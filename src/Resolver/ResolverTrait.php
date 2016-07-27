@@ -47,7 +47,7 @@ trait ResolverTrait
 			}
 			
 			//resolve it the regular wat
-			return $resolverHandler->resolve($name, ...$args);
+			return $this->resolverHandler->resolve($name, ...$args);
 		}
 		
 		//oops ?

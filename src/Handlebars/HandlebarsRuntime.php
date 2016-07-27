@@ -51,7 +51,7 @@ class HandlebarsRuntime
     public static function getHelper($name, HandlebarsData $bind = null)
     {
         if (isset(self::$helpers[$name])) {
-            return self::$helpers[$name];
+	        return self::$helpers[$name];
         }
         
         return null;

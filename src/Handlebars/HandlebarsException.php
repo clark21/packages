@@ -86,15 +86,15 @@ class HandlebarsException extends Exception
 	 *
 	 * @return HandlebarsException
 	 */
-	public static function forCompileError($error, $code)
+	public static function forCompileError($error, $code, $limit = 25)
 	{
 		$code = explode("\n", $code);
-		$start = $error['line'] - 25;
+		$start = $error['line'] - $limit;
 		if ($start < 0) {
 			$start = 0;
 		}
 
-		$code = array_splice($code, $start, 50);
+		$code = array_splice($code, $start, $limit * 2);
 
 		foreach ($code as $i => $line) {
 			$code[$i] = (++$start) . ': ' . $line;

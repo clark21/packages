@@ -79,7 +79,7 @@ class HandlebarsHandler
         if (is_dir($this->cache) && file_exists($file)) {
             $callback = include($file);
         } else {
-			$code = $this->resolve(Compiler::class, $this, $template)->compile();
+			$code = $this->resolve(HandlebarsCompiler::class, $this, $template)->compile();
             
             if (is_dir($this->cache)) {
                 file_put_contents($file, $code);

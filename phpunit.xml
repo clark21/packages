@@ -12,7 +12,7 @@
          bootstrap="test/bootstrap.php"
 >
   <testsuites>
-    <testsuite name="CradlePHP Curl Test Suite">
+    <!--<testsuite name="CradlePHP Curl Test Suite">
       <file>test/Curl/CurlException.php</file>
       <file>test/Curl/CurlHandler.php</file>
       <file>test/Curl/Rest.php</file>
@@ -33,7 +33,7 @@
       <file>test/Data/ModelException.php</file>
       <file>test/Data/Registry.php</file>
       <file>test/Data/RegistryException.php</file>
-    </testsuite>
+    </testsuite>-->
     <testsuite name="CradlePHP Event Test Suite">
       <file>test/Event/EventException.php</file>
       <file>test/Event/EventHandler.php</file>
@@ -56,7 +56,7 @@
       <file>test/Helper/LoopTrait.php</file>
       <file>test/Helper/SingletonTrait.php</file>
     </testsuite>
-    <testsuite name="CradlePHP Http Test Suite">
+    <!--<testsuite name="CradlePHP Http Test Suite">
       <file>test/Http/DispatcherTrait.php</file>
 	  <file>test/Http/ErrorProcessorTrait.php</file>
 	  <file>test/Http/HttpDispatcher.php</file>
@@ -123,7 +123,7 @@
 	  <file>test/Sql/Sqlite/QueryAlter.php</file>
 	  <file>test/Sql/Sqlite/QueryCreate.php</file>
 	  <file>test/Sql/Sqlite/QueryUtility.php</file>
-    </testsuite>
+    </testsuite>-->
   </testsuites>
 
   <filter>

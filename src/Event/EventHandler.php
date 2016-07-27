@@ -9,6 +9,7 @@
 
 namespace Cradle\Event;
 
+use Cradle\Helper\InstanceTrait;
 use Cradle\Resolver\ResolverTrait;
 
 /**
@@ -24,7 +25,7 @@ use Cradle\Resolver\ResolverTrait;
  */
 class EventHandler implements EventInterface
 {
-	use ResolverTrait;
+	use ResolverTrait, InstanceTrait;
 
 	 /**
      * @var array $observers cache of event handlers
@@ -89,8 +90,6 @@ class EventHandler implements EventInterface
      */
     public function on($event, $callback, $priority = 0)
     {
-        $id = $this->getId($callable);
-
         //set up the observer
 		$observer = $this->resolve(EventObserver::class, $callback);
         
@@ -110,7 +109,11 @@ class EventHandler implements EventInterface
      */
     public function trigger($event, ...$args)
     {
-        krsort(self::$observers[$event]);
+		if(!isset(self::$observers[$event])) {
+			return $this;
+		}
+        
+		krsort(self::$observers[$event]);
         $observers = call_user_func_array('array_merge', self::$observers[$event]);
 
         //for each observer

@@ -9,11 +9,12 @@
 
 namespace Cradle\Handlebars;
 
-use SdtClass;
+use StdClass;
 use SplFileObject;
 use ReflectionFunction;
 use Cradle\Resolver\ResolverTrait;
 use Cradle\Helper\BinderTrait;
+use Cradle\Helper\InstanceTrait;
 
 /**
  * Transforms Handlebars Templates to PHP equivilent
@@ -25,7 +26,7 @@ use Cradle\Helper\BinderTrait;
  */
 class HandlebarsCompiler
 {
-	use ResolverTrait, BinderTrait;
+	use ResolverTrait, BinderTrait, InstanceTrait;
 	
     /**
      * @const string BLOCK_TEXT_LINE
@@ -706,7 +707,7 @@ class HandlebarsCompiler
     {
         //lookout for pre processors helper
         $value = explode(' ', $node['value']);
-            
+
         //is it a helper ?
         $helper = $this->resolveStatic(HandlebarsRuntime::class, 'getHelper', 'tokenize-' . $value[0]);
 

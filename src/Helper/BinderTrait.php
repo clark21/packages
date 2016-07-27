@@ -9,6 +9,8 @@
 
 namespace Cradle\Helper;
 
+use Closure;
+
 /**
  *
  * @package  Cradle

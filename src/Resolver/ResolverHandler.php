@@ -61,7 +61,7 @@ class ResolverHandler implements ResolverInterface
 	 */
 	public function isShared($name)
 	{
-		return isset(self::$shared[$name]);
+		return isset(self::$share[$name]);
 	}
 
 	/**
@@ -127,7 +127,7 @@ class ResolverHandler implements ResolverInterface
 		});
 		
 		//then resolve this
-		return $this->shared($name, ...$args);
+		return $this->resolve($name, ...$args);
 	}
 
 	/**
@@ -141,7 +141,7 @@ class ResolverHandler implements ResolverInterface
 	 */
 	public function resolveStatic($name, $method, ...$args)
 	{
-		return $this->shared($name . '::' . $method, ...$args);
+		return $this->resolve($name . '::' . $method, ...$args);
 	}
 
 	/**

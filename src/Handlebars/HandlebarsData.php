@@ -9,6 +9,8 @@
 
 namespace Cradle\Handlebars;
 
+use Cradle\Helper\InstanceTrait;
+
 /**
  * Data needs to manage parent and children respectively
  *
@@ -19,6 +21,8 @@ namespace Cradle\Handlebars;
  */
 class HandlebarsData
 {
+	use InstanceTrait;
+
     protected $tree = [];
 
     /**
