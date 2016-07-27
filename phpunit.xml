@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false"
+         bootstrap="test/bootstrap.php"
+>
+  <testsuites>
+    <testsuite name="CradlePHP Curl Test Suite">
+      <file>test/Curl/CurlException.php</file>
+      <file>test/Curl/CurlHandler.php</file>
+      <file>test/Curl/Rest.php</file>
+      <file>test/Curl/RestException.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Data Test Suite">
+      <file>test/Data/ArrayAccessTrait.php</file>
+      <file>test/Data/CollectionTrait.php</file>
+      <file>test/Data/CollectionException.php</file>
+      <file>test/Data/CountableTrait.php</file>
+      <file>test/Data/DataException.php</file>
+      <file>test/Data/DataTrait.php</file>
+      <file>test/Data/DotTrait.php</file>
+      <file>test/Data/GeneratorTrait.php</file>
+      <file>test/Data/IteratorTrait.php</file>
+      <file>test/Data/MagicTrait.php</file>
+      <file>test/Data/Model.php</file>
+      <file>test/Data/ModelException.php</file>
+      <file>test/Data/Registry.php</file>
+      <file>test/Data/RegistryException.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Event Test Suite">
+      <file>test/Event/EventException.php</file>
+      <file>test/Event/EventHandler.php</file>
+      <file>test/Event/EventObserver.php</file>
+      <file>test/Event/EventPipe.php</file>
+      <file>test/Event/EventTrait.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Handlebars Test Suite">
+      <file>test/Handlebars/HandlebarsCompiler.php</file>
+      <file>test/Handlebars/HandlebarsData.php</file>
+      <file>test/Handlebars/HandlebarsException.php</file>
+      <file>test/Handlebars/HandlebarsHandler.php</file>
+      <file>test/Handlebars/HandlebarsRuntime.php</file>
+      <file>test/Handlebars/HandlebarsTokenizer.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Helper Test Suite">
+      <file>test/Helper/BinderTrait.php</file>
+      <file>test/Helper/ConditionalTrait.php</file>
+      <file>test/Helper/InstanceTrait.php</file>
+      <file>test/Helper/LoopTrait.php</file>
+      <file>test/Helper/SingletonTrait.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Http Test Suite">
+      <file>test/Http/DispatcherTrait.php</file>
+	  <file>test/Http/ErrorProcessorTrait.php</file>
+	  <file>test/Http/HttpDispatcher.php</file>
+	  <file>test/Http/HttpException.php</file>
+	  <file>test/Http/HttpHandler.php</file>
+	  <file>test/Http/Middleware.php</file>
+	  <file>test/Http/PostProcessorTrait.php</file>
+	  <file>test/Http/PreProcessorTrait.php</file>
+	  <file>test/Http/Request.php</file>
+	  <file>test/Http/RequestTrait.php</file>
+	  <file>test/Http/Response.php</file>
+	  <file>test/Http/ResponseTrait.php</file>
+	  <file>test/Http/Router.php</file>
+	  <file>test/Http/RouterTrait.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP I18n Test Suite">
+      <file>test/I18n/Language.php</file>
+  	  <file>test/I18n/LanguageException.php</file>
+	  <file>test/I18n/Timezone.php</file>
+	  <file>test/I18n/TimezoneValidation.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Image Test Suite">
+      <file>test/Image/ImageException.php</file>
+	  <file>test/Image/ImageHandler.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Profiler Test Suite">
+      <file>test/Profiler/CallerTrait.php</file>
+  	  <file>test/Profiler/InspectorHandler.php</file>
+	  <file>test/Profiler/InspectorTrait.php</file>
+	  <file>test/Profiler/LoggerException.php</file>
+	  <file>test/Profiler/LoggerTrait.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Resolver Test Suite">
+      <file>test/Resolver/ResolverException.php</file>
+ 	  <file>test/Resolver/ResolverHandler.php</file>
+	  <file>test/Resolver/ResolverTrait.php</file>
+	  <file>test/Resolver/StateTrait.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Sql Test Suite">
+	  <file>test/Sql/AbstractQuery.php</file>
+	  <file>test/Sql/AbstractSql.php</file>
+	  <file>test/Sql/Collection.php</file>
+	  <file>test/Sql/Model.php</file>
+	  <file>test/Sql/MySql.php</file>
+	  <file>test/Sql/PostGreSql.php</file>
+	  <file>test/Sql/QueryDelete.php</file>
+	  <file>test/Sql/QueryInsert.php</file>
+	  <file>test/Sql/QuerySelect.php</file>
+	  <file>test/Sql/QueryUpdate.php</file>
+	  <file>test/Sql/Search.php</file>
+	  <file>test/Sql/SqlException.php</file>
+	  <file>test/Sql/Sqlite.php</file>
+	  <file>test/Sql/MySql/QueryAlter.php</file>
+	  <file>test/Sql/MySql/QueryCreate.php</file>
+	  <file>test/Sql/MySql/QuerySubSelect.php</file>
+	  <file>test/Sql/MySql/QueryUtility.php</file>
+	  <file>test/Sql/Postgresql/QueryAlter.php</file>
+	  <file>test/Sql/Postgresql/QueryCreate.php</file>
+	  <file>test/Sql/Postgresql/QueryDelete.php</file>
+	  <file>test/Sql/Postgresql/QueryInsert.php</file>
+	  <file>test/Sql/Postgresql/QuerySelect.php</file>
+	  <file>test/Sql/Postgresql/QueryUpdate.php</file>
+	  <file>test/Sql/Postgresql/QueryUtility.php</file>
+	  <file>test/Sql/Sqlite/QueryAlter.php</file>
+	  <file>test/Sql/Sqlite/QueryCreate.php</file>
+	  <file>test/Sql/Sqlite/QueryUtility.php</file>
+    </testsuite>
+  </testsuites>
+
+  <filter>
+    <whitelist>
+      <directory suffix=".php">./</directory>
+    </whitelist>
+  </filter>
+</phpunit>

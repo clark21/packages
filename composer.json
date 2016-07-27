@@ -1,0 +1,32 @@
+{
+	"name": "cradlephp/packages",
+    "type": "library",
+    "description": "Framework Agnotic Packages",
+	"minimum-stability": "dev",
+    "keywords": [
+		"library", 
+		"cradle", 
+		"cradlephp"
+	],
+    "license": "MIT",
+	"authors": [
+        {
+            "name": "Christian Blanquera",
+            "email": "cblanquera@openovate.com"
+        }
+    ],"bin": [
+        "bin/scoop"
+    ],
+	"require-dev": {
+        "phpunit/phpunit": "~5.4",
+        "squizlabs/php_codesniffer": "~2.6"
+    },
+    "require": {
+		"php": ">=5.6.*"
+    },
+	"autoload": {
+        "psr-4": {
+			"Cradle\\": "/src"
+		}
+    }
+}
