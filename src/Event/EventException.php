@@ -28,10 +28,8 @@ class EventException extends Exception
 	
     /**
      * Create a new exception for invalid callback
-     *
-     * @param  *string $name
 	 *
-     * @return RouterException
+     * @return EventException
      */
 	public static function forInvalidCallback()
 	{

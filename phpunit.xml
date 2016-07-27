@@ -40,6 +40,7 @@
       <file>test/Event/EventObserver.php</file>
       <file>test/Event/EventPipe.php</file>
       <file>test/Event/EventTrait.php</file>
+      <file>test/Event/PipeTrait.php</file>
     </testsuite>
     <testsuite name="CradlePHP Handlebars Test Suite">
       <file>test/Handlebars/HandlebarsCompiler.php</file>

@@ -7,19 +7,16 @@
  * distributed with this package.
  */
 
-namespace Cradle\Event;
-
-use Closure;
+namespace Cradle\Frame;
 
 /**
- * Used to define and trigger process flows
  *
  * @vendor   Cradle
- * @package  Pipe
+ * @package  Frame
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class EventPipe
+class FrameService
 {	
-	use PipeTrait;
+	use FrameTrait;
 }

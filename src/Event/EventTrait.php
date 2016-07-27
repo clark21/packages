@@ -9,6 +9,8 @@
 
 namespace Cradle\Event;
 
+use Cradle\Helper\BinderTrait;
+
 /**
  *
  * @package  Cradle
@@ -18,6 +20,8 @@ namespace Cradle\Event;
  */
 trait EventTrait
 {
+	use BinderTrait;
+
 	/**
 	 * @var EventHandler|null $eventHandler
 	 */
@@ -55,7 +59,7 @@ trait EventTrait
         //if it's a closure, they meant to bind the callback
         if ($callback instanceof Closure) {
             //so there's no scope
-            $callback = $callback->bindTo($this, get_class($this));
+			$callback = $this->bindCallback($callback);
         }
         
 		$dispatcher->on($event, $callback, $priority);
