@@ -40,7 +40,6 @@ class Collection implements ArrayAccess, Iterator, Countable, CollectionInterfac
 	use ArrayAccessTrait,
 		CountableTrait,
 		GeneratorTrait,
-		BinderTrait,
 		IteratorTrait,
 		EventTrait, 
 		InstanceTrait, 

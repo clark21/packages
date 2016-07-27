@@ -41,7 +41,6 @@ namespace Cradle\Sink
 	use Cradle\Event\EventTrait;
 	
 	use Cradle\Helper\SingletonTrait;
-	use Cradle\Helper\BinderTrait;
 	use Cradle\Helper\LoopTrait;
 	use Cradle\Helper\ConditionalTrait;
 	
@@ -63,7 +62,6 @@ namespace Cradle\Sink
 	{
 		use EventTrait, 
 			SingletonTrait, 
-			BinderTrait, 
 			LoopTrait, 
 			ConditionalTrait, 
 			CallerTrait, 

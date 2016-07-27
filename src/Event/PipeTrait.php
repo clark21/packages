@@ -39,22 +39,22 @@ trait PipeTrait
 				if(is_array($step)) {
 					continue;
 				}
-				
+
 				//rule the subtasks first
 				$j = 1;
-				
+
 				while(isset($flow[$i + $j]) && is_array($flow[$i + $j])) {
 					$this->flow(...$flow[$i + $j]);
 					$j++;
 				}
-				
+
 				$this->trigger($step, ...$args);
 			}
 		});
-		
+
 		return $this;		
 	}
-	
+
 	/**
 	 * Calls an event considering classes and protocols
 	 *
@@ -69,7 +69,7 @@ trait PipeTrait
 			call_user_func_array($name, $args);
 			return $this;
 		}
-		
+
 		//we don't want to throw an error 
 		//because it could just be a pseudo
 		//placeholder
@@ -82,7 +82,7 @@ trait PipeTrait
 			$this->triggerController($name, ...$args);
 		}
 		
-		return $this->triggerEvent($name, ...$args);;
+		return $this->triggerEvent($name, ...$args);
 	}
 	
 	/**

@@ -84,12 +84,12 @@ trait EventTrait
      * Notify all observers of that a specific
      * event has happened
      *
-     * @param string|null      $event the event to trigger
+     * @param string           $event the event to trigger
      * @param mixed[, mixed..] $arg   the arguments to pass to the handler
      *
      * @return EventTrait
      */
-    public function trigger($event = null, ...$args)
+    public function trigger($event, ...$args)
     {
 		$this->getEventHandler()->trigger($event, ...$args);
         return $this;

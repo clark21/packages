@@ -12,14 +12,14 @@ namespace Cradle\Frame;
 use Exception;
 
 /**
- * Event exceptions
+ * Frame exceptions
  *
  * @package  Cradle
  * @category Frame
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class EventException extends Exception
+class FrameException extends Exception
 {
 	/**
 	 * @const string ERROR_PACKAGE_NOT_FOUND Error template

@@ -13,7 +13,6 @@ use Throwable;
 
 use Cradle\Event\EventTrait;
 
-use Cradle\Helper\BinderTrait;
 use Cradle\Helper\InstanceTrait;
 use Cradle\Helper\LoopTrait;
 use Cradle\Helper\ConditionalTrait;
@@ -42,7 +41,6 @@ class HttpHandler
 		ResponseTrait,
 		RouterTrait,
 		EventTrait, 
-		BinderTrait,
 		InstanceTrait, 
 		LoopTrait, 
 		ConditionalTrait, 
