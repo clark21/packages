@@ -33,13 +33,19 @@ class Cradle_I18n_LanguageException_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\I18n\LanguageException::forFileNotSet
-     * @todo   Implement testForFileNotSet().
      */
     public function testForFileNotSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = null;
+		
+        try {
+			throw LanguageException::forFileNotSet();
+		} catch(LanguageException $e) {
+			$actual = $e->getMessage();
+		}
+		
+		$expected = 'No file was specified';
+		
+		$this->assertEquals($expected, $actual);
     }
 }

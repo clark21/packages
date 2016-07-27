@@ -20,7 +20,7 @@ class Cradle_I18n_Timezone_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Timezone;
+        $this->object = new Timezone('Asia/Manila');
     }
 
     /**
@@ -33,217 +33,289 @@ class Cradle_I18n_Timezone_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\I18n\Timezone::convertTo
-     * @todo   Implement testConvertTo().
      */
     public function testConvertTo()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		//zone = Asia/Manila, time = 1358756901, date = January 21, 2013 8:28AM
+		//zone = America/Los_Angeles, time = ?, date = January 20, 2013 5:28PM
+		
+		$date = $this
+			->object
+			->setTime(1358756901)
+			->convertTo('America/Los_Angeles', 'F d, Y g:iA');
+		
+		$this->assertEquals('January 20, 2013 5:28PM', $date);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::getGMT
-     * @todo   Implement testGetGMT().
      */
     public function testGetGMT()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$gmt = $this->object->getGMT();
+		$this->assertEquals('GMT+800', $gmt);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::getGMTDates
-     * @todo   Implement testGetGMTDates().
      */
     public function testGetGMTDates()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$dates = $this->object->getGMTDates('F d, Y g:iA', 60);
+		$this->assertEquals(25, count($dates));
+		$this->assertArrayHasKey('GMT+800', $dates);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::getOffset
-     * @todo   Implement testGetOffset().
      */
     public function testGetOffset()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$offset = $this->object->getOffset();
+		$this->assertEquals(28800, $offset);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::getOffsetDates
-     * @todo   Implement testGetOffsetDates().
      */
     public function testGetOffsetDates()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$dates = $this->object->getOffsetDates('F d, Y g:iA', 60);
+		$this->assertEquals(25, count($dates));
+		$this->assertArrayHasKey('28800', $dates);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::getTime
-     * @todo   Implement testGetTime().
      */
     public function testGetTime()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$date = $this
+			->object
+			->setTime(1358756901)
+			->getTime('F d, Y g:iA');
+			
+		$this->assertEquals('January 21, 2013 8:28AM', $date);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::getUTC
-     * @todo   Implement testGetUTC().
      */
     public function testGetUTC()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$utc = $this->object->getUTC();
+		$this->assertEquals('UTC+8:00', $utc);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::getUTCDates
-     * @todo   Implement testGetUTCDates().
      */
     public function testGetUTCDates()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$dates = $this->object->getUTCDates('F d, Y g:iA', 60);
+		$this->assertEquals(25, count($dates));
+		$this->assertArrayHasKey('UTC+8:00', $dates);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::toRelative
-     * @todo   Implement testToRelative().
      */
     public function testToRelative()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$class = new Timezone('America/Los_Angeles', time() - 0);
+		
+		$offset = $class->getOffset();
+		
+		$this->assertEquals('Now', $class->toRelative(time() - $offset));
+		
+		///
+		$class = new Timezone('America/Los_Angeles', time() - 15);
+		$this->assertEquals('15 seconds ago', $class->toRelative(time() - $offset));
+		
+		///
+		$class = new Timezone('America/Los_Angeles', time() - 3602);
+		$this->assertEquals('1 hour ago', $class->toRelative(time() - $offset));
+		
+		///
+		$class = new Timezone('America/Los_Angeles', time() + 2);
+		$this->assertEquals('Now', $class->toRelative(time() - $offset));
+		
+		///
+		$class = new Timezone('America/Los_Angeles', time() + 15);
+		$this->assertEquals('15 seconds from now', $class->toRelative(time() - $offset));
+		
+		///
+		$class = new Timezone('America/Los_Angeles', time() + 3602);
+		$this->assertEquals('1 hour from now', $class->toRelative(time() - $offset));
     }
 
     /**
      * @covers Cradle\I18n\Timezone::setTime
-     * @todo   Implement testSetTime().
      */
     public function testSetTime()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this
+			->object
+			->setTime(1358756901);
+			
+		$this->assertInstanceOf('Cradle\I18n\Timezone', $instance);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::__callResolver
-     * @todo   Implement test__callResolver().
      */
     public function test__callResolver()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->__callResolver(ResolverCallStub::class, [])->foo('bar');
+		$this->assertEquals('barfoo', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::addResolver
-     * @todo   Implement testAddResolver().
      */
     public function testAddResolver()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
+		$this->assertInstanceOf('Cradle\I18n\Timezone', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::getResolverHandler
-     * @todo   Implement testGetResolverHandler().
      */
     public function testGetResolverHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getResolverHandler();
+		$this->assertInstanceOf('Cradle\Resolver\ResolverInterface', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::resolve
-     * @todo   Implement testResolve().
      */
     public function testResolve()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->addResolver(
+			ResolverCallStub::class, 
+			function() {
+				return new ResolverAddStub();
+			}
+		)
+		->resolve(ResolverCallStub::class)
+		->foo('bar');
+		
+        $this->assertEquals('barfoo', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::resolveShared
-     * @todo   Implement testResolveShared().
      */
     public function testResolveShared()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this
+			->object
+			->resolveShared(ResolverSharedStub::class)
+			->reset()
+			->foo('bar');
+		
+        $this->assertEquals('barfoo', $actual);
+		
+		$actual = $this
+			->object
+			->resolveShared(ResolverSharedStub::class)
+			->foo('bar');
+		
+        $this->assertEquals('barbar', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::resolveStatic
-     * @todo   Implement testResolveStatic().
      */
     public function testResolveStatic()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this
+			->object
+			->resolveStatic(
+				ResolverStaticStub::class, 
+				'foo', 
+				'bar'
+			);
+		
+        $this->assertEquals('barfoo', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::setResolverHandler
-     * @todo   Implement testSetResolverHandler().
      */
     public function testSetResolverHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->setResolverHandler(new ResolverHandlerStub);
+		$this->assertInstanceOf('Cradle\I18n\Timezone', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Timezone::i
-     * @todo   Implement testI().
      */
     public function testI()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance1 = Timezone::i('America/Los_Angeles');
+		$this->assertInstanceOf('Cradle\I18n\Timezone', $instance1);
+		
+		$instance2 = Timezone::i('America/Los_Angeles');
+		$this->assertTrue($instance1 !== $instance2);
     }
+}
+
+if(!class_exists('Cradle\I18n\ResolverCallStub')) {
+	class ResolverCallStub
+	{
+		public function foo($string)
+		{
+			return $string . 'foo';
+		}
+	}
+}
+
+if(!class_exists('Cradle\I18n\ResolverAddStub')) {
+	class ResolverAddStub
+	{
+		public function foo($string)
+		{
+			return $string . 'foo';
+		}
+	}
+}
+
+if(!class_exists('Cradle\I18n\ResolverSharedStub')) {
+	class ResolverSharedStub
+	{
+		public $name = 'foo';
+		
+		public function foo($string)
+		{
+			$name = $this->name;
+			$this->name = $string;
+			return $string . $name;
+		}
+		
+		public function reset()
+		{
+			$this->name = 'foo';
+			return $this;
+		}
+	}
+}
+
+if(!class_exists('Cradle\I18n\ResolverStaticStub')) {
+	class ResolverStaticStub
+	{
+		public static function foo($string)
+		{
+			return $string . 'foo';
+		}
+	}
+}
+
+if(!class_exists('Cradle\I18n\ResolverHandlerStub')) {
+	class ResolverHandlerStub extends ResolverHandler
+	{
+	}
 }

@@ -23,7 +23,6 @@ use Cradle\Helper\InstanceTrait;
 use Cradle\Helper\LoopTrait;
 use Cradle\Helper\ConditionalTrait;
 
-use Cradle\Profiler\CallerTrait;
 use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
@@ -47,7 +46,6 @@ class Language implements ArrayAccess, Iterator
 		InstanceTrait, 
 		LoopTrait, 
 		ConditionalTrait, 
-		CallerTrait, 
 		InspectorTrait, 
 		LoggerTrait, 
 		StateTrait
@@ -58,9 +56,14 @@ class Language implements ArrayAccess, Iterator
 		}
 
     /**
-     * @var array $file The language file to save to
+     * @var string $file The language file to save to
      */
     protected $file = null;
+
+    /**
+     * @var array $data The translation list
+     */
+    protected $data = array();
 	
 	/**
 	 * Attempts to use __callData then __callResolver
@@ -144,7 +147,7 @@ class Language implements ArrayAccess, Iterator
             $file = $this->file;
         }
         
-		$contents = "<?php //-->\nreturn " . var_export($variable, true) . ";";
+		$contents = "<?php //-->\nreturn " . var_export($this->data, true) . ";";
 		file_put_contents($file, $contents);
         
         return $this;

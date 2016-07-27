@@ -54,7 +54,7 @@
 	  <file>test/I18n/Timezone.php</file>
 	  <file>test/I18n/TimezoneValidation.php</file>
     </testsuite>
-    <!--<testsuite name="CradlePHP Data Test Suite">
+    <testsuite name="CradlePHP Data Test Suite">
       <file>test/Data/ArrayAccessTrait.php</file>
       <file>test/Data/CollectionTrait.php</file>
       <file>test/Data/CollectionException.php</file>
@@ -70,7 +70,7 @@
       <file>test/Data/Registry.php</file>
       <file>test/Data/RegistryException.php</file>
     </testsuite>
-    <testsuite name="CradlePHP Http Test Suite">
+    <!--<testsuite name="CradlePHP Http Test Suite">
       <file>test/Http/DispatcherTrait.php</file>
 	  <file>test/Http/ErrorProcessorTrait.php</file>
 	  <file>test/Http/HttpDispatcher.php</file>

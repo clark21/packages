@@ -33,37 +33,26 @@ class Cradle_I18n_TimezoneValidation_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\I18n\TimezoneValidation::isAbbr
-     * @todo   Implement testIsAbbr().
      */
     public function testIsAbbr()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue((bool) $this->object->isAbbr('ABCDE'));
+        $this->assertFalse((bool) $this->object->isAbbr('abcde'));
     }
 
     /**
      * @covers Cradle\I18n\TimezoneValidation::isLocation
-     * @todo   Implement testIsLocation().
      */
     public function testIsLocation()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue((bool) $this->object->isLocation('Asia/Manila'));
     }
 
     /**
      * @covers Cradle\I18n\TimezoneValidation::isUtc
-     * @todo   Implement testIsUtc().
      */
     public function testIsUtc()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue((bool) $this->object->isUtc('GMT+8'));   
     }
 }

@@ -2,6 +2,11 @@
 
 namespace Cradle\I18n;
 
+use StdClass;
+use Cradle\Profiler\InspectorHandler;
+use Cradle\Event\EventHandler;
+use Cradle\Resolver\ResolverHandler;
+
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -20,7 +25,7 @@ class Cradle_I18n_Language_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Language;
+        $this->object = new Language(__DIR__.'/../assets/language/tagalog.php');
     }
 
     /**
@@ -33,541 +38,627 @@ class Cradle_I18n_Language_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\I18n\Language::__call
-     * @todo   Implement test__call().
      */
     public function test__call()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this
+			->object
+			->__call('setGoodBye', ['pa alaam', ' '])
+			->__call('getGoodBye', [' ']);
+		
+		$this->assertEquals('pa alaam', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::get
-     * @todo   Implement testGet().
      */
     public function testGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $string = $this->object->get('How are you?');
+		$this->assertEquals('Kumusta ka?', $string);
     }
 
     /**
      * @covers Cradle\I18n\Language::getLanguage
-     * @todo   Implement testGetLanguage().
      */
     public function testGetLanguage()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$language = $this->object->getLanguage();
+		$this->assertArrayHasKey('How are you?', $language);
     }
 
     /**
      * @covers Cradle\I18n\Language::save
-     * @todo   Implement testSave().
      */
     public function testSave()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$class = $this
+			->object
+			->translate('How much is this?', 'Magkano ba ito?')
+			->save();
+		
+		$this->assertInstanceOf('Cradle\I18n\Language', $class);
     }
 
     /**
      * @covers Cradle\I18n\Language::translate
-     * @todo   Implement testTranslate().
      */
     public function testTranslate()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$rand = rand();
+		
+		$string = $this
+			->object
+			->translate('How much is this?', 'Magkano ba ito? '.$rand)
+			->get('How much is this?');
+
+		$this->assertEquals('Magkano ba ito? '.$rand, $string);
     }
 
     /**
      * @covers Cradle\I18n\Language::offsetExists
-     * @todo   Implement testOffsetExists().
      */
     public function testOffsetExists()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+       $actual = isset($this->object['I am fine.']);
+	   $this->assertTrue($actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::offsetGet
-     * @todo   Implement testOffsetGet().
      */
     public function testOffsetGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object['I am fine.'];
+	    $this->assertEquals('Mabuti.', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::offsetSet
-     * @todo   Implement testOffsetSet().
      */
     public function testOffsetSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object['Up to you'] = 'Bahala ka.';
+        $actual = $this->object['Up to you'];
+	    $this->assertEquals('Bahala ka.', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::offsetUnset
-     * @todo   Implement testOffsetUnset().
      */
     public function testOffsetUnset()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		unset($this->object['I am fine.']);
+	    $this->assertFalse(isset($this->object['I am fine.']));
     }
 
     /**
      * @covers Cradle\I18n\Language::current
-     * @todo   Implement testCurrent().
      */
     public function testCurrent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
+        $actual = $this->object->current();
+    	$this->assertEquals('Kumusta ka?', $actual);
+	}
 
     /**
      * @covers Cradle\I18n\Language::key
-     * @todo   Implement testKey().
      */
     public function testKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->key();
+    	$this->assertEquals('How are you?', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::next
-     * @todo   Implement testNext().
      */
     public function testNext()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->next();
+        $actual = $this->object->current();
+    	$this->assertEquals('Mabuti.', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::rewind
-     * @todo   Implement testRewind().
      */
     public function testRewind()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->rewind();
+        $actual = $this->object->current();
+    	$this->assertEquals('Kumusta ka?', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::valid
-     * @todo   Implement testValid().
      */
     public function testValid()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->valid());
     }
 
     /**
      * @covers Cradle\I18n\Language::__callData
-     * @todo   Implement test__callData().
      */
     public function test__callData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this
+			->object
+			->__call('setGoodBye', ['pa alaam', ' '])
+			->__call('getGoodBye', [' ']);
+		
+		$this->assertEquals('pa alaam', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::__get
-     * @todo   Implement test__get().
      */
     public function test__get()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals('cool', $this->object->__get('astig'));
     }
 
     /**
      * @covers Cradle\I18n\Language::__getData
-     * @todo   Implement test__getData().
      */
     public function test__getData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals('cool', $this->object->__getData('astig'));
     }
 
     /**
      * @covers Cradle\I18n\Language::__set
-     * @todo   Implement test__set().
      */
     public function test__set()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->__set('puede', 'it can');
+        $this->assertEquals('it can', $this->object->puede);
     }
 
     /**
      * @covers Cradle\I18n\Language::__setData
-     * @todo   Implement test__setData().
      */
     public function test__setData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->__setData('puede', 'it can');
+        $this->assertEquals('it can', $this->object->puede);
     }
 
     /**
      * @covers Cradle\I18n\Language::__toString
-     * @todo   Implement test__toString().
      */
     public function test__toString()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->__toString();
+        $this->assertContains('{"How are you?":"Kumusta ka?","I am fine.":"Mabuti.","Where is the market?":"Saan sa palenke?","How much is this?":"Magkano ba ito?', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::__toStringData
-     * @todo   Implement test__toStringData().
      */
     public function test__toStringData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->__toStringData();
+        $this->assertContains('{"How are you?":"Kumusta ka?","I am fine.":"Mabuti.","Where is the market?":"Saan sa palenke?","How much is this?":"Magkano ba ito?', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::generator
-     * @todo   Implement testGenerator().
      */
     public function testGenerator()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        foreach($this->object->generator() as $en => $tg) {
+			$this->assertEquals($tg, $this->object[$en]);
+		}
     }
 
     /**
      * @covers Cradle\I18n\Language::getEventHandler
-     * @todo   Implement testGetEventHandler().
      */
     public function testGetEventHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getEventHandler();
+		$this->assertInstanceOf('Cradle\Event\EventHandler', $instance);
+		
+        $instance = $this->object
+			->setEventHandler(new LanguageEventHandlerStub)
+			->getEventHandler();
+		$this->assertInstanceOf('Cradle\I18n\LanguageEventHandlerStub', $instance);
     }
 
     /**
      * @covers Cradle\I18n\Language::on
-     * @todo   Implement testOn().
      */
     public function testOn()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $trigger = new StdClass();
+		$trigger->success = null;
+		
+        $callback = function() use ($trigger) {
+			$trigger->success = true;
+		};
+		
+		$instance = $this
+			->object
+			->on('foobar', $callback)
+			->trigger('foobar');
+		
+		$this->assertInstanceOf('Cradle\I18n\Language', $instance);
+		$this->assertTrue($trigger->success);
     }
 
     /**
      * @covers Cradle\I18n\Language::setEventHandler
-     * @todo   Implement testSetEventHandler().
      */
     public function testSetEventHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setEventHandler(new LanguageEventHandlerStub);
+		$this->assertInstanceOf('Cradle\I18n\Language', $instance);
     }
 
     /**
      * @covers Cradle\I18n\Language::trigger
-     * @todo   Implement testTrigger().
      */
     public function testTrigger()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $trigger = new StdClass();
+		$trigger->success = null;
+		
+        $callback = function() use ($trigger) {
+			$trigger->success = true;
+		};
+		
+		$instance = $this
+			->object
+			->on('foobar', $callback)
+			->trigger('foobar');
+		
+		$this->assertInstanceOf('Cradle\I18n\Language', $instance);
+		$this->assertTrue($trigger->success);
     }
 
     /**
      * @covers Cradle\I18n\Language::i
-     * @todo   Implement testI().
      */
     public function testI()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance1 = Language::i(array());
+		$this->assertInstanceOf('Cradle\I18n\Language', $instance1);
+		
+		$instance2 = Language::i(array());
+		$this->assertTrue($instance1 !== $instance2);
     }
 
     /**
      * @covers Cradle\I18n\Language::loop
-     * @todo   Implement testLoop().
      */
     public function testLoop()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $self = $this;
+        $this->object->loop(function($i) use ($self) {
+            $self->assertInstanceOf('Cradle\I18n\Language', $this);
+            
+            if ($i == 2) {
+                return false;
+            }
+        });
     }
 
     /**
      * @covers Cradle\I18n\Language::when
-     * @todo   Implement testWhen().
      */
     public function testWhen()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Cradle\I18n\Language::getCaller
-     * @todo   Implement testGetCaller().
-     */
-    public function testGetCaller()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Cradle\I18n\Language::getCallee
-     * @todo   Implement testGetCallee().
-     */
-    public function testGetCallee()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $self = $this;
+        $test = 'Good';
+        $this->object->when(function() use ($self) {
+            $self->assertInstanceOf('Cradle\I18n\Language', $this);
+            return false;
+        }, function() use ($self, &$test) {
+            $self->assertInstanceOf('Cradle\I18n\Language', $this);
+            $test = 'Bad';
+        });
+        
+        $this->assertSame('Good', $test);
+        
+        $test = 'Good';
+        $this->object->when(null, function() use (&$test) {
+            $test = 'Bad';
+        });
+        
+        $this->assertSame('Good', $test);
+        
+        $test = 'Good';
+        $this->object->when(false, function() use (&$test) {
+            $test = 'Bad';
+        });
+        
+        $this->assertSame('Good', $test);
+        
+        
+        $test = 'Good';
+        $this->object->when(function() {
+            return true;
+        }, function() use (&$test) {
+            $test = 'Bad';
+        });
+        
+        $this->assertSame('Bad', $test);
+        
+        $test = 'Good';
+        $this->object->when('hi', function() use (&$test) {
+            $test = 'Bad';
+        });
+        
+        $this->assertSame('Bad', $test);
+        
+        $test = 'Good';
+        $this->object->when(true, function() use (&$test) {
+            $test = 'Bad';
+        });
+        
+        $this->assertSame('Bad', $test);
+        
+        $test = 'Not Sure';
+        $this->object->when(function() use ($self) {
+            $self->assertInstanceOf('Cradle\I18n\Language', $this);
+            return false;
+        }, function() use ($self, &$test) {
+            $self->assertInstanceOf('Cradle\I18n\Language', $this);
+            $test = 'Good';
+        }, function() use ($self, &$test) {
+            $self->assertInstanceOf('Cradle\I18n\Language', $this);
+            $test = 'Bad';
+        });
+        
+        $this->assertSame('Bad', $test);
     }
 
     /**
      * @covers Cradle\I18n\Language::getInspectorHandler
-     * @todo   Implement testGetInspectorHandler().
      */
     public function testGetInspectorHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->getInspectorHandler();
+		$this->assertInstanceOf('Cradle\Profiler\InspectorInterface', $instance);
     }
 
     /**
      * @covers Cradle\I18n\Language::inspect
-     * @todo   Implement testInspect().
      */
     public function testInspect()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        ob_start();
+		$this->object->inspect('foobar');
+		$contents = ob_get_contents();
+		ob_end_clean();  
+		
+		$this->assertEquals(
+			'<pre>INSPECTING Variable:</pre><pre>foobar</pre>', 
+			$contents
+		);
     }
 
     /**
      * @covers Cradle\I18n\Language::setInspectorHandler
-     * @todo   Implement testSetInspectorHandler().
      */
     public function testSetInspectorHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setInspectorHandler(new InspectorHandlerStub);
+		$this->assertInstanceOf('Cradle\I18n\Language', $instance);
     }
 
     /**
      * @covers Cradle\I18n\Language::addLogger
-     * @todo   Implement testAddLogger().
      */
     public function testAddLogger()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addLogger(function() {});
+		$this->assertInstanceOf('Cradle\I18n\Language', $instance);
     }
 
     /**
      * @covers Cradle\I18n\Language::log
-     * @todo   Implement testLog().
      */
     public function testLog()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$trigger = new StdClass();
+		$trigger->success = null;
+        $this->object->addLogger(function($trigger) {
+			$trigger->success = true;
+		})
+		->log($trigger);
+		
+		
+		$this->assertTrue($trigger->success);
     }
 
     /**
      * @covers Cradle\I18n\Language::loadState
-     * @todo   Implement testLoadState().
      */
     public function testLoadState()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$state1 = new Language(array());
+		$state2 = new Language(array());
+		
+		$state1->saveState('state1');
+		$state2->saveState('state2');
+		
+		$this->assertTrue($state2 === $state1->loadState('state2'));
+		$this->assertTrue($state1 === $state2->loadState('state1'));
     }
 
     /**
      * @covers Cradle\I18n\Language::saveState
-     * @todo   Implement testSaveState().
      */
     public function testSaveState()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $state1 = new Language(array());
+		$state2 = new Language(array());
+		
+		$state1->saveState('state1');
+		$state2->saveState('state2');
+		
+		$this->assertTrue($state2 === $state1->loadState('state2'));
+		$this->assertTrue($state1 === $state2->loadState('state1'));
     }
 
     /**
      * @covers Cradle\I18n\Language::__callResolver
-     * @todo   Implement test__callResolver().
      */
     public function test__callResolver()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
+		$this->assertInstanceOf('Cradle\I18n\Language', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::addResolver
-     * @todo   Implement testAddResolver().
      */
     public function testAddResolver()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
+		$this->assertInstanceOf('Cradle\I18n\Language', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::getResolverHandler
-     * @todo   Implement testGetResolverHandler().
      */
     public function testGetResolverHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getResolverHandler();
+		$this->assertInstanceOf('Cradle\Resolver\ResolverInterface', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::resolve
-     * @todo   Implement testResolve().
      */
     public function testResolve()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->addResolver(
+			ResolverCallStub::class, 
+			function() {
+				return new ResolverAddStub();
+			}
+		)
+		->resolve(ResolverCallStub::class)
+		->foo('bar');
+		
+        $this->assertEquals('barfoo', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::resolveShared
-     * @todo   Implement testResolveShared().
      */
     public function testResolveShared()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this
+			->object
+			->resolveShared(ResolverSharedStub::class)
+			->reset()
+			->foo('bar');
+		
+        $this->assertEquals('barfoo', $actual);
+		
+		$actual = $this
+			->object
+			->resolveShared(ResolverSharedStub::class)
+			->foo('bar');
+		
+        $this->assertEquals('barbar', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::resolveStatic
-     * @todo   Implement testResolveStatic().
      */
     public function testResolveStatic()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this
+			->object
+			->resolveStatic(
+				ResolverStaticStub::class, 
+				'foo', 
+				'bar'
+			);
+		
+        $this->assertEquals('barfoo', $actual);
     }
 
     /**
      * @covers Cradle\I18n\Language::setResolverHandler
-     * @todo   Implement testSetResolverHandler().
      */
     public function testSetResolverHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->setResolverHandler(new ResolverHandlerStub);
+		$this->assertInstanceOf('Cradle\I18n\Language', $actual);
     }
+}
+
+if(!class_exists('Cradle\I18n\LanguageEventHandlerStub')) {
+	class LanguageEventHandlerStub extends EventHandler
+	{
+	}
+}
+
+if(!class_exists('Cradle\I18n\InspectorHandlerStub')) {
+	class InspectorHandlerStub extends InspectorHandler
+	{
+	}
+}
+
+if(!class_exists('Cradle\I18n\ResolverHandlerStub')) {
+	class ResolverHandlerStub extends ResolverHandler
+	{
+	}
+}
+
+if(!class_exists('Cradle\I18n\ResolverCallStub')) {
+	class ResolverCallStub
+	{
+		public function foo($string)
+		{
+			return $string . 'foo';
+		}
+	}
+}
+
+if(!class_exists('Cradle\I18n\ResolverAddStub')) {
+	class ResolverAddStub
+	{
+		public function foo($string)
+		{
+			return $string . 'foo';
+		}
+	}
+}
+
+if(!class_exists('Cradle\I18n\ResolverSharedStub')) {
+	class ResolverSharedStub
+	{
+		public $name = 'foo';
+		
+		public function foo($string)
+		{
+			$name = $this->name;
+			$this->name = $string;
+			return $string . $name;
+		}
+		
+		public function reset()
+		{
+			$this->name = 'foo';
+			return $this;
+		}
+	}
+}
+
+if(!class_exists('Cradle\I18n\ResolverStaticStub')) {
+	class ResolverStaticStub
+	{
+		public static function foo($string)
+		{
+			return $string . 'foo';
+		}
+	}
 }
