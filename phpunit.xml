@@ -42,6 +42,13 @@
       <file>test/Event/EventTrait.php</file>
       <file>test/Event/PipeTrait.php</file>
     </testsuite>
+    <!--<testsuite name="CradlePHP Micro Framework Test Suite">
+      <file>test/Frame/FrameException.php</file>
+      <file>test/Frame/FrameHttp.php</file>
+      <file>test/Frame/FramePackage.php</file>
+      <file>test/Frame/FrameService.php</file>
+      <file>test/Frame/FrameTrait.php</file>
+    </testsuite>-->
     <testsuite name="CradlePHP Handlebars Test Suite">
       <file>test/Handlebars/HandlebarsCompiler.php</file>
       <file>test/Handlebars/HandlebarsData.php</file>
@@ -72,14 +79,14 @@
 	  <file>test/Http/ResponseTrait.php</file>
 	  <file>test/Http/Router.php</file>
 	  <file>test/Http/RouterTrait.php</file>
-    </testsuite>
+    </testsuite>-->
     <testsuite name="CradlePHP I18n Test Suite">
       <file>test/I18n/Language.php</file>
   	  <file>test/I18n/LanguageException.php</file>
 	  <file>test/I18n/Timezone.php</file>
 	  <file>test/I18n/TimezoneValidation.php</file>
     </testsuite>
-    <testsuite name="CradlePHP Image Test Suite">
+    <!--<testsuite name="CradlePHP Image Test Suite">
       <file>test/Image/ImageException.php</file>
 	  <file>test/Image/ImageHandler.php</file>
     </testsuite>-->
