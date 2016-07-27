@@ -23,6 +23,11 @@ trait ResolverTrait
 	/**
 	 * @var Resolver|null $routeResolver The resolver instance
 	 */
+	protected static $globalResolverHandler = null;
+	
+	/**
+	 * @var Resolver|null $routeResolver The resolver instance
+	 */
 	protected $resolverHandler = null;
 	
 	/**
@@ -46,8 +51,8 @@ trait ResolverTrait
 				return $this->resolveShared($name, ...$args);
 			}
 			
-			//resolve it the regular wat
-			return $this->resolverHandler->resolve($name, ...$args);
+			//resolve it the regular way
+			return $this->resolve($name, ...$args);
 		}
 		
 		//oops ?
@@ -84,8 +89,14 @@ trait ResolverTrait
 	 */
 	public function getResolverHandler()
 	{
+		if(is_null(self::$globalResolverHandler)) {
+			//this should be the only place where 
+			//a hard coded dependancy exists
+			self::$globalResolverHandler = new ResolverHandler();
+		}
+		
 		if(is_null($this->resolverHandler)) {
-			$this->resolverHandler = new ResolverHandler();
+			$this->resolverHandler = self::$globalResolverHandler;
 		}
 		
 		return $this->resolverHandler;
@@ -136,9 +147,14 @@ trait ResolverTrait
 	 *
 	 * @return ResolverTrait
 	 */
-	public function setResolverHandler(ResolverInterface $resolver)
+	public function setResolverHandler(ResolverInterface $resolver, $static = false)
 	{
+		if($static) {
+			self::$globalResolverHandler = $resolver;
+		}
+		
 		$this->resolverHandler = $resolver;
+		
 		return $this;
 	}
 }

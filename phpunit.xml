@@ -81,7 +81,7 @@
     <testsuite name="CradlePHP Image Test Suite">
       <file>test/Image/ImageException.php</file>
 	  <file>test/Image/ImageHandler.php</file>
-    </testsuite>
+    </testsuite>-->
     <testsuite name="CradlePHP Profiler Test Suite">
       <file>test/Profiler/CallerTrait.php</file>
   	  <file>test/Profiler/InspectorHandler.php</file>
@@ -95,7 +95,7 @@
 	  <file>test/Resolver/ResolverTrait.php</file>
 	  <file>test/Resolver/StateTrait.php</file>
     </testsuite>
-    <testsuite name="CradlePHP Sql Test Suite">
+    <!--<testsuite name="CradlePHP Sql Test Suite">
 	  <file>test/Sql/AbstractQuery.php</file>
 	  <file>test/Sql/AbstractSql.php</file>
 	  <file>test/Sql/Collection.php</file>

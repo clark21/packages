@@ -24,7 +24,7 @@ class ResolverException extends Exception
 	/**
 	 * @const string ERROR_INVALID_CALLBACK Error template
 	 */
-	const ERROR_INVALID_CALLBACK = 'Invalid callback used.';
+	const ERROR_INVALID_CALLBACK = 'Invalid callback passed.';
 
 	/**
 	 * @const string ERROR_CLASS_NOT_FOUND Error template
