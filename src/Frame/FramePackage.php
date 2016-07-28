@@ -58,7 +58,7 @@ class FramePackage
      *
      * @return Plugin
      */
-	public function registerMethod($name, Closure $callback)
+	public function addMethod($name, Closure $callback)
 	{
 		$this->methods[$name] = $callback->bindTo($this, get_class($this));
 		

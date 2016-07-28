@@ -85,7 +85,7 @@ class HttpHandler
 			//you may not want to out 
 			//right throw it out
 			$response->setStatus(500, '500 Server Error');
-			$continue = $this->getErrorProcessor()->process($request, $response);
+			$continue = $this->getErrorProcessor()->process($request, $response, $e);
 			//if there's an error in the errorware then let it be thrown
 		}
 		
@@ -110,7 +110,7 @@ class HttpHandler
 			//you may not want to out 
 			//right throw it out
 			$response->setStatus(500, '500 Server Error');
-			$continue = $this->getErrorProcessor()->process($request, $response);
+			$continue = $this->getErrorProcessor()->process($request, $response, $e);
 			//if there's an error in the error processor then let it be thrown
 		}
 		
@@ -165,7 +165,7 @@ class HttpHandler
 			//you may not want to out 
 			//right throw it out
 			$response->setStatus(500, '500 Server Error');
-			$continue = $this->getErrorProcessor()->process($request, $response);
+			$continue = $this->getErrorProcessor()->process($request, $response, $e);
 			//if there's an error in the error processor then let it be thrown
 		}
 		

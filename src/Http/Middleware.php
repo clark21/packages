@@ -17,7 +17,7 @@ namespace Cradle\Http;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class Middleware
+class Middleware implements MiddlewareInterface
 {
 	/**
      * @const string UNEXPECTED_GLOBAL Error template
