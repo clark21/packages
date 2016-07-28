@@ -23,6 +23,11 @@ trait PipeTrait
 	use EventTrait { EventTrait::trigger as triggerEvent; }
 
 	/**
+	 * @var array $protocols Custom protocol callbacks
+	 */
+	protected $protocols = array();
+
+	/**
 	 * Sets up a process flow
 	 *
 	 * @param *string               $name     The name of this rule
@@ -54,6 +59,22 @@ trait PipeTrait
 
 		return $this;		
 	}
+	
+	/**
+	 * Adds a protocol used to custom parse an event name
+	 *
+	 * @param *string   $name The middleware handler
+	 * @param *callable $callback The middleware handler
+	 *
+	 * @return Base
+	 */
+	public function protocol($name, $callback)
+	{	
+		//create a space
+		$this->protocols[$name] = $callback;
+		
+		return $this;
+	}
 
 	/**
 	 * Calls an event considering classes and protocols
@@ -65,24 +86,32 @@ trait PipeTrait
 	 */
 	public function trigger($name, ...$args)
 	{
+		//we should deal with strings 
+		//then callables respectively
+		//to allow overriding
+		if(is_string($name)) {
+			//is it a protocol?
+			if(strpos($name, '://') !== false) {
+				return $this->triggerProtocol($name, ...$args);
+			}
+	
+			//they can call a class
+			if(strpos($name, '@') !== false) {
+				$this->triggerController($name, ...$args);
+			}
+			
+			return $this->triggerEvent($name, ...$args);
+		} 
+		
 		if(is_callable($name)) {
 			call_user_func_array($name, $args);
-			return $this;
 		}
-
+		
+		//we can only deal with callable and strings
 		//we don't want to throw an error 
 		//because it could just be a pseudo
 		//placeholder
-		if(!is_string($name)) {
-			return $this;
-		}
-
-		//they can call a class
-		if(strpos($name, '@') !== false) {
-			$this->triggerController($name, ...$args);
-		}
-		
-		return $this->triggerEvent($name, ...$args);
+		return $this;
 	}
 	
 	/**
@@ -109,6 +138,53 @@ trait PipeTrait
 			}
 		}
 		
+		return $this;
+	}
+	
+	/**
+	 * Calls a protocol
+	 *
+	 * @param *string $protocol In the form of protocol://event
+	 * @param *Event  $event    Event object to pass
+	 * 
+	 * @return Base
+	 */
+	public function triggerProtocol($protocol, ...$args)
+	{
+		list($protocol, $name) = explode('://', $protocol, 2);
+		
+		//if it's not a registered protocol
+		if(!isset($this->protocols[$protocol])) {
+			//oops?
+			return $this;
+		}
+
+		//get the protocol
+		$protocol = $this->protocols[$protocol];
+		
+		//we should deal with strings 
+		//then callables respectively
+		//to allow overriding
+		
+		//they can call a class
+		if(is_string($protocol) && strpos($protocol, '@') !== false) {
+			return $this->triggerController($protocol, $name, ...$args);
+		}
+		
+		//late binding ?
+		if($protocol instanceof Closure) {
+			$protocol = $this->bindCallback($protocol);
+		}
+
+		if(is_callable($protocol)) {
+			//call the protocol
+			call_user_func($protocol, $name, ...$args);
+		}
+		
+		//we can only deal with callable and strings
+		//we don't want to throw an error 
+		//because it could just be a pseudo
+		//placeholder
 		return $this;
 	}
 }

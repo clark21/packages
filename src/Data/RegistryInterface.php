@@ -71,6 +71,15 @@ interface RegistryInterface
 	 * Loop generator
 	 */
 	public function generator();
+	
+	/**
+	 * Sets the entire data
+	 *
+	 * @param *array $data
+	 * 
+	 * @return Registry
+	 */
+	public function exists(...$args);
 
 	/**
 	 * Returns the entire data
@@ -78,6 +87,15 @@ interface RegistryInterface
 	 * @return array
 	 */
 	public function get(...$args);
+	
+	/**
+	 * Sets the entire data
+	 *
+	 * @param *array $data
+	 * 
+	 * @return Registry
+	 */
+	public function isEmpty(...$args);
 	
 	/**
      * Returns th current position
@@ -129,6 +147,15 @@ interface RegistryInterface
      * For Iterator interface
      */
     public function rewind();
+	
+	/**
+	 * Sets the entire data
+	 *
+	 * @param *array $data
+	 * 
+	 * @return Registry
+	 */
+	public function remove(...$args);
 	
 	/**
 	 * Sets the entire data

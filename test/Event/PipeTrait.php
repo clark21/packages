@@ -89,6 +89,18 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Event\PipeTrait::protocol
+     * @todo   Implement testProtocol().
+     */
+    public function testProtocol()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
      * @covers Cradle\Event\PipeTrait::trigger
      */
     public function testTrigger()
@@ -151,6 +163,18 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('Cradle\Event\PipeTraitStub', $instance);
 		$this->assertTrue($trigger->success4);
 		$this->assertEquals(6, $trigger->total);
+    }
+
+    /**
+     * @covers Cradle\Event\PipeTrait::triggerProtocol
+     * @todo   Implement testTriggerProtocol().
+     */
+    public function testTriggerProtocol()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
     }
 
     /**

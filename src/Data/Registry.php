@@ -84,6 +84,24 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
     }
 	
 	/**
+	 * Sets the entire data
+	 *
+	 * @param *array $data
+	 * 
+	 * @return Registry
+	 */
+	public function exists(...$args)
+	{
+		if(!count($args)) {
+			//test to see if it's empty
+			return !$this->isEmpty();
+		}
+		
+		$separator = '--'. md5(uniqid()) . '--';
+		return $this->isDot(implode($separator, $args), $separator);
+	}
+	
+	/**
 	 * Returns the entire data
 	 * 
 	 * @return array
@@ -94,7 +112,58 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
 			return $this->data;
 		}
 
-		return $this->getDot(implode('.', $args));
+		$separator = '--'. md5(uniqid()) . '--';
+		return $this->getDot(implode($separator, $args), $separator);
+	}
+	
+	/**
+	 * Sets the entire data
+	 *
+	 * @param *array $data
+	 * 
+	 * @return Registry
+	 */
+	public function isEmpty(...$args)
+	{
+		if(!count($args)) {
+			//test to see if it's empty
+			return empty($this->data);
+		}
+		
+		$separator = '--'. md5(uniqid()) . '--';
+		
+		$data = $this->getDot(implode($separator, $args), $separator);
+		
+		//if it's bool
+		if(is_bool($data)) {
+			//it's something
+			return false;
+		}
+		
+		//if it's scalar
+		if(is_scalar($data)) {
+			return !strlen($data);
+		}
+		
+		return empty($data);
+	}
+	
+	/**
+	 * Sets the entire data
+	 *
+	 * @param *array $data
+	 * 
+	 * @return Registry
+	 */
+	public function remove(...$args)
+	{
+		if(!count($args)) {
+			//there's nothing to remove
+			return $this;
+		}
+		
+		$separator = '--'. md5(uniqid()) . '--';
+		return $this->removeDot(implode($separator, $args), $separator);
 	}
 	
 	/**
@@ -106,6 +175,8 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
 	 */
 	public function set(...$args)
 	{
+		$separator = '--'. md5(uniqid()) . '--';
+
 		switch(count($args)) {
 			case 0:
 				//there's nothing to set
@@ -117,7 +188,7 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
 				return $this;
 			default:
 				$value = array_pop($args);
-				return $this->setDot(implode('.', $args), $value);
+				return $this->setDot(implode($separator, $args), $value, $separator);
 		}
 	}
 }

@@ -7,10 +7,9 @@
  * distributed with this package.
  */
 
-namespace BreadPHP\Framework;
+namespace Cradle\Frame;
 
 use Closure;
-namespace Cradle\Frame;
 
 /**
  * Package space for package methods

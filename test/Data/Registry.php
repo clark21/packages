@@ -44,10 +44,46 @@ class Cradle_Data_Registry_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Data\Registry::exists
+     * @todo   Implement testExists().
+     */
+    public function testExists()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
      * @covers Cradle\Data\Registry::get
      * @todo   Implement testGet().
      */
     public function testGet()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Cradle\Data\Registry::isEmpty
+     * @todo   Implement testIsEmpty().
+     */
+    public function testIsEmpty()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Cradle\Data\Registry::remove
+     * @todo   Implement testRemove().
+     */
+    public function testRemove()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

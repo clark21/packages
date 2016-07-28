@@ -21,6 +21,7 @@ class Cradle_Data_ArrayAccessTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new ArrayAccessTraitStub;
+		$this->object['foo'] = 'bar';
     }
 
     /**
@@ -37,46 +38,39 @@ class Cradle_Data_ArrayAccessTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testOffsetExists()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = isset($this->object['foo']);
+	    $this->assertTrue($actual);
+		
+        $actual = isset($this->object['bar']);
+	    $this->assertFalse($actual);
     }
 
     /**
      * @covers Cradle\Data\ArrayAccessTrait::offsetGet
-     * @todo   Implement testOffsetGet().
      */
     public function testOffsetGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object['foo'];
+	    $this->assertEquals('bar', $actual);
     }
 
     /**
      * @covers Cradle\Data\ArrayAccessTrait::offsetSet
-     * @todo   Implement testOffsetSet().
      */
     public function testOffsetSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object['bar'] = 'foo';
+        $actual = $this->object['bar'];
+	    $this->assertEquals('foo', $actual);
     }
 
     /**
      * @covers Cradle\Data\ArrayAccessTrait::offsetUnset
-     * @todo   Implement testOffsetUnset().
      */
     public function testOffsetUnset()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		unset($this->object['foo']);
+	    $this->assertFalse(isset($this->object['foo']));
     }
 }
 

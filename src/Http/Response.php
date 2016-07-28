@@ -22,18 +22,6 @@ use Cradle\Data\Registry;
 class Response extends Registry implements ResponseInterface
 {
 	/**
-	 * Set default response data
-	 */
-	public function __construct($data = null)
-	{
-		$this
-			->setHeader('Content-Type', 'text/html; charset=utf-8')
-            ->setStatus(200, '200 OK');
-		
-		parent::__construct($data);
-	}
-
-	/**
 	 * Adds a header parameter
 	 *
 	 * @param *string     $name  Name of the header
@@ -60,10 +48,8 @@ class Response extends Registry implements ResponseInterface
 	public function addValidation($field, $message)
 	{
 		$args = func_get_args();
-		
-		array_unshift($args, 'body', 'validation');
-		
-		return $this->callArray('set', $args);
+
+		return $this->set('body', 'validation', ...$args);
 	}
 
 	/**
@@ -115,9 +101,14 @@ class Response extends Registry implements ResponseInterface
 	 *
 	 * @return mixed
 	 */
-	public function getResults()
+	public function getResults(...$args)
 	{
-		return $this->getDot('body.results');
+		if(!count($args))
+		{
+			return $this->getDot('body.results');	
+		}
+		
+		return $this->get('body', 'results', ...$args);
 	}
 	
 	/**
@@ -133,11 +124,18 @@ class Response extends Registry implements ResponseInterface
 	/**
 	 * Returns JSON validations if still in array mode
 	 *
+	 * @param string|null $name
+	 * @param mixed       $args
+	 *
 	 * @return mixed
 	 */
-	public function getValidations()
+	public function getValidation($name = null, ...$args)
 	{
-		return $this->getDot('body.validation');
+		if(is_null($name)) {
+			return $this->getDot('body.validation');
+		}
+		
+		return $this->get('body', 'validation', $name, ...$args);
 	}
 	
 	/**
@@ -159,6 +157,20 @@ class Response extends Registry implements ResponseInterface
 	public function isContentFlat()
 	{
 		return !is_scalar($this->get('body'));
+	}
+	
+	/**
+	 * Loads default data
+	 *
+	 * @return Response
+	 */
+	public function load()
+	{
+		$this
+			->setHeader('Content-Type', 'text/html; charset=utf-8')
+            ->setStatus(200, '200 OK');
+		
+		return $this;
 	}
 	
 	/**

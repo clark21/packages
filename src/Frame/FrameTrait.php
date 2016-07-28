@@ -45,7 +45,7 @@ trait FrameTrait
 	public function package($vendor)
 	{
 		if(!isset($this->packages[$vendor])) {
-			throw EventException::forPackageNotFound($vendor);
+			throw FrameException::forPackageNotFound($vendor);
 		}
 		
 		return $this->packages[$vendor];
@@ -61,9 +61,11 @@ trait FrameTrait
 	public function register($vendor)
 	{
 		//create a space
-		$this->packages[$vendor] = new Package();
+		$this->packages[$vendor] = new FramePackage();
 		
-		$root = __DIR__ . '/../../../';
+		//luckily we know where we are in vendor folder :)
+		//is there a better recommended way?
+		$root = __DIR__ . '/../../../../';
 		
 		if(strpos($vendor, '/') === 0) {
 			$root .= '../';
@@ -71,9 +73,11 @@ trait FrameTrait
 		
 		//we should check for events
 		$file = $root . $vendor . '/.cradle';
-		
+
 		if(file_exists($file)) {
-			$bread = $this;
+			//so you can access cradle 
+			//within the included file
+			$cradle = $this;
 			include_once($file);
 		}
 		

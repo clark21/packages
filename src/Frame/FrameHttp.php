@@ -20,7 +20,26 @@ use Cradle\Http\HttpHandler;
  */
 class FrameHttp extends HttpHandler
 {	
-	use FrameTrait;
+	use FrameTrait { FrameTrait::register as registerPackage; }
+	
+	/**
+	 * Registers and initializes a plugin
+	 *
+	 * @param *string $vendor The vendor/package name
+	 *
+	 * @return FrameService
+	 */
+	public function register($vendor)
+	{
+		//if it's callable
+		if(is_callable($vendor)) {
+			//it's not a package
+			//it's a preprocess
+			return $this->preprocess($vendor);
+		}
+
+		return $this->registerPackage($vendor);
+	}
 
 	/**
      * Adds routing middleware

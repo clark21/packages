@@ -140,6 +140,18 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Http\Request::getRoute
+     * @todo   Implement testGetRoute().
+     */
+    public function testGetRoute()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
      * @covers Cradle\Http\Request::getServer
      * @todo   Implement testGetServer().
      */
@@ -164,10 +176,106 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request::getRoute
-     * @todo   Implement testGetRoute().
+     * @covers Cradle\Http\Request::getVariables
+     * @todo   Implement testGetVariables().
      */
-    public function testGetRoute()
+    public function testGetVariables()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Cradle\Http\Request::hasContent
+     * @todo   Implement testHasContent().
+     */
+    public function testHasContent()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Cradle\Http\Request::hasCookies
+     * @todo   Implement testHasCookies().
+     */
+    public function testHasCookies()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Cradle\Http\Request::hasFiles
+     * @todo   Implement testHasFiles().
+     */
+    public function testHasFiles()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Cradle\Http\Request::hasGet
+     * @todo   Implement testHasGet().
+     */
+    public function testHasGet()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Cradle\Http\Request::hasPost
+     * @todo   Implement testHasPost().
+     */
+    public function testHasPost()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Cradle\Http\Request::hasServer
+     * @todo   Implement testHasServer().
+     */
+    public function testHasServer()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Cradle\Http\Request::hasSession
+     * @todo   Implement testHasSession().
+     */
+    public function testHasSession()
+    {
+        // Remove the following lines when you implement this test.
+        $this->markTestIncomplete(
+            'This test has not been implemented yet.'
+        );
+    }
+
+    /**
+     * @covers Cradle\Http\Request::isMethod
+     * @todo   Implement testIsMethod().
+     */
+    public function testIsMethod()
     {
         // Remove the following lines when you implement this test.
         $this->markTestIncomplete(

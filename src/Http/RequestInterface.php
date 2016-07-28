@@ -39,6 +39,7 @@ interface RequestInterface
 	 * Returns cookies given name or all cookies
 	 *
 	 * @param string|null $name The key name in the COOKIE
+	 * @param mixed       $args
 	 *
 	 * @return mixed
 	 */
@@ -48,6 +49,7 @@ interface RequestInterface
 	 * Returns file data given name or all files
 	 *
 	 * @param string|null $name The key name in the FILES
+	 * @param mixed       $args
 	 *
 	 * @return mixed
 	 */
@@ -57,6 +59,7 @@ interface RequestInterface
 	 * Returns GET data given name or all GET
 	 *
 	 * @param string|null $name The key name in the GET
+	 * @param mixed       $args
 	 *
 	 * @return mixed
 	 */
@@ -82,6 +85,7 @@ interface RequestInterface
 	 * Returns POST data given name or all POST data
 	 *
 	 * @param string|null $name The key name in the POST
+	 * @param mixed       $args
 	 *
 	 * @return mixed
 	 */
@@ -107,10 +111,85 @@ interface RequestInterface
 	 * Returns SESSION data given name or all SESSION data
 	 *
 	 * @param string|null $name The key name in the SESSION
+	 * @param mixed       $args
 	 *
 	 * @return mixed
 	 */
 	public function getSession($name = null, ...$args);
+	
+	/**
+	 * Returns true if has content
+	 *
+	 * @return bool
+	 */
+	public function hasContent();
+	
+	/**
+	 * Returns cookies given name or all cookies
+	 *
+	 * @param string|null $name The key name in the COOKIE
+	 * @param mixed       $args
+	 *
+	 * @return bool
+	 */
+	public function hasCookies($name = null, ...$args);
+	
+	/**
+	 * Returns file data given name or all files
+	 *
+	 * @param string|null $name The key name in the FILES
+	 * @param mixed       $args
+	 *
+	 * @return bool
+	 */
+	public function hasFiles($name = null, ...$args);
+	
+	/**
+	 * Returns GET data given name or all GET
+	 *
+	 * @param string|null $name The key name in the GET
+	 * @param mixed       $args
+	 *
+	 * @return bool
+	 */
+	public function hasGet($name = null, ...$args);
+	
+	/**
+	 * Returns POST data given name or all POST data
+	 *
+	 * @param string|null $name The key name in the POST
+	 * @param mixed       $args
+	 *
+	 * @return bool
+	 */
+	public function hasPost($name = null, ...$args);
+	
+	/**
+	 * Returns SERVER data given name or all SERVER data
+	 *
+	 * @param string|null $name The key name in the SERVER
+	 *
+	 * @return bool
+	 */
+	public function hasServer($name = null);
+	
+	/**
+	 * Returns SESSION data given name or all SESSION data
+	 *
+	 * @param mixed $args
+	 *
+	 * @return bool
+	 */
+	public function hasSession(...$args);
+	
+	/**
+	 * Returns true if method is the one given
+	 *
+	 * @param *string $method
+	 *
+	 * @return bool
+	 */
+	public function isMethod($method);
 
 	/**
 	 * Sets CLI args

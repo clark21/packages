@@ -45,6 +45,7 @@ class Request extends Registry implements RequestInterface
 	 * Returns cookies given name or all cookies
 	 *
 	 * @param string|null $name The key name in the COOKIE
+	 * @param mixed       $args
 	 *
 	 * @return mixed
 	 */
@@ -61,6 +62,7 @@ class Request extends Registry implements RequestInterface
 	 * Returns file data given name or all files
 	 *
 	 * @param string|null $name The key name in the FILES
+	 * @param mixed       $args
 	 *
 	 * @return mixed
 	 */
@@ -77,6 +79,7 @@ class Request extends Registry implements RequestInterface
 	 * Returns GET data given name or all GET
 	 *
 	 * @param string|null $name The key name in the GET
+	 * @param mixed       $args
 	 *
 	 * @return mixed
 	 */
@@ -119,6 +122,7 @@ class Request extends Registry implements RequestInterface
 	 * Returns POST data given name or all POST data
 	 *
 	 * @param string|null $name The key name in the POST
+	 * @param mixed       $args
 	 *
 	 * @return mixed
 	 */
@@ -142,6 +146,23 @@ class Request extends Registry implements RequestInterface
 	}
 	
 	/**
+	 * Returns route data given name or all route data
+	 *
+	 * @param string|null $name The key name in the route
+	 * @param mixed       $args
+	 *
+	 * @return mixed
+	 */
+	public function getRoute($name = null, ...$args)
+	{
+		if(is_null($name)) {
+			return $this->get('route');
+		}
+		
+		return $this->get('route', $name, ...$args);
+	}
+	
+	/**
 	 * Returns SERVER data given name or all SERVER data
 	 *
 	 * @param string|null $name The key name in the SERVER
@@ -161,6 +182,7 @@ class Request extends Registry implements RequestInterface
 	 * Returns SESSION data given name or all SESSION data
 	 *
 	 * @param string|null $name The key name in the SESSION
+	 * @param mixed       $args
 	 *
 	 * @return mixed
 	 */
@@ -176,17 +198,135 @@ class Request extends Registry implements RequestInterface
 	/**
 	 * Returns route data given name or all route data
 	 *
-	 * @param string|null $name The key name in the route
+	 * @param string|null $index The variable index
 	 *
 	 * @return mixed
 	 */
-	public function getRoute($name = null, ...$args)
+	public function getVariables($index = null)
 	{
-		if(is_null($name)) {
-			return $this->get('route');
+		if(is_null($index)) {
+			return $this->getRoute('variables');
 		}
 		
-		return $this->get('route', $name, ...$args);
+		return $this->getRoute('variables', $index);
+	}
+	
+	/**
+	 * Returns true if has content
+	 *
+	 * @return bool
+	 */
+	public function hasContent()
+	{
+		return !$this->isEmpty('body');
+	}
+	
+	/**
+	 * Returns cookies given name or all cookies
+	 *
+	 * @param string|null $name The key name in the COOKIE
+	 * @param mixed       $args
+	 *
+	 * @return bool
+	 */
+	public function hasCookies($name = null, ...$args)
+	{
+		if(is_null($name)) {
+			return $this->exists('cookie');
+		}
+		
+		return $this->exists('cookie', $name, ...$args);
+	}
+	
+	/**
+	 * Returns file data given name or all files
+	 *
+	 * @param string|null $name The key name in the FILES
+	 * @param mixed       $args
+	 *
+	 * @return bool
+	 */
+	public function hasFiles($name = null, ...$args)
+	{
+		if(is_null($name)) {
+			return $this->exists('files');
+		}
+		
+		return $this->exists('files', $name, ...$args);
+	}
+	
+	/**
+	 * Returns GET data given name or all GET
+	 *
+	 * @param string|null $name The key name in the GET
+	 * @param mixed       $args
+	 *
+	 * @return bool
+	 */
+	public function hasGet($name = null, ...$args)
+	{
+		if(is_null($name)) {
+			return $this->exists('get');
+		}
+		
+		return $this->exists('get', $name, ...$args);
+	}
+	
+	/**
+	 * Returns POST data given name or all POST data
+	 *
+	 * @param string|null $name The key name in the POST
+	 * @param mixed       $args
+	 *
+	 * @return bool
+	 */
+	public function hasPost($name = null, ...$args)
+	{
+		if(is_null($name)) {
+			return $this->exists('post');
+		}
+		
+		return $this->exists('post', $name, ...$args);
+	}
+	
+	/**
+	 * Returns SERVER data given name or all SERVER data
+	 *
+	 * @param string|null $name The key name in the SERVER
+	 *
+	 * @return bool
+	 */
+	public function hasServer($name = null)
+	{
+		if(is_null($name)) {
+			return $this->exists('server');
+		}
+		
+		return $this->exists('server', $name);
+	}
+	
+	/**
+	 * Returns SESSION data given name or all SESSION data
+	 *
+	 * @param mixed $args
+	 *
+	 * @return bool
+	 */
+	public function hasSession(...$args)
+	{
+		return $this->exists('session', ...$args);
+	}
+	
+	/**
+	 * Returns true if method is the one given
+	 *
+	 * @param *string $method
+	 *
+	 * @return bool
+	 */
+	public function isMethod($method)
+	{
+		return strtoupper($method) === strtoupper($this->get('method'));
 	}
 
 	/**
@@ -400,7 +540,7 @@ class Request extends Registry implements RequestInterface
 		$this->set('server', $server);
 		
 		//if there is no path set
-		if(!$this->isKey('path') && isset($server['REQUEST_URI'])) {
+		if(!$this->exists('path') && isset($server['REQUEST_URI'])) {
 			$path = $_SERVER['REQUEST_URI'];
 		
 			//remove ? url queries
@@ -411,11 +551,11 @@ class Request extends Registry implements RequestInterface
 			$this->setPath($path);
 		}
 
-		if(!$this->isKey('method') && isset($server['REQUEST_METHOD'])) {
+		if(!$this->exists('method') && isset($server['REQUEST_METHOD'])) {
 			$this->setMethod($_SERVER['REQUEST_METHOD']);
 		}
 
-		if(!$this->isKey('query') && isset($server['QUERY_STRING'])) {
+		if(!$this->exists('query') && isset($server['QUERY_STRING'])) {
 			$this->setQuery($_SERVER['QUERY_STRING']);
 		}
 		

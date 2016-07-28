@@ -32,9 +32,10 @@ trait ResponseTrait
     {
         if(is_null($this->response)) {
 			if(method_exists($this, 'resolve')) {
-				$this->setResponse($this->resolve(Response::class));
+				$this->setResponse($this->resolve(Response::class)->load());
 			} else {
-				$this->setResponse(new Response());
+				$response = new Response();
+				$this->setResponse($response->load());
 			}
 		}
 
