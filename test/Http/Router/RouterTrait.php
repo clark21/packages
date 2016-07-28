@@ -1,6 +1,6 @@
 <?php
 
-namespace Cradle\Http;
+namespace Cradle\Http\Router;
 
 use PHPUnit_Framework_TestCase;
 
@@ -128,7 +128,7 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
     }
 }
 
-if(!class_exists('Cradle\Http\RouterTraitStub')) {
+if(!class_exists('Cradle\Http\Router\RouterTraitStub')) {
 	class RouterTraitStub
 	{
 		use RouterTrait;

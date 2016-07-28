@@ -9,6 +9,9 @@
 
 namespace Cradle\Http;
 
+use Cradle\Http\Dispatcher\DispatcherInterface;
+use Cradle\Http\Response\ResponseInterface;
+
 /**
  * Express style server class implementation
  *

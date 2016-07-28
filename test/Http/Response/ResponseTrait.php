@@ -1,6 +1,6 @@
 <?php
 
-namespace Cradle\Http;
+namespace Cradle\Http\Response;
 
 use PHPUnit_Framework_TestCase;
 
@@ -56,7 +56,7 @@ class Cradle_Http_ResponseTrait_Test extends PHPUnit_Framework_TestCase
     }
 }
 
-if(!class_exists('Cradle\Http\ResponseTraitStub')) {
+if(!class_exists('Cradle\Http\Response\ResponseTraitStub')) {
 	class ResponseTraitStub
 	{
 		use ResponseTrait;

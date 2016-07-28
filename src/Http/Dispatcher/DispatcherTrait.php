@@ -9,7 +9,7 @@
 
 namespace Cradle\Http\Dispatcher;
 
-use Cradle\Http\Dispatcher;
+use Cradle\Http\HttpDispatcher;
 
 /**
  *

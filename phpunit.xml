@@ -67,7 +67,7 @@
       <file>test/Data/Model.php</file>
       <file>test/Data/Registry.php</file>
     </testsuite>
-    <!--<testsuite name="CradlePHP Http Test Suite">
+    <testsuite name="CradlePHP Http Test Suite">
       <file>test/Http/HttpDispatcher.php</file>
       <file>test/Http/HttpException.php</file>
       <file>test/Http/HttpHandler.php</file>
@@ -96,7 +96,7 @@
       <file>test/Http/Response/StatusTrait.php</file>
       <file>test/Http/Router/RouterTrait.php</file>
     </testsuite>
-    <testsuite name="CradlePHP Micro Framework Test Suite">
+    <!--<testsuite name="CradlePHP Micro Framework Test Suite">
       <file>test/Frame/FrameException.php</file>
       <file>test/Frame/FrameHttp.php</file>
       <file>test/Frame/FramePackage.php</file>

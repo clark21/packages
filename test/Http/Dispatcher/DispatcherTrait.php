@@ -1,6 +1,9 @@
 <?php
 
-namespace Cradle\Http;
+namespace Cradle\Http\Dispatcher;
+
+use Cradle\Resolver\ResolverTrait;
+use Cradle\Http\HttpDispatcher;
 
 use PHPUnit_Framework_TestCase;
 
@@ -33,32 +36,26 @@ class Cradle_Http_DispatcherTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Http\DispatcherTrait::getDispatcher
-     * @todo   Implement testGetDispatcher().
      */
     public function testGetDispatcher()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getDispatcher();
+		$this->assertInstanceOf('Cradle\Http\HttpDispatcher', $instance);
     }
 
     /**
      * @covers Cradle\Http\DispatcherTrait::setDispatcher
-     * @todo   Implement testSetDispatcher().
      */
     public function testSetDispatcher()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setDispatcher(new HttpDispatcher);
+		$this->assertInstanceOf('Cradle\Http\Dispatcher\DispatcherTraitStub', $instance);
     }
 }
 
-if(!class_exists('Cradle\Http\DispatcherTraitStub')) {
+if(!class_exists('Cradle\Http\Dispatcher\DispatcherTraitStub')) {
 	class DispatcherTraitStub
 	{
-		use DispatcherTrait;
+		use DispatcherTrait, ResolverTrait;
 	}
 }
