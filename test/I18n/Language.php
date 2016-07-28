@@ -231,7 +231,10 @@ class Cradle_I18n_Language_Test extends PHPUnit_Framework_TestCase
     public function test__toString()
     {
         $actual = $this->object->__toString();
-        $this->assertContains('{"How are you?":"Kumusta ka?","I am fine.":"Mabuti.","Where is the market?":"Saan sa palenke?","How much is this?":"Magkano ba ito?', $actual);
+        $this->assertContains('{
+    "How are you?": "Kumusta ka?",
+    "I am fine.": "Mabuti.",
+    "Where is the market?": "Saan sa palenke?",', $actual);
     }
 
     /**
@@ -240,7 +243,10 @@ class Cradle_I18n_Language_Test extends PHPUnit_Framework_TestCase
     public function test__toStringData()
     {
         $actual = $this->object->__toStringData();
-        $this->assertContains('{"How are you?":"Kumusta ka?","I am fine.":"Mabuti.","Where is the market?":"Saan sa palenke?","How much is this?":"Magkano ba ito?', $actual);
+        $this->assertContains('{
+    "How are you?": "Kumusta ka?",
+    "I am fine.": "Mabuti.",
+    "Where is the market?": "Saan sa palenke?",', $actual);
     }
 
     /**

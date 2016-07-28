@@ -19,7 +19,6 @@ use Cradle\Helper\InstanceTrait;
 use Cradle\Helper\LoopTrait;
 use Cradle\Helper\ConditionalTrait;
 
-use Cradle\Profiler\CallerTrait;
 use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
@@ -41,7 +40,6 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
 		InstanceTrait, 
 		LoopTrait, 
 		ConditionalTrait, 
-		CallerTrait, 
 		InspectorTrait, 
 		LoggerTrait, 
 		StateTrait

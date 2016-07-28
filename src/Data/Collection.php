@@ -20,7 +20,6 @@ use Cradle\Helper\InstanceTrait;
 use Cradle\Helper\LoopTrait;
 use Cradle\Helper\ConditionalTrait;
 
-use Cradle\Profiler\CallerTrait;
 use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
@@ -45,7 +44,6 @@ class Collection implements ArrayAccess, Iterator, Countable, CollectionInterfac
 		InstanceTrait, 
 		LoopTrait, 
 		ConditionalTrait, 
-		CallerTrait, 
 		InspectorTrait, 
 		LoggerTrait, 
 		StateTrait;
@@ -186,7 +184,7 @@ class Collection implements ArrayAccess, Iterator, Countable, CollectionInterfac
      */
     public function __toString()
     {
-        return json_encode($this->get());
+        return json_encode($this->get(), JSON_PRETTY_PRINT);
     }
 
     /**
@@ -268,7 +266,13 @@ class Collection implements ArrayAccess, Iterator, Countable, CollectionInterfac
 	 */
 	public function get()
 	{
-		return $this->data;
+		$data = array();
+		
+		foreach($this->data as $row) {
+			$data[] = $row->get();
+		}
+		
+		return $data;
 	}
 	
 	/**

@@ -189,6 +189,15 @@ class Cradle_Event_EventPipe_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Event\EventPipe::protocol
+     */
+    public function testProtocol()
+    {
+        $instance = $this->object->protocol('foobar', function() {});
+		$this->assertInstanceOf('Cradle\Event\EventPipe', $instance);
+    }
+
+    /**
      * @covers Cradle\Event\EventPipe::setEventHandler
      */
     public function testSetEventHandler()
@@ -215,6 +224,24 @@ class Cradle_Event_EventPipe_Test extends PHPUnit_Framework_TestCase
 			->triggerEvent('foobar');
 		
 		$this->assertInstanceOf('Cradle\Event\EventPipe', $instance);
+		$this->assertTrue($trigger->success);
+    }
+
+    /**
+     * @covers Cradle\Event\EventPipe::triggerProtocol
+     */
+    public function testTriggerProtocol()
+    {
+		$trigger = new StdClass();
+		$trigger->success = null;
+		
+		$this
+			->object
+			->protocol('foobar', function() use ($trigger) {
+				$trigger->success = true;
+			})
+			->triggerProtocol('foobar://something');
+		
 		$this->assertTrue($trigger->success);
     }
 }

@@ -33,62 +33,48 @@ class Cradle_Data_IteratorTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Data\IteratorTrait::current
-     * @todo   Implement testCurrent().
      */
     public function testCurrent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->current();
+    	$this->assertEquals('bar', $actual);
     }
 
     /**
      * @covers Cradle\Data\IteratorTrait::key
-     * @todo   Implement testKey().
      */
     public function testKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->key();
+    	$this->assertEquals('foo', $actual);
     }
 
     /**
      * @covers Cradle\Data\IteratorTrait::next
-     * @todo   Implement testNext().
      */
     public function testNext()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->next();
+        $actual = $this->object->current();
+    	$this->assertEquals('foo', $actual);
     }
 
     /**
      * @covers Cradle\Data\IteratorTrait::rewind
-     * @todo   Implement testRewind().
      */
     public function testRewind()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->rewind();
+        $actual = $this->object->current();
+    	$this->assertEquals('bar', $actual);
     }
 
     /**
      * @covers Cradle\Data\IteratorTrait::valid
-     * @todo   Implement testValid().
      */
     public function testValid()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->valid());
     }
 }
 
@@ -96,5 +82,10 @@ if(!class_exists('Cradle\Data\IteratorTraitStub')) {
 	class IteratorTraitStub
 	{
 		use IteratorTrait;
+		
+		protected $data = array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		);
 	}
 }

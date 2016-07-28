@@ -21,6 +21,9 @@ class Cradle_Data_DotTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new DotTraitStub;
+		
+		$this->object->setDot('foo', 'bar');
+		$this->object->setDot('bar', 'foo');
     }
 
     /**
@@ -33,50 +36,36 @@ class Cradle_Data_DotTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Data\DotTrait::getDot
-     * @todo   Implement testGetDot().
      */
     public function testGetDot()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals('bar', $this->object->getDot('foo'));
     }
 
     /**
      * @covers Cradle\Data\DotTrait::isDot
-     * @todo   Implement testIsDot().
      */
     public function testIsDot()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->assertTrue($this->object->isDot('bar'));
     }
 
     /**
      * @covers Cradle\Data\DotTrait::removeDot
-     * @todo   Implement testRemoveDot().
      */
     public function testRemoveDot()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->removeDot('foo');
+		$this->assertFalse($this->object->isDot('foo'));
     }
 
     /**
      * @covers Cradle\Data\DotTrait::setDot
-     * @todo   Implement testSetDot().
      */
     public function testSetDot()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->setDot('zoo', 2);
+        $this->assertEquals(2, $this->object->getDot('zoo'));
     }
 }
 
@@ -84,5 +73,7 @@ if(!class_exists('Cradle\Data\DotTraitStub')) {
 	class DotTraitStub
 	{
 		use DotTrait;
+		
+		protected $data = array();
 	}
 }

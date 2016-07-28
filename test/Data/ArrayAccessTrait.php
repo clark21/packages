@@ -2,6 +2,7 @@
 
 namespace Cradle\Data;
 
+use ArrayAccess;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -75,7 +76,7 @@ class Cradle_Data_ArrayAccessTrait_Test extends PHPUnit_Framework_TestCase
 }
 
 if(!class_exists('Cradle\Data\ArrayAccessTraitStub')) {
-	class ArrayAccessTraitStub
+	class ArrayAccessTraitStub implements ArrayAccess
 	{
 		use ArrayAccessTrait;
 	}

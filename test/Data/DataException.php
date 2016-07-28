@@ -37,9 +37,16 @@ class Cradle_Data_DataException_Test extends PHPUnit_Framework_TestCase
      */
     public function testForMethodNotFound()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = null;
+		
+        try {
+			throw DataException::forMethodNotFound('foo', 'bar');
+		} catch(DataException $e) {
+			$actual = $e->getMessage();
+		}
+		
+		$expected = 'Method foo->bar() not found';
+		
+		$this->assertEquals($expected, $actual);
     }
 }

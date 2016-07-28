@@ -33,38 +33,35 @@ class Cradle_Data_MagicTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Data\MagicTrait::__callData
-     * @todo   Implement test__callData().
      */
     public function test__callData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->__callData('setZoo', array(2));
+		$this->assertInstanceOf('Cradle\Data\MagicTraitStub', $instance);
+		
+        $actual = $this->object->__callData('getZoo', array());
+		
+		$this->assertEquals(2, $actual);
     }
 
     /**
      * @covers Cradle\Data\MagicTrait::__getData
-     * @todo   Implement test__getData().
      */
     public function test__getData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->__getData('foo');
+		$this->assertEquals('bar', $actual);
     }
 
     /**
      * @covers Cradle\Data\MagicTrait::__setData
-     * @todo   Implement test__setData().
      */
     public function test__setData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->__setData('zoo', 2);
+        $actual = $this->object->__getData('zoo');
+		
+		$this->assertEquals(2, $actual);
     }
 
     /**
@@ -73,10 +70,10 @@ class Cradle_Data_MagicTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function test__toStringData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->assertEquals(json_encode([
+			'foo' => 'bar',
+			'bar' => 'foo'
+		], JSON_PRETTY_PRINT), $this->object->__toStringData());
     }
 }
 
@@ -84,5 +81,10 @@ if(!class_exists('Cradle\Data\MagicTraitStub')) {
 	class MagicTraitStub
 	{
 		use MagicTrait;
+		
+		protected $data = array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		);
 	}
 }

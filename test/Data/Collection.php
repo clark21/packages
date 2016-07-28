@@ -2,6 +2,7 @@
 
 namespace Cradle\Data;
 
+use StdClass;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -20,7 +21,26 @@ class Cradle_Data_Collection_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Collection;
+        $this->object = new Collection([
+			[
+				'post_id' => 1,
+				'post_title' => 'Foobar 1',
+				'post_detail' => 'foobar 1',
+				'post_active' => 1
+			], 
+			[
+				'post_id' => 2,
+				'post_title' => 'Foobar 2',
+				'post_detail' => 'foobar 2',
+				'post_active' => 0
+			],
+			[
+				'post_id' => 3,
+				'post_title' => 'Foobar 3',
+				'post_detail' => 'foobar 3',
+				'post_active' => 1
+			]
+		]);
     }
 
     /**
@@ -33,74 +53,95 @@ class Cradle_Data_Collection_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Data\Collection::__call
-     * @todo   Implement test__call().
      */
     public function test__call()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->__call('setPostTitle', array('Foobar 4'));
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance);
+		
+        $actual = $this->object->__call('getPostTitle', array());
+		
+		foreach($actual as $title) {
+			$this->assertEquals('Foobar 4', $title);
+		}
     }
 
     /**
      * @covers Cradle\Data\Collection::__get
-     * @todo   Implement test__get().
      */
     public function test__get()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->post_title;
+		
+		foreach($actual as $title) {
+			$this->assertContains('Foobar', $title);
+		}
     }
 
     /**
      * @covers Cradle\Data\Collection::__set
-     * @todo   Implement test__set().
      */
     public function test__set()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->post_title = 'Foobar 4';
+        $actual = $this->object->post_title;
+		
+		foreach($actual as $title) {
+			$this->assertEquals('Foobar 4', $title);
+		}
     }
 
     /**
      * @covers Cradle\Data\Collection::__toString
-     * @todo   Implement test__toString().
      */
     public function test__toString()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals(json_encode([
+			[
+				'post_id' => 1,
+				'post_title' => 'Foobar 1',
+				'post_detail' => 'foobar 1',
+				'post_active' => 1
+			], 
+			[
+				'post_id' => 2,
+				'post_title' => 'Foobar 2',
+				'post_detail' => 'foobar 2',
+				'post_active' => 0
+			],
+			[
+				'post_id' => 3,
+				'post_title' => 'Foobar 3',
+				'post_detail' => 'foobar 3',
+				'post_active' => 1
+			]
+		], JSON_PRETTY_PRINT), (string) $this->object);
     }
 
     /**
      * @covers Cradle\Data\Collection::add
-     * @todo   Implement testAdd().
      */
     public function testAdd()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->add([
+			'post_id' => 4,
+			'post_title' => 'Foobar 4',
+			'post_detail' => 'foobar 4',
+			'post_active' => 0
+		]);
+		
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance);
     }
 
     /**
      * @covers Cradle\Data\Collection::cut
-     * @todo   Implement testCut().
      */
     public function testCut()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->cut(1);
+		
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance);
+		$this->assertEquals(2, count($instance));
     }
 
     /**
@@ -109,10 +150,14 @@ class Cradle_Data_Collection_Test extends PHPUnit_Framework_TestCase
      */
     public function testEach()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$trigger = new StdClass();
+		$trigger->total = 0;
+        $instance = $this->object->each(function($i, $row) use ($trigger) {
+			$trigger->total++;
+		});
+		
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance);
+		$this->assertEquals(3, $trigger->total);
     }
 
     /**
@@ -121,10 +166,10 @@ class Cradle_Data_Collection_Test extends PHPUnit_Framework_TestCase
      */
     public function testGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $data = $this->object->get();
+		
+		$this->assertTrue(is_array($data));
+		$this->assertTrue(is_array($data[2]));
     }
 
     /**
@@ -133,10 +178,14 @@ class Cradle_Data_Collection_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetModel()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getModel([
+			'post_id' => 4,
+			'post_title' => 'Foobar 4',
+			'post_detail' => 'foobar 4',
+			'post_active' => 0
+		]);
+		
+		$this->assertInstanceOf('Cradle\Data\Model', $instance);
     }
 
     /**
@@ -145,429 +194,475 @@ class Cradle_Data_Collection_Test extends PHPUnit_Framework_TestCase
      */
     public function testSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->set([
+			[
+				'post_id' => 4,
+				'post_title' => 'Foobar 4',
+				'post_detail' => 'foobar 4',
+				'post_active' => 0
+			]
+		]);
+		
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance);
+		$this->assertEquals(4, count($instance));
     }
 
     /**
      * @covers Cradle\Data\Collection::offsetExists
-     * @todo   Implement testOffsetExists().
      */
     public function testOffsetExists()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->offsetExists(0));
+        $this->assertFalse($this->object->offsetExists(3));
     }
 
     /**
      * @covers Cradle\Data\Collection::offsetGet
-     * @todo   Implement testOffsetGet().
      */
     public function testOffsetGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->offsetGet(1);
+		$this->assertInstanceOf('Cradle\Data\Model', $instance);
     }
 
     /**
      * @covers Cradle\Data\Collection::offsetSet
-     * @todo   Implement testOffsetSet().
      */
     public function testOffsetSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->offsetSet(null, [
+			'post_id' => 4,
+			'post_title' => 'Foobar 4',
+			'post_detail' => 'foobar 4',
+			'post_active' => 0
+		]);
+		
+		$this->assertEquals(4, count($this->object));
     }
 
     /**
      * @covers Cradle\Data\Collection::offsetUnset
-     * @todo   Implement testOffsetUnset().
      */
     public function testOffsetUnset()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->offsetUnset(2);
+		$this->assertEquals(2, count($this->object));
     }
 
     /**
      * @covers Cradle\Data\Collection::count
-     * @todo   Implement testCount().
      */
     public function testCount()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals(3, count($this->object));
     }
 
     /**
      * @covers Cradle\Data\Collection::generator
-     * @todo   Implement testGenerator().
      */
     public function testGenerator()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        foreach($this->object->generator() as $i => $model) {
+			$this->assertInstanceOf('Cradle\Data\Model', $model);
+		}
     }
 
     /**
      * @covers Cradle\Data\Collection::bindCallback
-     * @todo   Implement testBindCallback().
      */
     public function testBindCallback()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $trigger = new StdClass;
+        $trigger->success = null;
+		$trigger->test = $this;
+		
+		$callback = $this->object->bindCallback(function() use ($trigger) {
+	    	$trigger->success = true;
+			$trigger->test->assertInstanceOf('Cradle\Data\Collection', $this);
+		});
+		
+		$callback();
+		
+		$this->assertTrue($trigger->success);
     }
 
     /**
      * @covers Cradle\Data\Collection::current
-     * @todo   Implement testCurrent().
      */
     public function testCurrent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->current();
+    	$this->assertEquals(1, $actual['post_id']);
     }
 
     /**
      * @covers Cradle\Data\Collection::key
-     * @todo   Implement testKey().
      */
     public function testKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->key();
+    	$this->assertEquals(0, $actual);
     }
 
     /**
      * @covers Cradle\Data\Collection::next
-     * @todo   Implement testNext().
      */
     public function testNext()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->next();
+        $actual = $this->object->current();
+    	$this->assertEquals(2, $actual['post_id']);
     }
 
     /**
      * @covers Cradle\Data\Collection::rewind
-     * @todo   Implement testRewind().
      */
     public function testRewind()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->rewind();
+        $actual = $this->object->current();
+    	$this->assertEquals(1, $actual['post_id']);
     }
 
     /**
      * @covers Cradle\Data\Collection::valid
-     * @todo   Implement testValid().
      */
     public function testValid()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->valid());
     }
 
     /**
      * @covers Cradle\Data\Collection::getEventHandler
-     * @todo   Implement testGetEventHandler().
      */
     public function testGetEventHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->getEventHandler();
+		$this->assertInstanceOf('Cradle\Event\EventHandler', $instance);
     }
 
     /**
      * @covers Cradle\Data\Collection::on
-     * @todo   Implement testOn().
      */
     public function testOn()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $trigger = new StdClass();
+		$trigger->success = null;
+		
+        $callback = function() use ($trigger) {
+			$trigger->success = true;
+		};
+		
+		$instance = $this
+			->object
+			->on('foobar', $callback)
+			->trigger('foobar');
+		
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance);
+		$this->assertTrue($trigger->success);
     }
 
     /**
      * @covers Cradle\Data\Collection::setEventHandler
-     * @todo   Implement testSetEventHandler().
      */
     public function testSetEventHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setEventHandler(new \Cradle\Event\EventHandler);
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance);
     }
 
     /**
      * @covers Cradle\Data\Collection::trigger
-     * @todo   Implement testTrigger().
      */
     public function testTrigger()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $trigger = new StdClass();
+		$trigger->success = null;
+		
+        $callback = function() use ($trigger) {
+			$trigger->success = true;
+		};
+		
+		$instance = $this
+			->object
+			->on('foobar', $callback)
+			->trigger('foobar');
+		
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance);
+		$this->assertTrue($trigger->success);
     }
 
     /**
      * @covers Cradle\Data\Collection::i
-     * @todo   Implement testI().
      */
     public function testI()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance1 = Collection::i();
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance1);
+		
+		$instance2 = Collection::i();
+		$this->assertTrue($instance1 !== $instance2);
     }
 
     /**
      * @covers Cradle\Data\Collection::loop
-     * @todo   Implement testLoop().
      */
     public function testLoop()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $self = $this;
+        $this->object->loop(function($i) use ($self) {
+            $self->assertInstanceOf('Cradle\Data\Collection', $this);
+            
+            if ($i == 2) {
+                return false;
+            }
+        });
     }
 
     /**
      * @covers Cradle\Data\Collection::when
-     * @todo   Implement testWhen().
      */
     public function testWhen()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Cradle\Data\Collection::getCaller
-     * @todo   Implement testGetCaller().
-     */
-    public function testGetCaller()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Cradle\Data\Collection::getCallee
-     * @todo   Implement testGetCallee().
-     */
-    public function testGetCallee()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $self = $this;
+        $test = 'Good';
+        $this->object->when(function() use ($self) {
+            $self->assertInstanceOf('Cradle\Data\Collection', $this);
+            return false;
+        }, function() use ($self, &$test) {
+            $self->assertInstanceOf('Cradle\Data\Collection', $this);
+            $test = 'Bad';
+        });
+        
+        $this->assertSame('Good', $test);
     }
 
     /**
      * @covers Cradle\Data\Collection::getInspectorHandler
-     * @todo   Implement testGetInspectorHandler().
      */
     public function testGetInspectorHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->getInspectorHandler();
+		$this->assertInstanceOf('Cradle\Profiler\InspectorInterface', $instance);
     }
 
     /**
      * @covers Cradle\Data\Collection::inspect
-     * @todo   Implement testInspect().
      */
     public function testInspect()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        ob_start();
+		$this->object->inspect('foobar');
+		$contents = ob_get_contents();
+		ob_end_clean();  
+		
+		$this->assertEquals(
+			'<pre>INSPECTING Variable:</pre><pre>foobar</pre>', 
+			$contents
+		);
     }
 
     /**
      * @covers Cradle\Data\Collection::setInspectorHandler
-     * @todo   Implement testSetInspectorHandler().
      */
     public function testSetInspectorHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setInspectorHandler(new \Cradle\Profiler\InspectorHandler);
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance);
     }
 
     /**
      * @covers Cradle\Data\Collection::addLogger
-     * @todo   Implement testAddLogger().
      */
     public function testAddLogger()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addLogger(function() {});
+		$this->assertInstanceOf('Cradle\Data\Collection', $instance);
     }
 
     /**
      * @covers Cradle\Data\Collection::log
-     * @todo   Implement testLog().
      */
     public function testLog()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$trigger = new StdClass();
+		$trigger->success = null;
+        $this->object->addLogger(function($trigger) {
+			$trigger->success = true;
+		})
+		->log($trigger);
+		
+		
+		$this->assertTrue($trigger->success);
     }
 
     /**
      * @covers Cradle\Data\Collection::loadState
-     * @todo   Implement testLoadState().
      */
     public function testLoadState()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$state1 = new Collection(array());
+		$state2 = new Collection(array());
+		
+		$state1->saveState('state1');
+		$state2->saveState('state2');
+		
+		$this->assertTrue($state2 === $state1->loadState('state2'));
+		$this->assertTrue($state1 === $state2->loadState('state1'));
     }
 
     /**
      * @covers Cradle\Data\Collection::saveState
-     * @todo   Implement testSaveState().
      */
     public function testSaveState()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$state1 = new Collection(array());
+		$state2 = new Collection(array());
+		
+		$state1->saveState('state1');
+		$state2->saveState('state2');
+		
+		$this->assertTrue($state2 === $state1->loadState('state2'));
+		$this->assertTrue($state1 === $state2->loadState('state1'));
     }
 
     /**
      * @covers Cradle\Data\Collection::__callResolver
-     * @todo   Implement test__callResolver().
      */
     public function test__callResolver()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->addResolver(Collection::class, function() {});
+		$this->assertInstanceOf('Cradle\Data\Collection', $actual);
     }
 
     /**
      * @covers Cradle\Data\Collection::addResolver
-     * @todo   Implement testAddResolver().
      */
     public function testAddResolver()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->addResolver(ResolverAddStub::class, function() {});
+		$this->assertInstanceOf('Cradle\Data\Collection', $actual);
     }
 
     /**
      * @covers Cradle\Data\Collection::getResolverHandler
-     * @todo   Implement testGetResolverHandler().
      */
     public function testGetResolverHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getResolverHandler();
+		$this->assertInstanceOf('Cradle\Resolver\ResolverInterface', $actual);
     }
 
     /**
      * @covers Cradle\Data\Collection::resolve
-     * @todo   Implement testResolve().
      */
     public function testResolve()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->addResolver(
+			ResolverCallStub::class, 
+			function() {
+				return new ResolverAddStub();
+			}
+		)
+		->resolve(ResolverCallStub::class)
+		->foo('bar');
+		
+        $this->assertEquals('barfoo', $actual);
     }
 
     /**
      * @covers Cradle\Data\Collection::resolveShared
-     * @todo   Implement testResolveShared().
      */
     public function testResolveShared()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this
+			->object
+			->resolveShared(ResolverSharedStub::class)
+			->reset()
+			->foo('bar');
+		
+        $this->assertEquals('barfoo', $actual);
+		
+		$actual = $this
+			->object
+			->resolveShared(ResolverSharedStub::class)
+			->foo('bar');
+		
+        $this->assertEquals('barbar', $actual);
     }
 
     /**
      * @covers Cradle\Data\Collection::resolveStatic
-     * @todo   Implement testResolveStatic().
      */
     public function testResolveStatic()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this
+			->object
+			->resolveStatic(
+				ResolverStaticStub::class, 
+				'foo', 
+				'bar'
+			);
+		
+        $this->assertEquals('barfoo', $actual);
     }
 
     /**
      * @covers Cradle\Data\Collection::setResolverHandler
-     * @todo   Implement testSetResolverHandler().
      */
     public function testSetResolverHandler()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->setResolverHandler(new \Cradle\Resolver\ResolverHandler);
+		$this->assertInstanceOf('Cradle\Data\Collection', $actual);
     }
+}
+
+if(!class_exists('Cradle\Data\ResolverCallStub')) {
+	class ResolverCallStub
+	{
+		public function foo($string)
+		{
+			return $string . 'foo';
+		}
+	}
+}
+
+if(!class_exists('Cradle\Data\ResolverAddStub')) {
+	class ResolverAddStub
+	{
+		public function foo($string)
+		{
+			return $string . 'foo';
+		}
+	}
+}
+
+if(!class_exists('Cradle\Data\ResolverSharedStub')) {
+	class ResolverSharedStub
+	{
+		public $name = 'foo';
+		
+		public function foo($string)
+		{
+			$name = $this->name;
+			$this->name = $string;
+			return $string . $name;
+		}
+		
+		public function reset()
+		{
+			$this->name = 'foo';
+			return $this;
+		}
+	}
+}
+
+if(!class_exists('Cradle\Data\ResolverStaticStub')) {
+	class ResolverStaticStub
+	{
+		public static function foo($string)
+		{
+			return $string . 'foo';
+		}
+	}
 }

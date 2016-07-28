@@ -40,7 +40,7 @@ trait MagicTrait
             //get rid of get
             $key = strtolower(substr($key, 3 + strlen($separator)));
 
-			return $this->__get($key);
+			return $this->__getData($key);
         } else if (strpos($name, 'set') === 0) {
             //setUserName('Chris', '-')
             $separator = '_';
@@ -53,7 +53,7 @@ trait MagicTrait
             //get rid of set
             $key = strtolower(substr($key, 3 + strlen($separator)));
 
-            $this->__set($key, isset($args[0]) ? $args[0] : null);
+            $this->__setData($key, isset($args[0]) ? $args[0] : null);
 
             return $this;
         }
@@ -94,6 +94,6 @@ trait MagicTrait
      */
     public function __toStringData() 
     {
-        return json_encode($this->data);
+        return json_encode($this->data, JSON_PRETTY_PRINT);
     }
 }

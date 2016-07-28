@@ -41,10 +41,14 @@ class Cradle_Helper_BinderTrait_Test extends PHPUnit_Framework_TestCase
         $trigger->success = null;
 		$trigger->test = $this;
 		
-		$this->object->bindCallback(function() use ($trigger) {
+		$callback = $this->object->bindCallback(function() use ($trigger) {
 	    	$trigger->success = true;
 			$trigger->test->assertInstanceOf('Cradle\Helper\BinderTraitStub', $this);
 		});
+		
+		$callback();
+		
+		$this->assertTrue($trigger->success);
     }
 }
 

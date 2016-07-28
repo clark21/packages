@@ -56,8 +56,7 @@
     </testsuite>
     <testsuite name="CradlePHP Data Test Suite">
       <file>test/Data/ArrayAccessTrait.php</file>
-      <file>test/Data/CollectionTrait.php</file>
-      <file>test/Data/CollectionException.php</file>
+      <file>test/Data/Collection.php</file>
       <file>test/Data/CountableTrait.php</file>
       <file>test/Data/DataException.php</file>
       <file>test/Data/DataTrait.php</file>
@@ -66,25 +65,36 @@
       <file>test/Data/IteratorTrait.php</file>
       <file>test/Data/MagicTrait.php</file>
       <file>test/Data/Model.php</file>
-      <file>test/Data/ModelException.php</file>
       <file>test/Data/Registry.php</file>
-      <file>test/Data/RegistryException.php</file>
     </testsuite>
     <!--<testsuite name="CradlePHP Http Test Suite">
-      <file>test/Http/DispatcherTrait.php</file>
-	  <file>test/Http/ErrorProcessorTrait.php</file>
-	  <file>test/Http/HttpDispatcher.php</file>
-	  <file>test/Http/HttpException.php</file>
-	  <file>test/Http/HttpHandler.php</file>
-	  <file>test/Http/Middleware.php</file>
-	  <file>test/Http/PostProcessorTrait.php</file>
-	  <file>test/Http/PreProcessorTrait.php</file>
-	  <file>test/Http/Request.php</file>
-	  <file>test/Http/RequestTrait.php</file>
-	  <file>test/Http/Response.php</file>
-	  <file>test/Http/ResponseTrait.php</file>
-	  <file>test/Http/Router.php</file>
-	  <file>test/Http/RouterTrait.php</file>
+      <file>test/Http/HttpDispatcher.php</file>
+      <file>test/Http/HttpException.php</file>
+      <file>test/Http/HttpHandler.php</file>
+      <file>test/Http/Middleware.php</file>
+      <file>test/Http/Request.php</file>
+      <file>test/Http/Response.php</file>
+      <file>test/Http/Router.php</file>
+      <file>test/Http/Dispatcher/DispatcherTrait.php</file>
+      <file>test/Http/Middleware/ErrorProcessorTrait.php</file>
+      <file>test/Http/Middleware/PostProcessorTrait.php</file>
+      <file>test/Http/Middleware/PreProcessorTrait.php</file>
+      <file>test/Http/Request/CliTrait.php</file>
+      <file>test/Http/Request/ContentTrait.php</file>
+      <file>test/Http/Request/CookieTrait.php</file>
+      <file>test/Http/Request/FileTrait.php</file>
+      <file>test/Http/Request/GetTrait.php</file>
+      <file>test/Http/Request/PostTrait.php</file>
+      <file>test/Http/Request/RequestTrait.php</file>
+      <file>test/Http/Request/RouteTrait.php</file>
+      <file>test/Http/Request/ServerTrait.php</file>
+      <file>test/Http/Request/SessionTrait.php</file>
+      <file>test/Http/Response/ContentTrait.php</file>
+      <file>test/Http/Response/HeaderTrait.php</file>
+      <file>test/Http/Response/ResponseTrait.php</file>
+      <file>test/Http/Response/RestTrait.php</file>
+      <file>test/Http/Response/StatusTrait.php</file>
+      <file>test/Http/Router/RouterTrait.php</file>
     </testsuite>
     <testsuite name="CradlePHP Micro Framework Test Suite">
       <file>test/Frame/FrameException.php</file>

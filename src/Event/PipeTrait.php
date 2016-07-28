@@ -97,7 +97,13 @@ trait PipeTrait
 	
 			//they can call a class
 			if(strpos($name, '@') !== false) {
-				$this->triggerController($name, ...$args);
+				return $this->triggerController($name, ...$args);
+			}
+			
+			//unless it's a static call
+			if(strpos($name, '::') !== false && is_callable($name)) {
+				call_user_func_array($name, $args);
+				return $this;
 			}
 			
 			return $this->triggerEvent($name, ...$args);

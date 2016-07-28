@@ -2,6 +2,7 @@
 
 namespace Cradle\Data;
 
+use Countable;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -33,20 +34,18 @@ class Cradle_Data_CountableTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Data\CountableTrait::count
-     * @todo   Implement testCount().
      */
     public function testCount()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->assertEquals(4, count($this->object));
     }
 }
 
 if(!class_exists('Cradle\Data\CountableTraitStub')) {
-	class CountableTraitStub
+	class CountableTraitStub implements Countable
 	{
 		use CountableTrait;
+		
+		protected $data = array(4, 5, 6, 7);
 	}
 }

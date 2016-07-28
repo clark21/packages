@@ -33,14 +33,11 @@ class Cradle_Data_GeneratorTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Data\GeneratorTrait::generator
-     * @todo   Implement testGenerator().
      */
     public function testGenerator()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        foreach($this->object->generator() as $i => $value);
+		$this->assertEquals('bar', $i);
     }
 }
 
@@ -48,5 +45,10 @@ if(!class_exists('Cradle\Data\GeneratorTraitStub')) {
 	class GeneratorTraitStub
 	{
 		use GeneratorTrait;
+		
+		protected $data = array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		);
 	}
 }

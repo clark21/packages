@@ -90,14 +90,11 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Event\PipeTrait::protocol
-     * @todo   Implement testProtocol().
      */
     public function testProtocol()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->protocol('foobar', function() {});
+		$this->assertInstanceOf('Cradle\Event\PipeTraitStub', $instance);
     }
 
     /**
@@ -167,14 +164,20 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Event\PipeTrait::triggerProtocol
-     * @todo   Implement testTriggerProtocol().
      */
     public function testTriggerProtocol()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$trigger = new StdClass();
+		$trigger->success = null;
+		
+		$this
+			->object
+			->protocol('foobar', function() use ($trigger) {
+				$trigger->success = true;
+			})
+			->triggerProtocol('foobar://something');
+		
+		$this->assertTrue($trigger->success);
     }
 
     /**

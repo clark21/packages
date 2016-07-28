@@ -21,6 +21,9 @@ class Cradle_Data_DataTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new DataTraitStub;
+		
+		$this->object->setDot('foo', 'bar');
+		$this->object->setDot('bar', 'foo');
     }
 
     /**
@@ -33,230 +36,181 @@ class Cradle_Data_DataTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Data\DataTrait::offsetExists
-     * @todo   Implement testOffsetExists().
      */
     public function testOffsetExists()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->offsetExists('foo'));
+        $this->assertFalse($this->object->offsetExists(3));
     }
 
     /**
      * @covers Cradle\Data\DataTrait::offsetGet
-     * @todo   Implement testOffsetGet().
      */
     public function testOffsetGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->offsetGet('foo');
+		$this->assertEquals('bar', $actual);
     }
 
     /**
      * @covers Cradle\Data\DataTrait::offsetSet
-     * @todo   Implement testOffsetSet().
      */
     public function testOffsetSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->offsetSet('zoo', 2);
+		
+		$this->assertEquals(2, $this->object->offsetGet('zoo'));
     }
 
     /**
      * @covers Cradle\Data\DataTrait::offsetUnset
-     * @todo   Implement testOffsetUnset().
      */
     public function testOffsetUnset()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->offsetUnset('foo');
+		$this->assertNull($this->object->offsetGet('foo'));
     }
 
     /**
      * @covers Cradle\Data\DataTrait::current
-     * @todo   Implement testCurrent().
      */
     public function testCurrent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->current();
+    	$this->assertEquals('bar', $actual);
     }
 
     /**
      * @covers Cradle\Data\DataTrait::key
-     * @todo   Implement testKey().
      */
     public function testKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->key();
+    	$this->assertEquals('foo', $actual);
     }
 
     /**
      * @covers Cradle\Data\DataTrait::next
-     * @todo   Implement testNext().
      */
     public function testNext()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->next();
+        $actual = $this->object->current();
+    	$this->assertEquals('foo', $actual);
     }
 
     /**
      * @covers Cradle\Data\DataTrait::rewind
-     * @todo   Implement testRewind().
      */
     public function testRewind()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->rewind();
+        $actual = $this->object->current();
+    	$this->assertEquals('bar', $actual);
     }
 
     /**
      * @covers Cradle\Data\DataTrait::valid
-     * @todo   Implement testValid().
      */
     public function testValid()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->valid());
     }
 
     /**
      * @covers Cradle\Data\DataTrait::count
-     * @todo   Implement testCount().
      */
     public function testCount()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals(2, $this->object->count());
     }
 
     /**
      * @covers Cradle\Data\DataTrait::getDot
-     * @todo   Implement testGetDot().
      */
     public function testGetDot()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertEquals('bar', $this->object->getDot('foo'));
     }
 
     /**
      * @covers Cradle\Data\DataTrait::isDot
-     * @todo   Implement testIsDot().
      */
     public function testIsDot()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->assertTrue($this->object->isDot('bar'));
     }
 
     /**
      * @covers Cradle\Data\DataTrait::removeDot
-     * @todo   Implement testRemoveDot().
      */
     public function testRemoveDot()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->removeDot('foo');
+		$this->assertFalse($this->object->isDot('foo'));
     }
 
     /**
      * @covers Cradle\Data\DataTrait::setDot
-     * @todo   Implement testSetDot().
      */
     public function testSetDot()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->setDot('zoo', 2);
+        $this->assertEquals(2, $this->object->getDot('zoo'));
     }
 
     /**
      * @covers Cradle\Data\DataTrait::__callData
-     * @todo   Implement test__callData().
      */
     public function test__callData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->__callData('setZoo', array(2));
+		$this->assertInstanceOf('Cradle\Data\DataTraitStub', $instance);
+		
+        $actual = $this->object->__callData('getZoo', array());
+		
+		$this->assertEquals(2, $actual);
     }
 
     /**
      * @covers Cradle\Data\DataTrait::__getData
-     * @todo   Implement test__getData().
      */
     public function test__getData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->__getData('foo');
+		$this->assertEquals('bar', $actual);
     }
 
     /**
      * @covers Cradle\Data\DataTrait::__setData
-     * @todo   Implement test__setData().
      */
     public function test__setData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->__setData('zoo', 2);
+        $actual = $this->object->__getData('zoo');
+		
+		$this->assertEquals(2, $actual);
     }
 
     /**
      * @covers Cradle\Data\DataTrait::__toStringData
-     * @todo   Implement test__toStringData().
      */
     public function test__toStringData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->assertEquals(json_encode([
+			'foo' => 'bar',
+			'bar' => 'foo'
+		], JSON_PRETTY_PRINT), $this->object->__toStringData());
     }
 
     /**
      * @covers Cradle\Data\DataTrait::generator
-     * @todo   Implement testGenerator().
      */
     public function testGenerator()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        foreach($this->object->generator() as $i => $value);
+		
+		$this->assertEquals('bar', $i);
     }
 }
 
