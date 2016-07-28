@@ -9,6 +9,8 @@
 
 namespace Cradle\Http;
 
+use Cradle\Http\Router\RouterInterface;
+
 /**
  * Express style server class implementation
  *

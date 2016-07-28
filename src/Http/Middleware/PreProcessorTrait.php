@@ -7,7 +7,9 @@
  * distributed with this package.
  */
 
-namespace Cradle\Http;
+namespace Cradle\Http\Middleware;
+
+use Cradle\Http\Middleware;
 
 /**
  *
@@ -16,29 +18,29 @@ namespace Cradle\Http;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-trait ErrorProcessorTrait
+trait PreProcessorTrait
 {
 	/**
-     * @var Middleware|null $errorProcessor
+     * @var Middleware|null $preProcessor
      */
-    protected $errorProcessor = null;
+    protected $preProcessor = null;
     
     /**
-     * Returns an error handler object
+     * Returns a middleware object
      *
      * @return MiddlewareInterface
      */
-    public function getErrorProcessor()
+    public function getPreprocessor()
     {
-        if(is_null($this->errorProcessor)) {
+        if(is_null($this->preProcessor)) {
 			if(method_exists($this, 'resolve')) {
-				$this->setErrorProcessor($this->resolve(Middleware::class));
+				$this->setPreprocessor($this->resolve(Middleware::class));
 			} else {
-				$this->setErrorProcessor(new Middleware());
+				$this->setPreprocessor(new Middleware());
 			}
 		}
 
-        return $this->errorProcessor;
+        return $this->preProcessor;
     }
     
     /**
@@ -46,24 +48,24 @@ trait ErrorProcessorTrait
      *
      * @param function $callback The middleware handler
      *
-     * @return ErrorProcessorTrait
+     * @return PreProcessorTrait
      */
-    public function error($callback)
+    public function preprocess($callback)
     {
-        $this->getErrorProcessor()->register($callback);
+        $this->getPreprocessor()->register($callback);
         return $this;
     }
     
     /**
-     * Sets the middleware to use on error
+     * Sets the middleware to use
      *
      * @param MiddlewareInterface $middleare
      *
-     * @return ErrorProcessorTrait
+     * @return PreProcessorTrait
      */
-    public function setErrorProcessor(MiddlewareInterface $middleware)
+    public function setPreprocessor(MiddlewareInterface $middleware)
     {
-        $this->errorProcessor = $middleware;
+        $this->preProcessor = $middleware;
         
         return $this;
     }

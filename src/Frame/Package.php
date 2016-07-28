@@ -19,7 +19,7 @@ use Closure;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class FramePackage
+class Package
 {
 	/**
 	 * @const NO_METHOD Error template

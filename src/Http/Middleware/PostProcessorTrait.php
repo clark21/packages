@@ -7,7 +7,9 @@
  * distributed with this package.
  */
 
-namespace Cradle\Http;
+namespace Cradle\Http\Middleware;
+
+use Cradle\Http\Middleware;
 
 /**
  *
@@ -16,29 +18,29 @@ namespace Cradle\Http;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-trait PreProcessorTrait
+trait PostProcessorTrait
 {
 	/**
      * @var Middleware|null $preProcessor
      */
-    protected $preProcessor = null;
+    protected $postProcessor = null;
     
     /**
      * Returns a middleware object
      *
      * @return MiddlewareInterface
      */
-    public function getPreprocessor()
+    public function getPostprocessor()
     {
-        if(is_null($this->preProcessor)) {
+        if(is_null($this->postProcessor)) {
 			if(method_exists($this, 'resolve')) {
-				$this->setPreprocessor($this->resolve(Middleware::class));
+				$this->setPostprocessor($this->resolve(Middleware::class));
 			} else {
-				$this->setPreprocessor(new Middleware());
+				$this->setPostprocessor(new Middleware());
 			}
 		}
 
-        return $this->preProcessor;
+        return $this->postProcessor;
     }
     
     /**
@@ -48,9 +50,9 @@ trait PreProcessorTrait
      *
      * @return PreProcessorTrait
      */
-    public function preprocess($callback)
+    public function postprocess($callback)
     {
-        $this->getPreprocessor()->register($callback);
+        $this->getPostprocessor()->register($callback);
         return $this;
     }
     
@@ -61,9 +63,9 @@ trait PreProcessorTrait
      *
      * @return PreProcessorTrait
      */
-    public function setPreprocessor(MiddlewareInterface $middleware)
+    public function setPostprocessor(MiddlewareInterface $middleware)
     {
-        $this->preProcessor = $middleware;
+        $this->postProcessor = $middleware;
         
         return $this;
     }

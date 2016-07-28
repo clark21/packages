@@ -23,6 +23,14 @@ use Cradle\Profiler\LoggerTrait;
 
 use Cradle\Resolver\StateTrait;
 
+use Cradle\Http\Router\RouterTrait;
+use Cradle\Http\Request\RequestTrait;
+use Cradle\Http\Response\ResponseTrait;
+use Cradle\Http\Dispatcher\DispatcherTrait;
+use Cradle\Http\Middleware\PreProcessorTrait;
+use Cradle\Http\Middleware\PostProcessorTrait;
+use Cradle\Http\Middleware\ErrorProcessorTrait;
+
 /**
  * Express style server class implementation
  *

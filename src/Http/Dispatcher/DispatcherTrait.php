@@ -7,7 +7,9 @@
  * distributed with this package.
  */
 
-namespace Cradle\Http;
+namespace Cradle\Http\Dispatcher;
+
+use Cradle\Http\Dispatcher;
 
 /**
  *

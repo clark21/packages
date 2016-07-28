@@ -7,9 +7,7 @@
  * distributed with this package.
  */
 
-namespace Cradle\Http;
-
-use Cradle\Data\Registry;
+namespace Cradle\Http\Response;
 
 /**
  * Response Class

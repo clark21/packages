@@ -10,6 +10,7 @@
 namespace Cradle\Frame;
 
 use Cradle\Event\PipeTrait;
+use Cradle\Resolver\ResolverTrait;
 
 /**
  *
@@ -20,7 +21,7 @@ use Cradle\Event\PipeTrait;
  */
 trait FrameTrait
 {	
-	use PipeTrait;
+	use PipeTrait, ResolverTrait;
 
 	/**
 	 * @var array $packages A safe place to store package junk
@@ -32,7 +33,7 @@ trait FrameTrait
 	 */
 	public function __construct()
 	{
-		$this->packages['global'] = new FramePackage();
+		$this->packages['global'] = $this->resolve(Package::class);
 	}
 	
 	/**
@@ -61,7 +62,7 @@ trait FrameTrait
 	public function register($vendor)
 	{
 		//create a space
-		$this->packages[$vendor] = new FramePackage();
+		$this->packages[$vendor] = $this->resolve(Package::class);
 		
 		//luckily we know where we are in vendor folder :)
 		//is there a better recommended way?

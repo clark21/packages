@@ -7,7 +7,7 @@
  * distributed with this package.
  */
 
-namespace Cradle\Http;
+namespace Cradle\Http\Dispatcher;
 
 /**
  * Express style server class implementation

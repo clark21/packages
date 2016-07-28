@@ -9,6 +9,8 @@
 
 namespace Cradle\Http;
 
+use Cradle\Http\Middleware\MiddlewareInterface;
+
 /**
  * Express style server class implementation
  *
