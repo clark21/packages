@@ -33,25 +33,27 @@ class Cradle_Frame_Package_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Frame\Package::__call
-     * @todo   Implement test__call().
      */
     public function test__call()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->addMethod('foo', function() {
+			return 'bar';
+		});
+		
+		$actual = $this->object->__call('foo', array());
+		$this->assertEquals('bar', $actual);
     }
 
     /**
-     * @covers Cradle\Frame\Package::registerMethod
-     * @todo   Implement testRegisterMethod().
+     * @covers Cradle\Frame\Package::addMethod
      */
-    public function testRegisterMethod()
+    public function testAddMethod()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->addMethod('foo', function() {
+			return 'bar';
+		});
+		
+		$actual = $this->object->__call('foo', array());
+		$this->assertEquals('bar', $actual);
     }
 }

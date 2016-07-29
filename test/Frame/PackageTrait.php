@@ -2,6 +2,7 @@
 
 namespace Cradle\Frame;
 
+use StdClass;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -33,50 +34,29 @@ class Cradle_Frame_PackageTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Frame\PackageTrait::package
-     * @todo   Implement testPackage().
      */
     public function testPackage()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->register('foobar')->package('foobar');
+		$this->assertInstanceOf('Cradle\Frame\Package', $instance);
     }
 
     /**
      * @covers Cradle\Frame\PackageTrait::register
-     * @todo   Implement testRegister().
      */
     public function testRegister()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->register('foobar')->package('foobar');
+		$this->assertInstanceOf('Cradle\Frame\Package', $instance);
     }
 
     /**
      * @covers Cradle\Frame\PackageTrait::setBoostrapFile
-     * @todo   Implement testSetBoostrapFile().
      */
     public function testSetBoostrapFile()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Cradle\Frame\PackageTrait::bindCallback
-     * @todo   Implement testBindCallback().
-     */
-    public function testBindCallback()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setBootstrapFile('foobar');
+		$this->assertInstanceOf('Cradle\Frame\PackageTraitStub', $instance);
     }
 }
 

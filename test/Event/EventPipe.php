@@ -22,6 +22,7 @@ class Cradle_Event_EventPipe_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new EventPipe;
+		$this->object->getEventHandler()->off();
     }
 
     /**

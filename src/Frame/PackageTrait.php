@@ -9,8 +9,6 @@
 
 namespace Cradle\Frame;
 
-use Cradle\Resolver\ResolverTrait;
-
 /**
  * If you want to utilize composer packages
  * as plugins/extensions/addons you can adopt
@@ -22,9 +20,7 @@ use Cradle\Resolver\ResolverTrait;
  * @standard PSR-2
  */
 trait PackageTrait
-{	
-	use ResolverTrait;
-
+{
 	/**
 	 * @var array $packages A safe place to store package junk
 	 */
@@ -40,7 +36,11 @@ trait PackageTrait
 	 */
 	public function __construct()
 	{
-		$this->packages['global'] = $this->resolve(Package::class);
+		if(method_exists($this, 'resolve')) {
+			$this->packages['global'] = $this->resolve(Package::class);
+		} else {
+			$this->packages['global'] = new Package;
+		}
 	}
 	
 	/**
@@ -69,7 +69,11 @@ trait PackageTrait
 	public function register($vendor)
 	{
 		//create a space
-		$this->packages[$vendor] = $this->resolve(Package::class);
+		if(method_exists($this, 'resolve')) {
+			$this->packages[$vendor] = $this->resolve(Package::class);
+		} else {
+			$this->packages[$vendor] = new Package;
+		}
 		
 		//luckily we know where we are in vendor folder :)
 		//is there a better recommended way?

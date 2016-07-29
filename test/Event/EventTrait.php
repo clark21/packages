@@ -22,6 +22,7 @@ class Cradle_Event_EventTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new EventTraitStub;
+		$this->object->getEventHandler()->off();
     }
 
     /**
@@ -94,6 +95,25 @@ class Cradle_Event_EventTrait_Test extends PHPUnit_Framework_TestCase
 			->trigger('foobar');
 		
 		$this->assertInstanceOf('Cradle\Event\EventTraitStub', $instance);
+		$this->assertTrue($trigger->success);
+    }
+	
+    /**
+     * @covers Cradle\Event\EventTrait::bindCallback
+     */
+    public function testBindCallback()
+    {
+        $trigger = new StdClass;
+        $trigger->success = null;
+		$trigger->test = $this;
+		
+		$callback = $this->object->bindCallback(function() use ($trigger) {
+	    	$trigger->success = true;
+			$trigger->test->assertInstanceOf('Cradle\Event\EventTraitStub', $this);
+		});
+		
+		$callback();
+		
 		$this->assertTrue($trigger->success);
     }
 }

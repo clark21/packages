@@ -244,6 +244,25 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
 		$this->assertInstanceOf('Cradle\Event\PipeTraitStub', $instance);
 		$this->assertTrue($trigger->success);
     }
+	
+    /**
+     * @covers Cradle\Event\PipeTrait::bindCallback
+     */
+    public function testBindCallback()
+    {
+        $trigger = new StdClass;
+        $trigger->success = null;
+		$trigger->test = $this;
+		
+		$callback = $this->object->bindCallback(function() use ($trigger) {
+	    	$trigger->success = true;
+			$trigger->test->assertInstanceOf('Cradle\Event\PipeTraitStub', $this);
+		});
+		
+		$callback();
+		
+		$this->assertTrue($trigger->success);
+    }
 }
 
 if(!class_exists('Cradle\Event\EventPipeTriggerStub')) {

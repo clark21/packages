@@ -33,25 +33,33 @@ class Cradle_Frame_FrameException_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Frame\FrameException::forPackageNotFound
-     * @todo   Implement testForPackageNotFound().
      */
     public function testForPackageNotFound()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$message = null;
+		
+		try {
+			throw FrameException::forPackageNotFound('foobar');
+		} catch(FrameException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('Could not find package: foobar', $message);
     }
 
     /**
      * @covers Cradle\Frame\FrameException::forMethodNotFound
-     * @todo   Implement testForMethodNotFound().
      */
     public function testForMethodNotFound()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$message = null;
+		
+		try {
+			throw FrameException::forMethodNotFound('foobar');
+		} catch(FrameException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('No method named foobar was found', $message);
     }
 }

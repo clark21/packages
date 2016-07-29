@@ -9,6 +9,7 @@
 
 namespace Cradle\Frame;
 
+use Cradle\Resolver\ResolverTrait;
 use Cradle\Event\PipeTrait;
 
 /**
@@ -23,5 +24,6 @@ use Cradle\Event\PipeTrait;
 class FrameService
 {	
 	use PipeTrait,
-		PackageTrait;
+		PackageTrait,
+		ResolverTrait;
 }
