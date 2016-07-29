@@ -7,20 +7,20 @@
  * distributed with this package.
  */
 
-namespace Cradle\Data;
+namespace Cradle\Data\Registry;
 
 /**
- * Models are designed to easily manipulate $data in
- * preparation to integrate with any one dimensional 
- * data store. This is the main model object. This 
- * interface is defined to support depenancy injection.
+ * Registry are designed to easily manipulate $data in
+ * preparation to integrate with any multi dimensional 
+ * data store. This interface is defined to support 
+ * depenancy injection.
  *
  * @package  Cradle
  * @category Data
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-interface ModelInterface
+interface RegistryInterface
 {
 	/**
 	 * Attempts to use __callData then __callResolver
@@ -73,11 +73,34 @@ interface ModelInterface
 	public function generator();
 	
 	/**
-	 * Returns the entire data
+	 * Returns true if the path keys 
+	 * exist in the dataset
+	 *
+	 * @param scalar|null ...$args Path keys
 	 * 
-	 * @return array
+	 * @return bool
 	 */
-	public function get();
+	public function exists(...$args);
+
+	/**
+	 * Returns the exact data given the path keys
+	 *
+	 * @param scalar|null ...$args Path keys
+	 * 
+	 * @return mixed
+	 */
+	public function get(...$args);
+	
+	/**
+	 * Returns true if the path keys 
+	 * does not exist in the dataset
+	 * or if it has an empy value
+	 *
+	 * @param scalar|null ...$args Path keys
+	 * 
+	 * @return bool
+	 */
+	public function isEmpty(...$args);
 	
 	/**
      * Returns th current position
@@ -131,13 +154,22 @@ interface ModelInterface
     public function rewind();
 	
 	/**
-	 * Sets the entire data
+	 * Removes the data found in the path keys
 	 *
-	 * @param *array $data
+	 * @param scalar|null ...$args Path keys
 	 * 
-	 * @return ModelInterface
+	 * @return RegistryInterface
 	 */
-	public function set(array $data);
+	public function remove(...$args);
+	
+	/**
+	 * Sets the given data to given the path keys
+	 *
+	 * @param scalar|null ...$args Path keys and value on the end
+	 * 
+	 * @return RegistryInterface
+	 */
+	public function set(...$args);
     
     /**
      * Validates whether if the index is set

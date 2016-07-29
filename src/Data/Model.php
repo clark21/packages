@@ -13,6 +13,9 @@ use ArrayAccess;
 use Iterator;
 use Countable;
 
+use Cradle\Data\Model\ModelInterface;
+use Cradle\Data\Model\ModelException;
+
 use Cradle\Event\EventTrait;
 
 use Cradle\Helper\InstanceTrait;

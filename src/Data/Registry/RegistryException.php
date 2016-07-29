@@ -7,7 +7,7 @@
  * distributed with this package.
  */
 
-namespace Cradle\Data;
+namespace Cradle\Data\Registry;
 
 use Exception;
 

@@ -13,6 +13,9 @@ use ArrayAccess;
 use Iterator;
 use Countable;
 
+use Cradle\Data\Collection\CollectionInterface;
+use Cradle\Data\Collection\CollectionException;
+
 use Cradle\Event\EventTrait;
 
 use Cradle\Helper\BinderTrait;

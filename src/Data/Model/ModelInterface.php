@@ -7,22 +7,20 @@
  * distributed with this package.
  */
 
-namespace Cradle\Data;
+namespace Cradle\Data\Model;
 
 /**
- * Collections are a managable list of models. Model
- * methods called by the collection are simply passed
- * to each model in the collection. Collections perform
- * the same functionality as a model, except on a more 
- * massive level. This interface is defined to support 
- * depenancy injection.
+ * Models are designed to easily manipulate $data in
+ * preparation to integrate with any one dimensional 
+ * data store. This is the main model object. This 
+ * interface is defined to support depenancy injection.
  *
  * @package  Cradle
  * @category Data
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-interface CollectionInterface
+interface ModelInterface
 {
 	/**
 	 * Attempts to use __callData then __callResolver
@@ -82,7 +80,7 @@ interface CollectionInterface
 	public function get();
 	
 	/**
-     * Returns the current position
+     * Returns th current position
      * For Iterator interface
      */
     public function key();
@@ -96,7 +94,7 @@ interface CollectionInterface
 	/**
      * isset using the ArrayAccess interface
      *
-     * @param *scalar|null $offset The key to test if exists
+     * @param *scalar|null|bool $offset The key to test if exists
      *
      * @return bool
      */
@@ -105,7 +103,7 @@ interface CollectionInterface
     /**
      * returns data using the ArrayAccess interface
      *
-     * @param *scalar|null $offset The key to get
+     * @param *scalar|null|bool $offset The key to get
      *
      * @return mixed
      */
@@ -114,15 +112,15 @@ interface CollectionInterface
     /**
      * Sets data using the ArrayAccess interface
      *
-     * @param *scalar|null $offset The key to set
-     * @param mixed        $value  The value the key should be set to
+     * @param *scalar|null|bool $offset The key to set
+     * @param mixed             $value  The value the key should be set to
      */
     public function offsetSet($offset, $value);
 
     /**
      * unsets using the ArrayAccess interface
      *
-     * @param *scalar|null $offset The key to unset
+     * @param *scalar|null|bool $offset The key to unset
      */
     public function offsetUnset($offset);
 
@@ -137,7 +135,7 @@ interface CollectionInterface
 	 *
 	 * @param *array $data
 	 * 
-	 * @return CollectionInterface
+	 * @return ModelInterface
 	 */
 	public function set(array $data);
     

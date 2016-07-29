@@ -7,12 +7,14 @@
  * distributed with this package.
  */
 
-namespace Cradle\Data;
+namespace Cradle\Data\Collection;
 
 /**
- * Registry are designed to easily manipulate $data in
- * preparation to integrate with any multi dimensional 
- * data store. This interface is defined to support 
+ * Collections are a managable list of models. Model
+ * methods called by the collection are simply passed
+ * to each model in the collection. Collections perform
+ * the same functionality as a model, except on a more 
+ * massive level. This interface is defined to support 
  * depenancy injection.
  *
  * @package  Cradle
@@ -20,7 +22,7 @@ namespace Cradle\Data;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-interface RegistryInterface
+interface CollectionInterface
 {
 	/**
 	 * Attempts to use __callData then __callResolver
@@ -73,37 +75,14 @@ interface RegistryInterface
 	public function generator();
 	
 	/**
-	 * Returns true if the path keys 
-	 * exist in the dataset
-	 *
-	 * @param scalar|null ...$args Path keys
+	 * Returns the entire data
 	 * 
-	 * @return bool
+	 * @return array
 	 */
-	public function exists(...$args);
-
-	/**
-	 * Returns the exact data given the path keys
-	 *
-	 * @param scalar|null ...$args Path keys
-	 * 
-	 * @return mixed
-	 */
-	public function get(...$args);
+	public function get();
 	
 	/**
-	 * Returns true if the path keys 
-	 * does not exist in the dataset
-	 * or if it has an empy value
-	 *
-	 * @param scalar|null ...$args Path keys
-	 * 
-	 * @return bool
-	 */
-	public function isEmpty(...$args);
-	
-	/**
-     * Returns th current position
+     * Returns the current position
      * For Iterator interface
      */
     public function key();
@@ -117,7 +96,7 @@ interface RegistryInterface
 	/**
      * isset using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to test if exists
+     * @param *scalar|null $offset The key to test if exists
      *
      * @return bool
      */
@@ -126,7 +105,7 @@ interface RegistryInterface
     /**
      * returns data using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to get
+     * @param *scalar|null $offset The key to get
      *
      * @return mixed
      */
@@ -135,15 +114,15 @@ interface RegistryInterface
     /**
      * Sets data using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to set
-     * @param mixed             $value  The value the key should be set to
+     * @param *scalar|null $offset The key to set
+     * @param mixed        $value  The value the key should be set to
      */
     public function offsetSet($offset, $value);
 
     /**
      * unsets using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to unset
+     * @param *scalar|null $offset The key to unset
      */
     public function offsetUnset($offset);
 
@@ -154,22 +133,13 @@ interface RegistryInterface
     public function rewind();
 	
 	/**
-	 * Removes the data found in the path keys
+	 * Sets the entire data
 	 *
-	 * @param scalar|null ...$args Path keys
+	 * @param *array $data
 	 * 
-	 * @return RegistryInterface
+	 * @return CollectionInterface
 	 */
-	public function remove(...$args);
-	
-	/**
-	 * Sets the given data to given the path keys
-	 *
-	 * @param scalar|null ...$args Path keys and value on the end
-	 * 
-	 * @return RegistryInterface
-	 */
-	public function set(...$args);
+	public function set(array $data);
     
     /**
      * Validates whether if the index is set

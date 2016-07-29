@@ -1,6 +1,6 @@
 <?php
 
-namespace Cradle\Data;
+namespace Cradle\Data\Model;
 
 use PHPUnit_Framework_TestCase;
 

@@ -13,6 +13,9 @@ use ArrayAccess;
 use Iterator;
 use Countable;
 
+use Cradle\Data\Registry\RegistryInterface;
+use Cradle\Data\Registry\RegistryException;
+
 use Cradle\Event\EventTrait;
 
 use Cradle\Helper\InstanceTrait;
