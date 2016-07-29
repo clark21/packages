@@ -10,6 +10,7 @@
 namespace Cradle\Data;
 
 /**
+ * Given that there's $data this will auto setup Countable interface
  *
  * @package  Cradle
  * @category Data

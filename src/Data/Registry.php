@@ -26,7 +26,9 @@ use Cradle\Resolver\StateTrait;
 use Cradle\Resolver\ResolverException;
 
 /**
- * Core Factory Class
+ * Registry are designed to easily manipulate $data in
+ * preparation to integrate with any multi dimensional 
+ * data store. This is the main registry object.
  *
  * @package  Cradle
  * @category Date
@@ -74,7 +76,7 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
 	/**
      * Presets the collection
      *
-     * @param *mixed $data The initial data
+     * @param array $data The initial data
      */
     public function __construct(array $data = [])
     {
@@ -82,11 +84,12 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
     }
 	
 	/**
-	 * Sets the entire data
+	 * Returns true if the path keys 
+	 * exist in the dataset
 	 *
-	 * @param *array $data
+	 * @param scalar|null ...$args Path keys
 	 * 
-	 * @return Registry
+	 * @return bool
 	 */
 	public function exists(...$args)
 	{
@@ -100,9 +103,11 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
 	}
 	
 	/**
-	 * Returns the entire data
+	 * Returns the exact data given the path keys
+	 *
+	 * @param scalar|null ...$args Path keys
 	 * 
-	 * @return array
+	 * @return mixed
 	 */
 	public function get(...$args)
 	{
@@ -115,11 +120,13 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
 	}
 	
 	/**
-	 * Sets the entire data
+	 * Returns true if the path keys 
+	 * does not exist in the dataset
+	 * or if it has an empy value
 	 *
-	 * @param *array $data
+	 * @param scalar|null ...$args Path keys
 	 * 
-	 * @return Registry
+	 * @return bool
 	 */
 	public function isEmpty(...$args)
 	{
@@ -147,9 +154,9 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
 	}
 	
 	/**
-	 * Sets the entire data
+	 * Removes the data found in the path keys
 	 *
-	 * @param *array $data
+	 * @param scalar|null ...$args Path keys
 	 * 
 	 * @return Registry
 	 */
@@ -165,9 +172,9 @@ class Registry implements ArrayAccess, Iterator, Countable, RegistryInterface
 	}
 	
 	/**
-	 * Sets the entire data
+	 * Sets the given data to given the path keys
 	 *
-	 * @param *array $data
+	 * @param scalar|null ...$args Path keys and value on the end
 	 * 
 	 * @return Registry
 	 */

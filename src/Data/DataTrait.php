@@ -10,6 +10,9 @@
 namespace Cradle\Data;
 
 /**
+ * The DataTrait combines all the data features 
+ * in the Data package. Just a shortcut for having
+ * all the features in one go.
  *
  * @package  Cradle
  * @category Data

@@ -250,7 +250,7 @@ class CurlHandler implements ArrayAccess
     /**
      * isset using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to test if exists
+     * @param *scalar|null $offset The key to test if exists
      *
      * @return bool
      */
@@ -262,7 +262,7 @@ class CurlHandler implements ArrayAccess
     /**
      * returns data using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to get
+     * @param *scalar|null $offset The key to get
      *
      * @return mixed
      */
@@ -274,8 +274,8 @@ class CurlHandler implements ArrayAccess
     /**
      * Sets data using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset
-     * @param mixed             $value
+     * @param *scalar|null $offset
+     * @param mixed        $value
      */
     public function offsetSet($offset, $value)
     {
@@ -315,7 +315,7 @@ class CurlHandler implements ArrayAccess
     /**
      * unsets using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to unset
+     * @param *scalar|null $offset The key to unset
      */
     public function offsetUnset($offset)
     {

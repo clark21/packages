@@ -27,7 +27,9 @@ use Cradle\Resolver\ResolverException;
 
 
 /**
- * Core Factory Class
+ * Models are designed to easily manipulate $data in
+ * preparation to integrate with any one dimensional 
+ * data store. This is the main model object.
  *
  * @package  Cradle
  * @category Date

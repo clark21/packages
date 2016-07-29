@@ -10,6 +10,8 @@
 namespace Cradle\Data;
 
 /**
+ * Given that there's $data this will 
+ * auto setup the Iterator interface
  *
  * @package  Cradle
  * @category Data

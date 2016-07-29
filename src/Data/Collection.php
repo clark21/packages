@@ -27,7 +27,11 @@ use Cradle\Resolver\StateTrait;
 
 
 /**
- * Core Factory Class
+ * Collections are a managable list of models. Model
+ * methods called by the collection are simply passed
+ * to each model in the collection. Collections perform
+ * the same functionality as a model, except on a more 
+ * massive level. This is the main collection object.
  *
  * @package  Cradle
  * @category Date

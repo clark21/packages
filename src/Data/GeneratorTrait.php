@@ -10,6 +10,7 @@
 namespace Cradle\Data;
 
 /**
+ * Allows $data to be iterable using generators
  *
  * @package  Cradle
  * @category Data

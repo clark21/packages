@@ -10,7 +10,10 @@
 namespace Cradle\Data;
 
 /**
- *
+ * Given that there's $data this will setup magic methods.
+ * By default these methods are suffixed with `Data` to 
+ * prevent collisions. You need to alias them on implementation.
+ * 
  * @package  Cradle
  * @category Data
  * @author   Christian Blanquera <cblanquera@openovate.com>

@@ -118,8 +118,8 @@ class Rest
     /**
      * Processes set, post, put, delete, get, etc.
      *
-     * @param string* $name The name of the method
-     * @param array*  $args The arguments trying to be passed
+     * @param *string $name The name of the method
+     * @param *array  $args The arguments trying to be passed
      *
      * @return mixed
      */
@@ -217,7 +217,7 @@ class Rest
     /**
      * Sets up the host and if we are in tet mode
      *
-     * @param string* $host     The root host
+     * @param *string $host     The root host
      * @param bool    $metaOnly Whether to just get the meta
      *
      * @return Rest
@@ -231,7 +231,7 @@ class Rest
     /**
      * Add headers into this request
      *
-     * @param string|array* $key   The header name
+     * @param *string|array $key   The header name
      * @param scalar|null   $value The header value
      *
      * @return Rest
@@ -262,8 +262,8 @@ class Rest
      * wishing to extend this class
      * and testing
      *
-     * @param string*        $path The route path
-     * @param string|array*  $meta The route meta or forwarding meta
+     * @param *string        $path The route path
+     * @param *string|array  $meta The route meta or forwarding meta
      *
      * @return Rest
      */
@@ -277,7 +277,7 @@ class Rest
     /**
      * Set the raw data
      *
-     * @param array|scalar* $data  Either the entire data or a key
+     * @param *array|scalar $data  Either the entire data or a key
      * @param mixed         $value The value of the key
      *
      * @return Rest 
@@ -298,8 +298,8 @@ class Rest
     /**
      * Sends off this request to cURL
      *
-     * @param string* $method The request method
-     * @param string* $path   The end point path
+     * @param *string $method The request method
+     * @param *string $path   The end point path
      * @param array   $meta   Route meta
      *
      * @return mixed
@@ -375,10 +375,10 @@ class Rest
     /**
      * Returns any problems with the request
      *
-     * @param string* $method The request method
-     * @param string* $path   The request path
-     * @param string* $meta   The route meta
-     * @param array*  $data   The request body
+     * @param *string $method The request method
+     * @param *string $path   The request path
+     * @param *string $meta   The route meta
+     * @param *array  $data   The request body
      */
     private function throwErrors($method, $path, $meta, array $data) 
     {
@@ -435,8 +435,8 @@ class Rest
      * parse out the method name and return 
      * the translated meaning
      *
-     * @param string* $action    The prefix action
-     * @param string* $method    The magic method
+     * @param *string $action    The prefix action
+     * @param *string $method    The magic method
      * @param string  $separator How to delimit the key name
      *
      * @return string
@@ -453,9 +453,9 @@ class Rest
      * Used mainly for testing or passing out the call
      * for further processing
      *
-     * @param string* $method The request method
-     * @param string* $path   The request path
-     * @param string* $meta   The route meta
+     * @param *string $method The request method
+     * @param *string $path   The request path
+     * @param *string $meta   The route meta
      *
      * @return array
      */
@@ -533,9 +533,9 @@ class Rest
     /**
      * Returns the compiled path
      *
-     * @param string* $action The magic action prefix
-     * @param string* $method The magic method name
-     * @param array*  $args   The arguments for the method
+     * @param *string $action The magic action prefix
+     * @param *string $method The magic method name
+     * @param *array  $args   The arguments for the method
      *
      * @return string
      */
@@ -565,8 +565,8 @@ class Rest
     /**
      * Figures out which data is the url query and the post
      *
-     * @param string* $meta The route meta
-     * @param array*  $data The actual request body
+     * @param *string $meta The route meta
+     * @param *array  $data The actual request body
      *
      * @return array
      */
@@ -599,7 +599,7 @@ class Rest
     /**
      * Returns what kind of encoding the request should have
      *
-     * @param array* $meta The route meta data
+     * @param *array $meta The route meta data
      *
      * @return string
      */
@@ -616,7 +616,7 @@ class Rest
     /**
      * Returns what kind of encoding the response should have
      *
-     * @param array* $meta The route meta data
+     * @param *array $meta The route meta data
      *
      * @return string
      */
@@ -633,8 +633,8 @@ class Rest
     /**
      * Returns the actual route based on the path pattern
      *
-     * @param string* $path The request path
-     * @param array*  $args The arguments from send
+     * @param *string $path The request path
+     * @param *array  $args The arguments from send
      *
      * @return string
      */
@@ -658,8 +658,8 @@ class Rest
     /**
      * Tests a field against many kinds of validations
      *
-     * @param string* $value      The value to be tested
-     * @param array*  $validation The test parameter
+     * @param *string $value      The value to be tested
+     * @param *array  $validation The test parameter
      *
      * @return bool
      */

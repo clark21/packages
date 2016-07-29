@@ -10,6 +10,9 @@
 namespace Cradle\Data;
 
 /**
+ * The DotTrait allows multidimensional $data to 
+ * be accessed like `foo.bar.zoo` as well as be 
+ * manipulated in the same fashion.
  *
  * @package  Cradle
  * @category Data
@@ -94,7 +97,7 @@ trait DotTrait
      * @param *string $notation  Name space string notation
      * @param string  $separator If you want to specify a different separator other than dot
      *
-     * @return ArrayTrait
+     * @return DotTrait
      */
     public function removeDot($notation, $separator = '.')
     {
@@ -130,7 +133,7 @@ trait DotTrait
      * @param *mixed  $value     Value to set on this namespace
      * @param string  $separator If you want to specify a different separator other than dot
      *
-     * @return ArrayTrait
+     * @return DotTrait
      */
     public function setDot($notation, $value, $separator = '.')
     {

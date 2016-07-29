@@ -10,10 +10,10 @@
 namespace Cradle\Data;
 
 /**
- * Allows the ability to listen to events made known by another
- * piece of functionality. Events are items that transpire based
- * on an action. With events you can add extra functionality
- * right after the event has triggered.
+ * Registry are designed to easily manipulate $data in
+ * preparation to integrate with any multi dimensional 
+ * data store. This interface is defined to support 
+ * depenancy injection.
  *
  * @package  Cradle
  * @category Data
@@ -73,27 +73,32 @@ interface RegistryInterface
 	public function generator();
 	
 	/**
-	 * Sets the entire data
+	 * Returns true if the path keys 
+	 * exist in the dataset
 	 *
-	 * @param *array $data
+	 * @param scalar|null ...$args Path keys
 	 * 
-	 * @return Registry
+	 * @return bool
 	 */
 	public function exists(...$args);
 
 	/**
-	 * Returns the entire data
+	 * Returns the exact data given the path keys
+	 *
+	 * @param scalar|null ...$args Path keys
 	 * 
-	 * @return array
+	 * @return mixed
 	 */
 	public function get(...$args);
 	
 	/**
-	 * Sets the entire data
+	 * Returns true if the path keys 
+	 * does not exist in the dataset
+	 * or if it has an empy value
 	 *
-	 * @param *array $data
+	 * @param scalar|null ...$args Path keys
 	 * 
-	 * @return Registry
+	 * @return bool
 	 */
 	public function isEmpty(...$args);
 	
@@ -149,18 +154,18 @@ interface RegistryInterface
     public function rewind();
 	
 	/**
-	 * Sets the entire data
+	 * Removes the data found in the path keys
 	 *
-	 * @param *array $data
+	 * @param scalar|null ...$args Path keys
 	 * 
-	 * @return Registry
+	 * @return RegistryInterface
 	 */
 	public function remove(...$args);
 	
 	/**
-	 * Sets the entire data
+	 * Sets the given data to given the path keys
 	 *
-	 * @param *array $data
+	 * @param scalar|null ...$args Path keys and value on the end
 	 * 
 	 * @return RegistryInterface
 	 */

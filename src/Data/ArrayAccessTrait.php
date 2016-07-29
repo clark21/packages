@@ -22,7 +22,7 @@ trait ArrayAccessTrait
     /**
      * isset using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to test if exists
+     * @param *scalar|null $offset The key to test if exists
      *
      * @return bool
      */
@@ -34,7 +34,7 @@ trait ArrayAccessTrait
     /**
      * returns data using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to get
+     * @param *scalar|null $offset The key to get
      *
      * @return mixed
      */
@@ -46,8 +46,8 @@ trait ArrayAccessTrait
     /**
      * Sets data using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to set
-     * @param mixed             $value  The value the key should be set to
+     * @param *scalar|null $offset The key to set
+     * @param mixed        $value  The value the key should be set to
      */
     public function offsetSet($offset, $value) 
     {
@@ -61,7 +61,7 @@ trait ArrayAccessTrait
     /**
      * unsets using the ArrayAccess interface
      *
-     * @param *scalar|null|bool $offset The key to unset
+     * @param *scalar|null $offset The key to unset
      */
     public function offsetUnset($offset) 
     {

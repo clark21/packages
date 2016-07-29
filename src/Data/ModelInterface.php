@@ -10,10 +10,10 @@
 namespace Cradle\Data;
 
 /**
- * Allows the ability to listen to events made known by another
- * piece of functionality. Events are items that transpire based
- * on an action. With events you can add extra functionality
- * right after the event has triggered.
+ * Models are designed to easily manipulate $data in
+ * preparation to integrate with any one dimensional 
+ * data store. This is the main model object. This 
+ * interface is defined to support depenancy injection.
  *
  * @package  Cradle
  * @category Data
