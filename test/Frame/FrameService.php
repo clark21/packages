@@ -23,7 +23,7 @@ class Cradle_Frame_FrameService_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new FrameService;
-		$this->object->getEventHandler()->off();
+		$this->object->setEventHandler(new EventHandler);
     }
 
     /**
