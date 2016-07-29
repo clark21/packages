@@ -10,6 +10,7 @@
 namespace Cradle\Data\Model;
 
 use Exception;
+use Cradle\Data\DataException;
 
 /**
  * Model exceptions

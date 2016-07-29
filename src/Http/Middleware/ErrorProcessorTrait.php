@@ -9,6 +9,7 @@
 
 namespace Cradle\Http\Middleware;
 
+use Closure;
 use Cradle\Http\Middleware;
 
 /**
@@ -52,7 +53,11 @@ trait ErrorProcessorTrait
      * @return ErrorProcessorTrait
      */
     public function error($callback)
-    {
+    {	
+		if($callback instanceof Closure) {
+			$callback = $callback->bindTo($this, get_class($this));
+		}
+
         $this->getErrorProcessor()->register($callback);
         return $this;
     }

@@ -10,6 +10,7 @@
 namespace Cradle\Data\Registry;
 
 use Exception;
+use Cradle\Data\DataException;
 
 /**
  * Registry exceptions

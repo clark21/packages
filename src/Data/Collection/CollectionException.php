@@ -10,6 +10,7 @@
 namespace Cradle\Data\Collection;
 
 use Exception;
+use Cradle\Data\DataException;
 
 /**
  * Collection exceptions

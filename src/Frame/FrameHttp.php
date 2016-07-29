@@ -45,6 +45,7 @@ class FrameHttp
 			StateTrait::__callResolver as __call;
 			HttpTrait::route as routeHttp;
 			PackageTrait::register as registerPackage;
+			PackageTrait::__constructPackage as __construct;
 		}
 	
 	/**

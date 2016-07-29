@@ -25,5 +25,8 @@ class FrameService
 {	
 	use PipeTrait,
 		PackageTrait,
-		ResolverTrait;
+		ResolverTrait
+		{
+			PackageTrait::__constructPackage as __construct;
+		}
 }

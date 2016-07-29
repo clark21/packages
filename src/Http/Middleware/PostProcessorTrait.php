@@ -9,6 +9,7 @@
 
 namespace Cradle\Http\Middleware;
 
+use Closure;
 use Cradle\Http\Middleware;
 
 /**
@@ -53,6 +54,10 @@ trait PostProcessorTrait
      */
     public function postprocess($callback)
     {
+		if($callback instanceof Closure) {
+			$callback = $callback->bindTo($this, get_class($this));
+		}
+
         $this->getPostprocessor()->register($callback);
         return $this;
     }

@@ -9,6 +9,7 @@
 
 namespace Cradle\Http\Middleware;
 
+use Closure;
 use Cradle\Http\Middleware;
 
 /**
@@ -53,6 +54,10 @@ trait PreProcessorTrait
      */
     public function preprocess($callback)
     {
+		if($callback instanceof Closure) {
+			$callback = $callback->bindTo($this, get_class($this));
+		}
+		
         $this->getPreprocessor()->register($callback);
         return $this;
     }

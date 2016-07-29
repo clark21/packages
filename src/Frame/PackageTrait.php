@@ -34,7 +34,7 @@ trait PackageTrait
 	/**
 	 * Setups dispatcher and global package
 	 */
-	public function __construct()
+	public function __constructPackage()
 	{
 		if(method_exists($this, 'resolve')) {
 			$this->packages['global'] = $this->resolve(Package::class);
@@ -85,7 +85,6 @@ trait PackageTrait
 		
 		//we should check for events
 		$file = $root . $vendor . '/' . $this->bootstrapFile;
-
 		if(file_exists($file)) {
 			//so you can access cradle 
 			//within the included file
