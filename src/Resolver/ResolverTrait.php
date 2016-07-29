@@ -23,7 +23,7 @@ use Closure;
 trait ResolverTrait
 {
 	/**
-	 * @var Resolver|null $routeResolver The resolver instance
+	 * @var Resolver|null $globalResolverHandler The resolver instance
 	 */
 	protected static $globalResolverHandler = null;
 	
@@ -149,13 +149,13 @@ trait ResolverTrait
 	 *
 	 * @return ResolverTrait
 	 */
-	public function setResolverHandler(ResolverInterface $resolver, $static = false)
+	public function setResolverHandler(ResolverInterface $handler, $static = false)
 	{
 		if($static) {
-			self::$globalResolverHandler = $resolver;
+			self::$globalResolverHandler = $handler;
 		}
 		
-		$this->resolverHandler = $resolver;
+		$this->resolverHandler = $handler;
 		
 		return $this;
 	}

@@ -23,9 +23,14 @@ trait EventTrait
 	use BinderTrait;
 
 	/**
+	 * @var Resolver|null $globalEventHandler The resolver instance
+	 */
+	protected static $globalEventHandler = null;
+
+	/**
 	 * @var EventHandler|null $eventHandler
 	 */
-	private static $eventHandler = null;
+	private $eventHandler = null;
 	
 	/**
 	 * Returns an EventHandler object
@@ -35,11 +40,17 @@ trait EventTrait
 	 */
 	public function getEventHandler()
 	{
-		if(is_null(self::$eventHandler)) {
-			self::$eventHandler = EventHandler::i();	
+		if(is_null(self::$globalEventHandler)) {
+			//no need for a resolver because
+			//there is a way to set this
+			self::$globalEventHandler = new EventHandler();
 		}
 		
-		return self::$eventHandler;
+		if(is_null($this->eventHandler)) {
+			$this->eventHandler = self::$globalEventHandler;
+		}
+		
+		return $this->eventHandler;
 	}
 
     /**
@@ -74,9 +85,14 @@ trait EventTrait
 	 * 
 	 * @return EventTrait
 	 */
-	public function setEventHandler(EventInterface $handler)
+	public function setEventHandler(EventInterface $handler, $static = false)
 	{
-		self::$eventHandler = $handler;
+		if($static) {
+			self::$globalEventHandler = $handler;
+		}
+		
+		$this->eventHandler = $handler;
+		
 		return $this;
 	}
 	

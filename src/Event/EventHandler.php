@@ -30,7 +30,7 @@ class EventHandler implements EventInterface
 	 /**
      * @var array $observers cache of event handlers
      */
-    protected static $observers = [];
+    protected $observers = [];
     
     /**
      * Stops listening to an event
@@ -51,22 +51,22 @@ class EventHandler implements EventInterface
         //if there is no event and not callable
         if (is_null($event) && is_null($callback)) {
             //it means that they want to remove everything
-            self::$observers = [];
+            $this->observers = [];
             return $this;
         }
 		
 		//if there are callbacks listening to
 		//this and no callback was specified
-		if(isset(self::$observers[$event]) && is_null($callback)) {
+		if(isset($this->observers[$event]) && is_null($callback)) {
 			//it means that they want to remove 
 			//all callbacks listening to this event
-			unset(self::$observers[$event]);
+			unset($this->observers[$event]);
 			return $this;
 		}
 		
 		//if there are callbacks listening 
 		//to this and we have a callback
-		if(isset(self::$observers[$event]) && is_callable($callback)) {
+		if(isset($this->observers[$event]) && is_callable($callback)) {
 			return $this->removeObserversByEvent($event, $callback);
 		}
 		
@@ -93,7 +93,7 @@ class EventHandler implements EventInterface
         //set up the observer
 		$observer = $this->resolve(EventObserver::class, $callback);
         
-		self::$observers[$event][$priority][] = $observer;
+		$this->observers[$event][$priority][] = $observer;
 		
         return $this;
     }
@@ -109,12 +109,12 @@ class EventHandler implements EventInterface
      */
     public function trigger($event, ...$args)
     {
-		if(!isset(self::$observers[$event])) {
+		if(!isset($this->observers[$event])) {
 			return $this;
 		}
         
-		krsort(self::$observers[$event]);
-        $observers = call_user_func_array('array_merge', self::$observers[$event]);
+		krsort($this->observers[$event]);
+        $observers = call_user_func_array('array_merge', $this->observers[$event]);
 
         //for each observer
         foreach ($observers as $observer) {
@@ -139,7 +139,7 @@ class EventHandler implements EventInterface
 	protected function removeObserversByCallback($callback)
 	{
 		//find the callback
-		foreach(self::$observers as $event => $priorities) {
+		foreach($this->observers as $event => $priorities) {
 			$this->removeObserversByEvent($event, $callback);
 		}
 		
@@ -157,18 +157,18 @@ class EventHandler implements EventInterface
 	protected function removeObserversByEvent($event, $callback)
 	{
 		//if event isn't set
-		if(!isset(self::$observers[$event])) {
+		if(!isset($this->observers[$event])) {
 			//do nothing
 			return $this;
 		}
 
 		//'foobar' => array(
-		foreach(self::$observers[$event] as $priority => $observers) {
+		foreach($this->observers[$event] as $priority => $observers) {
 			//0 => array(
 			foreach($observers as $i => $observer) {
 				//0 => callback
 				if($observer->assertEquals($callback)) {
-					unset(self::$observers[$priority][$i]);
+					unset($this->observers[$priority][$i]);
 				}
 			}
 		}

@@ -9,7 +9,16 @@
 
 namespace Cradle\Frame;
 
-use Cradle\Http\HttpHandler;
+use Cradle\Helper\InstanceTrait;
+use Cradle\Helper\LoopTrait;
+use Cradle\Helper\ConditionalTrait;
+
+use Cradle\Profiler\InspectorTrait;
+use Cradle\Profiler\LoggerTrait;
+
+use Cradle\Resolver\StateTrait;
+
+use Cradle\Http\HttpTrait;
 use Cradle\Event\PipeTrait;
 
 /**
@@ -21,12 +30,21 @@ use Cradle\Event\PipeTrait;
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-class FrameHttp extends HttpHandler
+class FrameHttp
 {	
-	use PipeTrait,
+	use HttpTrait,
+		InstanceTrait, 
+		LoopTrait, 
+		ConditionalTrait,
+		InspectorTrait, 
+		LoggerTrait, 
+		StateTrait,
+		PipeTrait,
 		PackageTrait 
 		{ 
-			PackageTrait::register as registerPackage; 
+			StateTrait::__callResolver as __call;
+			HttpTrait::route as routeHttp;
+			PackageTrait::register as registerPackage;
 		}
 	
 	/**
@@ -75,7 +93,7 @@ class FrameHttp extends HttpHandler
 			};
 		}
 		
-		parent::route($method, $path, $this->bindCallback($callback));
+		$this->routeHttp($method, $path, $this->bindCallback($callback));
 		
 		return $this;
     }
