@@ -49,12 +49,21 @@ class Sqlite extends AbstractSql implements SqlInterface
     /**
      * Connects to the database
      *
-     * @param array $options The connection options
+     * @param PDO|array $options The connection options
      *
-     * @return Index
+     * @return Sqlite
      */
-    public function connect(array $options = [])
+    public function connect($options = [])
     {
+		if($options instanceof PDO) {
+			$this->connection = $options;
+			return $this;
+		}
+		
+		if(!is_array($options)) {
+			$options = array();
+		}
+
         $this->connection = new PDO('sqlite:'.$this->path);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->trigger('connect');

@@ -11,6 +11,7 @@ namespace Cradle\Sql;
 
 use StdClass;
 use PDO;
+use ReflectionClass;
 
 use Cradle\Event\EventTrait;
 
@@ -78,11 +79,11 @@ abstract class AbstractSql
     /**
      * Connects to the database
      *
-     * @param array $options The connection options
+     * @param PDO|array $options The connection options
      *
      * @return AbstractSQL
      */
-    abstract public function connect(array $options = []);
+    abstract public function connect($options = []);
     
     /**
      * Binds a value and returns the bound key
@@ -411,6 +412,20 @@ abstract class AbstractSql
         
         return $this;
     }
+
+	/**
+     * Adaptor used to force a connection to the handler
+     *
+     * @param PDO $connection
+     *
+     * @return AbstractSQL
+     */
+	public static function loadPDO(PDO $connection)
+	{
+		$reflection = new ReflectionClass(static::class);
+		$instance = $reflection->newInstanceWithoutConstructor();
+		return $instance->connect($connection);
+	}
     
     /**
      * Returns model

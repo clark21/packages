@@ -37,6 +37,11 @@ class SqlException extends Exception
     const DATABASE_NOT_SET = 'No default database set or was passed.';
 
     /**
+     * @const string UNKNOWN_PDO Error template
+     */
+    const UNKNOWN_PDO = 'Could not match an SQL handler with %s';
+
+    /**
      * Create a new exception for query errors
      *
      * @param *string $query
@@ -67,5 +72,17 @@ class SqlException extends Exception
 	public static function forDatabaseNotSet()
 	{
 		return new static(static::DATABASE_NOT_SET);
+	}
+
+    /**
+     * Create a new exception for unknown PDO
+     *
+     * @param *string $name
+	 *
+     * @return SqlException
+     */
+	public static function forUnknownPDO($name)
+	{
+		return new static(sprintf(static::UNKNOWN_PDO, $name));
 	}
 }

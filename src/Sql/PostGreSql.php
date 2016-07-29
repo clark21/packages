@@ -82,12 +82,21 @@ class PostGreSql extends AbstractSql implements SqlInterface
     /**
      * Connects to the database
      *
-     * @param array $options the connection options
+     * @param PDO|array $options the connection options
      *
-     * @return Index
+     * @return PostGreSql
      */
-    public function connect(array $options = [])
+    public function connect($options = [])
     {
+		if($options instanceof PDO) {
+			$this->connection = $options;
+			return $this;
+		}
+		
+		if(!is_array($options)) {
+			$options = array();
+		}
+
         $host = $port = null;
         
         if (!is_null($this->host)) {

@@ -26,11 +26,11 @@ interface SqlInterface
     /**
      * Connects to the database
      *
-     * @param array $options The connection options
+     * @param PDO|array $options The connection options
      *
      * @return SqlInterface
      */
-    public function connect(array $options = []);
+    public function connect($options = []);
     
     /**
      * Binds a value and returns the bound key
