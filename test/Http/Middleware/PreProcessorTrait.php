@@ -34,7 +34,6 @@ class Cradle_Http_PreProcessorTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Http\PreProcessorTrait::getPreprocessor
-     * @todo   Implement testGetPreprocessor().
      */
     public function testGetPreprocessor()
     {
@@ -44,7 +43,6 @@ class Cradle_Http_PreProcessorTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Http\PreProcessorTrait::preprocess
-     * @todo   Implement testPreprocess().
      */
     public function testPreprocess()
     {
@@ -54,7 +52,6 @@ class Cradle_Http_PreProcessorTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Http\PreProcessorTrait::setPreprocessor
-     * @todo   Implement testSetPreprocessor().
      */
     public function testSetPreprocessor()
     {

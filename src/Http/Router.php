@@ -9,6 +9,7 @@
 
 namespace Cradle\Http;
 
+use Cradle\Http\Request\RequestInterface;
 use Cradle\Http\Router\RouterInterface;
 
 /**

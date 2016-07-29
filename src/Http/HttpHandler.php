@@ -17,7 +17,6 @@ use Cradle\Helper\InstanceTrait;
 use Cradle\Helper\LoopTrait;
 use Cradle\Helper\ConditionalTrait;
 
-use Cradle\Profiler\CallerTrait;
 use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
@@ -53,29 +52,13 @@ class HttpHandler
 		EventTrait, 
 		InstanceTrait, 
 		LoopTrait, 
-		ConditionalTrait, 
-		CallerTrait, 
+		ConditionalTrait,
 		InspectorTrait, 
 		LoggerTrait, 
 		StateTrait
 		{
 			StateTrait::__callResolver as __call;
 		}
-    
-    /**
-     * We might as well...
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        try {
-            return $this->render();
-        } catch (Exception $e) {
-        }
-        
-        return '';
-    }
 
 	/**
 	 * Prepares the event and calls the preprocessors
@@ -129,10 +112,12 @@ class HttpHandler
 	
     /**
      * Process and output
+	 *
+     * @param bool $emulate  If you really want it to echo (for testing)
      *
      * @return HttpHandler
      */
-    public function render()
+    public function render($emulate = false)
     {
         if(!$this->prepare() || !$this->process()) {
 			return $this;
@@ -147,7 +132,7 @@ class HttpHandler
 		}
 		
 		if($continue) {
-			$this->getDispatcher()->dispatch($response);
+			$this->getDispatcher()->dispatch($response, $emulate);
 		}
 		
 		//the connection is already closed

@@ -44,8 +44,7 @@ trait RestTrait
 	 */
 	public function getResults(...$args)
 	{
-		if(!count($args))
-		{
+		if(!count($args)) {
 			return $this->getDot('body.results');	
 		}
 		

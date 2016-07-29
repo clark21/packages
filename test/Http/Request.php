@@ -33,409 +33,408 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Http\Request::load
-     * @todo   Implement testLoad().
      */
     public function testLoad()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->load();
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::getArgs
-     * @todo   Implement testGetArgs().
      */
     public function testGetArgs()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('args', array(1, 2, 3));	
+		$actual = $this->object->getArgs();
+		$this->assertEquals(2, $actual[1]);
     }
 
     /**
      * @covers Cradle\Http\Request::setArgs
-     * @todo   Implement testSetArgs().
      */
     public function testSetArgs()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->setArgs(array(1, 2, 3));	
+		$actual = $this->object->getArgs();
+		$this->assertEquals(2, $actual[1]);
     }
 
     /**
      * @covers Cradle\Http\Request::getContent
-     * @todo   Implement testGetContent().
      */
     public function testGetContent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->object->set('body', 'foobar');	
+		$actual = $this->object->getContent();
+		$this->assertEquals('foobar', $actual);
     }
 
     /**
      * @covers Cradle\Http\Request::hasContent
-     * @todo   Implement testHasContent().
      */
     public function testHasContent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->assertFalse($this->object->hasContent());
+		$this->object->set('body', 'foobar');
+		$this->assertTrue($this->object->hasContent());
     }
 
     /**
      * @covers Cradle\Http\Request::setContent
-     * @todo   Implement testSetContent().
      */
     public function testSetContent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setContent('foobar');
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::getCookies
-     * @todo   Implement testGetCookies().
      */
     public function testGetCookies()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('cookie', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertEquals('bar', $this->object->getCookies('foo'));
     }
 
     /**
      * @covers Cradle\Http\Request::hasCookies
-     * @todo   Implement testHasCookies().
      */
     public function testHasCookies()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('cookie', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertTrue($this->object->hasCookies('foo'));
+		$this->assertFalse($this->object->hasCookies('zoo'));
     }
 
     /**
      * @covers Cradle\Http\Request::setCookies
-     * @todo   Implement testSetCookies().
      */
     public function testSetCookies()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setCookies(array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::getFiles
-     * @todo   Implement testGetFiles().
      */
     public function testGetFiles()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('files', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertEquals('bar', $this->object->getFiles('foo'));
     }
 
     /**
      * @covers Cradle\Http\Request::hasFiles
-     * @todo   Implement testHasFiles().
      */
     public function testHasFiles()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('files', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertTrue($this->object->hasFiles('foo'));
+		$this->assertFalse($this->object->hasFiles('zoo'));
     }
 
     /**
      * @covers Cradle\Http\Request::setFiles
-     * @todo   Implement testSetFiles().
      */
     public function testSetFiles()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setFiles(array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::getGet
-     * @todo   Implement testGetGet().
      */
     public function testGetGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('get', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertEquals('bar', $this->object->getGet('foo'));
     }
 
     /**
      * @covers Cradle\Http\Request::hasGet
-     * @todo   Implement testHasGet().
      */
     public function testHasGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('get', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertTrue($this->object->hasGet('foo'));
+		$this->assertFalse($this->object->hasGet('zoo'));
     }
 
     /**
      * @covers Cradle\Http\Request::setGet
-     * @todo   Implement testSetGet().
      */
     public function testSetGet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setGet(array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::getPost
-     * @todo   Implement testGetPost().
      */
     public function testGetPost()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('post', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertEquals('bar', $this->object->getPost('foo'));
     }
 
     /**
      * @covers Cradle\Http\Request::hasPost
-     * @todo   Implement testHasPost().
      */
     public function testHasPost()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('post', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertTrue($this->object->hasPost('foo'));
+		$this->assertFalse($this->object->hasPost('zoo'));
     }
 
     /**
      * @covers Cradle\Http\Request::setPost
-     * @todo   Implement testSetPost().
      */
     public function testSetPost()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setPost(array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::getRoute
-     * @todo   Implement testGetRoute().
      */
     public function testGetRoute()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('route', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertEquals('bar', $this->object->getRoute('foo'));
     }
 
     /**
      * @covers Cradle\Http\Request::getVariables
-     * @todo   Implement testGetVariables().
      */
     public function testGetVariables()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('route', array(
+			'foo' => 'bar',
+			'variables' => array('foo', 'bar')
+		));
+		
+		$this->assertEquals('bar', $this->object->getVariables(1));
     }
 
     /**
      * @covers Cradle\Http\Request::setRoute
-     * @todo   Implement testSetRoute().
      */
     public function testSetRoute()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setRoute(array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::getMethod
-     * @todo   Implement testGetMethod().
      */
     public function testGetMethod()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('method', 'foobar');
+		$this->assertEquals('FOOBAR', $this->object->getMethod());
     }
 
     /**
      * @covers Cradle\Http\Request::getPath
-     * @todo   Implement testGetPath().
      */
     public function testGetPath()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->setPath('/foo/bar');
+		$this->assertEquals('/foo/bar', $this->object->getPath('string'));
     }
 
     /**
      * @covers Cradle\Http\Request::getQuery
-     * @todo   Implement testGetQuery().
      */
     public function testGetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('query', 'foobar');
+		$this->assertEquals('foobar', $this->object->getQuery());
     }
 
     /**
      * @covers Cradle\Http\Request::getServer
-     * @todo   Implement testGetServer().
      */
     public function testGetServer()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('server', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertEquals('bar', $this->object->getServer('foo'));
     }
 
     /**
      * @covers Cradle\Http\Request::hasServer
-     * @todo   Implement testHasServer().
      */
     public function testHasServer()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('server', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertTrue($this->object->hasServer('foo'));
+		$this->assertFalse($this->object->hasServer('zoo'));
     }
 
     /**
      * @covers Cradle\Http\Request::isMethod
-     * @todo   Implement testIsMethod().
      */
     public function testIsMethod()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->assertFalse($this->object->isMethod('foobar'));
+		
+		$this->object->setMethod('foobar');
+		$this->assertTrue($this->object->isMethod('foobar'));
     }
 
     /**
      * @covers Cradle\Http\Request::setMethod
-     * @todo   Implement testSetMethod().
      */
     public function testSetMethod()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setMethod('foobar');
+		
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::setPath
-     * @todo   Implement testSetPath().
      */
     public function testSetPath()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setPath('foobar');
+		
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::setQuery
-     * @todo   Implement testSetQuery().
      */
     public function testSetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setQuery('foobar');
+		
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::setServer
-     * @todo   Implement testSetServer().
      */
     public function testSetServer()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setServer(array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
      * @covers Cradle\Http\Request::getSession
-     * @todo   Implement testGetSession().
      */
     public function testGetSession()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('session', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertEquals('bar', $this->object->getSession('foo'));
     }
 
     /**
      * @covers Cradle\Http\Request::hasSession
-     * @todo   Implement testHasSession().
      */
     public function testHasSession()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->set('session', array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		));
+		
+		$this->assertTrue($this->object->hasSession('foo'));
+		$this->assertFalse($this->object->hasSession('zoo'));
     }
 
     /**
      * @covers Cradle\Http\Request::setSession
-     * @todo   Implement testSetSession().
      */
     public function testSetSession()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$session = array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		);
+
+		$instance = $this->object->setSession($session);
+		
+		$this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 }

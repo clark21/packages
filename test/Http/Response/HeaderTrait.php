@@ -21,7 +21,12 @@ class Cradle_Http_Response_HeaderTrait_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new HeaderTraitStub;
+        $this->object = new HeaderTraitStub(array(
+			'headers' => array(
+				'foo' => 'bar',
+				'bar' => 'foo'
+			)
+		));
     }
 
     /**
@@ -34,26 +39,22 @@ class Cradle_Http_Response_HeaderTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Http\Response\HeaderTrait::addHeader
-     * @todo   Implement testAddHeader().
      */
     public function testAddHeader()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->addHeader('zoo', 'foo');
+		$this->assertInstanceOf('Cradle\Http\Response\HeaderTraitStub', $instance);
     }
 
     /**
      * @covers Cradle\Http\Response\HeaderTrait::getHeaders
-     * @todo   Implement testGetHeaders().
      */
     public function testGetHeaders()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getHeaders();
+		$this->assertArrayHasKey('foo', $actual);
+		$actual = $this->object->getHeaders('foo');
+		$this->assertEquals('bar', $actual);
     }
 }
 

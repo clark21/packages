@@ -27,19 +27,30 @@ interface DispatcherInterface
      * output. Then of course, output it
      *
      * @param ResponseInterface $response The response object to evaluate
+     * @param bool              $emulate  If you really want it to echo (for testing)
      *
-     * @return DispatcherInterface
+     * @return HttpHandler
      */
-    public function output(ResponseInterface $response);
+    public function output(ResponseInterface $response, $emulate = false);
 	
     /**
      * Starts to process the request
 	 *
      * @param ResponseInterface $response The response object to evaluate
+     * @param bool              $emulate  If you really want it to echo (for testing)
      *
      * @return array with request and response inside
      */
-    public function dispatch(ResponseInterface $response);
+    public function dispatch(ResponseInterface $response, $emulate = false);
+    
+    /**
+     * Browser redirect
+     *
+     * @param *string $path  Where to redirect to
+     * @param bool    $force Whether if you want to exit immediately
+     * @param bool    $emulate  If you really want it to redirect (for testing)
+     */
+    public function redirect($path, $force = false, $emulate = false);
     
     /**
      * Returns if we were able to output

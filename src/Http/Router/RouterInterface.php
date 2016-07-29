@@ -9,6 +9,8 @@
 
 namespace Cradle\Http\Router;
 
+use Cradle\Http\Request\RequestInterface;
+
 /**
  * Handles method-path matching and routing
  *

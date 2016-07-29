@@ -21,7 +21,12 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ContentTraitStub;
+        $this->object = new ContentTraitStub(array(
+			'body' => array(
+				'foo' => 'bar',
+				'bar' => 'foo'
+			)
+		));
     }
 
     /**
@@ -34,50 +39,45 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Http\Response\ContentTrait::getContent
-     * @todo   Implement testGetContent().
      */
     public function testGetContent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getContent();
+		$this->assertArrayHasKey('foo', $actual);
+		
+		$actual = $this->object->getContent(true);
+		
+		$this->assertEquals(json_encode(array(
+			'foo' => 'bar',
+			'bar' => 'foo'
+		), JSON_PRETTY_PRINT), $actual);
     }
 
     /**
      * @covers Cradle\Http\Response\ContentTrait::hasContent
-     * @todo   Implement testHasContent().
      */
     public function testHasContent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertTrue($this->object->hasContent());
     }
 
     /**
      * @covers Cradle\Http\Response\ContentTrait::isContentFlat
-     * @todo   Implement testIsContentFlat().
      */
     public function testIsContentFlat()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $this->assertFalse($this->object->isContentFlat());
     }
 
     /**
      * @covers Cradle\Http\Response\ContentTrait::setContent
-     * @todo   Implement testSetContent().
      */
     public function testSetContent()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setContent('foobar');
+		
+		$this->assertInstanceOf('Cradle\Http\Response\ContentTraitStub', $instance);
+        $this->assertTrue($this->object->isContentFlat());
     }
 }
 

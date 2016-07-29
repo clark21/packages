@@ -66,7 +66,7 @@ trait ContentTrait
 	 */
 	public function isContentFlat()
 	{
-		return !is_scalar($this->get('body'));
+		return is_scalar($this->get('body'));
 	}
 	
 	/**

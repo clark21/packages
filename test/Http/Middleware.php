@@ -33,25 +33,18 @@ class Cradle_Http_Middleware_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Http\Middleware::register
-     * @todo   Implement testRegister().
      */
     public function testRegister()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->register(function() {});
+		$this->assertInstanceOf('Cradle\Http\Middleware', $instance);
     }
 
     /**
      * @covers Cradle\Http\Middleware::process
-     * @todo   Implement testProcess().
      */
     public function testProcess()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->assertTrue($this->object->process());
     }
 }

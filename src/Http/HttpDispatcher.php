@@ -49,29 +49,15 @@ class HttpDispatcher implements DispatcherInterface
     protected $successful = false;
     
     /**
-     * We might as well...
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        try {
-            return $this->dispatch();
-        } catch (Exception $e) {
-        }
-        
-        return '';
-    }
-    
-    /**
      * Evaluates the response in order to determine the
      * output. Then of course, output it
      *
      * @param ResponseInterface $response The response object to evaluate
+     * @param bool              $emulate  If you really want it to echo (for testing)
      *
      * @return HttpHandler
      */
-    public function output(ResponseInterface $response)
+    public function output(ResponseInterface $response, $emulate = false)
     {
 		$code = $response->getStatus();
         $headers = $response->getHeaders();
@@ -79,6 +65,11 @@ class HttpDispatcher implements DispatcherInterface
 		
 		//make sure it's a string
 		$body = (string) $body;
+		
+		if($emulate) {
+			$this->successful = true;
+			return $body;
+		}
 		
         if (is_int($code)) {
             http_response_code($code);
@@ -139,10 +130,11 @@ class HttpDispatcher implements DispatcherInterface
      * Starts to process the request
 	 *
      * @param ResponseInterface $response The response object to evaluate
+     * @param bool              $emulate  If you really want it to echo (for testing)
      *
      * @return array with request and response inside
      */
-    public function dispatch(ResponseInterface $response)
+    public function dispatch(ResponseInterface $response, $emulate = false)
     {
 		$redirect = $response->getHeaders('Location');
 		
@@ -162,7 +154,7 @@ class HttpDispatcher implements DispatcherInterface
 				}
 			}
 			
-			return $this->redirect($redirect);
+			return $this->redirect($redirect, false, $emulate);
 		}
 
 		if(!$response->isContentFlat()
@@ -186,7 +178,7 @@ class HttpDispatcher implements DispatcherInterface
             $headers['Content-Type'] = 'text/html; charset=utf-8';
         }
 
-        return $this->output($response);
+        return $this->output($response, $emulate);
     }
     
     /**
@@ -194,9 +186,14 @@ class HttpDispatcher implements DispatcherInterface
      *
      * @param *string $path  Where to redirect to
      * @param bool    $force Whether if you want to exit immediately
+     * @param bool    $emulate  If you really want it to redirect (for testing)
      */
-    public function redirect($path, $force = false)
+    public function redirect($path, $force = false, $emulate = false)
     {
+		if($emulate) {
+			return $path;
+		}
+		
 		if($force) {
 			header('Location: ' . $path);
 			exit;

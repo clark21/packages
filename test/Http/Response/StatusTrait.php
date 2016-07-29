@@ -21,7 +21,13 @@ class Cradle_Http_Response_StatusTrait_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new StatusTraitStub;
+        $this->object = new StatusTraitStub(array(
+			'code' => 200,
+			'headers' => array(
+				'foo' => 'bar',
+				'bar' => 'foo'
+			)
+		));
     }
 
     /**
@@ -34,26 +40,20 @@ class Cradle_Http_Response_StatusTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Http\Response\StatusTrait::getStatus
-     * @todo   Implement testGetStatus().
      */
     public function testGetStatus()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$code = $this->object->getStatus();
+		$this->assertEquals(200, $code);
     }
 
     /**
      * @covers Cradle\Http\Response\StatusTrait::setStatus
-     * @todo   Implement testSetStatus().
      */
     public function testSetStatus()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setStatus(404, '404 Not Found');
+		$this->assertInstanceOf('Cradle\Http\Response\StatusTraitStub', $instance);
     }
 }
 

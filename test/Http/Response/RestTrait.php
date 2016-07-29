@@ -21,7 +21,20 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new RestTraitStub;
+        $this->object = new RestTraitStub(array(
+			'body' => array(
+				'error' => true,
+				'message' => 'foobar',
+				'validation' => array(
+					'foo' => 'bar',
+					'bar' => 'foo'
+				), 
+				'results' => array(
+					'foo' => 'bar',
+					'bar' => 'foo'
+				)
+			)
+		));
     }
 
     /**
@@ -34,66 +47,55 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Http\Response\RestTrait::addValidation
-     * @todo   Implement testAddValidation().
      */
     public function testAddValidation()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->addValidation('zoo', 'foo');
+		$this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
     }
 
     /**
      * @covers Cradle\Http\Response\RestTrait::getResults
-     * @todo   Implement testGetResults().
      */
     public function testGetResults()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getResults();
+		$this->assertArrayHasKey('foo', $actual);
+		$actual = $this->object->getResults('foo');
+		$this->assertEquals('bar', $actual);
     }
 
     /**
      * @covers Cradle\Http\Response\RestTrait::getValidation
-     * @todo   Implement testGetValidation().
      */
     public function testGetValidation()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getValidation();
+		$this->assertArrayHasKey('foo', $actual);
+		$actual = $this->object->getValidation('foo');
+		$this->assertEquals('bar', $actual);
     }
 
     /**
      * @covers Cradle\Http\Response\RestTrait::setError
-     * @todo   Implement testSetError().
      */
     public function testSetError()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setError(false);
+		$this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
     }
 
     /**
      * @covers Cradle\Http\Response\RestTrait::setResults
-     * @todo   Implement testSetResults().
      */
     public function testSetResults()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setResults('zoo', 'foo');
+		$this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
     }
 }
 
-if(!class_exists('Cradle\Http\Request\RestTraitStub')) {
+if(!class_exists('Cradle\Http\Response\RestTraitStub')) {
 	class RestTraitStub extends Registry
 	{
 		use RestTrait;
