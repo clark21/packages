@@ -10,7 +10,7 @@
 namespace Cradle\Http\Middleware;
 
 /**
- * Express style server class implementation
+ * Express style middleware object
  *
  * @vendor   Cradle
  * @package  Http

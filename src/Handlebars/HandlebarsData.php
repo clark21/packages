@@ -130,7 +130,7 @@ class HandlebarsData
      *
      * @param *array $data
      *
-     * @return Data
+     * @return HandlebarsData
      */
     public function push(array $data)
     {
@@ -141,7 +141,7 @@ class HandlebarsData
     /**
      * Pops the last context
      *
-     * @return Data
+     * @return HandlebarsData
      */
     public function pop()
     {

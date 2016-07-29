@@ -12,6 +12,7 @@ namespace Cradle\Resolver;
 use Closure;
 
 /**
+ * States are used when classes want to resolve themselves
  *
  * @package  Cradle
  * @category Resolver

@@ -10,6 +10,7 @@
 namespace Cradle\Http\Request;
 
 /**
+ * Designed for the Request Object; Adds methods to store $_POST data
  *
  * @vendor   Cradle
  * @package  Http
@@ -21,8 +22,8 @@ trait PostTrait
 	/**
 	 * Returns POST data given name or all POST data
 	 *
-	 * @param string|null $name The key name in the POST
-	 * @param mixed       $args
+	 * @param string|null $name    The key name in the POST
+	 * @param mixed       ...$args
 	 *
 	 * @return mixed
 	 */
@@ -38,8 +39,8 @@ trait PostTrait
 	/**
 	 * Returns POST data given name or all POST data
 	 *
-	 * @param string|null $name The key name in the POST
-	 * @param mixed       $args
+	 * @param string|null $name    The key name in the POST
+	 * @param mixed       ...$args
 	 *
 	 * @return bool
 	 */
@@ -55,9 +56,10 @@ trait PostTrait
 	/**
 	 * Sets POST
 	 *
-	 * @param *array $post
+	 * @param *mixed $data
+	 * @param mixed  ...$args
 	 *
-	 * @return Request
+	 * @return PostTrait
 	 */
 	public function setPost($data, ...$args)
 	{

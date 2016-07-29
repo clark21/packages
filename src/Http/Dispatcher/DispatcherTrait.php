@@ -12,7 +12,9 @@ namespace Cradle\Http\Dispatcher;
 use Cradle\Http\HttpDispatcher;
 
 /**
- *
+ * Designed for the HttpHandler we are parting this out
+ * to lessen the confusion
+ * 
  * @package  Cradle
  * @category Http
  * @author   Christian Blanquera <cblanquera@openovate.com>
@@ -42,9 +44,9 @@ trait DispatcherTrait
     /**
      * Sets the dispatcher to use
      *
-     * @param HttpDispatcher $dispatcher
+     * @param DispatcherInterface $dispatcher
      *
-     * @return HttpHandler
+     * @return DispatcherTrait
      */
     public function setDispatcher(DispatcherInterface $dispatcher)
     {

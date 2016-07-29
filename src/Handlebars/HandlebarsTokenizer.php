@@ -136,7 +136,10 @@ class HandlebarsTokenizer
      *
      * @param *int      $start
      * @param *string   $type
-     * @param *function $callback
+     * @param *int      $line
+     * @param *int      $offset1
+     * @param *int      $offset2
+     * @param *callable $callback
      *
      * @return HandlebarsTokenizer
      */
@@ -183,7 +186,7 @@ class HandlebarsTokenizer
      * the callback
      *
      * @param *int      $i
-     * @param *function $callback
+     * @param *callable $callback
      *
      * @return HandlebarsTokenizer
      */

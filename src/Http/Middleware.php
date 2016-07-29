@@ -12,7 +12,7 @@ namespace Cradle\Http;
 use Cradle\Http\Middleware\MiddlewareInterface;
 
 /**
- * Express style server class implementation
+ * Express style middleware object
  *
  * @vendor   Cradle
  * @package  Http
@@ -36,7 +36,7 @@ class Middleware implements MiddlewareInterface
      *
      * @param function $callback The middleware handler
      *
-     * @return HttpHandler
+     * @return Middleware
      */
     public function register($callback)
     {

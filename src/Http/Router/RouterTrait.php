@@ -12,6 +12,8 @@ namespace Cradle\Http\Router;
 use Cradle\Http\Router;
 
 /**
+ * Designed for the HttpHandler we are parting this out
+ * to lessen the confusion
  *
  * @package  Cradle
  * @category Http

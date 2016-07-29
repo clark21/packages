@@ -9,24 +9,31 @@
 
 namespace Cradle\Frame;
 
-use Cradle\Event\PipeTrait;
 use Cradle\Resolver\ResolverTrait;
 
 /**
+ * If you want to utilize composer packages
+ * as plugins/extensions/addons you can adopt
+ * this trait
  *
  * @vendor   Cradle
  * @package  Frame
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
-trait FrameTrait
+trait PackageTrait
 {	
-	use PipeTrait, ResolverTrait;
+	use ResolverTrait;
 
 	/**
 	 * @var array $packages A safe place to store package junk
 	 */
 	protected $packages = array();
+
+	/**
+	 * @var string $bootstrapFile A file to call on when a package is registered
+	 */
+	protected $bootstrapFile = '.cradle';
 	
 	/**
 	 * Setups dispatcher and global package
@@ -41,7 +48,7 @@ trait FrameTrait
 	 *
 	 * @param *string $vendor The vendor/package name
 	 *
-	 * @return FrameService
+	 * @return PackageTrait
 	 */
 	public function package($vendor)
 	{
@@ -57,7 +64,7 @@ trait FrameTrait
 	 *
 	 * @param *string $vendor The vendor/package name
 	 *
-	 * @return FrameService
+	 * @return PackageTrait
 	 */
 	public function register($vendor)
 	{
@@ -73,7 +80,7 @@ trait FrameTrait
 		}
 		
 		//we should check for events
-		$file = $root . $vendor . '/.cradle';
+		$file = $root . $vendor . '/' . $this->bootstrapFile;
 
 		if(file_exists($file)) {
 			//so you can access cradle 
@@ -81,6 +88,20 @@ trait FrameTrait
 			$cradle = $this;
 			include_once($file);
 		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns a package space
+	 *
+	 * @param *string $file A file to call on when a package is registered
+	 *
+	 * @return PackageTrait
+	 */
+	public function setBootstrapFile($file)
+	{
+		$this->bootstrapFile = $file;
 		
 		return $this;
 	}

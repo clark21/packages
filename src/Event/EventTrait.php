@@ -70,7 +70,7 @@ trait EventTrait
 	/**
 	 * Allow for a custom dispatcher to be used 
 	 *
-	 * @param *EventHandler $handler
+	 * @param *EventInterface $handler
 	 * 
 	 * @return EventTrait
 	 */
@@ -84,8 +84,8 @@ trait EventTrait
      * Notify all observers of that a specific
      * event has happened
      *
-     * @param string           $event the event to trigger
-     * @param mixed[, mixed..] $arg   the arguments to pass to the handler
+     * @param *string $event The event to trigger
+     * @param mixed   ...$args The arguments to pass to the handler
      *
      * @return EventTrait
      */

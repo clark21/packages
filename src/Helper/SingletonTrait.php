@@ -11,6 +11,10 @@
 namespace Cradle\Helper;
 
 /**
+ * Instantiates a class without using `new`. This is used
+ * primarly to start chaining immediately without assigning
+ * this instance to a variable. This particularly follows a 
+ * singleton pattern. No singletons are used in this library
  *
  * @package  Cradle
  * @category Helper

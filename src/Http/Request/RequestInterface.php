@@ -10,7 +10,7 @@
 namespace Cradle\Http\Request;
 
 /**
- * Request Class
+ * HTTP Request Object
  *
  * @vendor   Cradle
  * @package  Http

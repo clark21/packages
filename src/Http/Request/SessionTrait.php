@@ -10,6 +10,7 @@
 namespace Cradle\Http\Request;
 
 /**
+ * Designed for the Request Object; Adds methods to store $_SESSION data
  *
  * @vendor   Cradle
  * @package  Http
@@ -22,7 +23,7 @@ trait SessionTrait
 	 * Returns SESSION data given name or all SESSION data
 	 *
 	 * @param string|null $name The key name in the SESSION
-	 * @param mixed       $args
+	 * @param mixed       ...$args
 	 *
 	 * @return mixed
 	 */
@@ -38,7 +39,7 @@ trait SessionTrait
 	/**
 	 * Returns SESSION data given name or all SESSION data
 	 *
-	 * @param mixed $args
+	 * @param mixed  ...$args
 	 *
 	 * @return bool
 	 */
@@ -50,9 +51,10 @@ trait SessionTrait
 	/**
 	 * Sets SESSION
 	 *
-	 * @param *array $session
+	 * @param *array $data
+	 * @param mixed  ...$args
 	 *
-	 * @return Request
+	 * @return SessionTrait
 	 */
 	public function setSession(&$data, ...$args)
 	{

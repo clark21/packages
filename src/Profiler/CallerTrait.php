@@ -10,6 +10,7 @@
 namespace Cradle\Profiler;
 
 /**
+ * JavaScript like caller and callee methods
  *
  * @package  Cradle
  * @category Core

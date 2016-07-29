@@ -32,7 +32,7 @@ class FrameException extends Exception
 	const ERROR_METHOD_NOT_FOUND = 'No method named %s was found';
 	
     /**
-     * Create a new exception for invalid callback
+     * Create a new exception for invalid package
      *
      * @param *string $vendor
 	 *
@@ -44,9 +44,9 @@ class FrameException extends Exception
 	}
 	
     /**
-     * Create a new exception for invalid callback
+     * Create a new exception for invalid method
      *
-     * @param *string $vendor
+     * @param *string $name
 	 *
      * @return FrameException
      */

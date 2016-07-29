@@ -11,7 +11,10 @@
 namespace Cradle\Helper;
 
 /**
- *
+ * Instantiates a class without using `new`. This is used
+ * primarly to start chaining immediately without assigning
+ * this instance to a variable
+ * 
  * @package  Cradle
  * @category Helper
  * @author   Christian Blanquera <cblanquera@openovate.com>
@@ -29,14 +32,13 @@ trait InstanceTrait
      * for each class call. By default we instantiate classes with
      * this method.
      *
-     * @param mixed[,mixed..] $args Arguments to pass to the constructor
+     * @param mixed ...$args Arguments to pass to the constructor
      *
      * @return object
      */
-    public static function i()
+    public static function i(...$args)
     {
         $class = get_called_class();
-		$args = func_get_args();
 		return new $class(...$args); 
     }
 }

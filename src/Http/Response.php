@@ -19,7 +19,7 @@ use Cradle\Http\Response\RestTrait;
 use Cradle\Http\Response\StatusTrait;
 
 /**
- * Response Class
+ * Http Response Object
  *
  * @vendor   Cradle
  * @package  Server

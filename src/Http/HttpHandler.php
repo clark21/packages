@@ -32,7 +32,9 @@ use Cradle\Http\Middleware\PostProcessorTrait;
 use Cradle\Http\Middleware\ErrorProcessorTrait;
 
 /**
- * Express style server class implementation
+ * Main HTTP Handler which connects everything together.
+ * We moved out everything that is not the main process flow
+ * to traits and reinserted them here to make this easy to follow.
  *
  * @vendor   Cradle
  * @package  Http
@@ -76,7 +78,7 @@ class HttpHandler
     }
 
 	/**
-	 * Prepares the event and calls the middleware
+	 * Prepares the event and calls the preprocessors
 	 *
 	 * @return bool Whether if the process should continue
 	 */
@@ -101,9 +103,9 @@ class HttpHandler
 	}
 	
 	/**
-	 * Serves up an order of bread
+	 * Handles the main routing process
 	 *
-	 * @param *string $name The event name to serve
+	 * @return bool Whether if the process should continue
 	 */
 	public function process()
 	{

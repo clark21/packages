@@ -9,6 +9,8 @@
 
 namespace Cradle\Handlebars;
 
+use Closure;
+
 /**
  * Welcome to Cradle\Handlebars!
  *
@@ -44,14 +46,19 @@ class HandlebarsRuntime
     /**
      * Returns a specific helper
      *
-     * @param *string $name The name of the helper
+     * @param *string             $name The name of the helper
+	 * @param HandlebarsData|null $data If provided we will bind the callback with Data
      *
-     * @return function|null
+     * @return Closure|null
      */
-    public static function getHelper($name, HandlebarsData $bind = null)
+    public static function getHelper($name, HandlebarsData $data = null)
     {
         if (isset(self::$helpers[$name])) {
-	        return self::$helpers[$name];
+			if (!is_null($data) && self::$helpers[$name] instanceof Closure) {
+				return self::$helpers[$name]->bindTo($data, get_class($data));
+			}
+	        
+			return self::$helpers[$name];
         }
         
         return null;
@@ -60,6 +67,8 @@ class HandlebarsRuntime
     /**
      * Returns all the registered helpers
      *
+	 * @param HandlebarsData|null $bind If provided we will bind the callbacks with Data
+	 *
      * @return array
      */
     public static function getHelpers(HandlebarsData $data = null)
@@ -71,7 +80,9 @@ class HandlebarsRuntime
         $helpers = [];
         
         foreach (self::$helpers as $name => $helper) {
-            $helpers[$name] = $helper->bindTo($data, get_class($data));
+			if($helper instanceof Closure) {
+            	$helpers[$name] = $helper->bindTo($data, get_class($data));
+			}
         }
         
         return $helpers;

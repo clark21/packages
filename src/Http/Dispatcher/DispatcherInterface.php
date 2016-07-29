@@ -12,7 +12,8 @@ namespace Cradle\Http\Dispatcher;
 use Cradle\Http\Response\ResponseInterface;
 
 /**
- * Express style server class implementation
+ * This deals with the releasing of content into the 
+ * main output buffer. Considers headers and post processing
  *
  * @vendor   Cradle
  * @package  Http
@@ -22,12 +23,10 @@ use Cradle\Http\Response\ResponseInterface;
 interface DispatcherInterface
 {
     /**
-     * Evaluates the response
-     * in order to determine the
-     * output. Then of course,
-     * output it
+     * Evaluates the response in order to determine the
+     * output. Then of course, output it
      *
-     * @param Response $response The response object to evaluate
+     * @param ResponseInterface $response The response object to evaluate
      *
      * @return DispatcherInterface
      */
@@ -35,6 +34,8 @@ interface DispatcherInterface
 	
     /**
      * Starts to process the request
+	 *
+     * @param ResponseInterface $response The response object to evaluate
      *
      * @return array with request and response inside
      */

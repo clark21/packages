@@ -10,6 +10,7 @@
 namespace Cradle\Http\Request;
 
 /**
+ * Designed for the Request Object; Adds methods to store $_SERVER data
  *
  * @vendor   Cradle
  * @package  Http
@@ -103,7 +104,7 @@ trait ServerTrait
 	 *
 	 * @param *string $method
 	 *
-	 * @return Request
+	 * @return ServerTrait
 	 */
 	public function setMethod($method)
 	{
@@ -115,7 +116,7 @@ trait ServerTrait
 	 *
 	 * @param *string|array $path
 	 *
-	 * @return Request
+	 * @return ServerTrait
 	 */
 	public function setPath($path)
 	{
@@ -136,7 +137,7 @@ trait ServerTrait
 	 *
 	 * @param *string $get
 	 *
-	 * @return Request
+	 * @return ServerTrait
 	 */
 	public function setQuery($query)
 	{
@@ -148,7 +149,7 @@ trait ServerTrait
 	 *
 	 * @param *array $server
 	 *
-	 * @return Request
+	 * @return ServerTrait
 	 */
 	public function setServer(array $server)
 	{

@@ -10,6 +10,7 @@
 namespace Cradle\Profiler;
 
 /**
+ * Used to inspect classes and result sets
  * 
  * @package  Cradle
  * @category Inspector

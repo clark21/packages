@@ -12,6 +12,7 @@ namespace Cradle\Profiler;
 use Closure;
 
 /**
+ * If you want to enable logging capabilities within your class
  *
  * @package  Cradle
  * @category Core

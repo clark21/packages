@@ -12,6 +12,7 @@ namespace Cradle\Http\Middleware;
 use Cradle\Http\Middleware;
 
 /**
+ * These sets of callbacks are called after the connection is closed
  *
  * @package  Cradle
  * @category Http

@@ -10,7 +10,7 @@
 namespace Cradle\Http\Response;
 
 /**
- * Response Class
+ * Http Response Object
  *
  * @vendor   Cradle
  * @package  Http

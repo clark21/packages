@@ -10,6 +10,7 @@
 namespace Cradle\Http\Response;
 
 /**
+ * Designed for the Response Object; Adds methods to process status codes
  *
  * @vendor   Cradle
  * @package  Server
@@ -34,7 +35,7 @@ trait StatusTrait
 	 * @param *int    $code   Status code
 	 * @param *string $status The string literal code for header
 	 *
-	 * @return Response
+	 * @return StatusTrait
 	 */
 	public function setStatus($code, $status) 
 	{

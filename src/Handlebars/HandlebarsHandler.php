@@ -153,7 +153,7 @@ class HandlebarsHandler
      * The famous register helper matching the Handlebars API
      *
      * @param *string   $name   The name of the helper
-     * @param *function $helper The helper handler
+     * @param *callable $helper The helper handler
      *
      * @return HandlebarsHandler
      */

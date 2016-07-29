@@ -12,6 +12,8 @@ namespace Cradle\Resolver;
 use Closure;
 
 /**
+ * This will add resolver features to any 
+ * class that wants to be test friendly
  *
  * @package  Cradle
  * @category Resolver

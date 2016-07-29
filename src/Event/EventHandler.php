@@ -102,8 +102,8 @@ class EventHandler implements EventInterface
      * Notify all observers of that a specific
      * event has happened
      *
-     * @param string|null      $event The event to trigger
-     * @param mixed[, mixed..] $args  The arguments to pass to the handler
+     * @param *string $event The event to trigger
+     * @param mixed   ...$args The arguments to pass to the handler
      *
      * @return EventHandler
      */

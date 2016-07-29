@@ -10,7 +10,7 @@
 namespace Cradle\Http\Response;
 
 /**
- * Response Class
+ * Designed for the Response Object; Adds methods to process REST type responses
  *
  * @vendor   Cradle
  * @package  Server
@@ -25,6 +25,8 @@ trait RestTrait
 	 *
 	 * @param *string $field
 	 * @param *string $message
+	 *
+	 * @return RestTrait
 	 */
 	public function addValidation($field, $message)
 	{
@@ -35,6 +37,8 @@ trait RestTrait
 
 	/**
 	 * Returns JSON results if still in array mode
+	 *
+	 * @param mixed ...$args
 	 *
 	 * @return mixed
 	 */
@@ -52,7 +56,7 @@ trait RestTrait
 	 * Returns JSON validations if still in array mode
 	 *
 	 * @param string|null $name
-	 * @param mixed       $args
+	 * @param mixed       ...$args
 	 *
 	 * @return mixed
 	 */
@@ -69,9 +73,10 @@ trait RestTrait
 	 * Sets a JSON error message
 	 * warning: This turns the body into an array
 	 *
-	 * @param *mixed $content Can it be an array or string please?
+	 * @param *bool  $status  True if there is an error
+	 * @param string $message A message to describe this error
 	 *
-	 * @return Response
+	 * @return RestTrait
 	 */
 	public function setError($status, $message = null)
 	{
@@ -88,9 +93,10 @@ trait RestTrait
 	 * Sets a JSON result
 	 * warning: This turns the body into an array
 	 *
-	 * @param *mixed $results
+	 * @param *mixed $data
+	 * @param mixed  ...$args
 	 *
-	 * @return Response
+	 * @return RestTrait
 	 */
 	public function setResults($data, ...$args)
 	{	

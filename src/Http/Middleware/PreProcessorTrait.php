@@ -12,6 +12,7 @@ namespace Cradle\Http\Middleware;
 use Cradle\Http\Middleware;
 
 /**
+ * These sets of callbacks are called before routing
  *
  * @package  Cradle
  * @category Http

@@ -289,7 +289,7 @@ class HandlebarsCompiler
      *
      * @param *int $offset This is to preset the tabbing when generating the code
      *
-     * @return Compiler
+     * @return HandlebarsCompiler
      */
     public function setOffset($offset)
     {   
@@ -302,7 +302,7 @@ class HandlebarsCompiler
      *
      * @param *StdClass $reference
      *
-     * @return function
+     * @return Closure
      */
 	protected function getTokenizeCallback(StdClass $reference)
 	{
@@ -475,7 +475,7 @@ class HandlebarsCompiler
      *
      * @return string
      */
-    protected function generateOpen($node, &$open)
+    protected function generateOpen(array $node, array &$open)
     {
         $node['value'] = trim($node['value']);
         
@@ -521,7 +521,7 @@ class HandlebarsCompiler
      *
      * @return string
      */
-    protected function generateClose($node, &$open)
+    protected function generateClose(array $node, array &$open)
     {
         $node['value'] = trim($node['value']);
         
@@ -669,7 +669,7 @@ class HandlebarsCompiler
      * If there's a quote, null, bool,
      * int, float... it's the literal value
      *
-     * @param *string $value One string argument value
+     * @param *string $arg One string argument value
      *
      * @return mixed
      */
@@ -699,11 +699,11 @@ class HandlebarsCompiler
     /**
      * Calls an alternative helper to add on to the compiled code
      *
-     * @param *array  $node
+     * @param *array $node
      *
      * @return string|false
      */
-    protected function tokenize($node)
+    protected function tokenize(array $node)
     {
         //lookout for pre processors helper
         $value = explode(' ', $node['value']);
@@ -735,8 +735,8 @@ class HandlebarsCompiler
      * Makes code look nicely spaced
      *
      * @param *string $code
-     * @param *int    $before Used to set the token before spacing
-     * @param *int    $after Used to set the token after spacing
+     * @param int     $before Used to set the token before spacing
+     * @param int     $after Used to set the token after spacing
      *
      * @return string
      */
@@ -783,11 +783,11 @@ class HandlebarsCompiler
      * Finds a particular node in the open sections
      *
      * @param *array  $open The open nodes
-     * @param *string $name The last name of the node we are looking for
+     * @param string  $name The last name of the node we are looking for
      *
      * @return int The index where the section is found
      */
-    protected function findSection($open, $name = self::LAST_OPEN)
+    protected function findSection(array $open, $name = self::LAST_OPEN)
     {
         foreach ($open as $i => $item) {
             $item = explode(' ', $item['value']);

@@ -10,6 +10,7 @@
 namespace Cradle\Http\Request;
 
 /**
+ * Designed for the Request Object; Adds methods to store $_COOKIE data
  *
  * @vendor   Cradle
  * @package  Http
@@ -22,7 +23,7 @@ trait CookieTrait
 	 * Returns cookies given name or all cookies
 	 *
 	 * @param string|null $name The key name in the COOKIE
-	 * @param mixed       $args
+	 * @param mixed       ...$args
 	 *
 	 * @return mixed
 	 */
@@ -39,7 +40,7 @@ trait CookieTrait
 	 * Returns cookies given name or all cookies
 	 *
 	 * @param string|null $name The key name in the COOKIE
-	 * @param mixed       $args
+	 * @param mixed       ...$args
 	 *
 	 * @return bool
 	 */
@@ -55,9 +56,10 @@ trait CookieTrait
 	/**
 	 * Sets COOKIE
 	 *
-	 * @param *array $cookies
+	 * @param *array $data
+	 * @param mixed  ...$args
 	 *
-	 * @return Request
+	 * @return CookieTrait
 	 */
 	public function setCookies($data, ...$args)
 	{

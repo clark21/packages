@@ -10,6 +10,7 @@
 namespace Cradle\Http\Request;
 
 /**
+ * Designed for the Request Object; Adds methods to store raw input
  *
  * @vendor   Cradle
  * @package  Http
@@ -43,7 +44,7 @@ trait ContentTrait
 	 *
 	 * @param *mixed $content
 	 *
-	 * @return Request
+	 * @return ContentTrait
 	 */
 	public function setContent($content)
 	{

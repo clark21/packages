@@ -12,6 +12,10 @@ namespace Cradle\Event;
 use Closure;
 
 /**
+ * An event pipe executes a series of triggers
+ * one after the other called flows. Sub flows
+ * defined in the same call to help visualize
+ * and group process flows.
  *
  * @vendor   Cradle
  * @package  Pipe
@@ -30,10 +34,10 @@ trait PipeTrait
 	/**
 	 * Sets up a process flow
 	 *
-	 * @param *string               $name     The name of this rule
-	 * @param [string|callable, ..] $flow  An event name or callback
+	 * @param *string         $name     The name of this rule
+	 * @param string|callable ...$flow  An event name or callback
 	 *
-	 * @return EventPipe
+	 * @return PipeTrait
 	 */
 	public function flow($event, ...$flow)
 	{	
@@ -66,7 +70,7 @@ trait PipeTrait
 	 * @param *string   $name The middleware handler
 	 * @param *callable $callback The middleware handler
 	 *
-	 * @return Base
+	 * @return PipeTrait
 	 */
 	public function protocol($name, $callback)
 	{	
@@ -80,9 +84,9 @@ trait PipeTrait
 	 * Calls an event considering classes and protocols
 	 *
 	 * @param *string|callable $name
-	 * @param mixed            $args
+	 * @param mixed            ...$args
 	 * 
-	 * @return EventPipe
+	 * @return PipeTrait
 	 */
 	public function trigger($name, ...$args)
 	{
@@ -124,9 +128,9 @@ trait PipeTrait
 	 * Calls a controller method
 	 *
 	 * @param *string $controller In the form of class@method
-	 * @param mixed   $args
+	 * @param mixed   ...$args
 	 * 
-	 * @return EventPipe
+	 * @return PipeTrait
 	 */
 	public function triggerController($controller, ...$args)
 	{
@@ -151,7 +155,7 @@ trait PipeTrait
 	 * Calls a protocol
 	 *
 	 * @param *string $protocol In the form of protocol://event
-	 * @param *Event  $event    Event object to pass
+	 * @param mixed   ...$args
 	 * 
 	 * @return Base
 	 */

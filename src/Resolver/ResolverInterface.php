@@ -10,6 +10,8 @@
 namespace Cradle\Resolver;
 
 /**
+ * A resolver is a container interface used to manage class 
+ * dependancies which is useful to properly test classes
  * 
  * @package  Cradle
  * @category Resolver

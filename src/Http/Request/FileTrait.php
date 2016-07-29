@@ -10,6 +10,7 @@
 namespace Cradle\Http\Request;
 
 /**
+ * Designed for the Request Object; Adds methods to store $_FILES data
  *
  * @vendor   Cradle
  * @package  Http
@@ -22,7 +23,7 @@ trait FileTrait
 	 * Returns file data given name or all files
 	 *
 	 * @param string|null $name The key name in the FILES
-	 * @param mixed       $args
+	 * @param mixed       ...$args
 	 *
 	 * @return mixed
 	 */
@@ -39,7 +40,7 @@ trait FileTrait
 	 * Returns file data given name or all files
 	 *
 	 * @param string|null $name The key name in the FILES
-	 * @param mixed       $args
+	 * @param mixed       ...$args
 	 *
 	 * @return bool
 	 */
@@ -55,9 +56,10 @@ trait FileTrait
 	/**
 	 * Sets FILES
 	 *
-	 * @param *array $files
+	 * @param *array $data
+	 * @param mixed  ...$args
 	 *
-	 * @return Request
+	 * @return FileTrait
 	 */
 	public function setFiles($data, ...$args)
 	{

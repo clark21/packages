@@ -9,7 +9,11 @@
 
 namespace Cradle\Frame;
 
+use Cradle\Event\PipeTrait;
+
 /**
+ * Service level handler for micro framework 
+ * calls. Handles process using event pipes.
  *
  * @vendor   Cradle
  * @package  Frame
@@ -18,5 +22,6 @@ namespace Cradle\Frame;
  */
 class FrameService
 {	
-	use FrameTrait;
+	use PipeTrait,
+		PackageTrait;
 }

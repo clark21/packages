@@ -10,6 +10,7 @@
 namespace Cradle\Http\Request;
 
 /**
+ * Designed for the Request Object; Adds methods to store $_GET data
  *
  * @vendor   Cradle
  * @package  Http
@@ -22,7 +23,7 @@ trait GetTrait
 	 * Returns GET data given name or all GET
 	 *
 	 * @param string|null $name The key name in the GET
-	 * @param mixed       $args
+	 * @param mixed       ...$args
 	 *
 	 * @return mixed
 	 */
@@ -39,7 +40,7 @@ trait GetTrait
 	 * Returns GET data given name or all GET
 	 *
 	 * @param string|null $name The key name in the GET
-	 * @param mixed       $args
+	 * @param mixed       ...$args
 	 *
 	 * @return bool
 	 */
@@ -55,9 +56,10 @@ trait GetTrait
 	/**
 	 * Sets GET
 	 *
-	 * @param *array $get
+	 * @param *array $data
+	 * @param mixed  ...$args
 	 *
-	 * @return Request
+	 * @return GetTrait
 	 */
 	public function setGet($data, ...$args)
 	{

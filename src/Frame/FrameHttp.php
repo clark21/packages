@@ -10,9 +10,12 @@
 namespace Cradle\Frame;
 
 use Cradle\Http\HttpHandler;
+use Cradle\Event\PipeTrait;
 
 /**
- *
+ * Handler for micro framework calls. Combines both
+ * Http handling and Event handling using event pipes.
+ * 
  * @vendor   Cradle
  * @package  Frame
  * @author   Christian Blanquera <cblanquera@openovate.com>
@@ -20,14 +23,18 @@ use Cradle\Http\HttpHandler;
  */
 class FrameHttp extends HttpHandler
 {	
-	use FrameTrait { FrameTrait::register as registerPackage; }
+	use PipeTrait,
+		PackageTrait 
+		{ 
+			PackageTrait::register as registerPackage; 
+		}
 	
 	/**
 	 * Registers and initializes a plugin
 	 *
 	 * @param *string $vendor The vendor/package name
 	 *
-	 * @return FrameService
+	 * @return FrameHttp
 	 */
 	public function register($vendor)
 	{
@@ -44,11 +51,11 @@ class FrameHttp extends HttpHandler
 	/**
      * Adds routing middleware
      *
-     * @param string   $method   The request method
-     * @param string   $path     The route path
-     * @param function $callback The middleware handler
+     * @param *string   $method   The request method
+     * @param *string   $path     The route path
+     * @param *callable $callback The middleware handler
      *
-     * @return FrameService
+     * @return FrameHttp
      */
     public function route($method, $path, $callback)
     {

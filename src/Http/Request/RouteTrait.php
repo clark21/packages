@@ -10,6 +10,7 @@
 namespace Cradle\Http\Request;
 
 /**
+ * Designed for the Request Object; Adds methods to store passed Router data
  *
  * @vendor   Cradle
  * @package  Http
@@ -22,7 +23,7 @@ trait RouteTrait
 	 * Returns route data given name or all route data
 	 *
 	 * @param string|null $name The key name in the route
-	 * @param mixed       $args
+	 * @param mixed       ...$args
 	 *
 	 * @return mixed
 	 */
@@ -54,9 +55,9 @@ trait RouteTrait
 	/**
 	 * Sets a request route
 	 *
-	 * @param *mixed $results
+	 * @param *array $results
 	 *
-	 * @return Request
+	 * @return RouteTrait
 	 */
 	public function setRoute(array $route)
 	{	

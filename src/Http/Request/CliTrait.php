@@ -10,6 +10,7 @@
 namespace Cradle\Http\Request;
 
 /**
+ * Designed for the Request Object; Adds CLI methods
  *
  * @vendor   Cradle
  * @package  Http
@@ -33,7 +34,7 @@ trait CliTrait
 	 *
 	 * @param *array|null
 	 *
-	 * @return Request
+	 * @return CliTrait
 	 */
 	public function setArgs($argv = null)
 	{

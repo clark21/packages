@@ -9,7 +9,10 @@
 
 namespace Cradle\Helper;
 
+use Closure;
+
 /**
+ * Adds a generic `when()` method used during chainable calls
  *
  * @package  Cradle
  * @category Helper
@@ -30,17 +33,17 @@ trait ConditionalTrait
     public function when($conditional, $success, $fail = null)
 	{
 		//bind conditional if it's not bound
-        if (is_callable($conditional) && !is_array($conditional)) {
+        if ($conditional instanceof Closure) {
             $conditional = $conditional->bindTo($this, get_class($this));
         }
         
         //bind success if it's not bound
-        if (is_callable($success) && !is_array($success)) {
+        if ($success instanceof Closure) {
             $success = $success->bindTo($this, get_class($this));
         }
         
         //bind fail if it's not bound
-        if (is_callable($fail) && !is_array($fail)) {
+        if ($fail instanceof Closure) {
             $fail = $fail->bindTo($this, get_class($this));
         }
         

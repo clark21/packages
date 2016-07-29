@@ -24,7 +24,7 @@ use Cradle\Http\Request\ServerTrait;
 use Cradle\Http\Request\SessionTrait;
 
 /**
- * Request Class
+ * Http Request Object
  *
  * @vendor   Cradle
  * @package  Http

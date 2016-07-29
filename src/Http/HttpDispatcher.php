@@ -13,7 +13,8 @@ use Cradle\Http\Dispatcher\DispatcherInterface;
 use Cradle\Http\Response\ResponseInterface;
 
 /**
- * Express style server class implementation
+ * This deals with the releasing of content into the 
+ * main output buffer. Considers headers and post processing
  *
  * @vendor   Cradle
  * @package  Http
@@ -43,7 +44,7 @@ class HttpDispatcher implements DispatcherInterface
 	const HEADER_CONTENT_LENGTH = 'Content-Length: %s';
 
     /**
-     * @var bool $successful If we were able to process all middleware
+     * @var bool $successful If we were able to output it
      */
     protected $successful = false;
     
@@ -63,12 +64,10 @@ class HttpDispatcher implements DispatcherInterface
     }
     
     /**
-     * Evaluates the response
-     * in order to determine the
-     * output. Then of course,
-     * output it
+     * Evaluates the response in order to determine the
+     * output. Then of course, output it
      *
-     * @param Response $response The response object to evaluate
+     * @param ResponseInterface $response The response object to evaluate
      *
      * @return HttpHandler
      */
@@ -138,6 +137,8 @@ class HttpDispatcher implements DispatcherInterface
 	
     /**
      * Starts to process the request
+	 *
+     * @param ResponseInterface $response The response object to evaluate
      *
      * @return array with request and response inside
      */
@@ -191,7 +192,8 @@ class HttpDispatcher implements DispatcherInterface
     /**
      * Browser redirect
      *
-     * @param *string $path Where to redirect to
+     * @param *string $path  Where to redirect to
+     * @param bool    $force Whether if you want to exit immediately
      */
     public function redirect($path, $force = false)
     {
@@ -228,7 +230,7 @@ class HttpDispatcher implements DispatcherInterface
     }
     
     /**
-     * Returns if we were able to output
+     * Returns true if we were able to output
      * something
      *
      * @return bool

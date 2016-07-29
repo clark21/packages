@@ -12,6 +12,7 @@ namespace Cradle\Helper;
 use Closure;
 
 /**
+ * Adds a method to bind callables to the current instance
  *
  * @package  Cradle
  * @category Helper
@@ -21,7 +22,7 @@ use Closure;
 trait BinderTrait
 {
 	/**
-     * Binds callback with this scope
+     * Binds callback with this instance
      *
      * @param *Closure $conditional should evaluate to true
      *

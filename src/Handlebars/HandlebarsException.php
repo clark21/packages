@@ -53,7 +53,7 @@ class HandlebarsException extends Exception
 	 *
 	 * @return HandlebarsException
 	 */
-	public static function forMissingClosing($open)
+	public static function forMissingClosing(array $open)
 	{
 		foreach ($open as $i => $item) {
 			$open[$i] = sprintf(self::ERROR_LINE, $item['value'], $item['line']);
@@ -69,7 +69,7 @@ class HandlebarsException extends Exception
 	 * Triggered when we are missing closing tags
 	 *
 	 * @param *string $tag  Open tag
-	 * @param *string $open Line it was openned
+	 * @param *string $line Line it was openned
 	 *
 	 * @return HandlebarsException
 	 */
@@ -83,10 +83,11 @@ class HandlebarsException extends Exception
 	 *
 	 * @param *array  $error Error trace
 	 * @param *string $code
+	 * @param int     $limit The amount of lines to show
 	 *
 	 * @return HandlebarsException
 	 */
-	public static function forCompileError($error, $code, $limit = 25)
+	public static function forCompileError(array $error, $code, $limit = 25)
 	{
 		$code = explode("\n", $code);
 		$start = $error['line'] - $limit;

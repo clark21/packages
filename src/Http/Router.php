@@ -12,7 +12,7 @@ namespace Cradle\Http;
 use Cradle\Http\Router\RouterInterface;
 
 /**
- * Express style server class implementation
+ * Handles method-path matching and routing
  *
  * @vendor   Cradle
  * @package  Http

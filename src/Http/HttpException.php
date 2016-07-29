@@ -29,7 +29,7 @@ class HttpException extends Exception
     /**
      * Create a new exception for 404
 	 *
-     * @return DataException
+     * @return HttpException
      */
 	public static function forResponseNotFound()
 	{

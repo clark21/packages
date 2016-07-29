@@ -10,6 +10,8 @@
 namespace Cradle\Profiler;
 
 /**
+ * When developing this would be useful to 
+ * find the contents of any object or raw data type
  *
  * @package  Cradle
  * @category Core
