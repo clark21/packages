@@ -170,23 +170,6 @@ class MySql extends AbstractSql implements SqlInterface
     }
     
     /**
-     * Returns the whole enitre schema and rows
-     * of the current databse
-     *
-     * @return string
-     */
-    public function getSchema()
-    {
-        $backup = [];
-        $tables = $this->getTables();
-        foreach ($tables as $table) {
-            $backup[] = $this->getBackup();
-        }
-        
-        return implode("\n\n", $backup);
-    }
-    
-    /**
      * Returns the Subselect query builder
      *
      * @param string $parentQuery The parent query
@@ -246,8 +229,13 @@ class MySql extends AbstractSql implements SqlInterface
                 $typeArray = explode('(', $fieldTypeArray[0]);
                 
                 $type = $typeArray[0];
-                $length = str_replace(')', '', $typeArray[1]);
-                $attribute = isset($fieldTypeArray[1]) ? $fieldTypeArray[1] : null;
+				
+				$length = null;
+				if(isset($typeArray[1])) {
+                	$length = str_replace(')', '', $typeArray[1]);
+				}
+				
+				$attribute = isset($fieldTypeArray[1]) ? $fieldTypeArray[1] : null;
                 
                 $null = strtolower($field['Null']) == 'no' ? false : true;
                 
@@ -290,7 +278,7 @@ class MySql extends AbstractSql implements SqlInterface
 
             foreach ($rows as $index => $row) {
                 foreach ($row as $key => $value) {
-                    $query->set($key, $this->getBinds($value), $index);
+                    $query->set($key, $value, $index);
                 }
             }
             

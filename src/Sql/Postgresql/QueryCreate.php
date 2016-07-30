@@ -139,7 +139,7 @@ class QueryCreate extends AbstractQuery
             ', PRIMARY KEY ("'.implode('", ""', $this->primaryKeys).'")' :
             '';
         
-        return sprintf('CREATE TABLE %s (%s%s) %s', $table, $fields, $primary, $oids);
+        return sprintf('CREATE TABLE %s (%s%s) %s;', $table, $fields, $primary, $oids);
     }
     
     /**

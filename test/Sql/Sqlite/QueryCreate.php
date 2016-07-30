@@ -20,7 +20,7 @@ class Cradle_Sql_Sqlite_QueryCreate_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new QueryCreate;
+        $this->object = new QueryCreate('foobar');
     }
 
     /**
@@ -33,26 +33,20 @@ class Cradle_Sql_Sqlite_QueryCreate_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryCreate::addField
-     * @todo   Implement testAddField().
      */
     public function testAddField()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addField('foobar', array());
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryCreate::addForeignKey
-     * @todo   Implement testAddForeignKey().
      */
     public function testAddForeignKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addForeignKey('foobar', 'foo', 'bar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryCreate', $instance);
     }
 
     /**
@@ -61,81 +55,61 @@ class Cradle_Sql_Sqlite_QueryCreate_Test extends PHPUnit_Framework_TestCase
      */
     public function testAddUniqueKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addUniqueKey('foobar', array());
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryCreate::getQuery
-     * @todo   Implement testGetQuery().
      */
     public function testGetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getQuery();
+		$this->assertEquals('CREATE TABLE "foobar" ();', $actual);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryCreate::setComments
-     * @todo   Implement testSetComments().
      */
     public function testSetComments()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setComments('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryCreate::setFields
-     * @todo   Implement testSetFields().
      */
     public function testSetFields()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setFields(array('foobar'));
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryCreate::setForiegnKeys
-     * @todo   Implement testSetForiegnKeys().
      */
     public function testSetForiegnKeys()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setForiegnKeys(array('foobar'));
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryCreate::setName
-     * @todo   Implement testSetName().
      */
     public function testSetName()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setName('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryCreate::setUniqueKeys
-     * @todo   Implement testSetUniqueKeys().
      */
     public function testSetUniqueKeys()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setUniqueKeys(array('foobar'));
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryCreate', $instance);
     }
 }

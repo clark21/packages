@@ -20,6 +20,11 @@ namespace Cradle\Sql;
 abstract class AbstractQuery
 {
     /**
+     * @var string $table most queries deal with tables
+     */
+    protected $table = null;
+
+    /**
      * Transform class to string using
      * getQuery
      *

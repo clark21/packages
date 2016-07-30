@@ -20,7 +20,7 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new MySql;
+        $this->object = SqlFactory::load(include(__DIR__.'/../assets/sql/mysql.php'));
     }
 
     /**
@@ -33,38 +33,29 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\MySql::connect
-     * @todo   Implement testConnect().
      */
     public function testConnect()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->connect(include(__DIR__.'/../assets/sql/mysql.php'));
+		$this->assertInstanceOf('Cradle\Sql\MySql', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql::getAlterQuery
-     * @todo   Implement testGetAlterQuery().
      */
     public function testGetAlterQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getAlterQuery('foobar');
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql::getColumns
-     * @todo   Implement testGetColumns().
      */
     public function testGetColumns()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getColumns('address');
+		$this->assertTrue(is_array($actual));
     }
 
     /**
@@ -73,10 +64,8 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetCreateQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getCreateQuery('foobar');
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -85,58 +74,35 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetPrimaryKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Cradle\Sql\MySql::getSchema
-     * @todo   Implement testGetSchema().
-     */
-    public function testGetSchema()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getPrimaryKey('address');
+		$this->assertEquals('address_id', $actual);
     }
 
     /**
      * @covers Cradle\Sql\MySql::getSubSelectQuery
-     * @todo   Implement testGetSubSelectQuery().
      */
     public function testGetSubSelectQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getSubSelectQuery(new QuerySelect);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QuerySubSelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql::getTables
-     * @todo   Implement testGetTables().
      */
     public function testGetTables()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getColumns('address');
+		$this->assertTrue(is_array($actual));
     }
 
     /**
      * @covers Cradle\Sql\MySql::getTableSchema
-     * @todo   Implement testGetTableSchema().
      */
     public function testGetTableSchema()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getTableSchema('address');
+		$this->assertContains('CREATE TABLE `address`', $actual);
     }
 
     /**
@@ -145,9 +111,7 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetUtilityQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getUtilityQuery();
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryUtility', $instance);
     }
 }

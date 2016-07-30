@@ -20,7 +20,7 @@ class Cradle_Sql_PostGreSql_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new PostGreSql;
+        $this->object = SqlFactory::load(include(__DIR__.'/../assets/sql/pgsql.php'));
     }
 
     /**

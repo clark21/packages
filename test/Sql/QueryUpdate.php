@@ -20,7 +20,7 @@ class Cradle_Sql_QueryUpdate_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new QueryUpdate;
+        $this->object = new QueryUpdate('foobar');
     }
 
     /**
@@ -33,25 +33,19 @@ class Cradle_Sql_QueryUpdate_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\QueryUpdate::getQuery
-     * @todo   Implement testGetQuery().
      */
     public function testGetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getQuery();
+		$this->assertEquals('UPDATE foobar SET  WHERE ;', $actual);
     }
 
     /**
      * @covers Cradle\Sql\QueryUpdate::set
-     * @todo   Implement testSet().
      */
     public function testSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->set('foo', 'bar');
+		$this->assertInstanceOf('Cradle\Sql\QueryUpdate', $instance);
     }
 }

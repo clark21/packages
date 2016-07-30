@@ -20,7 +20,7 @@ class Cradle_Sql_QueryDelete_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new QueryDelete;
+        $this->object = new QueryDelete('foobar');
     }
 
     /**
@@ -33,37 +33,28 @@ class Cradle_Sql_QueryDelete_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\QueryDelete::getQuery
-     * @todo   Implement testGetQuery().
      */
     public function testGetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getQuery();
+		$this->assertEquals('DELETE FROM foobar WHERE ;', $actual);
     }
 
     /**
      * @covers Cradle\Sql\QueryDelete::setTable
-     * @todo   Implement testSetTable().
      */
     public function testSetTable()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setTable('foobar');
+		$this->assertInstanceOf('Cradle\Sql\QueryDelete', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QueryDelete::where
-     * @todo   Implement testWhere().
      */
     public function testWhere()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->where('foo=bar');
+		$this->assertInstanceOf('Cradle\Sql\QueryDelete', $instance);
     }
 }

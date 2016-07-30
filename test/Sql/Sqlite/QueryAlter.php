@@ -20,7 +20,7 @@ class Cradle_Sql_Sqlite_QueryAlter_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new QueryAlter;
+        $this->object = new QueryAlter('foobar');
     }
 
     /**
@@ -33,62 +33,47 @@ class Cradle_Sql_Sqlite_QueryAlter_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryAlter::addField
-     * @todo   Implement testAddField().
      */
     public function testAddField()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addField('foobar', array());
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryAlter::addForeignKey
-     * @todo   Implement testAddForeignKey().
      */
     public function testAddForeignKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addForeignKey('foobar', 'foo', 'bar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryAlter::addUniqueKey
-     * @todo   Implement testAddUniqueKey().
      */
     public function testAddUniqueKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addUniqueKey('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryAlter::changeField
-     * @todo   Implement testChangeField().
      */
     public function testChangeField()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->changeField('foobar', array());
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryAlter::getQuery
-     * @todo   Implement testGetQuery().
      */
     public function testGetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getQuery();
+		$this->assertEquals('ALTER TABLE "foobar" ;', $actual);
     }
 
     /**
@@ -97,45 +82,34 @@ class Cradle_Sql_Sqlite_QueryAlter_Test extends PHPUnit_Framework_TestCase
      */
     public function testRemoveField()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->removeField('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryAlter::removeForeignKey
-     * @todo   Implement testRemoveForeignKey().
      */
     public function testRemoveForeignKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->removeForeignKey('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryAlter::removeUniqueKey
-     * @todo   Implement testRemoveUniqueKey().
      */
     public function testRemoveUniqueKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->removeUniqueKey('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryAlter::setName
-     * @todo   Implement testSetName().
      */
     public function testSetName()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setName('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryAlter', $instance);
     }
 }

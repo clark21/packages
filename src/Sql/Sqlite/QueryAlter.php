@@ -229,7 +229,7 @@ class QueryAlter extends AbstractQuery
             $fields[] = 'DROP FOREIGN KEY "'.$key.'"';
         }
         
-        foreach ($this->keys as $key => $value) {
+        foreach ($this->addKeys as $key => $value) {
             $fields[] = 'ADD FOREIGN KEY "'. $key .'" REFERENCES '.$value[0].'('.$value[1].')';
         }
         

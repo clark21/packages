@@ -33,145 +33,109 @@ class Cradle_Sql_QuerySelect_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\QuerySelect::from
-     * @todo   Implement testFrom().
      */
     public function testFrom()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->from('foobar');
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::getQuery
-     * @todo   Implement testGetQuery().
      */
     public function testGetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getQuery();
+		$this->assertEquals('SELECT * FROM   ;', $actual);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::groupBy
-     * @todo   Implement testGroupBy().
      */
     public function testGroupBy()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->groupBy('foobar');
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::innerJoin
-     * @todo   Implement testInnerJoin().
      */
     public function testInnerJoin()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->innerJoin('foobar', 'foo=bar');
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::join
-     * @todo   Implement testJoin().
      */
     public function testJoin()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->join('INNER', 'foobar', 'foo=bar');
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::leftJoin
-     * @todo   Implement testLeftJoin().
      */
     public function testLeftJoin()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->leftJoin('foobar', 'foo=bar');
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::limit
-     * @todo   Implement testLimit().
      */
     public function testLimit()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->limit(0, 1);
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::outerJoin
-     * @todo   Implement testOuterJoin().
      */
     public function testOuterJoin()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->outerJoin('foobar', 'foo=bar');
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::rightJoin
-     * @todo   Implement testRightJoin().
      */
     public function testRightJoin()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->rightJoin('foobar', 'foo=bar');
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::select
-     * @todo   Implement testSelect().
      */
     public function testSelect()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->select('foobar');
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::sortBy
-     * @todo   Implement testSortBy().
      */
     public function testSortBy()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->sortBy('foobar');
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QuerySelect::where
-     * @todo   Implement testWhere().
      */
     public function testWhere()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->where('foo=bar');
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 }

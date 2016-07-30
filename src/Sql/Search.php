@@ -15,7 +15,6 @@ use Cradle\Helper\InstanceTrait;
 use Cradle\Helper\LoopTrait;
 use Cradle\Helper\ConditionalTrait;
 
-use Cradle\Profiler\CallerTrait;
 use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
@@ -36,7 +35,6 @@ class Search
 		InstanceTrait, 
 		LoopTrait, 
 		ConditionalTrait, 
-		CallerTrait, 
 		InspectorTrait, 
 		LoggerTrait, 
 		StateTrait;
@@ -221,150 +219,6 @@ class Search
     }
     
     /**
-     * Adds Inner Join On
-     *
-     * @param *string            $table Table name
-     * @param *string[,string..] $where Filter/s
-     *
-     * @return Search
-     */
-    public function addInnerJoinOn($table, $where)
-    {
-        $where = func_get_args();
-        $table = array_shift($where);
-        
-        $this->join[] = [self::INNER, $table, $where, false];
-        
-        return $this;
-    }
-    
-    /**
-     * Adds Inner Join Using
-     *
-     * @param *string            $table Table name
-     * @param *string[,string..] $where Filter/s
-     *
-     * @return Search
-     */
-    public function addInnerJoinUsing($table, $where)
-    {
-        $where = func_get_args();
-        $table = array_shift($where);
-        
-        $this->join[] = [self::INNER, $table, $where, true];
-        
-        return $this;
-    }
-    
-    /**
-     * Adds Left Join On
-     *
-     * @param *string            $table Table name
-     * @param *string[,string..] $where Filter/s
-     *
-     * @return Search
-     */
-    public function addLeftJoinOn($table, $where)
-    {
-        $where = func_get_args();
-        $table = array_shift($where);
-        
-        $this->join[] = [self::LEFT, $table, $where, false];
-        
-        return $this;
-    }
-    
-    /**
-     * Adds Left Join Using
-     *
-     * @param *string            $table Table name
-     * @param *string[,string..] $where Filter/s
-     *
-     * @return Search
-     */
-    public function addLeftJoinUsing($table, $where)
-    {
-        $where = func_get_args();
-        $table = array_shift($where);
-        
-        $this->join[] = [self::LEFT, $table, $where, true];
-        
-        return $this;
-    }
-    
-    /**
-     * Adds Outer Join On
-     *
-     * @param *string            $table Table name
-     * @param *string[,string..] $where Filter/s
-     *
-     * @return Search
-     */
-    public function addOuterJoinOn($table, $where)
-    {
-        $where = func_get_args();
-        $table = array_shift($where);
-        
-        $this->join[] = [self::OUTER, $table, $where, false];
-        
-        return $this;
-    }
-    
-    /**
-     * Adds Outer Join Using
-     *
-     * @param *string            $table Table name
-     * @param *string[,string..] $where Filter/s
-     *
-     * @return Search
-     */
-    public function addOuterJoinUsing($table, $where)
-    {
-        $where = func_get_args();
-        $table = array_shift($where);
-        
-        $this->join[] = [self::OUTER, $table, $where, true];
-        
-        return $this;
-    }
-    
-    /**
-     * Adds Right Join On
-     *
-     * @param *string            $table Table name
-     * @param *string[,string..] $where Filter/s
-     *
-     * @return Search
-     */
-    public function addRightJoinOn($table, $where)
-    {
-        $where = func_get_args();
-        $table = array_shift($where);
-        
-        $this->join[] = [self::RIGHT, $table, $where, false];
-        
-        return $this;
-    }
-    
-    /**
-     * Adds Right Join Using
-     *
-     * @param *string            $table Table name
-     * @param *string[,string..] $where Filter/s
-     *
-     * @return Search
-     */
-    public function addRightJoinUsing($table, $where)
-    {
-        $where = func_get_args();
-        $table = array_shift($where);
-        
-        $this->join[] = [self::RIGHT, $table, $where, true];
-        
-        return $this;
-    }
-    
-    /**
      * Adds sort
      *
      * @param *string $column Column name
@@ -460,6 +314,23 @@ class Search
         }
         
         return $this->database->query($query, $this->database->getBinds());
+    }
+    
+    /**
+     * Group by clause
+     *
+     * @param string $group Column name
+     *
+     * @return Search
+     */
+    public function groupBy($group)
+    {
+        if (is_string($group)) {
+            $group = [$group];
+        }
+        
+        $this->group = $group;
+        return $this;
     }
     
     /**
@@ -643,23 +514,6 @@ class Search
     }
     
     /**
-     * Group by clause
-     *
-     * @param string $group Column name
-     *
-     * @return Search
-     */
-    public function setGroup($group)
-    {
-        if (is_string($group)) {
-            $group = [$group];
-        }
-        
-        $this->group = $group;
-        return $this;
-    }
-    
-    /**
      * Sets the pagination page
      *
      * @param int $page Pagination page
@@ -671,6 +525,10 @@ class Search
         if ($page < 1) {
             $page = 1;
         }
+		
+		if ($this->range == 0) {
+			$this->setRange(25);
+		}
         
         $this->start = ($page - 1) * $this->range;
         

@@ -20,7 +20,11 @@ class Cradle_Sql_Model_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Model;
+        $this->object = new Model();
+		$this->object
+			->setDatabase(new AbstractSqlStub)
+			->setFoobarTitle('Foo Bar 1')
+			->setFoobarDate('January 12, 2015');
     }
 
     /**
@@ -33,62 +37,48 @@ class Cradle_Sql_Model_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\Model::formatTime
-     * @todo   Implement testFormatTime().
      */
     public function testFormatTime()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->formatTime('foobar_date');
+		$this->assertEquals('2015-01-12 12:00:00', $actual->getFoobarDate());
     }
 
     /**
      * @covers Cradle\Sql\Model::insert
-     * @todo   Implement testInsert().
      */
     public function testInsert()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->insert('foo');
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
+		$this->assertEquals(123, $this->object->getFoobarId());
     }
 
     /**
      * @covers Cradle\Sql\Model::remove
-     * @todo   Implement testRemove().
      */
     public function testRemove()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->remove('foo');
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Model::save
-     * @todo   Implement testSave().
      */
     public function testSave()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->save('foo');
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Model::setDatabase
-     * @todo   Implement testSetDatabase().
      */
     public function testSetDatabase()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setDatabase(new AbstractSqlStub);
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
     }
 
     /**
@@ -97,10 +87,8 @@ class Cradle_Sql_Model_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetTable()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setTable('foo');
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
     }
 
     /**
@@ -109,9 +97,59 @@ class Cradle_Sql_Model_Test extends PHPUnit_Framework_TestCase
      */
     public function testUpdate()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setFoobarId(321)->update('foo');
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
     }
+}
+
+if(!class_exists('Cradle\Sql\AbstractSqlStub')) {
+	class AbstractSqlStub extends AbstractSql implements SqlInterface
+	{
+		public function connect($options = [])
+		{
+			$this->connection = 'foobar';
+			return $this;
+		}
+		
+		public function getLastInsertedId($column = null)
+		{
+			return 123;
+		}
+		
+		public function query($query, array $binds = [])
+    	{
+			return array(array(
+				'total' => 123,
+				'query' => (string) $query, 
+				'binds' => $binds
+			));
+		}
+		
+		public function getColumns()
+		{
+			return array(
+				array(
+					'Field' => 'foobar_id',
+					'Type' => 'int',
+					'Key' => 'PRI',
+					'Default' => null,
+					'Null' => 1
+				),
+				array(
+					'Field' => 'foobar_title',
+					'Type' => 'vachar',
+					'Key' => null,
+					'Default' => null,
+					'Null' => 1
+				),
+				array(
+					'Field' => 'foobar_date',
+					'Type' => 'datetime',
+					'Key' => null,
+					'Default' => null,
+					'Null' => 1
+				)
+			);
+		}
+	}
 }

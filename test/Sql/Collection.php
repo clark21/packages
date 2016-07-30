@@ -33,26 +33,20 @@ class Cradle_Sql_Collection_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\Collection::getModel
-     * @todo   Implement testGetModel().
      */
     public function testGetModel()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->getModel();
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Collection::setDatabase
-     * @todo   Implement testSetDatabase().
      */
     public function testSetDatabase()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setDatabase(new AbstractSqlStub);
+		$this->assertInstanceOf('Cradle\Sql\Collection', $instance);
     }
 
     /**
@@ -61,9 +55,31 @@ class Cradle_Sql_Collection_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetTable()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setTable('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Collection', $instance);
     }
+}
+
+if(!class_exists('Cradle\Sql\AbstractSqlStub')) {
+	class AbstractSqlStub extends AbstractSql implements SqlInterface
+	{
+		public function connect($options = [])
+		{
+			$this->connection = 'foobar';
+			return $this;
+		}
+		
+		public function getLastInsertedId($column = null)
+		{
+			return 123;
+		}
+		
+		public function query($query, array $binds = [])
+    	{
+			return array(array(
+				'query' => (string) $query, 
+				'binds' => $binds
+			));
+		}
+	}
 }

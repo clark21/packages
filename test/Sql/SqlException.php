@@ -33,37 +33,46 @@ class Cradle_Sql_SqlException_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\SqlException::forQueryError
-     * @todo   Implement testForQueryError().
      */
     public function testForQueryError()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$message = null;
+		try {
+			throw SqlException::forQueryError('foo', 'bar');
+		} catch(SqlException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('foo Query: bar', $message);
     }
 
     /**
      * @covers Cradle\Sql\SqlException::forTableNotSet
-     * @todo   Implement testForTableNotSet().
      */
     public function testForTableNotSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$message = null;
+		try {
+			throw SqlException::forTableNotSet();
+		} catch(SqlException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('No default table set or was passed.', $message);
     }
 
     /**
      * @covers Cradle\Sql\SqlException::forDatabaseNotSet
-     * @todo   Implement testForDatabaseNotSet().
      */
     public function testForDatabaseNotSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$message = null;
+		try {
+			throw SqlException::forDatabaseNotSet();
+		} catch(SqlException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('No default database set or was passed.', $message);
     }
 }

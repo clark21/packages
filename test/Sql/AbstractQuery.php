@@ -20,7 +20,7 @@ class Cradle_Sql_AbstractQuery_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new AbstractQuery;
+        $this->object = new AbstractQueryStub;
     }
 
     /**
@@ -33,13 +33,19 @@ class Cradle_Sql_AbstractQuery_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\AbstractQuery::__toString
-     * @todo   Implement test__toString().
      */
     public function test__toString()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->assertEquals('foobar', $this->object->__toString());
     }
+}
+
+if(!class_exists('Cradle\Sql\AbstractQueryStub')) {
+	class AbstractQueryStub extends AbstractQuery
+	{
+		public function getQuery()
+		{
+			return 'foobar';
+		}
+	}
 }

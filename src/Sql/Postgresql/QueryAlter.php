@@ -115,7 +115,7 @@ class QueryAlter extends AbstractQuery
     public function getQuery($unbind = false)
     {
         $fields = [];
-        $table = '"'.$this->name.'""';
+        $table = '"'.$this->name.'"';
         
         foreach ($this->removeFields as $name) {
             $fields[] = 'DROP COLUMN "'.$name.'"';

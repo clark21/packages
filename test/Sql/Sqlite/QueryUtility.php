@@ -33,73 +33,55 @@ class Cradle_Sql_Sqlite_QueryUtility_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryUtility::dropTable
-     * @todo   Implement testDropTable().
      */
     public function testDropTable()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->dropTable('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryUtility', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryUtility::getQuery
-     * @todo   Implement testGetQuery().
      */
     public function testGetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getQuery();
+		$this->assertEquals(';', $actual);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryUtility::renameTable
-     * @todo   Implement testRenameTable().
      */
     public function testRenameTable()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->renameTable('foo', 'bar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryUtility', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryUtility::showColumns
-     * @todo   Implement testShowColumns().
      */
     public function testShowColumns()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->showColumns('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryUtility', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryUtility::showTables
-     * @todo   Implement testShowTables().
      */
     public function testShowTables()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->showTables();
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryUtility', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite\QueryUtility::truncate
-     * @todo   Implement testTruncate().
      */
     public function testTruncate()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->truncate('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryUtility', $instance);
     }
 }

@@ -20,7 +20,7 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new QueryCreate;
+        $this->object = new QueryCreate('foobar');
     }
 
     /**
@@ -33,133 +33,100 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::addField
-     * @todo   Implement testAddField().
      */
     public function testAddField()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addField('foobar', array());
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::addKey
-     * @todo   Implement testAddKey().
      */
     public function testAddKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addKey('foobar', array());
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::addPrimaryKey
-     * @todo   Implement testAddPrimaryKey().
      */
     public function testAddPrimaryKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addPrimaryKey('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::addUniqueKey
-     * @todo   Implement testAddUniqueKey().
      */
     public function testAddUniqueKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addUniqueKey('foobar', array());
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::getQuery
-     * @todo   Implement testGetQuery().
      */
     public function testGetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getQuery();
+		$this->assertEquals('CREATE TABLE `foobar` ();', $actual);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::setComments
-     * @todo   Implement testSetComments().
      */
     public function testSetComments()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setComments('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::setFields
-     * @todo   Implement testSetFields().
      */
     public function testSetFields()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setFields(array('foobar'));
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::setKeys
-     * @todo   Implement testSetKeys().
      */
     public function testSetKeys()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setKeys(array('foobar'));
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::setName
-     * @todo   Implement testSetName().
      */
     public function testSetName()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setName('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::setPrimaryKeys
-     * @todo   Implement testSetPrimaryKeys().
      */
     public function testSetPrimaryKeys()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setPrimaryKeys(array('foobar'));
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryCreate::setUniqueKeys
-     * @todo   Implement testSetUniqueKeys().
      */
     public function testSetUniqueKeys()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setUniqueKeys(array('foobar'));
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
     }
 }

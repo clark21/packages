@@ -172,10 +172,10 @@ class QueryCreate extends AbstractQuery
         $keys = !empty($keys) ? ', ' . implode(", \n", $keys) : '';
         
         return sprintf(
-            'CREATE TABLE %s (%s%s%s)',
+            'CREATE TABLE %s (%s%s%s);',
             $table,
             $fields,
-            $unique,
+            $uniques,
             $keys
         );
     }

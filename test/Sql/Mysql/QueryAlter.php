@@ -20,7 +20,7 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new QueryAlter;
+        $this->object = new QueryAlter('foobar');
     }
 
     /**
@@ -33,133 +33,100 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::addField
-     * @todo   Implement testAddField().
      */
     public function testAddField()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addField('foobar', array());
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::addKey
-     * @todo   Implement testAddKey().
      */
     public function testAddKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addKey('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::addPrimaryKey
-     * @todo   Implement testAddPrimaryKey().
      */
     public function testAddPrimaryKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addPrimaryKey('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::addUniqueKey
-     * @todo   Implement testAddUniqueKey().
      */
     public function testAddUniqueKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->addUniqueKey('foobar', array());
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::changeField
-     * @todo   Implement testChangeField().
      */
     public function testChangeField()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->changeField('foobar', array());
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::getQuery
-     * @todo   Implement testGetQuery().
      */
     public function testGetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getQuery();
+		$this->assertEquals('ALTER TABLE `foobar` ;', $actual);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::removeField
-     * @todo   Implement testRemoveField().
      */
     public function testRemoveField()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->removeField('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::removeKey
-     * @todo   Implement testRemoveKey().
      */
     public function testRemoveKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->removeKey('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::removePrimaryKey
-     * @todo   Implement testRemovePrimaryKey().
      */
     public function testRemovePrimaryKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->removePrimaryKey('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::removeUniqueKey
-     * @todo   Implement testRemoveUniqueKey().
      */
     public function testRemoveUniqueKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->removeUniqueKey('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\MySql\QueryAlter::setName
-     * @todo   Implement testSetName().
      */
     public function testSetName()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setName('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
     }
 }

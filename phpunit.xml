@@ -103,20 +103,17 @@
       <file>test/Frame/FrameService.php</file>
       <file>test/Frame/FrameHttp.php</file>
     </testsuite>
-    <!--<testsuite name="CradlePHP Sql Test Suite">
+    <testsuite name="CradlePHP Sql Test Suite">
 	  <file>test/Sql/AbstractQuery.php</file>
 	  <file>test/Sql/AbstractSql.php</file>
 	  <file>test/Sql/Collection.php</file>
 	  <file>test/Sql/Model.php</file>
-	  <file>test/Sql/MySql.php</file>
-	  <file>test/Sql/PostGreSql.php</file>
+	  <file>test/Sql/Search.php</file>
 	  <file>test/Sql/QueryDelete.php</file>
 	  <file>test/Sql/QueryInsert.php</file>
 	  <file>test/Sql/QuerySelect.php</file>
 	  <file>test/Sql/QueryUpdate.php</file>
-	  <file>test/Sql/Search.php</file>
 	  <file>test/Sql/SqlException.php</file>
-	  <file>test/Sql/Sqlite.php</file>
 	  <file>test/Sql/MySql/QueryAlter.php</file>
 	  <file>test/Sql/MySql/QueryCreate.php</file>
 	  <file>test/Sql/MySql/QuerySubSelect.php</file>
@@ -131,8 +128,11 @@
 	  <file>test/Sql/Sqlite/QueryAlter.php</file>
 	  <file>test/Sql/Sqlite/QueryCreate.php</file>
 	  <file>test/Sql/Sqlite/QueryUtility.php</file>
+	  <file>test/Sql/MySql.php</file>
+	  <!--<file>test/Sql/PostGreSql.php</file>
+	  <file>test/Sql/Sqlite.php</file>-->
     </testsuite>
-    <testsuite name="CradlePHP Curl Test Suite">
+    <!--<testsuite name="CradlePHP Curl Test Suite">
       <file>test/Curl/CurlException.php</file>
       <file>test/Curl/CurlHandler.php</file>
       <file>test/Curl/Rest.php</file>

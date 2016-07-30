@@ -45,7 +45,7 @@ class QuerySubSelect
      */
     public function getQuery()
     {
-        return '('.substr(parent::getQuery(), 0, -1).')';
+        return '('.substr($this->parentQuery->getQuery(), 0, -1).')';
     }
     
     /**

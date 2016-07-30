@@ -133,7 +133,7 @@ class QueryCreate extends AbstractQuery
         foreach ($this->fields as $name => $attr) {
             $field = ['`'.$name.'`'];
             if (isset($attr['type'])) {
-                $field[] = isset($attr['length']) ?
+                $field[] = isset($attr['length']) && $attr['length'] ?
                     $attr['type'] . '('.$attr['length'].')' :
                     $attr['type'];
             }
@@ -188,11 +188,11 @@ class QueryCreate extends AbstractQuery
         $keys = !empty($keys) ? ', ' . implode(", \n", $keys) : '';
         
         return sprintf(
-            'CREATE TABLE %s (%s%s%s%s)',
+            'CREATE TABLE %s (%s%s%s%s);',
             $table,
             $fields,
             $primary,
-            $unique,
+            $uniques,
             $keys
         );
     }

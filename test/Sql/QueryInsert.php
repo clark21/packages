@@ -20,7 +20,7 @@ class Cradle_Sql_QueryInsert_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new QueryInsert;
+        $this->object = new QueryInsert('foobar');
     }
 
     /**
@@ -33,37 +33,28 @@ class Cradle_Sql_QueryInsert_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\QueryInsert::getQuery
-     * @todo   Implement testGetQuery().
      */
     public function testGetQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getQuery();
+		$this->assertEquals('INSERT INTO foobar () VALUES ;', $actual);
     }
 
     /**
      * @covers Cradle\Sql\QueryInsert::set
-     * @todo   Implement testSet().
      */
     public function testSet()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->set('foo', 'bar');
+		$this->assertInstanceOf('Cradle\Sql\QueryInsert', $instance);
     }
 
     /**
      * @covers Cradle\Sql\QueryInsert::setTable
-     * @todo   Implement testSetTable().
      */
     public function testSetTable()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->setTable('foobar');
+		$this->assertInstanceOf('Cradle\Sql\QueryInsert', $instance);
     }
 }

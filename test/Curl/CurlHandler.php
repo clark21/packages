@@ -20,7 +20,7 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new CurlHandler;
+        $this->object = new CurlHandlerStub;
     }
 
     /**
@@ -570,4 +570,15 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
             'This test has not been implemented yet.'
         );
     }
+}
+
+if(!class_exists('Cradle\Curl\CurlHandlerStub')) {
+	class CurlHandlerStub extends CurlHandler
+	{
+		public function send()
+		{
+			$this->addParameters()->addHeaders();
+			return $this->options;
+		}
+	}
 }

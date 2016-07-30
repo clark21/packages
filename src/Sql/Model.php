@@ -139,9 +139,6 @@ class Model extends DataModel
         $meta = $this->getMeta($table, $database);
         $data = $this->getValidColumns(array_keys($meta[self::COLUMNS]));
         
-        //update original data
-        $this->original = $this->data;
-        
         //we insert it
         $database->insertRow($table, $data);
         
