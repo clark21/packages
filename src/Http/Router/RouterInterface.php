@@ -20,17 +20,7 @@ use Cradle\Http\Request\RequestInterface;
  * @standard PSR-2
  */
 interface RouterInterface
-{      
-    /**
-	 * Returns all the routes that match this method and path
-	 *
-	 * @param *string $method GET, POST, PUT, DELETE, etc..
-	 * @param *string $path   The request path
-	 *
-	 * @return array
-	 */
-	public function match($method, $path);
-	
+{	
 	/**
      * Process routes
      *

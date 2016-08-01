@@ -39,47 +39,6 @@ class Router implements RouterInterface
 
 		$this->setEventHandler($handler);
 	}
-	
-	/**
-	 * Returns all the routes that match this method and path
-	 *
-	 * @param *string $method GET, POST, PUT, DELETE, etc..
-	 * @param *string $path   The request path
-	 *
-	 * @return array
-	 */
-	public function match($method, $path)
-	{
-		$method = strtoupper($method);
-		$matches = [];
-
-		//if no routing on this
-        if (!isset($this->routes[$method])
-        	|| !is_array($this->routes[$method])
-		) {
-            return $matches;
-        }
-        
-        //determine the route
-        foreach ($this->routes[$method] as $route) {
-            $regex = str_replace('**', '!!', $route['pattern']);
-            $regex = str_replace('*', '([^/]*)', $regex);
-            $regex = str_replace('!!', '(.*)', $regex);
-            
-            $regex = '#^'.$regex.'(.*)#';
-            if (!preg_match($regex, $path, $variables)) {
-                continue;
-            }
-            
-			$route['method'] = $method;
-			$route['path'] = $path;
-			$route['variables'] = $this->getVariables($variables);
-			
-			$matches[] = $route;
-        }
-		
-		return $matches;
-	}
 
     /**
      * Process routes
@@ -162,36 +121,5 @@ class Router implements RouterInterface
 		});
 
         return $this;
-    }
-    
-    /**
-     * Returns a dynamic list of variables
-     * based on the given pattern and path
-     *
-     * @param array $matches Matches usually from a preg method
-     *
-     * @return array
-     */
-    protected function getVariables($matches)
-    {
-        $variables = [];
-        
-        if (!is_array($matches)) {
-            return $variables;
-        }
-        
-        array_shift($matches);
-        
-        foreach ($matches as $path) {
-            $variables = array_merge($variables, explode('/', $path));
-        }
-        
-        foreach ($variables as $i => $variable) {
-            if (!$variable) {
-                unset($variables[$i]);
-            }
-        }
-        
-        return array_values($variables);
     }
 }
