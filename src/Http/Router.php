@@ -9,6 +9,9 @@
 
 namespace Cradle\Http;
 
+use Cradle\Event\EventTrait;
+use Cradle\Event\EventHandler;
+use Cradle\Resolver\ResolverTrait;
 use Cradle\Http\Request\RequestInterface;
 use Cradle\Http\Router\RouterInterface;
 
@@ -21,11 +24,21 @@ use Cradle\Http\Router\RouterInterface;
  * @standard PSR-2
  */
 class Router implements RouterInterface
-{      
-    /**
-     * @var array $routes A list of route callbacks
-     */
-    protected $routes = [];
+{
+	use EventTrait, ResolverTrait;
+	
+	/**
+	 * Allow to pass a custom EventHandler
+	 */
+	public function __construct(EventHandler $handler = null)
+	{
+		//but we do need one
+		if(is_null($handler)) {
+			$handler = $this->resolve(EventHandler::class);
+		}
+
+		$this->setEventHandler($handler);
+	}
 	
 	/**
 	 * Returns all the routes that match this method and path
@@ -77,25 +90,12 @@ class Router implements RouterInterface
     {
 		$path = $request->getPath('string');
 		$method = $request->getMethod();
-		$routes = $this->match($method, $path);
-		
-		foreach($routes as $route) {
-			$callback = $route['callback'];
-			
-			//the request object should 
-			//be clean of objects
-			unset($route['callback']);
-			
-			$request->setRoute($route);
-			
-			$results = call_user_func($callback, $request, ...$args);
-			
-			if ($results === false) {
-				return false;
-			}
-		}
-        
-        return true;
+		$event = $method.' '.$path;
+
+		return $this
+			->getEventHandler()
+			->trigger($event, $request, ...$args)
+			->getMeta();
     }
     
     /**
@@ -108,9 +108,7 @@ class Router implements RouterInterface
      * @return Router
      */
     public function route($method, $path, $callback)
-    {
-        $method = strtoupper($method);
-        
+    {   
         if ($method === 'ALL') {
             return $this
                 ->route('get', $path, $callback)
@@ -118,12 +116,51 @@ class Router implements RouterInterface
                 ->route('put', $path, $callback)
                 ->route('delete', $path, $callback);
         }
+
+		$separator = md5(uniqid());
+
+		$regex = str_replace('**', $separator, $path);
+		$regex = str_replace('*', '([^/]+)', $regex);
+		$regex = str_replace($separator, '(.*)', $regex);
+
+		$event = '#^' . $method . '\s' . $regex . '$#is';
 		
-        $this->routes[$method][] = [
-			'pattern' => $path, 
-			'callback' => $callback
-		];
+		$handler = $this->getEventHandler();
 		
+		$handler->on($event, function(
+			RequestInterface $request, 
+			...$args
+		) 
+		use 
+		(
+			$handler, 
+			$callback,
+			$method,
+			$path
+		) 
+		{
+			$route = $handler->getMeta();
+			$variables = array();
+			
+			//sanitize the variables
+			foreach($route['variables'] as $variable) {
+				if(strpos($variable, '/') === false) {
+					$variables[] = $variable;
+					continue;
+				}
+				
+				$variables = array_merge($variables, explode('/', $variable));
+			}
+
+			$request->setRoute(array(
+				'method' => $method,
+				'path' => $path,
+				'variables' => $variables
+			));
+			
+			return call_user_func($callback, $request, ...$args);
+		});
+
         return $this;
     }
     

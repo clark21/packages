@@ -231,25 +231,26 @@ class Cradle_Event_EventHandler_Test extends PHPUnit_Framework_TestCase
 		->trigger('SQL Address', $trigger);
 		
 		$this->assertNull($trigger->success4);
-		
     }
 
     /**
-     * @covers Cradle\Event\EventHandler::getEvent
+     * @covers Cradle\Event\EventHandler::getMeta
      */
-    public function testGetEvent()
+    public function testGetMeta()
     {
 		$trigger = new StdClass();
 		$trigger->success1 = null;
 		$trigger->success2 = null;
 		$trigger->success3 = null;
+		$trigger->success4 = null;
+		$trigger->success5 = null;
 		
 		$this
 			->object
 			->on('foo zoo bar', function($trigger, $handler, $test) {
 				$trigger->success1 = true;
 				
-				$event = $handler->getEvent();
+				$event = $handler->getMeta();
 				
 				$test->assertEquals('foo zoo bar', $event['event']);
 				$test->assertEquals('foo zoo bar', $event['pattern']);
@@ -259,7 +260,7 @@ class Cradle_Event_EventHandler_Test extends PHPUnit_Framework_TestCase
 			->on('foo %s bar', function($trigger, $handler, $test) {
 				$trigger->success2 = true;
 				
-				$event = $handler->getEvent();
+				$event = $handler->getMeta();
 				
 				$test->assertEquals('foo zoo bar', $event['event']);
 				$test->assertEquals('foo %s bar', $event['pattern']);
@@ -269,18 +270,29 @@ class Cradle_Event_EventHandler_Test extends PHPUnit_Framework_TestCase
 			->on('#foo\s*(.*)\s+bar#is', function($trigger, $handler, $test) {
 				$trigger->success3 = true;
 				
-				$event = $handler->getEvent();
+				$event = $handler->getMeta();
 				
 				$test->assertEquals('foo zoo bar', $event['event']);
 				$test->assertEquals('#foo\s*(.*)\s+bar#is', $event['pattern']);
-				$test->assertEquals('zoo', $event['variables'][0][0]);
+				$test->assertEquals('zoo', $event['variables'][0]);
 				$this->assertCount(3, $event['args']);
 			})
+			->on('#foo\s*(.*)\s+bar#is', function($trigger, $handler, $test) {
+				$trigger->success4 = true;
+				
+				return false;
+			})
+			->on('#foo\s*(.*)\s+bar#is', function($trigger, $handler, $test) {
+				$trigger->success5 = true;
+			})
+			
 			->trigger('foo zoo bar', $trigger, $this->object, $this);
 		
 		$this->assertTrue($trigger->success1);
 		$this->assertTrue($trigger->success2);
 		$this->assertTrue($trigger->success3);
+		$this->assertTrue($trigger->success4);
+		$this->assertNull($trigger->success5);
 		
     }
 }

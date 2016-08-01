@@ -43,20 +43,20 @@ class EventHandler implements EventInterface
     protected $sprintf = [];
 
 	 /**
-     * @var array $event The current matched event
+     * @var array|bool $meta The meta data for the current event
      */
-    protected $event = [];
+    protected $meta = true;
 	
 	/**
 	 * Returns the current matched handler
 	 *
 	 * @return array
 	 */
-	public function getEvent()
+	public function getMeta()
 	{
-		return $this->event;
+		return $this->meta;
 	}
-	
+
 	/**
 	 * Returns possible event matches
 	 *
@@ -67,7 +67,7 @@ class EventHandler implements EventInterface
 	public function match($event)
 	{
 		$matches = [];
-		
+
 		//do the obvious match
 		if(isset($this->observers[$event])) {
 			$matches[] = array(
@@ -96,7 +96,7 @@ class EventHandler implements EventInterface
 				);
 			}
 		}
-		
+
 		//deal with regexp
 		foreach($this->regex as $pattern) {
 			if(!isset($this->observers[$pattern]) 
@@ -109,9 +109,10 @@ class EventHandler implements EventInterface
 			if(preg_match_all($pattern, $event, $match)) {
 				$variables = array();
 
-				if(is_array($match)) {
-					array_shift($match);
-					$variables = $match;
+				if(is_array($match) && !empty($match)) {
+					//flatten
+					$variables = call_user_func_array('array_merge', $match);
+					array_shift($variables);
 				}
 
 				$matches[] = array(
@@ -191,12 +192,12 @@ class EventHandler implements EventInterface
 			
 			return $this;
 		}
-		
+
         //set up the observer
 		$observer = $this->resolve(EventObserver::class, $callback);
-        
+
 		$this->observers[$event][$priority][] = $observer;
-		
+
 		//is there a sprintf ?
 		if(strpos($event, '%s') !== false) {
 			$this->sprintf[] = $event;
@@ -204,7 +205,7 @@ class EventHandler implements EventInterface
 		} else if(strpos($event, '#') === 0 && strrpos($event, '#') !== 0) {
 			$this->regex[] = $event;
 		}
-		
+
         return $this;
     }
 
@@ -220,7 +221,7 @@ class EventHandler implements EventInterface
     public function trigger($event, ...$args)
     {
 		$matches = $this->match($event);
-		
+
 		foreach($matches as $match) {
 			//add on to match
 			$match['args'] = $args;
@@ -230,11 +231,11 @@ class EventHandler implements EventInterface
 			if(!isset($this->observers[$event])) {
 				continue;
 			}
-			
+
 			//sort it out
 			krsort($this->observers[$event]);
 			$observers = call_user_func_array('array_merge', $this->observers[$event]);
-	
+
 			//for each observer
 			foreach ($observers as $observer) {
 				//get the callback
@@ -242,18 +243,17 @@ class EventHandler implements EventInterface
 				//add on to match
 				$match['callback'] = $callback;
 				//set the current
-				$this->event = $match;
-				
+				$this->meta = $match;
+
 				//if this is the same event, call the method, if the method returns false
 				if (call_user_func_array($callback, $args) === false) {
-					//break out of the loop
-					break;
+					$this->meta = false;
+					return $this;
 				}
 			}
 		}
 		
-		//reset current
-		$this->event = [];
+		$this->meta = true;
 		
 		return $this;
     }
