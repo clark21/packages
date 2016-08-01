@@ -41,7 +41,7 @@ class Response extends Registry implements ResponseInterface
 	public function load()
 	{
 		$this
-			->setHeader('Content-Type', 'text/html; charset=utf-8')
+			->addHeader('Content-Type', 'text/html; charset=utf-8')
             ->setStatus(200, '200 OK');
 		
 		return $this;

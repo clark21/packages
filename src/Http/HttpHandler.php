@@ -43,4 +43,14 @@ class HttpHandler
 		{
 			StateTrait::__callResolver as __call;
 		}
+
+	/**
+	 * @const STATUS_404 Status template
+	 */
+	const STATUS_404 = '404 Not Found';
+
+	/**
+	 * @const STATUS_500 Status template
+	 */
+	const STATUS_500 = '500 Server Error';
 }

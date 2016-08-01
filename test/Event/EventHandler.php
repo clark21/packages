@@ -189,6 +189,100 @@ class Cradle_Event_EventHandler_Test extends PHPUnit_Framework_TestCase
         $actual = $this->object->setResolverHandler(new ResolverHandlerStub);
 		$this->assertInstanceOf('Cradle\Event\EventHandler', $actual);
     }
+
+    /**
+     * @covers Cradle\Event\EventHandler::match
+     */
+    public function testMatch()
+    {
+		$trigger = new StdClass();
+		$trigger->success1 = null;
+		
+		$this->object->on('#foo.*bar#is', function($trigger) {
+			$trigger->success1 = true;
+		})
+		->trigger('foo zoo bar', $trigger);
+		
+		$this->assertTrue($trigger->success1);
+		
+		$trigger->success2 = null;
+		
+		$this->object->on('#(?=.*create)(?=.*address)(?=.*sql)#is', function($trigger) {
+			$trigger->success2 = true;
+		})
+		->trigger('Create SQL Address', $trigger);
+		
+		$this->assertTrue($trigger->success2);
+		
+		$trigger->success3 = null;
+		
+		$this->object->on('Create %s Address', function($trigger) {
+			$trigger->success3 = true;
+		})
+		->trigger('Create SQL Address', $trigger);
+		
+		$this->assertTrue($trigger->success3);
+		
+		$trigger->success4 = null;
+		
+		$this->object->on('Create %s', function($trigger) {
+			$trigger->success4 = true;
+		})
+		->trigger('SQL Address', $trigger);
+		
+		$this->assertNull($trigger->success4);
+		
+    }
+
+    /**
+     * @covers Cradle\Event\EventHandler::getEvent
+     */
+    public function testGetEvent()
+    {
+		$trigger = new StdClass();
+		$trigger->success1 = null;
+		$trigger->success2 = null;
+		$trigger->success3 = null;
+		
+		$this
+			->object
+			->on('foo zoo bar', function($trigger, $handler, $test) {
+				$trigger->success1 = true;
+				
+				$event = $handler->getEvent();
+				
+				$test->assertEquals('foo zoo bar', $event['event']);
+				$test->assertEquals('foo zoo bar', $event['pattern']);
+				$test->assertTrue(empty($event['variables']));
+				$this->assertCount(3, $event['args']);
+			})
+			->on('foo %s bar', function($trigger, $handler, $test) {
+				$trigger->success2 = true;
+				
+				$event = $handler->getEvent();
+				
+				$test->assertEquals('foo zoo bar', $event['event']);
+				$test->assertEquals('foo %s bar', $event['pattern']);
+				$test->assertEquals('zoo', $event['variables'][0]);
+				$this->assertCount(3, $event['args']);
+			})
+			->on('#foo\s*(.*)\s+bar#is', function($trigger, $handler, $test) {
+				$trigger->success3 = true;
+				
+				$event = $handler->getEvent();
+				
+				$test->assertEquals('foo zoo bar', $event['event']);
+				$test->assertEquals('#foo\s*(.*)\s+bar#is', $event['pattern']);
+				$test->assertEquals('zoo', $event['variables'][0][0]);
+				$this->assertCount(3, $event['args']);
+			})
+			->trigger('foo zoo bar', $trigger, $this->object, $this);
+		
+		$this->assertTrue($trigger->success1);
+		$this->assertTrue($trigger->success2);
+		$this->assertTrue($trigger->success3);
+		
+    }
 }
 
 if(!class_exists('Cradle\Event\ResolverCallStub')) {

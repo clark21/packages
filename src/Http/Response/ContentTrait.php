@@ -30,6 +30,14 @@ trait ContentTrait
 	{
 		$content = $this->get('body');
 
+		if(is_null($content)) {
+			$content = '';
+		}
+		
+		if(is_bool($content)) {
+			$content = $content ? '1': '0';
+		}
+
 		if(!$toString) {
 			return $content;
 		}
@@ -56,7 +64,7 @@ trait ContentTrait
 	public function hasContent()
 	{
 		$body = $this->get('body');
-		return !is_scalar($body) || strlen($body);
+		return (!is_scalar($body) && !empty($body)) || (!is_null($body) && strlen($body));
 	}
 	
 	/**
@@ -66,7 +74,8 @@ trait ContentTrait
 	 */
 	public function isContentFlat()
 	{
-		return is_scalar($this->get('body'));
+		$body = $this->get('body');
+		return is_null($body) || is_scalar($body);
 	}
 	
 	/**

@@ -46,7 +46,7 @@ trait HttpTrait
 	{
 		$request = $this->getRequest();
 		$response = $this->getResponse();
-		
+
 		try {
 			//dispatch an init
 			$continue = $this->getPreprocessor()->process($request, $response);
@@ -54,11 +54,11 @@ trait HttpTrait
 			//if there is an exception
 			//you may not want to out 
 			//right throw it out
-			$response->setStatus(500, '500 Server Error');
+			$response->setStatus(500, HttpHandler::STATUS_500);
 			$continue = $this->getErrorProcessor()->process($request, $response, $e);
 			//if there's an error in the errorware then let it be thrown
 		}
-		
+
 		return $continue;
 	}
 	
@@ -79,7 +79,7 @@ trait HttpTrait
 			//if there is an exception
 			//you may not want to out 
 			//right throw it out
-			$response->setStatus(500, '500 Server Error');
+			$response->setStatus(500, HttpHandler::STATUS_500);
 			$continue = $this->getErrorProcessor()->process($request, $response, $e);
 			//if there's an error in the error processor then let it be thrown
 		}
@@ -103,9 +103,14 @@ trait HttpTrait
 		$response = $this->getResponse();
 		
 		$continue = true;
+
 		if(!$response->hasContent()) {
-			$response->setStatus(404, '404 Not Found');
-			$continue = $this->getErrorProcessor()->process($request, $response);
+			$request = $this->getRequest();
+			$response->setStatus(404, HttpHandler::STATUS_404);
+			
+			$error = new HttpException(HttpHandler::STATUS_404, 404);
+			
+			$continue = $this->getErrorProcessor()->process($request, $response, $error);
 		}
 		
 		if($continue) {

@@ -62,6 +62,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testRender()
     {
+		$this->object->getResponse()->setContent('foobar');
         $instance = $this->object->render(true);
 		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }

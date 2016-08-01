@@ -31,6 +31,99 @@ class EventHandler implements EventInterface
      * @var array $observers cache of event handlers
      */
     protected $observers = [];
+
+	 /**
+     * @var array $regexp listeners with regexp
+     */
+    protected $regex = [];
+
+	 /**
+     * @var array $sprintf listeners with sprintf
+     */
+    protected $sprintf = [];
+
+	 /**
+     * @var array $event The current matched event
+     */
+    protected $event = [];
+	
+	/**
+	 * Returns the current matched handler
+	 *
+	 * @return array
+	 */
+	public function getEvent()
+	{
+		return $this->event;
+	}
+	
+	/**
+	 * Returns possible event matches
+	 *
+	 * @param *string $event
+	 *
+	 * @return array
+	 */
+	public function match($event)
+	{
+		$matches = [];
+		
+		//do the obvious match
+		if(isset($this->observers[$event])) {
+			$matches[] = array(
+				'event' => $event,
+				'pattern' => $event,
+				'variables' => array()
+			);
+		}
+		
+		//deal with sprintf
+		foreach($this->sprintf as $pattern) {
+			if(!isset($this->observers[$pattern]) 
+				|| empty($this->observers[$pattern])
+			) {
+				continue;
+			}
+			
+			$variables = sscanf($event, $pattern);
+			
+			//if it matches
+			if(strlen(implode('', $variables))) {
+				$matches[] = array(
+					'event' => $event,
+					'pattern' => $pattern,
+					'variables' => $variables
+				);
+			}
+		}
+		
+		//deal with regexp
+		foreach($this->regex as $pattern) {
+			if(!isset($this->observers[$pattern]) 
+				|| empty($this->observers[$pattern])
+			) {
+				continue;
+			}
+
+			//if it matches
+			if(preg_match_all($pattern, $event, $match)) {
+				$variables = array();
+
+				if(is_array($match)) {
+					array_shift($match);
+					$variables = $match;
+				}
+
+				$matches[] = array(
+					'event' => $event,
+					'pattern' => $pattern,
+					'variables' => $variables
+				);
+			}
+		}
+
+        return $matches;
+	}
     
     /**
      * Stops listening to an event
@@ -82,18 +175,35 @@ class EventHandler implements EventInterface
      * Attaches an instance to be notified
      * when an event has been triggered
      *
-     * @param *string   $event    The name of the event
-     * @param *callable $callback The event handler
-     * @param int       $priority Set the importance
+     * @param *string|array $event    The name of the event
+     * @param *callable     $callback The event handler
+     * @param int           $priority Set the importance
      *
      * @return EventHandler
      */
     public function on($event, $callback, $priority = 0)
     {
+		//deal with multiple events
+		if(is_array($event)) {
+			foreach($event as $item) {
+				$this->on($item, $callback, $priority);
+			}
+			
+			return $this;
+		}
+		
         //set up the observer
 		$observer = $this->resolve(EventObserver::class, $callback);
         
 		$this->observers[$event][$priority][] = $observer;
+		
+		//is there a sprintf ?
+		if(strpos($event, '%s') !== false) {
+			$this->sprintf[] = $event;
+		//is there a regexp ?
+		} else if(strpos($event, '#') === 0 && strrpos($event, '#') !== 0) {
+			$this->regex[] = $event;
+		}
 		
         return $this;
     }
@@ -109,24 +219,43 @@ class EventHandler implements EventInterface
      */
     public function trigger($event, ...$args)
     {
-		if(!isset($this->observers[$event])) {
-			return $this;
+		$matches = $this->match($event);
+		
+		foreach($matches as $match) {
+			//add on to match
+			$match['args'] = $args;
+			$event = $match['pattern'];
+
+			//if no direct observers
+			if(!isset($this->observers[$event])) {
+				continue;
+			}
+			
+			//sort it out
+			krsort($this->observers[$event]);
+			$observers = call_user_func_array('array_merge', $this->observers[$event]);
+	
+			//for each observer
+			foreach ($observers as $observer) {
+				//get the callback
+				$callback = $observer->getCallback();
+				//add on to match
+				$match['callback'] = $callback;
+				//set the current
+				$this->event = $match;
+				
+				//if this is the same event, call the method, if the method returns false
+				if (call_user_func_array($callback, $args) === false) {
+					//break out of the loop
+					break;
+				}
+			}
 		}
-        
-		krsort($this->observers[$event]);
-        $observers = call_user_func_array('array_merge', $this->observers[$event]);
-
-        //for each observer
-        foreach ($observers as $observer) {
-			$callback = $observer->getCallback();
-            //if this is the same event, call the method, if the method returns false
-            if (call_user_func_array($callback, $args) === false) {
-                //break out of the loop
-                break;
-            }
-        }
-
-        return $this;
+		
+		//reset current
+		$this->event = [];
+		
+		return $this;
     }
 	
 	/**

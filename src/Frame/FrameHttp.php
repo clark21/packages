@@ -17,6 +17,7 @@ use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
 use Cradle\Resolver\StateTrait;
+use Cradle\Resolver\ResolverException;
 
 use Cradle\Http\HttpTrait;
 use Cradle\Event\PipeTrait;
@@ -42,11 +43,27 @@ class FrameHttp
 		PipeTrait,
 		PackageTrait 
 		{ 
-			StateTrait::__callResolver as __call;
 			HttpTrait::route as routeHttp;
 			PackageTrait::register as registerPackage;
 			PackageTrait::__constructPackage as __construct;
 		}
+	
+	/**
+	 * Attempts to use __callData then __callResolver
+	 *
+	 * @param *string $name name of method
+	 * @param *array  $args arguments to pass
+	 *
+	 * @return mixed
+	 */
+	public function __call($name, $args)
+	{
+		try {
+			return $this->__callResolver($name, $args);
+		} catch(ResolverException $e) {
+			throw new FrameException($e->getMessage());
+		}
+	}
 	
 	/**
 	 * Registers and initializes a plugin

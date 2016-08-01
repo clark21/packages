@@ -54,13 +54,13 @@ class Router implements RouterInterface
             $regex = str_replace('!!', '(.*)', $regex);
             
             $regex = '#^'.$regex.'(.*)#';
-            if (!preg_match($regex, $path, $matches)) {
+            if (!preg_match($regex, $path, $variables)) {
                 continue;
             }
             
 			$route['method'] = $method;
 			$route['path'] = $path;
-			$route['variables'] = $this->getVariables($matches);
+			$route['variables'] = $this->getVariables($variables);
 			
 			$matches[] = $route;
         }
