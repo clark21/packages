@@ -129,24 +129,16 @@
 	  <file>test/Sql/Sqlite/QueryCreate.php</file>
 	  <file>test/Sql/Sqlite/QueryUtility.php</file>
 	  <file>test/Sql/MySql.php</file>
-	  <!--<file>test/Sql/PostGreSql.php</file>
-	  <file>test/Sql/Sqlite.php</file>-->
     </testsuite>
-    <!--<testsuite name="CradlePHP Curl Test Suite">
-      <file>test/Curl/CurlException.php</file>
-      <file>test/Curl/CurlHandler.php</file>
-      <file>test/Curl/Rest.php</file>
-      <file>test/Curl/RestException.php</file>
-    </testsuite>
-    <testsuite name="CradlePHP Image Test Suite">
-      <file>test/Image/ImageException.php</file>
-	  <file>test/Image/ImageHandler.php</file>
-    </testsuite>-->
   </testsuites>
 
   <filter>
     <whitelist>
-      <directory suffix=".php">./</directory>
+      <directory suffix=".php">./src</directory>
+	  <exclude>
+        <directory>./vendor</directory>
+        <directory>./tests</directory>
+      </exclude>
     </whitelist>
   </filter>
 </phpunit>
