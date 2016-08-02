@@ -27,7 +27,7 @@ class SqlFactory
         
         switch ($name) {
             case 'mysql':
-                return MySQL::loadPDO($connection);
+                return MySql::loadPDO($connection);
             case 'pgsql':
                 return PostGreSql::loadPDO($connection);
             case 'sqlite':
