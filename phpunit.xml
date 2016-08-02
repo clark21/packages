@@ -143,8 +143,8 @@
 	  <exclude>
         <directory>./vendor</directory>
         <directory>./tests</directory>
-		<file>src/Data/Curl/CurlException.php</file>
-		<file>src/Data/Curl/map.php</file>
+		<file>src/Curl/CurlException.php</file>
+		<file>src/Curl/map.php</file>
 		<file>src/Data/Collection/CollectionInterface.php</file>
 		<file>src/Data/Collection/CollectionException.php</file>
 		<file>src/Data/Registry/RegistryInterface.php</file>
