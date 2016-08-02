@@ -86,6 +86,36 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
 		$this->assertTrue($trigger->success3);
 		$this->assertEquals(18, $trigger->total);
 		
+		$trigger = new StdClass();
+		$trigger->success1 = null;
+		$trigger->success2 = null;
+		$trigger->success3 = null;
+		
+		$instance = $this
+			->object
+			->flow(
+				'barfoo',
+				'step4',
+				array(
+					'step5',
+					'step6',
+					'foo://bar@foo',
+					'foo://bar::foo'
+				)
+			)
+			->on('step4', function($trigger, $foo, $bar) {
+				$trigger->success1 = true;
+				$this->triggerEvent('step5', $trigger, $foo, $bar);
+			})
+			->on('step6', function($trigger, $foo, $bar) {
+				$trigger->success2 = true;
+			})
+			->trigger('barfoo', $trigger, 1, 2);
+		
+		$this->assertInstanceOf('Cradle\Event\PipeTraitStub', $instance);
+		$this->assertTrue($trigger->success1);
+		$this->assertTrue($trigger->success2);
+		
     }
 
     /**

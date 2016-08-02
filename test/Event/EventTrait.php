@@ -75,6 +75,11 @@ class Cradle_Event_EventTrait_Test extends PHPUnit_Framework_TestCase
     {
         $instance = $this->object->setEventHandler(new EventPipeEventHandlerStub);
 		$this->assertInstanceOf('Cradle\Event\EventTraitStub', $instance);
+		
+        $instance = $this->object->setEventHandler(new EventPipeEventHandlerStub, true);
+		$this->assertInstanceOf('Cradle\Event\EventTraitStub', $instance);
+		
+        $instance = $this->object->setEventHandler(new EventHandler, true);
     }
 
     /**

@@ -53,6 +53,26 @@ class Cradle_Event_EventHandler_Test extends PHPUnit_Framework_TestCase
 			->trigger('foobar');
 		
 		$this->assertNull($trigger->success);
+		
+		$this->object->off();
+		
+		$this->assertNull($trigger->success);
+		
+		$this
+			->object
+			->on('foobar', $callback)
+			->off(null, $callback)
+			->trigger('foobar');
+		
+		$this->assertNull($trigger->success);
+		
+		$this
+			->object
+			->on('foobar', $callback)
+			->off('foobar', $callback)
+			->trigger('foobar');
+		
+		$this->assertNull($trigger->success);
     }
 
     /**
@@ -231,6 +251,13 @@ class Cradle_Event_EventHandler_Test extends PHPUnit_Framework_TestCase
 		->trigger('SQL Address', $trigger);
 		
 		$this->assertNull($trigger->success4);
+		
+		$this->object->on('Create', function($trigger) {
+			$trigger->success4 = true;
+		})
+		->trigger('Create', $trigger);
+		
+		$this->assertTrue($trigger->success4);
     }
 
     /**

@@ -82,9 +82,9 @@ class EventObserver
         if (!is_callable($callback)) {
             throw EventException::forInvalidCallback();
         }
-        
+
         $id = $this->getId($callback);
-        
+
         return $this->id === $id;
     }
 

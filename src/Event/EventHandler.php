@@ -79,16 +79,10 @@ class EventHandler implements EventInterface
         
         //deal with sprintf
         foreach ($this->sprintf as $pattern) {
-            if (!isset($this->observers[$pattern])
-                || empty($this->observers[$pattern])
-            ) {
-                continue;
-            }
-            
             $variables = sscanf($event, $pattern);
             
             //if it matches
-            if (strlen(implode('', $variables))) {
+            if (is_array($variables) && strlen(implode('', $variables))) {
                 $matches[] = array(
                     'event' => $event,
                     'pattern' => $pattern,
@@ -99,12 +93,6 @@ class EventHandler implements EventInterface
 
         //deal with regexp
         foreach ($this->regex as $pattern) {
-            if (!isset($this->observers[$pattern])
-                || empty($this->observers[$pattern])
-            ) {
-                continue;
-            }
-
             //if it matches
             if (preg_match_all($pattern, $event, $match)) {
                 $variables = array();
@@ -297,7 +285,7 @@ class EventHandler implements EventInterface
             foreach ($observers as $i => $observer) {
                 //0 => callback
                 if ($observer->assertEquals($callback)) {
-                    unset($this->observers[$priority][$i]);
+                    unset($this->observers[$event][$priority][$i]);
                 }
             }
         }

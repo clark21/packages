@@ -9,6 +9,7 @@
 
 namespace Cradle\Data;
 
+use Closure;
 use ArrayAccess;
 use Iterator;
 use Countable;
@@ -27,6 +28,7 @@ use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
 use Cradle\Resolver\StateTrait;
+use Cradle\Resolver\ResolverException;
 
 /**
  * Collections are a managable list of models. Model

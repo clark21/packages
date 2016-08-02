@@ -9,6 +9,7 @@
 
 namespace Cradle\Event;
 
+use Closure;
 use Cradle\Helper\BinderTrait;
 
 /**

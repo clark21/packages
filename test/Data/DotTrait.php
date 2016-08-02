@@ -24,6 +24,7 @@ class Cradle_Data_DotTrait_Test extends PHPUnit_Framework_TestCase
 		
 		$this->object->setDot('foo', 'bar');
 		$this->object->setDot('bar', 'foo');
+		$this->object->setDot('bar.zoo', 'zoo');
     }
 
     /**
@@ -40,6 +41,9 @@ class Cradle_Data_DotTrait_Test extends PHPUnit_Framework_TestCase
     public function testGetDot()
     {
         $this->assertEquals('bar', $this->object->getDot('foo'));
+        $this->assertEquals('zoo', $this->object->getDot('bar.zoo'));
+		
+		$this->assertNull($this->object->getDot(''));
     }
 
     /**
@@ -48,6 +52,8 @@ class Cradle_Data_DotTrait_Test extends PHPUnit_Framework_TestCase
     public function testIsDot()
     {
 		$this->assertTrue($this->object->isDot('bar'));
+		$this->assertTrue($this->object->isDot('bar.zoo'));
+		$this->assertFalse($this->object->isDot(''));
     }
 
     /**
@@ -55,8 +61,14 @@ class Cradle_Data_DotTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testRemoveDot()
     {
+		$instance = $this->object->removeDot('');
+		$this->assertInstanceOf('Cradle\Data\DotTraitStub', $instance);
+		
 		$this->object->removeDot('foo');
 		$this->assertFalse($this->object->isDot('foo'));
+		
+		$this->object->removeDot('bar.zoo');
+		$this->assertFalse($this->object->isDot('bar.zoo'));
     }
 
     /**
@@ -64,6 +76,8 @@ class Cradle_Data_DotTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetDot()
     {
+		$instance = $this->object->setDot('', 'foo');
+		$this->assertInstanceOf('Cradle\Data\DotTraitStub', $instance);
 		$this->object->setDot('zoo', 2);
         $this->assertEquals(2, $this->object->getDot('zoo'));
     }
