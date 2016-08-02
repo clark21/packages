@@ -3,7 +3,8 @@ php:
 - 5.6
 install:
 - pear install pear/PHP_CodeSniffer
-- phpenv rehash
+- /home/travis/.phpenv/versions/5.6/bin/composer install
+- phpenv rehash 
 script:
 - phpunit
 - phpcs
