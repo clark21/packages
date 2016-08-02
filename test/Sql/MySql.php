@@ -21,7 +21,7 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = SqlFactory::load(include(__DIR__.'/../assets/sql/mysql.php'));
-		$schema = file_get_contents(__DIR__.'/../assets/sql/mysql.php');
+		$schema = file_get_contents(__DIR__.'/../assets/sql/mysql-schema.sql');
 		$this->object->query($schema);
     }
 
