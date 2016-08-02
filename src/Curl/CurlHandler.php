@@ -110,14 +110,14 @@ class CurlHandler implements ArrayAccess
     {
         if (strpos($name, 'set') === 0) {
             //'AutoReferer' => CURLOPT_AUTOREFERER,
-			$name = strtoupper(substr($name, 3));
-			
-			$key = constant('CURLOPT_' . $name);
-			
-			if(!is_null($key)) {
-				$this->options[$key] = $args[0];
+            $name = strtoupper(substr($name, 3));
+            
+            $key = constant('CURLOPT_' . $name);
+            
+            if (!is_null($key)) {
+                $this->options[$key] = $args[0];
                 return $this;
-			}
+            }
         }
         
         try {
@@ -126,24 +126,24 @@ class CurlHandler implements ArrayAccess
             throw new CurlException($e->getMessage());
         }
     }
-	
-	/**
-	 * Set a curl map, which is usually good for testing
-	 *
-	 * @param Closure $map
-	 */
-	public function __construct(Closure $map = null)
-	{
-		if(is_null(self::$mapCache)) {
-			self::$mapCache = include(__DIR__ . '/map.php');
-		}
+    
+    /**
+     * Set a curl map, which is usually good for testing
+     *
+     * @param Closure $map
+     */
+    public function __construct(Closure $map = null)
+    {
+        if (is_null(self::$mapCache)) {
+            self::$mapCache = include(__DIR__ . '/map.php');
+        }
 
-		$this->map = self::$mapCache;
-		
-		if(!is_null($map)) {
-			$this->map = $map; 
-		}
-	}
+        $this->map = self::$mapCache;
+        
+        if (!is_null($map)) {
+            $this->map = $map;
+        }
+    }
 
     /**
      * Send the curl off and returns the results
@@ -211,8 +211,8 @@ class CurlHandler implements ArrayAccess
     {
         $this->addParameters()->addHeaders();
         $this->options[CURLOPT_RETURNTRANSFER] = true;
-		
-		$this->meta = call_user_func($this->map, $this->options);
+        
+        $this->meta = call_user_func($this->map, $this->options);
 
         return $this->meta['response'];
     }
@@ -238,16 +238,16 @@ class CurlHandler implements ArrayAccess
      */
     public function offsetExists($offset)
     {
-		if(is_string($offset)) {
-			//if it doesn't have a CURL prefix
-			if(strpos($offset, 'CURLOPT_') !== 0) {
-				$offset = 'CURLOPT_' . $offset;
-			}
-			
-			if (defined(strtoupper($offset))) {
-				$offset = constant(strtoupper($offset));
-			}
-		}
+        if (is_string($offset)) {
+            //if it doesn't have a CURL prefix
+            if (strpos($offset, 'CURLOPT_') !== 0) {
+                $offset = 'CURLOPT_' . $offset;
+            }
+            
+            if (defined(strtoupper($offset))) {
+                $offset = constant(strtoupper($offset));
+            }
+        }
 
         return isset($this->options[$offset]);
     }
@@ -261,17 +261,17 @@ class CurlHandler implements ArrayAccess
      */
     public function offsetGet($offset)
     {
-		if(is_string($offset)) {
-			//if it doesn't have a CURL prefix
-			if(strpos($offset, 'CURLOPT_') !== 0) {
-				$offset = 'CURLOPT_' . $offset;
-			}
-			
-			if (defined(strtoupper($offset))) {
-				$offset = constant(strtoupper($offset));
-			}
-		}
-		
+        if (is_string($offset)) {
+            //if it doesn't have a CURL prefix
+            if (strpos($offset, 'CURLOPT_') !== 0) {
+                $offset = 'CURLOPT_' . $offset;
+            }
+            
+            if (defined(strtoupper($offset))) {
+                $offset = constant(strtoupper($offset));
+            }
+        }
+        
         return isset($this->options[$offset]) ? $this->options[$offset] : null;
     }
 
@@ -283,20 +283,20 @@ class CurlHandler implements ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-		if(is_string($offset)) {
-			//if it doesn't have a CURL prefix
-			if(strpos($offset, 'CURLOPT_') !== 0) {
-				$offset = 'CURLOPT_' . $offset;
-			}
-			
-			if (defined(strtoupper($offset))) {
-				$offset = constant(strtoupper($offset));
-			}
-		}
-		
-		if(!is_null($offset)) {
-			$this->options[$offset] = $value;
-		}
+        if (is_string($offset)) {
+            //if it doesn't have a CURL prefix
+            if (strpos($offset, 'CURLOPT_') !== 0) {
+                $offset = 'CURLOPT_' . $offset;
+            }
+            
+            if (defined(strtoupper($offset))) {
+                $offset = constant(strtoupper($offset));
+            }
+        }
+        
+        if (!is_null($offset)) {
+            $this->options[$offset] = $value;
+        }
     }
 
     /**
@@ -306,20 +306,20 @@ class CurlHandler implements ArrayAccess
      */
     public function offsetUnset($offset)
     {
-		if(is_string($offset)) {
-			//if it doesn't have a CURL prefix
-			if(strpos($offset, 'CURLOPT_') !== 0) {
-				$offset = 'CURLOPT_' . $offset;
-			}
-			
-			if (defined(strtoupper($offset))) {
-				$offset = constant(strtoupper($offset));
-			}
-		}
-		
-		if(isset($this->options[$offset])) {
-        	unset($this->options[$offset]);
-		}
+        if (is_string($offset)) {
+            //if it doesn't have a CURL prefix
+            if (strpos($offset, 'CURLOPT_') !== 0) {
+                $offset = 'CURLOPT_' . $offset;
+            }
+            
+            if (defined(strtoupper($offset))) {
+                $offset = constant(strtoupper($offset));
+            }
+        }
+        
+        if (isset($this->options[$offset])) {
+            unset($this->options[$offset]);
+        }
     }
 
     /**
@@ -331,9 +331,9 @@ class CurlHandler implements ArrayAccess
     {
         $this->addParameters()->addHeaders();
         
-		$this->meta = call_user_func($this->map, $this->options);
-		
-		return $this;
+        $this->meta = call_user_func($this->map, $this->options);
+        
+        return $this;
     }
 
     /**
@@ -452,7 +452,7 @@ class CurlHandler implements ArrayAccess
         }
 
         $this->param[$key] = $value;
-		return $this;
+        return $this;
     }
 
     /**

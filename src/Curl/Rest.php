@@ -388,7 +388,7 @@ class Rest
         // -----------------------------------
         //if they made up a key value
         //foreach($data as $key => $value) {
-        //    if(!isset($meta['data'][$key])) {
+        //    if (!isset($meta['data'][$key])) {
         //        //disallow random key/values
         //        return sprintf(self::FAIL_DATA, $key);
         //    }
