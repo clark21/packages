@@ -63,8 +63,22 @@ class Cradle_Sql_PostGreSql_QueryAlter_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetQuery()
     {
+		
         $actual = $this->object->getQuery();
 		$this->assertEquals('ALTER TABLE "foobar" ;', $actual);
+		
+		$actual = $this->object
+			->addPrimaryKey('foobar')
+			->changeField('foobar', array())
+			->removeField('foobar')
+			->removePrimaryKey('foobar')
+			->setName('foobar')
+			->getQuery();
+		
+		$this->assertEquals('ALTER TABLE "foobar" DROP COLUMN "foobar", 
+ALTER COLUMN "foobar", 
+DROP PRIMARY KEY "foobar", 
+ADD PRIMARY KEY ("foobar");', $actual);
     }
 
     /**
