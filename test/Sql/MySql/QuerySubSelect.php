@@ -1,6 +1,6 @@
 <?php
 
-namespace Cradle\Sql\Mysql;
+namespace Cradle\Sql\MySql;
 
 use PHPUnit_Framework_TestCase;
 
@@ -47,6 +47,6 @@ class Cradle_Sql_MySql_QuerySubSelect_Test extends PHPUnit_Framework_TestCase
     public function testSetParentQuery()
     {
         $instance = $this->object->setParentQuery(new QuerySelect);
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QuerySubSelect', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QuerySubSelect', $instance);
     }
 }

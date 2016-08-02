@@ -1,6 +1,6 @@
 <?php
 
-namespace Cradle\Sql\Mysql;
+namespace Cradle\Sql\MySql;
 
 use PHPUnit_Framework_TestCase;
 
@@ -37,7 +37,7 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     public function testAddField()
     {
         $instance = $this->object->addField('foobar', array());
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -46,7 +46,7 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     public function testAddKey()
     {
         $instance = $this->object->addKey('foobar', array());
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -55,7 +55,7 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     public function testAddPrimaryKey()
     {
         $instance = $this->object->addPrimaryKey('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -64,7 +64,7 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     public function testAddUniqueKey()
     {
         $instance = $this->object->addUniqueKey('foobar', array());
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -82,7 +82,7 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     public function testSetComments()
     {
         $instance = $this->object->setComments('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -91,7 +91,7 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     public function testSetFields()
     {
         $instance = $this->object->setFields(array('foobar'));
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -100,7 +100,7 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     public function testSetKeys()
     {
         $instance = $this->object->setKeys(array('foobar'));
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -109,7 +109,7 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     public function testSetName()
     {
         $instance = $this->object->setName('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -118,7 +118,7 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     public function testSetPrimaryKeys()
     {
         $instance = $this->object->setPrimaryKeys(array('foobar'));
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -127,6 +127,6 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     public function testSetUniqueKeys()
     {
         $instance = $this->object->setUniqueKeys(array('foobar'));
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryCreate', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 }

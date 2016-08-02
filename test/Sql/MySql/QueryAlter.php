@@ -1,6 +1,6 @@
 <?php
 
-namespace Cradle\Sql\Mysql;
+namespace Cradle\Sql\MySql;
 
 use PHPUnit_Framework_TestCase;
 
@@ -37,7 +37,7 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     public function testAddField()
     {
         $instance = $this->object->addField('foobar', array());
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
@@ -46,7 +46,7 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     public function testAddKey()
     {
         $instance = $this->object->addKey('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
@@ -55,7 +55,7 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     public function testAddPrimaryKey()
     {
         $instance = $this->object->addPrimaryKey('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
@@ -64,7 +64,7 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     public function testAddUniqueKey()
     {
         $instance = $this->object->addUniqueKey('foobar', array());
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
@@ -73,7 +73,7 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     public function testChangeField()
     {
         $instance = $this->object->changeField('foobar', array());
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
@@ -91,7 +91,7 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     public function testRemoveField()
     {
         $instance = $this->object->removeField('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
@@ -100,7 +100,7 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     public function testRemoveKey()
     {
         $instance = $this->object->removeKey('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
@@ -109,7 +109,7 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     public function testRemovePrimaryKey()
     {
         $instance = $this->object->removePrimaryKey('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
@@ -118,7 +118,7 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     public function testRemoveUniqueKey()
     {
         $instance = $this->object->removeUniqueKey('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
@@ -127,6 +127,6 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     public function testSetName()
     {
         $instance = $this->object->setName('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryAlter', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 }

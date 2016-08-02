@@ -1,6 +1,6 @@
 <?php
 
-namespace Cradle\Sql\Mysql;
+namespace Cradle\Sql\MySql;
 
 use PHPUnit_Framework_TestCase;
 
@@ -37,7 +37,7 @@ class Cradle_Sql_MySql_QueryUtility_Test extends PHPUnit_Framework_TestCase
     public function testDropTable()
     {
         $instance = $this->object->dropTable('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryUtility', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryUtility', $instance);
     }
 
     /**
@@ -55,7 +55,7 @@ class Cradle_Sql_MySql_QueryUtility_Test extends PHPUnit_Framework_TestCase
     public function testRenameTable()
     {
         $instance = $this->object->renameTable('foo', 'bar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryUtility', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryUtility', $instance);
     }
 
     /**
@@ -64,7 +64,7 @@ class Cradle_Sql_MySql_QueryUtility_Test extends PHPUnit_Framework_TestCase
     public function testShowColumns()
     {
         $instance = $this->object->showColumns('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryUtility', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryUtility', $instance);
     }
 
     /**
@@ -73,7 +73,7 @@ class Cradle_Sql_MySql_QueryUtility_Test extends PHPUnit_Framework_TestCase
     public function testShowTables()
     {
         $instance = $this->object->showTables('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryUtility', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryUtility', $instance);
     }
 
     /**
@@ -82,6 +82,6 @@ class Cradle_Sql_MySql_QueryUtility_Test extends PHPUnit_Framework_TestCase
     public function testTruncate()
     {
         $instance = $this->object->truncate('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Mysql\QueryUtility', $instance);
+		$this->assertInstanceOf('Cradle\Sql\MySql\QueryUtility', $instance);
     }
 }
