@@ -102,14 +102,14 @@ class FrameHttp
             return false;
         };
         
-            if (!$map) {
-                return $next;
-            }
-        
-            $request = $handler->getRequest();
-            $response = $handler->getResponse();
-        
-            return array($request, $response, $next);
+        if (!$map) {
+            return $next;
+        }
+    
+        $request = $handler->getRequest();
+        $response = $handler->getResponse();
+    
+        return array($request, $response, $next);
     }
     
     /**

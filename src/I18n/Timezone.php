@@ -385,7 +385,6 @@ class Timezone
                 $hour   = substr($zone, 0, 2) * 3600;
                 $minute = substr($zone, 2) * 60;
                 return ($hour+$minute) * ($add?1:-1);
-
         }
 
         return 0;

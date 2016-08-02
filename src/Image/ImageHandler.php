@@ -106,7 +106,6 @@ class ImageHandler
             default:
                 imagejpeg($this->resource, null, $this->quality);
                 break;
-
         }
 
         return ob_get_clean();
@@ -651,7 +650,6 @@ class ImageHandler
             default:
                 imagejpeg($this->resource, $path, $this->quality);
                 break;
-
         }
 
         return $this;

@@ -366,7 +366,6 @@ class Rest
             default:
                 $response = $request->getResponse(); // get the raw response
                 break;
-                
         }
         
         return $response;

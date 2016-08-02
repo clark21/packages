@@ -123,7 +123,6 @@ class HandlebarsTokenizer
                 default:
                     $this->buffer .= $this->source[$i];
                     break;
-                    
             }
         }
 
