@@ -33,25 +33,33 @@ class Cradle_Image_ImageException_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Image\ImageException::forGDNotInstalled
-     * @todo   Implement testForGDNotInstalled().
      */
     public function testForGDNotInstalled()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$message = null;
+		
+		try {
+			throw ImageException::forGDNotInstalled();
+		} catch(ImageException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('PHP GD Library is not installed.', $message);
     }
 
     /**
      * @covers Cradle\Image\ImageException::forInvalidImageFile
-     * @todo   Implement testForInvalidImageFile().
      */
     public function testForInvalidImageFile()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$message = null;
+		
+		try {
+			throw ImageException::forInvalidImageFile('foobar');
+		} catch(ImageException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('foobar is not a valid image file.', $message);
     }
 }

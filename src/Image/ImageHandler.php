@@ -68,6 +68,7 @@ class ImageHandler
     {
         if ($this->resource) {
             imagedestroy($this->resource);
+            $this->resource = null;
         }
     }
 

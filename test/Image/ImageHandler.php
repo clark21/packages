@@ -20,7 +20,7 @@ class Cradle_Image_ImageHandler_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new ImageHandler;
+        $this->object = new ImageHandler(__DIR__.'/../assets/image/foobar.png', 'png');
     }
 
     /**
@@ -29,281 +29,221 @@ class Cradle_Image_ImageHandler_Test extends PHPUnit_Framework_TestCase
      */
     protected function tearDown()
     {
+		$this->object->__destruct();
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::__destruct
-     * @todo   Implement test__destruct().
      */
     public function test__destruct()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$this->object->__destruct();
+		
+		$this->assertNull($this->object->getResource());
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::__toString
-     * @todo   Implement test__toString().
      */
     public function test__toString()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = base64_encode($this->object->__toString());
+		
+		$this->assertTrue(!!strlen($actual));
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::blur
-     * @todo   Implement testBlur().
      */
     public function testBlur()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->blur();
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::brightness
-     * @todo   Implement testBrightness().
      */
     public function testBrightness()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->brightness(10);
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::colorize
-     * @todo   Implement testColorize().
      */
     public function testColorize()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->colorize(255, 0, 0);
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::contrast
-     * @todo   Implement testContrast().
      */
     public function testContrast()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->contrast(10);
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::crop
-     * @todo   Implement testCrop().
      */
     public function testCrop()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->crop(10);
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::edgedetect
-     * @todo   Implement testEdgedetect().
      */
     public function testEdgedetect()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->edgedetect();
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::emboss
-     * @todo   Implement testEmboss().
      */
     public function testEmboss()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->emboss();
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::gaussianBlur
-     * @todo   Implement testGaussianBlur().
      */
     public function testGaussianBlur()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->gaussianBlur();
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::getDimensions
-     * @todo   Implement testGetDimensions().
      */
     public function testGetDimensions()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getDimensions();
+		$this->assertTrue(is_array($actual));
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::getResource
-     * @todo   Implement testGetResource().
      */
     public function testGetResource()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$resource = $this->object->getResource();
+
+		$this->assertTrue(imagesx($resource) > 0);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::greyscale
-     * @todo   Implement testGreyscale().
      */
     public function testGreyscale()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->greyscale();
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::invert
-     * @todo   Implement testInvert().
      */
     public function testInvert()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->invert();
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::meanRemoval
-     * @todo   Implement testMeanRemoval().
      */
     public function testMeanRemoval()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->meanRemoval();
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::negative
-     * @todo   Implement testNegative().
      */
     public function testNegative()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->negative();
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::resize
-     * @todo   Implement testResize().
      */
     public function testResize()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->resize(10, 10);
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::rotate
-     * @todo   Implement testRotate().
      */
     public function testRotate()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->rotate(10);
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::scale
-     * @todo   Implement testScale().
      */
     public function testScale()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->scale(10, 10);
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::setTransparency
-     * @todo   Implement testSetTransparency().
      */
     public function testSetTransparency()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setTransparency();
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::smooth
-     * @todo   Implement testSmooth().
      */
     public function testSmooth()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->smooth(10);
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::save
-     * @todo   Implement testSave().
      */
     public function testSave()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->save('/tmp/foobar.png', 'png');
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance);
     }
 
     /**
      * @covers Cradle\Image\ImageHandler::i
-     * @todo   Implement testI().
      */
     public function testI()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance1 = ImageHandler::i(__DIR__.'/../assets/image/foobar.png', 'png');
+		
+		$this->assertInstanceOf('Cradle\Image\ImageHandler', $instance1);
+		
+		$instance2 = ImageHandler::i(__DIR__.'/../assets/image/foobar.png', 'png');
+		
+		$this->assertTrue($instance1 !== $instance2);
     }
 }

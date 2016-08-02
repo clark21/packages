@@ -135,6 +135,10 @@
       <file>test/Curl/Rest.php</file>
       <file>test/Curl/RestException.php</file>
     </testsuite>
+    <testsuite name="CradlePHP Image Test Suite">
+      <file>test/Image/ImageHandler.php</file>
+      <file>test/Image/ImageException.php</file>
+    </testsuite>
   </testsuites>
 
   <filter>
