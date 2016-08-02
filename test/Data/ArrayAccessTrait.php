@@ -35,7 +35,6 @@ class Cradle_Data_ArrayAccessTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Data\ArrayAccessTrait::offsetExists
-     * @todo   Implement testOffsetExists().
      */
     public function testOffsetExists()
     {

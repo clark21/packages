@@ -35,7 +35,7 @@ class Cradle_Http_DispatcherTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\DispatcherTrait::getDispatcher
+     * covers Cradle\Http\DispatcherTrait::getDispatcher
      */
     public function testGetDispatcher()
     {
@@ -44,7 +44,7 @@ class Cradle_Http_DispatcherTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\DispatcherTrait::setDispatcher
+     * covers Cradle\Http\DispatcherTrait::setDispatcher
      */
     public function testSetDispatcher()
     {

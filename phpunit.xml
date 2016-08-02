@@ -118,13 +118,13 @@
 	  <file>test/Sql/MySql/QueryCreate.php</file>
 	  <file>test/Sql/MySql/QuerySubSelect.php</file>
 	  <file>test/Sql/MySql/QueryUtility.php</file>
-	  <file>test/Sql/Postgresql/QueryAlter.php</file>
-	  <file>test/Sql/Postgresql/QueryCreate.php</file>
-	  <file>test/Sql/Postgresql/QueryDelete.php</file>
-	  <file>test/Sql/Postgresql/QueryInsert.php</file>
-	  <file>test/Sql/Postgresql/QuerySelect.php</file>
-	  <file>test/Sql/Postgresql/QueryUpdate.php</file>
-	  <file>test/Sql/Postgresql/QueryUtility.php</file>
+	  <file>test/Sql/PostGreSql/QueryAlter.php</file>
+	  <file>test/Sql/PostGreSql/QueryCreate.php</file>
+	  <file>test/Sql/PostGreSql/QueryDelete.php</file>
+	  <file>test/Sql/PostGreSql/QueryInsert.php</file>
+	  <file>test/Sql/PostGreSql/QuerySelect.php</file>
+	  <file>test/Sql/PostGreSql/QueryUpdate.php</file>
+	  <file>test/Sql/PostGreSql/QueryUtility.php</file>
 	  <file>test/Sql/Sqlite/QueryAlter.php</file>
 	  <file>test/Sql/Sqlite/QueryCreate.php</file>
 	  <file>test/Sql/Sqlite/QueryUtility.php</file>
@@ -138,6 +138,19 @@
 	  <exclude>
         <directory>./vendor</directory>
         <directory>./tests</directory>
+		<file>src/Data/Collection/CollectionInterface.php</file>
+		<file>src/Data/Registry/RegistryInterface.php</file>
+		<file>src/Data/Model/ModelInterface.php</file>
+		<file>src/Event/EventInterface.php</file>
+		<file>src/Handlebars/helpers.php</file>
+		<file>src/Http/Dispatcher/DispatcherInterface.php</file>
+		<file>src/Http/Middleware/MiddlewareInterface.php</file>
+		<file>src/Http/Request/RequestInterface.php</file>
+		<file>src/Http/Response/ResponseInterface.php</file>
+		<file>src/Http/Router/RouterInterface.php</file>
+		<file>src/Profiler/InspectorInterface.php</file>
+		<file>src/Resolver/ResolverInterface.php</file>
+		<file>src/Sql/SqlInterface.php</file>
       </exclude>
     </whitelist>
   </filter>
