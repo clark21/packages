@@ -79,15 +79,15 @@ class MySql extends AbstractSql implements SqlInterface
      */
     public function connect($options = [])
     {
-		if($options instanceof PDO) {
-			$this->connection = $options;
-			return $this;
-		}
-		
-		if(!is_array($options)) {
-			$options = array();
-		}
-		
+        if ($options instanceof PDO) {
+            $this->connection = $options;
+            return $this;
+        }
+        
+        if (!is_array($options)) {
+            $options = array();
+        }
+        
         $host = $port = null;
         
         if (!is_null($this->host)) {
@@ -151,7 +151,7 @@ class MySql extends AbstractSql implements SqlInterface
      * @return QueryCreate
      */
     public function getCreateQuery($name = null)
-    {   
+    {
         return $this->resolve(QueryCreate::class, $name);
     }
     
@@ -229,13 +229,13 @@ class MySql extends AbstractSql implements SqlInterface
                 $typeArray = explode('(', $fieldTypeArray[0]);
                 
                 $type = $typeArray[0];
-				
-				$length = null;
-				if(isset($typeArray[1])) {
-                	$length = str_replace(')', '', $typeArray[1]);
-				}
-				
-				$attribute = isset($fieldTypeArray[1]) ? $fieldTypeArray[1] : null;
+                
+                $length = null;
+                if (isset($typeArray[1])) {
+                    $length = str_replace(')', '', $typeArray[1]);
+                }
+                
+                $attribute = isset($fieldTypeArray[1]) ? $fieldTypeArray[1] : null;
                 
                 $null = strtolower($field['Null']) == 'no' ? false : true;
                 
@@ -249,7 +249,7 @@ class MySql extends AbstractSql implements SqlInterface
                     'null'              => $null,
                     'default'           => $field['Default'],
                     'auto_increment'    => $increment
-				]);
+                ]);
                 
                 //set keys where found
                 switch ($field['Key']) {

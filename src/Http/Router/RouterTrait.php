@@ -22,12 +22,12 @@ use Cradle\Http\Router;
  */
 trait RouterTrait
 {
-	/**
+    /**
      * @var Router|null $router Response object to use
      */
     protected $router = null;
     
-	/**
+    /**
      * Adds routing middleware for all methods
      *
      * @param string   $path     The route path
@@ -65,7 +65,7 @@ trait RouterTrait
     {
         return $this->route('get', $path, $callback);
     }
-	
+    
     /**
      * Returns a router object
      *
@@ -73,17 +73,17 @@ trait RouterTrait
      */
     public function getRouter()
     {
-        if(is_null($this->router)) {
-			if(method_exists($this, 'resolve')) {
-				$this->setRouter($this->resolve(Router::class));
-			} else {
-				$this->setRouter(new Router());
-			}
-		}
+        if (is_null($this->router)) {
+            if (method_exists($this, 'resolve')) {
+                $this->setRouter($this->resolve(Router::class));
+            } else {
+                $this->setRouter(new Router());
+            }
+        }
 
         return $this->router;
     }
-	
+    
     /**
      * Adds routing middleware for post method
      *
@@ -122,8 +122,8 @@ trait RouterTrait
     public function route($method, $path, $callback)
     {
         $this->getRouter()->route($method, $path, $callback);
-		
-		return $this;
+        
+        return $this;
     }
     
     /**

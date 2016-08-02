@@ -13,7 +13,7 @@ use Cradle\Http\Dispatcher\DispatcherInterface;
 use Cradle\Http\Response\ResponseInterface;
 
 /**
- * This deals with the releasing of content into the 
+ * This deals with the releasing of content into the
  * main output buffer. Considers headers and post processing
  *
  * @vendor   Cradle
@@ -22,26 +22,27 @@ use Cradle\Http\Response\ResponseInterface;
  * @standard PSR-2
  */
 class HttpDispatcher implements DispatcherInterface
-{      
+{
+
     /**
      * @const string BACK The back keyword for redirect
      */
     const BACK = '<back>';
-	
+    
     /**
      * @const string HEADER_CONNECTION_CLOSE Template for closing
      */
-	const HEADER_CONNECTION_CLOSE = "Connection: close\r\n";
-	
+    const HEADER_CONNECTION_CLOSE = "Connection: close\r\n";
+    
     /**
      * @const string HEADER_CONTENT_ENCODING Template for encoding
      */
-	const HEADER_CONTENT_ENCODING = "Content-Encoding: none\r\n";
-	
+    const HEADER_CONTENT_ENCODING = "Content-Encoding: none\r\n";
+    
     /**
      * @const string HEADER_CONTENT_LENGTH Template for length
      */
-	const HEADER_CONTENT_LENGTH = 'Content-Length: %s';
+    const HEADER_CONTENT_LENGTH = 'Content-Length: %s';
 
     /**
      * @var bool $successful If we were able to output it
@@ -59,18 +60,18 @@ class HttpDispatcher implements DispatcherInterface
      */
     public function output(ResponseInterface $response, $emulate = false)
     {
-		$code = $response->getStatus();
+        $code = $response->getStatus();
         $headers = $response->getHeaders();
         $body = $response->getContent(true);
-		
-		//make sure it's a string
-		$body = (string) $body;
-		
-		if($emulate) {
-			$this->successful = true;
-			return $body;
-		}
-		
+        
+        //make sure it's a string
+        $body = (string) $body;
+        
+        if ($emulate) {
+            $this->successful = true;
+            return $body;
+        }
+        
         if (is_int($code)) {
             http_response_code($code);
         }
@@ -83,52 +84,52 @@ class HttpDispatcher implements DispatcherInterface
             
             header($name.':'.$value);
         }
-		
-		//make sure nothing is already in the buffer
-		ob_end_clean();
-		
-		//close the connection
-		header(self::HEADER_CONNECTION_CLOSE);
-		
-		//add content encoding only if there is none set
-		if(!isset($headers['Content-Encoding']) 
-			&& !isset($headers['content-encoding'])
-		) {
-			header(self::HEADER_CONTENT_ENCODING);
-		}
-		
-		//if they were waiting for a response
-		//and they hit stop, it should mean that
-		//we should also stop
-		ignore_user_abort(false);
-		
-		//startup the buffer again 
-		ob_start();
-		
-		//business as usual
+        
+        //make sure nothing is already in the buffer
+        ob_end_clean();
+        
+        //close the connection
+        header(self::HEADER_CONNECTION_CLOSE);
+        
+        //add content encoding only if there is none set
+        if (!isset($headers['Content-Encoding'])
+            && !isset($headers['content-encoding'])
+        ) {
+            header(self::HEADER_CONTENT_ENCODING);
+        }
+        
+        //if they were waiting for a response
+        //and they hit stop, it should mean that
+        //we should also stop
+        ignore_user_abort(false);
+        
+        //startup the buffer again
+        ob_start();
+        
+        //business as usual
         echo $body;
-		$this->successful = true;
-		
-		//send the content size
-		$size = ob_get_length();
-		header(sprintf(self::HEADER_CONTENT_LENGTH, $size));
-		
-		//send out the buffer
-		//clean up the buffer
-		//3 times a charm
-		ob_end_flush();
-		flush();        
-		ob_end_clean();
-		
-		//sorry no more sessions
-		session_write_close();
-		
+        $this->successful = true;
+        
+        //send the content size
+        $size = ob_get_length();
+        header(sprintf(self::HEADER_CONTENT_LENGTH, $size));
+        
+        //send out the buffer
+        //clean up the buffer
+        //3 times a charm
+        ob_end_flush();
+        flush();
+        ob_end_clean();
+        
+        //sorry no more sessions
+        session_write_close();
+        
         return $this;
     }
-	
+    
     /**
      * Starts to process the request
-	 *
+     *
      * @param ResponseInterface $response The response object to evaluate
      * @param bool              $emulate  If you really want it to echo (for testing)
      *
@@ -136,45 +137,44 @@ class HttpDispatcher implements DispatcherInterface
      */
     public function dispatch(ResponseInterface $response, $emulate = false)
     {
-		$redirect = $response->getHeaders('Location');
-		
-		if($redirect) {
-			//if redirect is <BACK>
-			if ($redirect === self::BACK) {
-				//set up the redirect to something special
-				$redirect = 'javascript://history.go(-1)';
-				
-				//but we prefer the referrer
-				$referrer = $response->getServer('HTTP_REFERER');
-				
-				//we got one ?
-				if ($referrer) {
-					//set it
-					$redirect = $referrer;
-				}
-			}
-			
-			return $this->redirect($redirect, false, $emulate);
-		}
+        $redirect = $response->getHeaders('Location');
+        
+        if ($redirect) {
+            //if redirect is <BACK>
+            if ($redirect === self::BACK) {
+                //set up the redirect to something special
+                $redirect = 'javascript://history.go(-1)';
+                
+                //but we prefer the referrer
+                $referrer = $response->getServer('HTTP_REFERER');
+                
+                //we got one ?
+                if ($referrer) {
+                    //set it
+                    $redirect = $referrer;
+                }
+            }
+            
+            return $this->redirect($redirect, false, $emulate);
+        }
 
-		if(!$response->isContentFlat()
-			&& !isset($headers['Content-Type']) 
-			&& !isset($headers['content-type'])
-		) 
-		{
-			$headers['Content-Type'] = 'text/json';
-		}
-		
-		if(!$response->hasContent()) {
-			$response->setStatus(404, '404 Not Found');
-			
-			//throw an exception
-			throw HttpException::forResponseNotFound();
-		}
-		
-		if (!isset($headers['Content-Type']) 
-			&& !isset($headers['content-type'])
-		) {
+        if (!$response->isContentFlat()
+            && !isset($headers['Content-Type'])
+            && !isset($headers['content-type'])
+        ) {
+            $headers['Content-Type'] = 'text/json';
+        }
+        
+        if (!$response->hasContent()) {
+            $response->setStatus(404, '404 Not Found');
+            
+            //throw an exception
+            throw HttpException::forResponseNotFound();
+        }
+        
+        if (!isset($headers['Content-Type'])
+            && !isset($headers['content-type'])
+        ) {
             $headers['Content-Type'] = 'text/html; charset=utf-8';
         }
 
@@ -190,40 +190,40 @@ class HttpDispatcher implements DispatcherInterface
      */
     public function redirect($path, $force = false, $emulate = false)
     {
-		if($emulate) {
-			return $path;
-		}
-		
-		if($force) {
-			header('Location: ' . $path);
-			exit;
-		}
-		
-		//if they were waiting for a response
-		//and they hit stop, it should mean that
-		//we should also stop
-		ignore_user_abort(false);
-		
-		header('Location: ' . $path);
-		
-		//close the connection
-		header(self::HEADER_CONNECTION_CLOSE);
-		
-		//add content encoding
-		header(self::HEADER_CONTENT_ENCODING);
-		
-		//add 0 size
-		header(sprintf(self::HEADER_CONTENT_LENGTH, 0));
-		
-		//clean up the buffer
-		//2 times a charm
-		flush();
-		ob_flush();
-		
-		//sorry no more sessions
-		session_write_close();
-		
-		return $this;
+        if ($emulate) {
+            return $path;
+        }
+        
+        if ($force) {
+            header('Location: ' . $path);
+            exit;
+        }
+        
+        //if they were waiting for a response
+        //and they hit stop, it should mean that
+        //we should also stop
+        ignore_user_abort(false);
+        
+        header('Location: ' . $path);
+        
+        //close the connection
+        header(self::HEADER_CONNECTION_CLOSE);
+        
+        //add content encoding
+        header(self::HEADER_CONTENT_ENCODING);
+        
+        //add 0 size
+        header(sprintf(self::HEADER_CONTENT_LENGTH, 0));
+        
+        //clean up the buffer
+        //2 times a charm
+        flush();
+        ob_flush();
+        
+        //sorry no more sessions
+        session_write_close();
+        
+        return $this;
     }
     
     /**

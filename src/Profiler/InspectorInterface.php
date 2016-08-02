@@ -11,7 +11,7 @@ namespace Cradle\Profiler;
 
 /**
  * Used to inspect classes and result sets
- * 
+ *
  * @package  Cradle
  * @category Inspector
  * @author   Christian Blanquera <cblanquera@openovate.com>
@@ -19,7 +19,7 @@ namespace Cradle\Profiler;
  */
 interface InspectorInterface
 {
-	/**
+    /**
      * Call a method of the scope and output it
      *
      * @param *string $name the name of the method

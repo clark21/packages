@@ -88,14 +88,14 @@ class PostGreSql extends AbstractSql implements SqlInterface
      */
     public function connect($options = [])
     {
-		if($options instanceof PDO) {
-			$this->connection = $options;
-			return $this;
-		}
-		
-		if(!is_array($options)) {
-			$options = array();
-		}
+        if ($options instanceof PDO) {
+            $this->connection = $options;
+            return $this;
+        }
+        
+        if (!is_array($options)) {
+            $options = array();
+        }
 
         $host = $port = null;
         
@@ -147,24 +147,24 @@ class PostGreSql extends AbstractSql implements SqlInterface
             'columns.character_maximum_length',
             'columns.character_octet_length',
             'pg_class2.relname AS index_type'
-		];
+        ];
         
         $where = [
             "pg_attribute.attrelid = pg_class1.oid AND pg_class1.relname='".$table."'",
             'columns.column_name = pg_attribute.attname AND columns.table_name=pg_class1.relname',
             'pg_class1.oid = pg_index.indrelid AND pg_attribute.attnum = ANY(pg_index.indkey)',
             'pg_class2.oid = pg_index.indexrelid'
-		];
+        ];
         
         if ($schema) {
             $where[1] .= ' AND columns.table_schema="'.$schema.'"';
         }
         
         $query = $this
-			->getSelectQuery($select)
+            ->getSelectQuery($select)
             ->from('pg_attribute')
             ->innerJoin('pg_class AS pg_class1', $where[0], false)
-            ->innerJoin('information_schema.COLUMNS	AS columns', $where[1], false)
+            ->innerJoin('information_schema.COLUMNS    AS columns', $where[1], false)
             ->leftJoin('pg_index', $where[2], false)
             ->leftJoin('pg_class AS pg_class2', $where[3], false)
             ->getQuery();
@@ -186,7 +186,7 @@ class PostGreSql extends AbstractSql implements SqlInterface
                 'Default'   => $column['column_default'],
                 'Null'      => $column['is_nullable'],
                 'Key'       => $key
-			];
+            ];
         }
         
         return $columns;
@@ -200,7 +200,7 @@ class PostGreSql extends AbstractSql implements SqlInterface
      * @return QueryCreate
      */
     public function getCreateQuery($name = null)
-    {   
+    {
         return $this->resolve(QueryCreate::class, $name);
     }
     
@@ -227,26 +227,26 @@ class PostGreSql extends AbstractSql implements SqlInterface
     public function getIndexes($table, $schema = null)
     {
         $select = [
-			'columns.column_name',
+            'columns.column_name',
             'pg_class2.relname AS index_type'
-		];
+        ];
         
         $where = [
             "pg_attribute.attrelid = pg_class1.oid AND pg_class1.relname='".$table."'",
             'columns.column_name = pg_attribute.attname AND columns.table_name=pg_class1.relname',
             'pg_class1.oid = pg_index.indrelid AND pg_attribute.attnum = ANY(pg_index.indkey)',
             'pg_class2.oid = pg_index.indexrelid'
-		];
+        ];
         
         if ($schema) {
             $where[1] .= ' AND columns.table_schema="'.$schema.'"';
         }
         
         $query = $this
-			->getSelectQuery($select)
+            ->getSelectQuery($select)
             ->from('pg_attribute')
             ->innerJoin('pg_class AS pg_class1', $where[0], false)
-            ->innerJoin('information_schema.COLUMNS	AS columns', $where[1], false)
+            ->innerJoin('information_schema.COLUMNS    AS columns', $where[1], false)
             ->innerJoin('pg_index', $where[2], false)
             ->innerJoin('pg_class AS pg_class2', $where[3], false)
             ->getQuery();
@@ -289,10 +289,10 @@ class PostGreSql extends AbstractSql implements SqlInterface
         }
         
         $query = $this
-			->getSelectQuery($select)
+            ->getSelectQuery($select)
             ->from('pg_attribute')
             ->innerJoin('pg_class AS pg_class1', $where[0], false)
-            ->innerJoin('information_schema.COLUMNS	AS columns', $where[1], false)
+            ->innerJoin('information_schema.COLUMNS    AS columns', $where[1], false)
             ->innerJoin('pg_index', $where[2], false)
             ->innerJoin('pg_class AS pg_class2', $where[3], false)
             ->where('pg_class2.relname LIKE \'%_pkey\'')
@@ -310,7 +310,7 @@ class PostGreSql extends AbstractSql implements SqlInterface
      */
     public function getSelectQuery($select = '*')
     {
-		return $this->resolve(QuerySelect::class, $select);
+        return $this->resolve(QuerySelect::class, $select);
     }
     
     /**
@@ -321,7 +321,7 @@ class PostGreSql extends AbstractSql implements SqlInterface
     public function getTables()
     {
         $query = $this
-			->getSelectQuery('tablename')
+            ->getSelectQuery('tablename')
             ->from('pg_tables')
             ->where("tablename NOT LIKE 'pg\\_%'")
             ->where("tablename NOT LIKE 'sql\\_%'")

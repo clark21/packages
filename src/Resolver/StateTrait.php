@@ -21,7 +21,7 @@ use Closure;
  */
 trait StateTrait
 {
-	use ResolverTrait;
+    use ResolverTrait;
 
     /**
      * Returns a state that was previously saved
@@ -32,12 +32,12 @@ trait StateTrait
      */
     public function loadState($name)
     {
-		$state = $this->resolve($name);
-		
-		if (is_callable($state)) {
-			if($state instanceof Closure) {
-				$state = $value->bindTo($this, get_class($this));
-			}
+        $state = $this->resolve($name);
+        
+        if (is_callable($state)) {
+            if ($state instanceof Closure) {
+                $state = $value->bindTo($this, get_class($this));
+            }
 
             $state = call_user_func($state, $this);
         }
@@ -59,9 +59,9 @@ trait StateTrait
             $value = $this;
         }
         
-		$this->addResolver($name, function() use ($value) {
-			return $value;
-		});
+        $this->addResolver($name, function () use ($value) {
+            return $value;
+        });
 
         return $this;
     }

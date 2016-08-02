@@ -11,8 +11,8 @@ namespace Cradle\Data\Registry;
 
 /**
  * Registry are designed to easily manipulate $data in
- * preparation to integrate with any multi dimensional 
- * data store. This interface is defined to support 
+ * preparation to integrate with any multi dimensional
+ * data store. This interface is defined to support
  * depenancy injection.
  *
  * @package  Cradle
@@ -22,17 +22,17 @@ namespace Cradle\Data\Registry;
  */
 interface RegistryInterface
 {
-	/**
-	 * Attempts to use __callData then __callResolver
-	 *
-	 * @param *string $name name of method
-	 * @param *array  $args arguments to pass
-	 *
-	 * @return mixed
-	 */
-	public function __call($name, $args);
+    /**
+     * Attempts to use __callData then __callResolver
+     *
+     * @param *string $name name of method
+     * @param *array  $args arguments to pass
+     *
+     * @return mixed
+     */
+    public function __call($name, $args);
 
-	/**
+    /**
      * Allow object property magic to redirect to the data variable
      *
      * @param *string $name  The name of the supposed property
@@ -54,55 +54,55 @@ interface RegistryInterface
      * @return string
      */
     public function __toString();
-	
-	/**
+    
+    /**
      * Returns the data size
      * For Countable interface
      */
     public function count();
-	
-	/**
+    
+    /**
      * Returns the current item
      * For Iterator interface
      */
     public function current();
-	
-	/**
-	 * Loop generator
-	 */
-	public function generator();
-	
-	/**
-	 * Returns true if the path keys 
-	 * exist in the dataset
-	 *
-	 * @param scalar|null ...$args Path keys
-	 * 
-	 * @return bool
-	 */
-	public function exists(...$args);
+    
+    /**
+     * Loop generator
+     */
+    public function generator();
+    
+    /**
+     * Returns true if the path keys
+     * exist in the dataset
+     *
+     * @param scalar|null ...$args Path keys
+     *
+     * @return bool
+     */
+    public function exists(...$args);
 
-	/**
-	 * Returns the exact data given the path keys
-	 *
-	 * @param scalar|null ...$args Path keys
-	 * 
-	 * @return mixed
-	 */
-	public function get(...$args);
-	
-	/**
-	 * Returns true if the path keys 
-	 * does not exist in the dataset
-	 * or if it has an empy value
-	 *
-	 * @param scalar|null ...$args Path keys
-	 * 
-	 * @return bool
-	 */
-	public function isEmpty(...$args);
-	
-	/**
+    /**
+     * Returns the exact data given the path keys
+     *
+     * @param scalar|null ...$args Path keys
+     *
+     * @return mixed
+     */
+    public function get(...$args);
+    
+    /**
+     * Returns true if the path keys
+     * does not exist in the dataset
+     * or if it has an empy value
+     *
+     * @param scalar|null ...$args Path keys
+     *
+     * @return bool
+     */
+    public function isEmpty(...$args);
+    
+    /**
      * Returns th current position
      * For Iterator interface
      */
@@ -113,8 +113,8 @@ interface RegistryInterface
      * For Iterator interface
      */
     public function next();
-	
-	/**
+    
+    /**
      * isset using the ArrayAccess interface
      *
      * @param *scalar|null|bool $offset The key to test if exists
@@ -147,29 +147,29 @@ interface RegistryInterface
      */
     public function offsetUnset($offset);
 
-	/**
+    /**
      * Rewinds the position
      * For Iterator interface
      */
     public function rewind();
-	
-	/**
-	 * Removes the data found in the path keys
-	 *
-	 * @param scalar|null ...$args Path keys
-	 * 
-	 * @return RegistryInterface
-	 */
-	public function remove(...$args);
-	
-	/**
-	 * Sets the given data to given the path keys
-	 *
-	 * @param scalar|null ...$args Path keys and value on the end
-	 * 
-	 * @return RegistryInterface
-	 */
-	public function set(...$args);
+    
+    /**
+     * Removes the data found in the path keys
+     *
+     * @param scalar|null ...$args Path keys
+     *
+     * @return RegistryInterface
+     */
+    public function remove(...$args);
+    
+    /**
+     * Sets the given data to given the path keys
+     *
+     * @param scalar|null ...$args Path keys and value on the end
+     *
+     * @return RegistryInterface
+     */
+    public function set(...$args);
     
     /**
      * Validates whether if the index is set

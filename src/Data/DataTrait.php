@@ -10,7 +10,7 @@
 namespace Cradle\Data;
 
 /**
- * The DataTrait combines all the data features 
+ * The DataTrait combines all the data features
  * in the Data package. Just a shortcut for having
  * all the features in one go.
  *
@@ -21,7 +21,7 @@ namespace Cradle\Data;
  */
 trait DataTrait
 {
-	use ArrayAccessTrait, IteratorTrait, CountableTrait, DotTrait, MagicTrait, GeneratorTrait;
+    use ArrayAccessTrait, IteratorTrait, CountableTrait, DotTrait, MagicTrait, GeneratorTrait;
 
-	protected $data = [];
+    protected $data = [];
 }

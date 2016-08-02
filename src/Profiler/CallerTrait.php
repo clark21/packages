@@ -19,15 +19,15 @@ namespace Cradle\Profiler;
  */
 trait CallerTrait
 {
-	public function getCaller()
-	{
-		$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
-		return array_pop($trace);
-	}
+    public function getCaller()
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 3);
+        return array_pop($trace);
+    }
 
-	public function getCallee()
-	{
-		$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
-		return array_pop($trace);
-	}
+    public function getCallee()
+    {
+        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 2);
+        return array_pop($trace);
+    }
 }

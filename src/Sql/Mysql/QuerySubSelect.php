@@ -21,9 +21,9 @@ use Cradle\Sql\QuerySelect;
  */
 class QuerySubSelect
 {
-	/**
-	 * @var SqlQuerySelect $parentQuery
-	 */
+    /**
+     * @var SqlQuerySelect $parentQuery
+     */
     protected $parentQuery;
     
     /**

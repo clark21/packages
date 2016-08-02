@@ -22,7 +22,8 @@ namespace Cradle\Sql;
  * @standard PSR-2
  */
 interface SqlInterface
-{   
+{
+
     /**
      * Connects to the database
      *

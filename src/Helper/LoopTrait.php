@@ -31,9 +31,9 @@ trait LoopTrait
     public function loop($callback, $i = 0)
     {
         $bound = $callback;
-		if ($callback instanceof Closure) {
-        	$bound = $callback->bindTo($this, get_class($this));
-		}
+        if ($callback instanceof Closure) {
+            $bound = $callback->bindTo($this, get_class($this));
+        }
 
         if (call_user_func($bound, $i) !== false) {
             $this->loop($callback, $i + 1);

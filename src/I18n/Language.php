@@ -38,22 +38,22 @@ use Cradle\Resolver\StateTrait;
  */
 class Language implements ArrayAccess, Iterator
 {
-	use ArrayAccessTrait, 
-		IteratorTrait, 
-		MagicTrait, 
-		GeneratorTrait, 
-		EventTrait, 
-		InstanceTrait, 
-		LoopTrait, 
-		ConditionalTrait, 
-		InspectorTrait, 
-		LoggerTrait, 
-		StateTrait
-		{
-			MagicTrait::__getData as __get;
-			MagicTrait::__setData as __set;
-			MagicTrait::__toStringData as __toString;
-		}
+    use ArrayAccessTrait,
+        IteratorTrait,
+        MagicTrait,
+        GeneratorTrait,
+        EventTrait,
+        InstanceTrait,
+        LoopTrait,
+        ConditionalTrait,
+        InspectorTrait,
+        LoggerTrait,
+        StateTrait
+        {
+            MagicTrait::__getData as __get;
+            MagicTrait::__setData as __set;
+            MagicTrait::__toStringData as __toString;
+        }
 
     /**
      * @var string $file The language file to save to
@@ -64,28 +64,28 @@ class Language implements ArrayAccess, Iterator
      * @var array $data The translation list
      */
     protected $data = array();
-	
-	/**
-	 * Attempts to use __callData then __callResolver
-	 *
-	 * @param *string $name name of method
-	 * @param *array  $args arguments to pass
-	 *
-	 * @return mixed
-	 */
-	public function __call($name, $args)
-	{
-		try {
-			return $this->__callData($name, $args);	
-		} catch(DataException $e) {
-		}
-		
-		try {
-			return $this->__callResolver($name, $args);
-		} catch(ResolverException $e) {
-			throw new LanguageException($e->getMessage());
-		}
-	}
+    
+    /**
+     * Attempts to use __callData then __callResolver
+     *
+     * @param *string $name name of method
+     * @param *array  $args arguments to pass
+     *
+     * @return mixed
+     */
+    public function __call($name, $args)
+    {
+        try {
+            return $this->__callData($name, $args);
+        } catch (DataException $e) {
+        }
+        
+        try {
+            return $this->__callResolver($name, $args);
+        } catch (ResolverException $e) {
+            throw new LanguageException($e->getMessage());
+        }
+    }
     
     /**
      * Loads the translation set
@@ -138,7 +138,7 @@ class Language implements ArrayAccess, Iterator
      * @return LanguageHandler
      */
     public function save($file = null)
-    {		
+    {
         if (is_null($file) && is_null($this->file)) {
             throw I18n::forFileNotSet();
         }
@@ -147,8 +147,8 @@ class Language implements ArrayAccess, Iterator
             $file = $this->file;
         }
         
-		$contents = "<?php //-->\nreturn " . var_export($this->data, true) . ";";
-		file_put_contents($file, $contents);
+        $contents = "<?php //-->\nreturn " . var_export($this->data, true) . ";";
+        file_put_contents($file, $contents);
         
         return $this;
     }

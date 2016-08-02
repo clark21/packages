@@ -21,18 +21,18 @@ use Exception;
  */
 class EventException extends Exception
 {
-	/**
-	 * @const string ERROR_INVALID_CALLBACK Error template
-	 */
-	const ERROR_INVALID_CALLBACK = 'Invalid callback passed.';
-	
+    /**
+     * @const string ERROR_INVALID_CALLBACK Error template
+     */
+    const ERROR_INVALID_CALLBACK = 'Invalid callback passed.';
+    
     /**
      * Create a new exception for invalid callback
-	 *
+     *
      * @return EventException
      */
-	public static function forInvalidCallback()
-	{
-		return new static(static::ERROR_INVALID_CALLBACK);
-	}
+    public static function forInvalidCallback()
+    {
+        return new static(static::ERROR_INVALID_CALLBACK);
+    }
 }

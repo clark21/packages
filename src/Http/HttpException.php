@@ -25,14 +25,14 @@ class HttpException extends Exception
      * @const string RESPONSE_NOT_FOUND 404 Error template
      */
     const RESPONSE_NOT_FOUND = 'Not Found.';
-	
+    
     /**
      * Create a new exception for 404
-	 *
+     *
      * @return HttpException
      */
-	public static function forResponseNotFound()
-	{
-		return new static(static::RESPONSE_NOT_FOUND);
-	}
+    public static function forResponseNotFound()
+    {
+        return new static(static::RESPONSE_NOT_FOUND);
+    }
 }

@@ -30,28 +30,28 @@ class ImageException extends Exception
      * @const string NOT_VALID_IMAGE_FILE Error template
      */
     const NOT_VALID_IMAGE_FILE = '%s is not a valid image file.';
-	
+    
     /**
      * Create a new exception for invalid callback
      *
      * @param  *string $name
-	 *
+     *
      * @return RouterException
      */
-	public static function forGDNotInstalled()
-	{
-		return new static(static::GD_NOT_INSTALLED);
-	}
-	
+    public static function forGDNotInstalled()
+    {
+        return new static(static::GD_NOT_INSTALLED);
+    }
+    
     /**
      * Create a new exception for invalid callback
      *
      * @param  *string $name
-	 *
+     *
      * @return RouterException
      */
-	public static function forInvalidImageFile($path)
-	{
-		return new static(sprintf(static::NOT_VALID_IMAGE_FILE, $path));
-	}
+    public static function forInvalidImageFile($path)
+    {
+        return new static(sprintf(static::NOT_VALID_IMAGE_FILE, $path));
+    }
 }

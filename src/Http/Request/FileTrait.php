@@ -19,58 +19,58 @@ namespace Cradle\Http\Request;
  */
 trait FileTrait
 {
-	/**
-	 * Returns file data given name or all files
-	 *
-	 * @param string|null $name The key name in the FILES
-	 * @param mixed       ...$args
-	 *
-	 * @return mixed
-	 */
-	public function getFiles($name = null, ...$args)
-	{
-		if(is_null($name)) {
-			return $this->get('files');
-		}
-		
-		return $this->get('files', $name, ...$args);
-	}
-	
-	/**
-	 * Returns file data given name or all files
-	 *
-	 * @param string|null $name The key name in the FILES
-	 * @param mixed       ...$args
-	 *
-	 * @return bool
-	 */
-	public function hasFiles($name = null, ...$args)
-	{
-		if(is_null($name)) {
-			return $this->exists('files');
-		}
-		
-		return $this->exists('files', $name, ...$args);
-	}
-	
-	/**
-	 * Sets FILES
-	 *
-	 * @param *array $data
-	 * @param mixed  ...$args
-	 *
-	 * @return FileTrait
-	 */
-	public function setFiles($data, ...$args)
-	{
-		if(is_array($data)) {
-			return $this->set('files', $data);
-		}
-		
-		if(count($args) === 0) {
-			return $this;
-		}
-		
-		return $this->set('files', $data, ...$args);
-	}
+    /**
+     * Returns file data given name or all files
+     *
+     * @param string|null $name The key name in the FILES
+     * @param mixed       ...$args
+     *
+     * @return mixed
+     */
+    public function getFiles($name = null, ...$args)
+    {
+        if (is_null($name)) {
+            return $this->get('files');
+        }
+        
+        return $this->get('files', $name, ...$args);
+    }
+    
+    /**
+     * Returns file data given name or all files
+     *
+     * @param string|null $name The key name in the FILES
+     * @param mixed       ...$args
+     *
+     * @return bool
+     */
+    public function hasFiles($name = null, ...$args)
+    {
+        if (is_null($name)) {
+            return $this->exists('files');
+        }
+        
+        return $this->exists('files', $name, ...$args);
+    }
+    
+    /**
+     * Sets FILES
+     *
+     * @param *array $data
+     * @param mixed  ...$args
+     *
+     * @return FileTrait
+     */
+    public function setFiles($data, ...$args)
+    {
+        if (is_array($data)) {
+            return $this->set('files', $data);
+        }
+        
+        if (count($args) === 0) {
+            return $this;
+        }
+        
+        return $this->set('files', $data, ...$args);
+    }
 }

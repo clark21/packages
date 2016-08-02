@@ -20,19 +20,20 @@ use Exception;
  * @standard PSR-2
  */
 class LanguageException extends Exception
-{	
-	/**
-	 * @const string ERROR_INVALID_CALLBACK Error template
-	 */
-	const ERROR_FILE_NOT_SET = 'No file was specified';
-	
+{
+
+    /**
+     * @const string ERROR_INVALID_CALLBACK Error template
+     */
+    const ERROR_FILE_NOT_SET = 'No file was specified';
+    
     /**
      * Create a new exception for file not set
      *
      * @return LanguageException
      */
-	public static function forFileNotSet()
-	{
-		return new static(static::ERROR_FILE_NOT_SET);
-	}
+    public static function forFileNotSet()
+    {
+        return new static(static::ERROR_FILE_NOT_SET);
+    }
 }

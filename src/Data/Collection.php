@@ -28,12 +28,11 @@ use Cradle\Profiler\LoggerTrait;
 
 use Cradle\Resolver\StateTrait;
 
-
 /**
  * Collections are a managable list of models. Model
  * methods called by the collection are simply passed
  * to each model in the collection. Collections perform
- * the same functionality as a model, except on a more 
+ * the same functionality as a model, except on a more
  * massive level. This is the main collection object.
  *
  * @package  Cradle
@@ -43,17 +42,17 @@ use Cradle\Resolver\StateTrait;
  */
 class Collection implements ArrayAccess, Iterator, Countable, CollectionInterface
 {
-	use ArrayAccessTrait,
-		CountableTrait,
-		GeneratorTrait,
-		IteratorTrait,
-		EventTrait, 
-		InstanceTrait, 
-		LoopTrait, 
-		ConditionalTrait, 
-		InspectorTrait, 
-		LoggerTrait, 
-		StateTrait;
+    use ArrayAccessTrait,
+        CountableTrait,
+        GeneratorTrait,
+        IteratorTrait,
+        EventTrait,
+        InstanceTrait,
+        LoopTrait,
+        ConditionalTrait,
+        InspectorTrait,
+        LoggerTrait,
+        StateTrait;
        
     /**
      * @const string FIRST Flag that designates the first in the collection
@@ -69,8 +68,8 @@ class Collection implements ArrayAccess, Iterator, Countable, CollectionInterfac
      * @var array $data The raw collection list
      */
     protected $data = [];
-	
-	/**
+    
+    /**
      * The magic behind setN and getN
      *
      * @param *string $name Name of method
@@ -134,14 +133,14 @@ class Collection implements ArrayAccess, Iterator, Countable, CollectionInterfac
             return $this;
         }
 
-		try {
-			return $this->__callResolver($name, $args);
-		} catch(ResolverException $e) {
-			throw new CollectionException($e->getMessage());
-		}
+        try {
+            return $this->__callResolver($name, $args);
+        } catch (ResolverException $e) {
+            throw new CollectionException($e->getMessage());
+        }
     }
-	
-	/**
+    
+    /**
      * Presets the collection
      *
      * @param *mixed $data The initial data
@@ -159,10 +158,10 @@ class Collection implements ArrayAccess, Iterator, Countable, CollectionInterfac
     public function __get($name)
     {
         //set all rows with this column and value
-		$data = [];
-		
+        $data = [];
+        
         foreach ($this->data as $i => $row) {
-			$data[$i] = $row[$name];
+            $data[$i] = $row[$name];
         }
 
         return $data;
@@ -255,58 +254,58 @@ class Collection implements ArrayAccess, Iterator, Countable, CollectionInterfac
      */
     public function each($callback)
     {
-		if($callback instanceof Closure) {
-			$callback = $this->bindCallback($callback);
-		}
-		
+        if ($callback instanceof Closure) {
+            $callback = $this->bindCallback($callback);
+        }
+        
         foreach ($this->generator() as $key => $value) {
             call_user_func($callback, $key, $value);
         }
 
         return $this;
     }
-	
-	/**
-	 * Returns the entire data
-	 * 
-	 * @return array
-	 */
-	public function get()
-	{
-		$data = array();
-		
-		foreach($this->data as $row) {
-			$data[] = $row->get();
-		}
-		
-		return $data;
-	}
-	
-	/**
-	 * Returns the entire data
-	 * 
-	 * @param array $row
-	 *
-	 * @return Model
-	 */
-	public function getModel(array $row = [])
-	{
-		return $this->resolve(Model::class, $row);
-	}
-	
-	/**
-	 * Sets the entire data
-	 *
-	 * @param *array $data
-	 * 
-	 * @return Collection
-	 */
-	public function set(array $data)
-	{
-		foreach ($data as $row) {
+    
+    /**
+     * Returns the entire data
+     *
+     * @return array
+     */
+    public function get()
+    {
+        $data = array();
+        
+        foreach ($this->data as $row) {
+            $data[] = $row->get();
+        }
+        
+        return $data;
+    }
+    
+    /**
+     * Returns the entire data
+     *
+     * @param array $row
+     *
+     * @return Model
+     */
+    public function getModel(array $row = [])
+    {
+        return $this->resolve(Model::class, $row);
+    }
+    
+    /**
+     * Sets the entire data
+     *
+     * @param *array $data
+     *
+     * @return Collection
+     */
+    public function set(array $data)
+    {
+        foreach ($data as $row) {
             $this->add($row);
         }
 
-		return $this;
-	}
+        return $this;
+    }
 }

@@ -19,28 +19,28 @@ namespace Cradle\Http\Response;
  */
 trait StatusTrait
 {
-	/**
-	 * Returns the status code
-	 *
-	 * @return int
-	 */
-	public function getStatus()
-	{
-		return $this->get('code');
-	}
-	
-	/**
-	 * Sets a status code
-	 *
-	 * @param *int    $code   Status code
-	 * @param *string $status The string literal code for header
-	 *
-	 * @return StatusTrait
-	 */
-	public function setStatus($code, $status) 
-	{
-		return $this
-			->set('code', $code)
-			->setHeader('Status', $status);
-	}
+    /**
+     * Returns the status code
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return $this->get('code');
+    }
+    
+    /**
+     * Sets a status code
+     *
+     * @param *int    $code   Status code
+     * @param *string $status The string literal code for header
+     *
+     * @return StatusTrait
+     */
+    public function setStatus($code, $status)
+    {
+        return $this
+            ->set('code', $code)
+            ->setHeader('Status', $status);
+    }
 }

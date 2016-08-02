@@ -13,7 +13,7 @@ use Cradle\Resolver\ResolverTrait;
 use Cradle\Event\PipeTrait;
 
 /**
- * Service level handler for micro framework 
+ * Service level handler for micro framework
  * calls. Handles process using event pipes.
  *
  * @vendor   Cradle
@@ -22,11 +22,12 @@ use Cradle\Event\PipeTrait;
  * @standard PSR-2
  */
 class FrameService
-{	
-	use PipeTrait,
-		PackageTrait,
-		ResolverTrait
-		{
-			PackageTrait::__constructPackage as __construct;
-		}
+{
+
+    use PipeTrait,
+        PackageTrait,
+        ResolverTrait
+        {
+            PackageTrait::__constructPackage as __construct;
+    }
 }

@@ -34,14 +34,14 @@ use Cradle\Resolver\ResolverException;
  */
 class CurlHandler implements ArrayAccess
 {
-	use EventTrait, 
-		InstanceTrait, 
-		LoopTrait, 
-		ConditionalTrait, 
-		CallerTrait, 
-		InspectorTrait, 
-		LoggerTrait, 
-		StateTrait;
+    use EventTrait,
+        InstanceTrait,
+        LoopTrait,
+        ConditionalTrait,
+        CallerTrait,
+        InspectorTrait,
+        LoggerTrait,
+        StateTrait;
 
     /**
      * @const string PUT Send method type
@@ -143,12 +143,12 @@ class CurlHandler implements ArrayAccess
                 return $this;
             }
         }
-		
-		try {
-			return $this->__callResolver($name, $args);
-		} catch(ResolverException $e) {
-			throw new CurlException($e->getMessage());
-		}
+        
+        try {
+            return $this->__callResolver($name, $args);
+        } catch (ResolverException $e) {
+            throw new CurlException($e->getMessage());
+        }
     }
 
     /**
@@ -227,7 +227,7 @@ class CurlHandler implements ArrayAccess
             'info' => curl_getinfo($curl, CURLINFO_HTTP_CODE),
             'error_message' => curl_errno($curl),
             'error_code' => curl_error($curl)
-		];
+        ];
 
         curl_close($curl);
         unset($curl);
@@ -339,7 +339,7 @@ class CurlHandler implements ArrayAccess
             'info' => curl_getinfo($curl, CURLINFO_HTTP_CODE),
             'error_message' => curl_errno($curl),
             'error_code' => curl_error($curl)
-		];
+        ];
 
         curl_close($curl);
         unset($curl);
@@ -574,7 +574,7 @@ class CurlHandler implements ArrayAccess
         'UnrestrictedAuth' => CURLOPT_UNRESTRICTED_AUTH,
         'Upload' => CURLOPT_UPLOAD,
         'Verbose' => CURLOPT_VERBOSE
-	];
+    ];
 
     /**
      * @var array $setIntegerKeys cURL options accepting an integer
@@ -603,7 +603,7 @@ class CurlHandler implements ArrayAccess
         'Timeout' => CURLOPT_TIMEOUT,
         'TimeoutMs' => CURLOPT_TIMEOUT_MS,
         'TimeValue' => CURLOPT_TIMEVALUE
-	];
+    ];
 
     /**
      * @var array $setStringKeys cURL options accepting string values
@@ -638,7 +638,7 @@ class CurlHandler implements ArrayAccess
         'Url' => CURLOPT_URL,
         'UserAgent' => CURLOPT_USERAGENT,
         'UserPwd' => CURLOPT_USERPWD
-	];
+    ];
 
     /**
      * @var array $setArrayKeys cURL options accepting an array
@@ -648,7 +648,7 @@ class CurlHandler implements ArrayAccess
         'HttpHeader' => CURLOPT_HTTPHEADER,
         'PostQuote' => CURLOPT_POSTQUOTE,
         'Quote' => CURLOPT_QUOTE
-	];
+    ];
 
     /**
      * @var array $setFileKeys cURL options accepting a file pointer
@@ -658,7 +658,7 @@ class CurlHandler implements ArrayAccess
         'InFile' => CURLOPT_INFILE,
         'StdErr' => CURLOPT_STDERR,
         'WriteHeader' => CURLOPT_WRITEHEADER
-	];
+    ];
 
     /**
      * @var array $setCallbackKeys cURL options accepting a function
@@ -667,5 +667,5 @@ class CurlHandler implements ArrayAccess
         'HeaderFunction' => CURLOPT_HEADERFUNCTION,
         'ReadFunction' => CURLOPT_READFUNCTION,
         'WriteFunction' => CURLOPT_WRITEFUNCTION
-	];
+    ];
 }

@@ -33,50 +33,50 @@ use Cradle\Http\Request\SessionTrait;
  */
 class Request extends Registry implements RequestInterface
 {
-	use CliTrait,
-		ContentTrait,
-		CookieTrait,
-		FileTrait,
-		GetTrait,
-		PostTrait,
-		RouteTrait,
-		ServerTrait,
-		SessionTrait;
-	
-	/**
-	 * Loads default data given by PHP
-	 *
-	 * @return Request
-	 */
-	public function load()
-	{
-		global $argv;
+    use CliTrait,
+        ContentTrait,
+        CookieTrait,
+        FileTrait,
+        GetTrait,
+        PostTrait,
+        RouteTrait,
+        ServerTrait,
+        SessionTrait;
+    
+    /**
+     * Loads default data given by PHP
+     *
+     * @return Request
+     */
+    public function load()
+    {
+        global $argv;
 
-		$this
-			->setArgs($argv)
-			->setContent(file_get_contents('php://input'));
-		
-		if(isset($_COOKIE)) {
-			$this->setCookies($_COOKIE);
-		}
+        $this
+            ->setArgs($argv)
+            ->setContent(file_get_contents('php://input'));
+        
+        if (isset($_COOKIE)) {
+            $this->setCookies($_COOKIE);
+        }
 
-		if(isset($_FILES)) {
-			$this->setFiles($_FILES);
-		}
+        if (isset($_FILES)) {
+            $this->setFiles($_FILES);
+        }
 
-		if(isset($_POST)) {
-			$this->setPost($_POST);
-		}
+        if (isset($_POST)) {
+            $this->setPost($_POST);
+        }
 
-		if(isset($_SERVER)) {
-			$this->setServer($_SERVER);
-		}
+        if (isset($_SERVER)) {
+            $this->setServer($_SERVER);
+        }
 
-		if(isset($_SESSION)) {
-			//so whatever changes will be reflected
-			$this->setSession($_SESSION);
-		}
-		
-		return $this;
-	}
+        if (isset($_SESSION)) {
+            //so whatever changes will be reflected
+            $this->setSession($_SESSION);
+        }
+        
+        return $this;
+    }
 }

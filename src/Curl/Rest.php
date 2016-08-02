@@ -31,14 +31,14 @@ use Cradle\Resolver\StateTrait;
  */
 class Rest
 {
-	use EventTrait, 
-		InstanceTrait, 
-		LoopTrait, 
-		ConditionalTrait, 
-		CallerTrait, 
-		InspectorTrait, 
-		LoggerTrait, 
-		StateTrait;
+    use EventTrait,
+        InstanceTrait,
+        LoopTrait,
+        ConditionalTrait,
+        CallerTrait,
+        InspectorTrait,
+        LoggerTrait,
+        StateTrait;
 
     /**
      * @const string ENCODE_JSON Encode option
@@ -126,11 +126,11 @@ class Rest
     public function __call($name, $args)
     {
         //if it starts with set
-        if(strpos($name, 'set') === 0) {
+        if (strpos($name, 'set') === 0) {
             //determine the separator
             $separator = '_';
             
-            if(isset($args[1]) && is_scalar($args[1])) {
+            if (isset($args[1]) && is_scalar($args[1])) {
                 $separator = (string) $args[1];
             }
             
@@ -144,11 +144,11 @@ class Rest
         }
         
         //if it starts with set
-        if(strpos($name, 'add') === 0) {
+        if (strpos($name, 'add') === 0) {
             //determine the separator
             $separator = '_';
             
-            if(isset($args[1]) && is_scalar($args[1])) {
+            if (isset($args[1]) && is_scalar($args[1])) {
                 $separator = (string) $args[1];
             }
             
@@ -164,9 +164,9 @@ class Rest
         //get the path equivilent
         $path = $this->getKey('', $name, '/');
         
-        if(isset($this->routes[$path])) {
+        if (isset($this->routes[$path])) {
             $meta = $this->routes[$path];
-            if(is_string($meta)) {
+            if (is_string($meta)) {
                 $meta = $this->routes[$meta];
             }
             
@@ -176,7 +176,7 @@ class Rest
         }
         
         //default actions test
-        switch(true) {
+        switch (true) {
             case strpos($name, 'get') === 0:
                 $path = $this->getPath('get', $name, $args);
                 return $this->send(self::METHOD_GET, $path);
@@ -201,17 +201,17 @@ class Rest
         }
         
         //if it's a factory method match
-        if(count($args) === 0) {
+        if (count($args) === 0) {
             //add this to the path
             $this->paths[] = $this->getKey('', $name, '/');
             return $this;
         }
         
         try {
-			return $this->__callResolver($name, $args);
-		} catch(ResolverException $e) {
-			throw new RestException($e->getMessage());
-		}
+            return $this->__callResolver($name, $args);
+        } catch (ResolverException $e) {
+            throw new RestException($e->getMessage());
+        }
     }
     
     /**
@@ -239,14 +239,14 @@ class Rest
     public function addHeader($key, $value = null)
     {
         //if it's an array
-        if(is_array($key)) {
+        if (is_array($key)) {
             //warning this overwrites existing headers
             $this->headers = $key;
             return $this;
         }
         
         //if the value is null
-        if(is_null($value)) {
+        if (is_null($value)) {
             $this->headers[] = $key;
             return $this;
         }
@@ -258,7 +258,7 @@ class Rest
     
     /**
      * Add custom routing
-     * this is normally for classes 
+     * this is normally for classes
      * wishing to extend this class
      * and testing
      *
@@ -280,11 +280,11 @@ class Rest
      * @param *array|scalar $data  Either the entire data or a key
      * @param mixed         $value The value of the key
      *
-     * @return Rest 
+     * @return Rest
      */
     public function setData($data, $value = null)
     {
-        if(is_array($data)) {
+        if (is_array($data)) {
             $this->data = $data;
             
             return $this;
@@ -304,13 +304,13 @@ class Rest
      *
      * @return mixed
      */
-    public function send($method, $path, array $meta = []) 
+    public function send($method, $path, array $meta = [])
     {
         //get the meta data for this url call
         $meta = $this->getMetaData($method, $path, $meta);
         
         //if in meta mode
-        if($this->metaOnly) {
+        if ($this->metaOnly) {
             //return the meta
             return $meta;
         }
@@ -323,27 +323,27 @@ class Rest
         $headers = $meta['headers'];
         
         // send it into curl
-        $request = $this('curl') 
+        $request = $this('curl')
             ->setUrl($url)
             ->setConnectTimeout(10) // sets connection timeout to 10 sec.
             ->setFollowLocation(true) // sets the follow location to true
             ->setTimeout(60) // set page timeout to 60 sec
             ->verifyPeer(false) // verifying Peer must be boolean
             //if the agent is set
-            ->when($agent, function() use ($agent) {
-                $this->setUserAgent($agent); // set USER_AGENT    
+            ->when($agent, function () use ($agent) {
+                $this->setUserAgent($agent); // set USER_AGENT
             })
             //if there are headers
-            ->when(!empty($headers), function() use ($headers) {
+            ->when(!empty($headers), function () use ($headers) {
                 $this->setHeaders($headers); // set headers
             })
             //set the custom request
-            ->when($method == 'PUT' || $method == 'DELETE', function() use ($method) {
+            ->when($method == 'PUT' || $method == 'DELETE', function () use ($method) {
                 $this->setCustomRequest($method);
             })
             //when post or put
-            ->when($method == 'POST' || $method == 'PUT', function() use ($data) {    
-                if(empty($data)) {
+            ->when($method == 'POST' || $method == 'PUT', function () use ($data) {
+                if (empty($data)) {
                     return;
                 }
                 
@@ -352,7 +352,7 @@ class Rest
             });
         
         //how should we return the data ?
-        switch($encode) {
+        switch ($encode) {
             case self::ENCODE_QUERY:
                 $response = $request->getQueryResponse(); // get the query response
                 break;
@@ -367,7 +367,7 @@ class Rest
                 $response = $request->getResponse(); // get the raw response
                 break;
                 
-        }    
+        }
         
         return $response;
     }
@@ -380,10 +380,10 @@ class Rest
      * @param *string $meta   The route meta
      * @param *array  $data   The request body
      */
-    private function throwErrors($method, $path, $meta, array $data) 
+    private function throwErrors($method, $path, $meta, array $data)
     {
         //validate data
-        if(!isset($meta['data'])
+        if (!isset($meta['data'])
             || empty($meta['data'])
         ) {
             return;
@@ -391,7 +391,7 @@ class Rest
         
         // NOTE: APIs update more frequent
         // than we can update these libraries
-        // In this case we should allow for 
+        // In this case we should allow for
         // random variables
         // -----------------------------------
         //if they made up a key value
@@ -402,28 +402,28 @@ class Rest
         //    }
         //}
         
-        foreach($meta['data'] as $key => $valid) {
+        foreach ($meta['data'] as $key => $valid) {
             //normalize validations
-            if(!is_array($valid)) {
+            if (!is_array($valid)) {
                 $valid = [$valid];
             }
             
             //loop through validations
-            foreach($valid as $validation) {
+            foreach ($valid as $validation) {
                 //same here
-                if(is_string($validation)) {
+                if (is_string($validation)) {
                     $validation = [$validation];
                 }
                 
                 //if it's required
                 //and it's not set
-                if($validation[0] === 'required'
+                if ($validation[0] === 'required'
                 && !isset($data[$key])) {
                     throw RestException::forMissingRequired($key);
                 }
                 
                 //else we should check if the field is valid
-                if(isset($data[$key]) && !$this->isFieldValid($data[$key], $validation)) {
+                if (isset($data[$key]) && !$this->isFieldValid($data[$key], $validation)) {
                     throw RestException::forInvalidData($key);
                 }
             }
@@ -431,8 +431,8 @@ class Rest
     }
     
     /**
-     * Used by magic methods, this is used to 
-     * parse out the method name and return 
+     * Used by magic methods, this is used to
+     * parse out the method name and return
      * the translated meaning
      *
      * @param *string $action    The prefix action
@@ -462,7 +462,7 @@ class Rest
     private function getMetaData($method, $path, array $meta)
     {
         //if no host
-        if(!$this->host) {
+        if (!$this->host) {
             throw RestException::forMissingHost();
         }
         
@@ -476,13 +476,14 @@ class Rest
         $responseEncode = self::ENCODE_JSON;
         
         //if we have custom routes
-        if(!empty($meta)) {
+        if (!empty($meta)) {
             //check for errors
             $this->throwErrors(
-                $method, 
-                $path, 
-                $meta, 
-                $data);
+                $method,
+                $path,
+                $meta,
+                $data
+            );
             
             //get the request and response encodes
             $requestEncode = $this->getRequestEncode($meta);
@@ -493,9 +494,9 @@ class Rest
         }
         
         //if the method is a put or post
-        if($method === 'POST' || $method === 'PUT') {
+        if ($method === 'POST' || $method === 'PUT') {
             //figure out how to encode it
-            switch($requestEncode) {
+            switch ($requestEncode) {
                 case self::ENCODE_JSON:
                     $data = json_encode($data);
                     break;
@@ -514,7 +515,7 @@ class Rest
         $url = $host . $path;
                     
         //if we have a query
-        if(!empty($query)) {
+        if (!empty($query)) {
             //add it on to the url
             $url .= '?' . http_build_query($query);
         }
@@ -525,9 +526,9 @@ class Rest
             'post' => $data,
             'agent' => $agent,
             'method' => $method,
-            'encode' => $responseEncode, 
+            'encode' => $responseEncode,
             'headers' => $headers
-		];
+        ];
     }
     
     /**
@@ -548,13 +549,13 @@ class Rest
         $path = '/' . $key;
         
         //if there are paths
-        if(!empty($this->paths)) {
+        if (!empty($this->paths)) {
             //prefix the paths to the path
             $path = '/' . implode('/', $this->paths) . $path;
         }
         
         //if there are no arguments
-        if(!empty($args)) {
+        if (!empty($args)) {
             //add that too
             $path .= '/' . implode('/', $args);
         }
@@ -575,20 +576,20 @@ class Rest
         $query = [];
         $fields = [];
         
-        //if we have a query list    
-        if(isset($meta['query'])) {
+        //if we have a query list
+        if (isset($meta['query'])) {
             //use that as the fields
             $fields = $meta['query'];
         }
         
         //loop through the data sent
-        foreach($data as $key => $value) {
+        foreach ($data as $key => $value) {
             //if it's a field
-            if(in_array($key, $fields)) {
+            if (in_array($key, $fields)) {
                 //add that to the query
                 $query[$key] = $value;
-                //and unset the data 
-                unset($data[$key]);        
+                //and unset the data
+                unset($data[$key]);
             }
         }
         
@@ -606,7 +607,7 @@ class Rest
     private function getRequestEncode(array $meta)
     {
         $encode = self::ENCODE_QUERY;
-        if(isset($meta['request'])) {
+        if (isset($meta['request'])) {
             $encode = $meta['request'];
         }
         
@@ -623,7 +624,7 @@ class Rest
     private function getResponseEncode(array $meta)
     {
         $encode = self::ENCODE_JSON;
-        if(isset($meta['response'])) {
+        if (isset($meta['response'])) {
             $encode = $meta['response'];
         }
         
@@ -642,8 +643,8 @@ class Rest
     {
         //replace *'s with each arg
         //if there are more args, add it to the end
-        foreach($args as $arg) {
-            if(strpos($path, '*') !== false) {
+        foreach ($args as $arg) {
+            if (strpos($path, '*') !== false) {
                 $path = preg_replace('/\*/', $arg, $path, 1);
                 continue;
             }
@@ -664,8 +665,8 @@ class Rest
      * @return bool
      */
     private function isFieldValid($value, $validation)
-    {        
-        switch($validation[0]) {
+    {
+        switch ($validation[0]) {
             case 'empty':
                 return !empty($value);
             case 'one':

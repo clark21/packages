@@ -22,7 +22,7 @@ use Cradle\Http\Middleware;
  */
 trait ErrorProcessorTrait
 {
-	/**
+    /**
      * @var Middleware|null $errorProcessor
      */
     protected $errorProcessor = null;
@@ -34,13 +34,13 @@ trait ErrorProcessorTrait
      */
     public function getErrorProcessor()
     {
-        if(is_null($this->errorProcessor)) {
-			if(method_exists($this, 'resolve')) {
-				$this->setErrorProcessor($this->resolve(Middleware::class));
-			} else {
-				$this->setErrorProcessor(new Middleware());
-			}
-		}
+        if (is_null($this->errorProcessor)) {
+            if (method_exists($this, 'resolve')) {
+                $this->setErrorProcessor($this->resolve(Middleware::class));
+            } else {
+                $this->setErrorProcessor(new Middleware());
+            }
+        }
 
         return $this->errorProcessor;
     }
@@ -53,10 +53,10 @@ trait ErrorProcessorTrait
      * @return ErrorProcessorTrait
      */
     public function error($callback)
-    {	
-		if($callback instanceof Closure) {
-			$callback = $callback->bindTo($this, get_class($this));
-		}
+    {
+        if ($callback instanceof Closure) {
+            $callback = $callback->bindTo($this, get_class($this));
+        }
 
         $this->getErrorProcessor()->register($callback);
         return $this;

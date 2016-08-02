@@ -17,14 +17,14 @@ use Cradle\Resolver\ResolverTrait;
  * Core Factory Class
  *
  * @package  Cradle
- * @category I18n 
+ * @category I18n
  * @author   Christian Blanquera <cblanquera@openovate.com>
  * @standard PSR-2
  */
 class Timezone
 {
-	use ResolverTrait, InstanceTrait;
-	
+    use ResolverTrait, InstanceTrait;
+    
     /**
      * @const string GMT GMT timezone
      */
@@ -233,7 +233,7 @@ class Timezone
             'week' => 60 * 60 * 24 * 7,
             'month' => 60 * 60 * 24 * 30,
             'year' => 60 * 60 * 24 * 30 * 12
-		];
+        ];
         
         $tokens = [];
         
@@ -406,6 +406,6 @@ class Timezone
             floor(abs($offset/3600)),
             substr($minute, strlen($minute)-2),
             $offset < 0 ? '-':'+'
-		];
+        ];
     }
 }

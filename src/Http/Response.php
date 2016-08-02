@@ -28,22 +28,22 @@ use Cradle\Http\Response\StatusTrait;
  */
 class Response extends Registry implements ResponseInterface
 {
-	use ContentTrait,
-		HeaderTrait,
-		RestTrait,
-		StatusTrait;
-	
-	/**
-	 * Loads default data
-	 *
-	 * @return Response
-	 */
-	public function load()
-	{
-		$this
-			->addHeader('Content-Type', 'text/html; charset=utf-8')
+    use ContentTrait,
+        HeaderTrait,
+        RestTrait,
+        StatusTrait;
+    
+    /**
+     * Loads default data
+     *
+     * @return Response
+     */
+    public function load()
+    {
+        $this
+            ->addHeader('Content-Type', 'text/html; charset=utf-8')
             ->setStatus(200, '200 OK');
-		
-		return $this;
-	}
+        
+        return $this;
+    }
 }

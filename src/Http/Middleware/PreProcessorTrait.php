@@ -22,7 +22,7 @@ use Cradle\Http\Middleware;
  */
 trait PreProcessorTrait
 {
-	/**
+    /**
      * @var Middleware|null $preProcessor
      */
     protected $preProcessor = null;
@@ -34,13 +34,13 @@ trait PreProcessorTrait
      */
     public function getPreprocessor()
     {
-        if(is_null($this->preProcessor)) {
-			if(method_exists($this, 'resolve')) {
-				$this->setPreprocessor($this->resolve(Middleware::class));
-			} else {
-				$this->setPreprocessor(new Middleware());
-			}
-		}
+        if (is_null($this->preProcessor)) {
+            if (method_exists($this, 'resolve')) {
+                $this->setPreprocessor($this->resolve(Middleware::class));
+            } else {
+                $this->setPreprocessor(new Middleware());
+            }
+        }
 
         return $this->preProcessor;
     }
@@ -54,10 +54,10 @@ trait PreProcessorTrait
      */
     public function preprocess($callback)
     {
-		if($callback instanceof Closure) {
-			$callback = $callback->bindTo($this, get_class($this));
-		}
-		
+        if ($callback instanceof Closure) {
+            $callback = $callback->bindTo($this, get_class($this));
+        }
+        
         $this->getPreprocessor()->register($callback);
         return $this;
     }

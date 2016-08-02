@@ -25,20 +25,20 @@ use Cradle\Http\Router\RouterInterface;
  */
 class Router implements RouterInterface
 {
-	use EventTrait, ResolverTrait;
-	
-	/**
-	 * Allow to pass a custom EventHandler
-	 */
-	public function __construct(EventHandler $handler = null)
-	{
-		//but we do need one
-		if(is_null($handler)) {
-			$handler = $this->resolve(EventHandler::class);
-		}
+    use EventTrait, ResolverTrait;
+    
+    /**
+     * Allow to pass a custom EventHandler
+     */
+    public function __construct(EventHandler $handler = null)
+    {
+        //but we do need one
+        if (is_null($handler)) {
+            $handler = $this->resolve(EventHandler::class);
+        }
 
-		$this->setEventHandler($handler);
-	}
+        $this->setEventHandler($handler);
+    }
 
     /**
      * Process routes
@@ -47,14 +47,14 @@ class Router implements RouterInterface
      */
     public function process(RequestInterface $request, ...$args)
     {
-		$path = $request->getPath('string');
-		$method = $request->getMethod();
-		$event = $method.' '.$path;
+        $path = $request->getPath('string');
+        $method = $request->getMethod();
+        $event = $method.' '.$path;
 
-		return $this
-			->getEventHandler()
-			->trigger($event, $request, ...$args)
-			->getMeta();
+        return $this
+            ->getEventHandler()
+            ->trigger($event, $request, ...$args)
+            ->getMeta();
     }
     
     /**
@@ -67,7 +67,7 @@ class Router implements RouterInterface
      * @return Router
      */
     public function route($method, $path, $callback)
-    {   
+    {
         if ($method === 'ALL') {
             return $this
                 ->route('get', $path, $callback)
@@ -76,49 +76,46 @@ class Router implements RouterInterface
                 ->route('delete', $path, $callback);
         }
 
-		$separator = md5(uniqid());
+        $separator = md5(uniqid());
 
-		$regex = str_replace('**', $separator, $path);
-		$regex = str_replace('*', '([^/]+)', $regex);
-		$regex = str_replace($separator, '(.*)', $regex);
+        $regex = str_replace('**', $separator, $path);
+        $regex = str_replace('*', '([^/]+)', $regex);
+        $regex = str_replace($separator, '(.*)', $regex);
 
-		$event = '#^' . $method . '\s' . $regex . '$#is';
-		
-		$handler = $this->getEventHandler();
-		
-		$handler->on($event, function(
-			RequestInterface $request, 
-			...$args
-		) 
-		use 
-		(
-			$handler, 
-			$callback,
-			$method,
-			$path
-		) 
-		{
-			$route = $handler->getMeta();
-			$variables = array();
-			
-			//sanitize the variables
-			foreach($route['variables'] as $variable) {
-				if(strpos($variable, '/') === false) {
-					$variables[] = $variable;
-					continue;
-				}
-				
-				$variables = array_merge($variables, explode('/', $variable));
-			}
+        $event = '#^' . $method . '\s' . $regex . '$#is';
+        
+        $handler = $this->getEventHandler();
+        
+        $handler->on($event, function (
+            RequestInterface $request,
+            ...$args
+        ) use (
+            $handler,
+            $callback,
+            $method,
+            $path
+        ) {
+            $route = $handler->getMeta();
+            $variables = array();
+            
+            //sanitize the variables
+            foreach ($route['variables'] as $variable) {
+                if (strpos($variable, '/') === false) {
+                    $variables[] = $variable;
+                    continue;
+                }
+                
+                $variables = array_merge($variables, explode('/', $variable));
+            }
 
-			$request->setRoute(array(
-				'method' => $method,
-				'path' => $path,
-				'variables' => $variables
-			));
-			
-			return call_user_func($callback, $request, ...$args);
-		});
+            $request->setRoute(array(
+                'method' => $method,
+                'path' => $path,
+                'variables' => $variables
+            ));
+            
+            return call_user_func($callback, $request, ...$args);
+        });
 
         return $this;
     }

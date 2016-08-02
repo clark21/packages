@@ -35,6 +35,93 @@ class Cradle_Frame_FrameHttp_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Frame\FrameHttp::import
+     */
+    public function testImport()
+    {
+		$trigger = new StdClass();
+		$trigger->success1 = null;
+		$trigger->success2 = null;
+		$trigger->success3 = null;
+		$trigger->total = 0;
+		
+        $instance = $this
+			->object
+			->import(array(
+				array(
+					'foobar',
+					'step1',
+					'step2',
+					'step3'
+				)
+			))
+			->on('step1', function($trigger, $foo, $bar) {
+				$foo += 1;
+				$bar += 2;
+				$trigger->success1 = true;
+				$trigger->total += $foo + $bar;
+			})
+			->on('step2', function($trigger, $foo, $bar) {
+				$foo += 1;
+				$bar += 2;
+				$trigger->success2 = true;
+				$trigger->total += $foo + $bar;
+			})
+			->on('step3', function($trigger, $foo, $bar) {
+				$foo += 1;
+				$bar += 2;
+				$trigger->success3 = true;
+				
+				$trigger->total += $foo + $bar;
+			})
+			->trigger('foobar', $trigger, 1, 2);
+		
+		$this->assertInstanceOf('Cradle\Frame\FrameHttp', $instance);
+		$this->assertTrue($trigger->success1);
+		$this->assertTrue($trigger->success2);
+		$this->assertTrue($trigger->success3);
+		$this->assertEquals(18, $trigger->total);
+    }
+
+    /**
+     * @covers Cradle\Frame\FrameHttp::export
+     */
+    public function testExport()
+    {
+		$trigger = new StdClass();
+		$trigger->success1 = null;
+		$trigger->success2 = null;
+		$trigger->success3 = null;
+		$trigger->success4 = null;
+		
+        list($request, $response, $next) = $this
+			->object
+			->flow(
+				'foobar',
+				'step1',
+				'step2',
+				'step3'
+			)
+			->on('step1', function($request, $response, $trigger) {
+				$trigger->success1 = true;
+				
+			})
+			->on('step2', function($request, $response, $trigger) {
+				$trigger->success2 = true;
+			})
+			->on('step3', function($request, $response, $trigger) {
+				$trigger->success3 = true;
+			})
+			->export('foobar', true);
+		
+		$actual = $next($trigger);
+		
+		$this->assertTrue($trigger->success1);
+		$this->assertTrue($trigger->success2);
+		$this->assertTrue($trigger->success3);
+    }
+
+    /**
      * @covers Cradle\Frame\FrameHttp::route
      */
     public function testRoute()
@@ -221,6 +308,66 @@ class Cradle_Frame_FrameHttp_Test extends PHPUnit_Framework_TestCase
 		$this->assertTrue($trigger->success2);
 		$this->assertTrue($trigger->success3);
 		$this->assertEquals(18, $trigger->total);
+		
+		//advanced listeners
+		$trigger = new StdClass();
+		$trigger->success1 = null;
+		$trigger->success2 = null;
+		$trigger->success3 = null;
+		
+        $instance = $this
+			->object
+			->setEventHandler(new EventHandler)
+			->flow(
+				'foo%sbar',
+				'step1',
+				'step2',
+				'step3'
+			)
+			->on('step1', function($trigger) {
+				$trigger->success1 = true;
+			})
+			->on('step2', function($trigger) {
+				$trigger->success2 = true;
+			})
+			->on('step3', function($trigger) {
+				$trigger->success3 = true;
+			})
+			->trigger('foozoobar', $trigger);
+
+		$this->assertTrue($trigger->success1);
+		$this->assertTrue($trigger->success2);
+		$this->assertTrue($trigger->success3);
+		
+		//advanced listeners
+		$trigger = new StdClass();
+		$trigger->success1 = null;
+		$trigger->success2 = null;
+		$trigger->success3 = null;
+		
+        $instance = $this
+			->object
+			->setEventHandler(new EventHandler)
+			->flow(
+				'#^foo(.+)bar$#is',
+				'step1',
+				'step2',
+				'step3'
+			)
+			->on('step1', function($trigger) {
+				$trigger->success1 = true;
+			})
+			->on('step2', function($trigger) {
+				$trigger->success2 = true;
+			})
+			->on('step3', function($trigger) {
+				$trigger->success3 = true;
+			})
+			->trigger('foozoobar', $trigger);
+
+		$this->assertTrue($trigger->success1);
+		$this->assertTrue($trigger->success2);
+		$this->assertTrue($trigger->success3);
     }
 
     /**

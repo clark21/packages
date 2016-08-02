@@ -21,19 +21,19 @@ use PDO;
  */
 class SqlFactory
 {
-	public static function load(PDO $connection)
-	{
-		$name = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
-		
-		switch($name) {
-			case 'mysql':
-				return MySQL::loadPDO($connection);
-			case 'pgsql':
-				return PostGreSql::loadPDO($connection);
-			case 'sqlite':
-				return Sqlite::loadPDO($connection);
-			default:
-				throw SqlException::forUnknownPDO($name);
-		}
-	}
+    public static function load(PDO $connection)
+    {
+        $name = $connection->getAttribute(PDO::ATTR_DRIVER_NAME);
+        
+        switch ($name) {
+            case 'mysql':
+                return MySQL::loadPDO($connection);
+            case 'pgsql':
+                return PostGreSql::loadPDO($connection);
+            case 'sqlite':
+                return Sqlite::loadPDO($connection);
+            default:
+                throw SqlException::forUnknownPDO($name);
+        }
+    }
 }

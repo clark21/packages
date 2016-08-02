@@ -19,7 +19,7 @@ namespace Cradle\Curl;
  */
 class RestException extends CurlException
 {
-	/**
+    /**
      * @const string ERROR_HOST_NOT_DEFINED Error template
      */
     const ERROR_HOST_NOT_DEFINED = 'Host is not defined';
@@ -38,50 +38,50 @@ class RestException extends CurlException
      * @const string ERROR_INVALID Error template
      */
     const ERROR_INVALID = '%s does not have a valid value';
-	
+    
     /**
      * Create a new exception for missing host
-	 *
+     *
      * @return RestException
      */
-	public static function forMissingHost()
-	{
-		return new static(static::ERROR_HOST_NOT_DEFINED);
-	}
-	
+    public static function forMissingHost()
+    {
+        return new static(static::ERROR_HOST_NOT_DEFINED);
+    }
+    
     /**
      * Create a new exception for missing data
-	 *
-	 * @param *string $key
-	 *
+     *
+     * @param *string $key
+     *
      * @return RestException
      */
-	public static function forMissingData($key)
-	{
-		return new static(sprintf(static::ERROR_DATA_NOT_EXIST, $key));
-	}
-	
+    public static function forMissingData($key)
+    {
+        return new static(sprintf(static::ERROR_DATA_NOT_EXIST, $key));
+    }
+    
     /**
      * Create a new exception for missing required data
-	 *
-	 * @param *string $key
-	 *
+     *
+     * @param *string $key
+     *
      * @return RestException
      */
-	public static function forMissingRequired($key)
-	{
-		return new static(sprintf(static::ERROR_MISSING_REQUIRED, $key));
-	}
-	
+    public static function forMissingRequired($key)
+    {
+        return new static(sprintf(static::ERROR_MISSING_REQUIRED, $key));
+    }
+    
     /**
      * Create a new exception for invalid data
-	 *
-	 * @param *string $key
-	 *
+     *
+     * @param *string $key
+     *
      * @return RestException
      */
-	public static function forInvalidData($key)
-	{
-		return new static(sprintf(static::ERROR_INVALID, $key));
-	}
+    public static function forInvalidData($key)
+    {
+        return new static(sprintf(static::ERROR_INVALID, $key));
+    }
 }

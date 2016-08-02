@@ -21,21 +21,21 @@ use Exception;
  */
 class LoggerException extends Exception
 {
-	/**
-	 * @const string ERROR_INVALID_CALLBACK Error template
-	 */
-	const ERROR_INVALID_CALLBACK = 'Invalid callback passed.';
-	
+    /**
+     * @const string ERROR_INVALID_CALLBACK Error template
+     */
+    const ERROR_INVALID_CALLBACK = 'Invalid callback passed.';
+    
     /**
      * Create a new exception for invalid callback
      *
      * @param *string $class
      * @param *string $name
-	 *
+     *
      * @return DataException
      */
-	public static function forInvalidCallback()
-	{
-		return new static(sprintf(static::ERROR_INVALID_CALLBACK));
-	}
+    public static function forInvalidCallback()
+    {
+        return new static(sprintf(static::ERROR_INVALID_CALLBACK));
+    }
 }

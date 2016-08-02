@@ -21,12 +21,12 @@ use Cradle\Http\Middleware\MiddlewareInterface;
  */
 class Middleware implements MiddlewareInterface
 {
-	/**
+    /**
      * @const string UNEXPECTED_GLOBAL Error template
      */
     const UNEXPECTED_GLOBAL = 'Unexpected end before routing. Please check global middlewares.';
-	
-	/**
+    
+    /**
      * @var array $registry A list of middleware callbacks
      */
     protected $registry = [];

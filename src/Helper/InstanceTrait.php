@@ -14,7 +14,7 @@ namespace Cradle\Helper;
  * Instantiates a class without using `new`. This is used
  * primarly to start chaining immediately without assigning
  * this instance to a variable
- * 
+ *
  * @package  Cradle
  * @category Helper
  * @author   Christian Blanquera <cblanquera@openovate.com>
@@ -39,6 +39,6 @@ trait InstanceTrait
     public static function i(...$args)
     {
         $class = get_called_class();
-		return new $class(...$args); 
+        return new $class(...$args);
     }
 }

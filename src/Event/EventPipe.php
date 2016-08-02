@@ -20,6 +20,7 @@ use Closure;
  * @standard PSR-2
  */
 class EventPipe
-{	
-	use PipeTrait;
+{
+
+    use PipeTrait;
 }

@@ -47,18 +47,18 @@ class HandlebarsRuntime
      * Returns a specific helper
      *
      * @param *string             $name The name of the helper
-	 * @param HandlebarsData|null $data If provided we will bind the callback with Data
+     * @param HandlebarsData|null $data If provided we will bind the callback with Data
      *
      * @return Closure|null
      */
     public static function getHelper($name, HandlebarsData $data = null)
     {
         if (isset(self::$helpers[$name])) {
-			if (!is_null($data) && self::$helpers[$name] instanceof Closure) {
-				return self::$helpers[$name]->bindTo($data, get_class($data));
-			}
-	        
-			return self::$helpers[$name];
+            if (!is_null($data) && self::$helpers[$name] instanceof Closure) {
+                return self::$helpers[$name]->bindTo($data, get_class($data));
+            }
+            
+            return self::$helpers[$name];
         }
         
         return null;
@@ -67,8 +67,8 @@ class HandlebarsRuntime
     /**
      * Returns all the registered helpers
      *
-	 * @param HandlebarsData|null $bind If provided we will bind the callbacks with Data
-	 *
+     * @param HandlebarsData|null $bind If provided we will bind the callbacks with Data
+     *
      * @return array
      */
     public static function getHelpers(HandlebarsData $data = null)
@@ -80,9 +80,9 @@ class HandlebarsRuntime
         $helpers = [];
         
         foreach (self::$helpers as $name => $helper) {
-			if($helper instanceof Closure) {
-            	$helpers[$name] = $helper->bindTo($data, get_class($data));
-			}
+            if ($helper instanceof Closure) {
+                $helpers[$name] = $helper->bindTo($data, get_class($data));
+            }
         }
         
         return $helpers;

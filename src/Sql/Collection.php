@@ -31,28 +31,28 @@ class Collection extends DataCollection
      * @var string|null $table Default table name
      */
     protected $table = null;
-	
-	/**
-	 * Returns the entire data
-	 * 
-	 * @param array $row
-	 *
-	 * @return Model
-	 */
-	public function getModel(array $row = [])
-	{
-		$model = $this->resolve(Model::class, $row);
-		
-		if(!is_null($this->database)) {
-			$model->setDatabase($this->database);
-		}
-		
-		if(!is_null($this->table)) {
-			$model->setTable($this->table);
-		}
-		
-		return $model;
-	}
+    
+    /**
+     * Returns the entire data
+     *
+     * @param array $row
+     *
+     * @return Model
+     */
+    public function getModel(array $row = [])
+    {
+        $model = $this->resolve(Model::class, $row);
+        
+        if (!is_null($this->database)) {
+            $model->setDatabase($this->database);
+        }
+        
+        if (!is_null($this->table)) {
+            $model->setTable($this->table);
+        }
+        
+        return $model;
+    }
     
     /**
      * Sets the default database

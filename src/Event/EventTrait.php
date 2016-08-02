@@ -20,38 +20,38 @@ use Cradle\Helper\BinderTrait;
  */
 trait EventTrait
 {
-	use BinderTrait;
+    use BinderTrait;
 
-	/**
-	 * @var Resolver|null $globalEventHandler The resolver instance
-	 */
-	protected static $globalEventHandler = null;
+    /**
+     * @var Resolver|null $globalEventHandler The resolver instance
+     */
+    protected static $globalEventHandler = null;
 
-	/**
-	 * @var EventHandler|null $eventHandler
-	 */
-	private $eventHandler = null;
-	
-	/**
-	 * Returns an EventHandler object
-	 * if none was set, it will auto create one
-	 *
-	 * @return EventHandler
-	 */
-	public function getEventHandler()
-	{
-		if(is_null(self::$globalEventHandler)) {
-			//no need for a resolver because
-			//there is a way to set this
-			self::$globalEventHandler = new EventHandler();
-		}
-		
-		if(is_null($this->eventHandler)) {
-			$this->eventHandler = self::$globalEventHandler;
-		}
-		
-		return $this->eventHandler;
-	}
+    /**
+     * @var EventHandler|null $eventHandler
+     */
+    private $eventHandler = null;
+    
+    /**
+     * Returns an EventHandler object
+     * if none was set, it will auto create one
+     *
+     * @return EventHandler
+     */
+    public function getEventHandler()
+    {
+        if (is_null(self::$globalEventHandler)) {
+            //no need for a resolver because
+            //there is a way to set this
+            self::$globalEventHandler = new EventHandler();
+        }
+        
+        if (is_null($this->eventHandler)) {
+            $this->eventHandler = self::$globalEventHandler;
+        }
+        
+        return $this->eventHandler;
+    }
 
     /**
      * Attaches an instance to be notified
@@ -65,38 +65,38 @@ trait EventTrait
      */
     public function on($event, $callback, $priority = 0)
     {
-		$dispatcher = $this->getEventHandler();
+        $dispatcher = $this->getEventHandler();
 
         //if it's a closure, they meant to bind the callback
         if ($callback instanceof Closure) {
             //so there's no scope
-			$callback = $this->bindCallback($callback);
+            $callback = $this->bindCallback($callback);
         }
         
-		$dispatcher->on($event, $callback, $priority);
+        $dispatcher->on($event, $callback, $priority);
 
         return $this;
     }
-	
-	/**
-	 * Allow for a custom dispatcher to be used 
-	 *
-	 * @param *EventInterface $handler
-	 * 
-	 * @return EventTrait
-	 */
-	public function setEventHandler(EventInterface $handler, $static = false)
-	{
-		if($static) {
-			self::$globalEventHandler = $handler;
-		}
-		
-		$this->eventHandler = $handler;
-		
-		return $this;
-	}
-	
-	/**
+    
+    /**
+     * Allow for a custom dispatcher to be used
+     *
+     * @param *EventInterface $handler
+     *
+     * @return EventTrait
+     */
+    public function setEventHandler(EventInterface $handler, $static = false)
+    {
+        if ($static) {
+            self::$globalEventHandler = $handler;
+        }
+        
+        $this->eventHandler = $handler;
+        
+        return $this;
+    }
+    
+    /**
      * Notify all observers of that a specific
      * event has happened
      *
@@ -107,7 +107,7 @@ trait EventTrait
      */
     public function trigger($event, ...$args)
     {
-		$this->getEventHandler()->trigger($event, ...$args);
+        $this->getEventHandler()->trigger($event, ...$args);
         return $this;
     }
 }

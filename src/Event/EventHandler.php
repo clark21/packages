@@ -25,106 +25,106 @@ use Cradle\Resolver\ResolverTrait;
  */
 class EventHandler implements EventInterface
 {
-	use ResolverTrait, InstanceTrait;
+    use ResolverTrait, InstanceTrait;
 
-	 /**
+     /**
      * @var array $observers cache of event handlers
      */
     protected $observers = [];
 
-	 /**
+     /**
      * @var array $regexp listeners with regexp
      */
     protected $regex = [];
 
-	 /**
+     /**
      * @var array $sprintf listeners with sprintf
      */
     protected $sprintf = [];
 
-	 /**
+     /**
      * @var array|bool $meta The meta data for the current event
      */
     protected $meta = true;
-	
-	/**
-	 * Returns the current matched handler
-	 *
-	 * @return array
-	 */
-	public function getMeta()
-	{
-		return $this->meta;
-	}
+    
+    /**
+     * Returns the current matched handler
+     *
+     * @return array
+     */
+    public function getMeta()
+    {
+        return $this->meta;
+    }
 
-	/**
-	 * Returns possible event matches
-	 *
-	 * @param *string $event
-	 *
-	 * @return array
-	 */
-	public function match($event)
-	{
-		$matches = [];
+    /**
+     * Returns possible event matches
+     *
+     * @param *string $event
+     *
+     * @return array
+     */
+    public function match($event)
+    {
+        $matches = [];
 
-		//do the obvious match
-		if(isset($this->observers[$event])) {
-			$matches[] = array(
-				'event' => $event,
-				'pattern' => $event,
-				'variables' => array()
-			);
-		}
-		
-		//deal with sprintf
-		foreach($this->sprintf as $pattern) {
-			if(!isset($this->observers[$pattern]) 
-				|| empty($this->observers[$pattern])
-			) {
-				continue;
-			}
-			
-			$variables = sscanf($event, $pattern);
-			
-			//if it matches
-			if(strlen(implode('', $variables))) {
-				$matches[] = array(
-					'event' => $event,
-					'pattern' => $pattern,
-					'variables' => $variables
-				);
-			}
-		}
+        //do the obvious match
+        if (isset($this->observers[$event])) {
+            $matches[] = array(
+                'event' => $event,
+                'pattern' => $event,
+                'variables' => array()
+            );
+        }
+        
+        //deal with sprintf
+        foreach ($this->sprintf as $pattern) {
+            if (!isset($this->observers[$pattern])
+                || empty($this->observers[$pattern])
+            ) {
+                continue;
+            }
+            
+            $variables = sscanf($event, $pattern);
+            
+            //if it matches
+            if (strlen(implode('', $variables))) {
+                $matches[] = array(
+                    'event' => $event,
+                    'pattern' => $pattern,
+                    'variables' => $variables
+                );
+            }
+        }
 
-		//deal with regexp
-		foreach($this->regex as $pattern) {
-			if(!isset($this->observers[$pattern]) 
-				|| empty($this->observers[$pattern])
-			) {
-				continue;
-			}
+        //deal with regexp
+        foreach ($this->regex as $pattern) {
+            if (!isset($this->observers[$pattern])
+                || empty($this->observers[$pattern])
+            ) {
+                continue;
+            }
 
-			//if it matches
-			if(preg_match_all($pattern, $event, $match)) {
-				$variables = array();
+            //if it matches
+            if (preg_match_all($pattern, $event, $match)) {
+                $variables = array();
 
-				if(is_array($match) && !empty($match)) {
-					//flatten
-					$variables = call_user_func_array('array_merge', $match);
-					array_shift($variables);
-				}
+                if (is_array($match) && !empty($match)) {
+                    //flatten
+                    $variables = call_user_func_array('array_merge', $match);
+                    array_shift($variables);
+                }
 
-				$matches[] = array(
-					'event' => $event,
-					'pattern' => $pattern,
-					'variables' => $variables
-				);
-			}
-		}
+                $matches[] = array(
+                    'event' => $event,
+                    'pattern' => $pattern,
+                    'variables' => $variables
+                );
+            }
+        }
 
         return $matches;
-	}
+    }
     
     /**
      * Stops listening to an event
@@ -136,11 +136,11 @@ class EventHandler implements EventInterface
      */
     public function off($event = null, $callback = null)
     {
-		//if it's not callable
-		if(!is_callable($callback)) {
-			//set it to null
-			$callback = null;
-		}
+        //if it's not callable
+        if (!is_callable($callback)) {
+            //set it to null
+            $callback = null;
+        }
 
         //if there is no event and not callable
         if (is_null($event) && is_null($callback)) {
@@ -148,26 +148,26 @@ class EventHandler implements EventInterface
             $this->observers = [];
             return $this;
         }
-		
-		//if there are callbacks listening to
-		//this and no callback was specified
-		if(isset($this->observers[$event]) && is_null($callback)) {
-			//it means that they want to remove 
-			//all callbacks listening to this event
-			unset($this->observers[$event]);
-			return $this;
-		}
-		
-		//if there are callbacks listening 
-		//to this and we have a callback
-		if(isset($this->observers[$event]) && is_callable($callback)) {
-			return $this->removeObserversByEvent($event, $callback);
-		}
-		
-		//if no event, but there is a callback
-		if(is_null($event) && is_callable($callback)) {
-			return $this->removeObserversByCallback($callback);
-		}
+        
+        //if there are callbacks listening to
+        //this and no callback was specified
+        if (isset($this->observers[$event]) && is_null($callback)) {
+            //it means that they want to remove
+            //all callbacks listening to this event
+            unset($this->observers[$event]);
+            return $this;
+        }
+        
+        //if there are callbacks listening
+        //to this and we have a callback
+        if (isset($this->observers[$event]) && is_callable($callback)) {
+            return $this->removeObserversByEvent($event, $callback);
+        }
+        
+        //if no event, but there is a callback
+        if (is_null($event) && is_callable($callback)) {
+            return $this->removeObserversByCallback($callback);
+        }
 
         return $this;
     }
@@ -184,27 +184,27 @@ class EventHandler implements EventInterface
      */
     public function on($event, $callback, $priority = 0)
     {
-		//deal with multiple events
-		if(is_array($event)) {
-			foreach($event as $item) {
-				$this->on($item, $callback, $priority);
-			}
-			
-			return $this;
-		}
+        //deal with multiple events
+        if (is_array($event)) {
+            foreach ($event as $item) {
+                $this->on($item, $callback, $priority);
+            }
+            
+            return $this;
+        }
 
         //set up the observer
-		$observer = $this->resolve(EventObserver::class, $callback);
+        $observer = $this->resolve(EventObserver::class, $callback);
 
-		$this->observers[$event][$priority][] = $observer;
+        $this->observers[$event][$priority][] = $observer;
 
-		//is there a sprintf ?
-		if(strpos($event, '%s') !== false) {
-			$this->sprintf[] = $event;
-		//is there a regexp ?
-		} else if(strpos($event, '#') === 0 && strrpos($event, '#') !== 0) {
-			$this->regex[] = $event;
-		}
+        //is there a sprintf ?
+        if (preg_match('#%[sducoxXbgGeEfF]#', $event)) {
+            $this->sprintf[] = $event;
+        //is there a regexp ?
+        } else if (strpos($event, '#') === 0 && strrpos($event, '#') !== 0) {
+            $this->regex[] = $event;
+        }
 
         return $this;
     }
@@ -220,88 +220,88 @@ class EventHandler implements EventInterface
      */
     public function trigger($event, ...$args)
     {
-		$matches = $this->match($event);
+        $matches = $this->match($event);
 
-		foreach($matches as $match) {
-			//add on to match
-			$match['args'] = $args;
-			$event = $match['pattern'];
+        foreach ($matches as $match) {
+            //add on to match
+            $match['args'] = $args;
+            $event = $match['pattern'];
 
-			//if no direct observers
-			if(!isset($this->observers[$event])) {
-				continue;
-			}
+            //if no direct observers
+            if (!isset($this->observers[$event])) {
+                continue;
+            }
 
-			//sort it out
-			krsort($this->observers[$event]);
-			$observers = call_user_func_array('array_merge', $this->observers[$event]);
+            //sort it out
+            krsort($this->observers[$event]);
+            $observers = call_user_func_array('array_merge', $this->observers[$event]);
 
-			//for each observer
-			foreach ($observers as $observer) {
-				//get the callback
-				$callback = $observer->getCallback();
-				//add on to match
-				$match['callback'] = $callback;
-				//set the current
-				$this->meta = $match;
+            //for each observer
+            foreach ($observers as $observer) {
+                //get the callback
+                $callback = $observer->getCallback();
+                //add on to match
+                $match['callback'] = $callback;
+                //set the current
+                $this->meta = $match;
 
-				//if this is the same event, call the method, if the method returns false
-				if (call_user_func_array($callback, $args) === false) {
-					$this->meta = false;
-					return $this;
-				}
-			}
-		}
-		
-		$this->meta = true;
-		
-		return $this;
+                //if this is the same event, call the method, if the method returns false
+                if (call_user_func_array($callback, $args) === false) {
+                    $this->meta = false;
+                    return $this;
+                }
+            }
+        }
+        
+        $this->meta = true;
+        
+        return $this;
     }
-	
-	/**
-	 * Removes all observers matching this callback
-	 *
-	 * @param *callable $callback
-	 *
-	 * @return EventHandler
-	 */
-	protected function removeObserversByCallback($callback)
-	{
-		//find the callback
-		foreach($this->observers as $event => $priorities) {
-			$this->removeObserversByEvent($event, $callback);
-		}
-		
-		return $this;
-	}
-	
-	/**
-	 * Removes all observers matching this event and callback
-	 *
-	 * @param *string   $event
-	 * @param *callable $callback
-	 *
-	 * @return EventHandler
-	 */
-	protected function removeObserversByEvent($event, $callback)
-	{
-		//if event isn't set
-		if(!isset($this->observers[$event])) {
-			//do nothing
-			return $this;
-		}
+    
+    /**
+     * Removes all observers matching this callback
+     *
+     * @param *callable $callback
+     *
+     * @return EventHandler
+     */
+    protected function removeObserversByCallback($callback)
+    {
+        //find the callback
+        foreach ($this->observers as $event => $priorities) {
+            $this->removeObserversByEvent($event, $callback);
+        }
+        
+        return $this;
+    }
+    
+    /**
+     * Removes all observers matching this event and callback
+     *
+     * @param *string   $event
+     * @param *callable $callback
+     *
+     * @return EventHandler
+     */
+    protected function removeObserversByEvent($event, $callback)
+    {
+        //if event isn't set
+        if (!isset($this->observers[$event])) {
+            //do nothing
+            return $this;
+        }
 
-		//'foobar' => array(
-		foreach($this->observers[$event] as $priority => $observers) {
-			//0 => array(
-			foreach($observers as $i => $observer) {
-				//0 => callback
-				if($observer->assertEquals($callback)) {
-					unset($this->observers[$priority][$i]);
-				}
-			}
-		}
-		
-		return $this;
-	}
+        //'foobar' => array(
+        foreach ($this->observers[$event] as $priority => $observers) {
+            //0 => array(
+            foreach ($observers as $i => $observer) {
+                //0 => callback
+                if ($observer->assertEquals($callback)) {
+                    unset($this->observers[$priority][$i]);
+                }
+            }
+        }
+        
+        return $this;
+    }
 }

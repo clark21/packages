@@ -21,7 +21,7 @@ use Cradle\Helper\InstanceTrait;
  */
 class HandlebarsData
 {
-	use InstanceTrait;
+    use InstanceTrait;
 
     protected $tree = [];
 

@@ -21,7 +21,7 @@ use Closure;
  */
 trait ConditionalTrait
 {
-	/**
+    /**
      * Invokes Callback if conditional callback is true
      *
      * @param *callable|scalar|null $conditional should evaluate to true
@@ -31,8 +31,8 @@ trait ConditionalTrait
      * @return Condition
      */
     public function when($conditional, $success, $fail = null)
-	{
-		//bind conditional if it's not bound
+    {
+        //bind conditional if it's not bound
         if ($conditional instanceof Closure) {
             $conditional = $conditional->bindTo($this, get_class($this));
         }
@@ -69,5 +69,5 @@ trait ConditionalTrait
         
         //otherwise return this
         return $this;
-	}
+    }
 }

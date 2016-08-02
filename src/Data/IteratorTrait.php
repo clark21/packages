@@ -10,7 +10,7 @@
 namespace Cradle\Data;
 
 /**
- * Given that there's $data this will 
+ * Given that there's $data this will
  * auto setup the Iterator interface
  *
  * @package  Cradle
@@ -20,20 +20,20 @@ namespace Cradle\Data;
  */
 trait IteratorTrait
 {
-	/**
+    /**
      * Returns the current item
      * For Iterator interface
      */
-    public function current()  
+    public function current()
     {
         return current($this->data);
     }
     
-	/**
+    /**
      * Returns th current position
      * For Iterator interface
      */
-    public function key() 
+    public function key()
     {
         return key($this->data);
     }
@@ -42,16 +42,16 @@ trait IteratorTrait
      * Increases the position
      * For Iterator interface
      */
-    public function next() 
+    public function next()
     {
         next($this->data);
     }
 
-	/**
+    /**
      * Rewinds the position
      * For Iterator interface
      */
-    public function rewind() 
+    public function rewind()
     {
         reset($this->data);
     }
@@ -62,7 +62,7 @@ trait IteratorTrait
      *
      * @return bool
      */
-    public function valid() 
+    public function valid()
     {
         return isset($this->data[$this->key()]);
     }

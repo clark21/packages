@@ -10,8 +10,8 @@
 namespace Cradle\Data;
 
 /**
- * The DotTrait allows multidimensional $data to 
- * be accessed like `foo.bar.zoo` as well as be 
+ * The DotTrait allows multidimensional $data to
+ * be accessed like `foo.bar.zoo` as well as be
  * manipulated in the same fashion.
  *
  * @package  Cradle
@@ -40,7 +40,7 @@ trait DotTrait
         $last = array_pop($args);
         $pointer = &$this->data;
         
-		foreach ($args as $step) {
+        foreach ($args as $step) {
             if (!isset($pointer[$step])) {
                 return null;
             }
@@ -54,8 +54,8 @@ trait DotTrait
         
         return $pointer[$last];
     }
-	
-	/**
+    
+    /**
      * Checks to see if a key is set
      *
      * @param *string $notation  Name space string notation
@@ -87,10 +87,10 @@ trait DotTrait
         if (!isset($pointer[$last])) {
             return false;
         }
-		
+        
         return true;
     }
-	
+    
     /**
      * Removes name space given notation
      *
@@ -103,11 +103,11 @@ trait DotTrait
     {
         $args = explode($separator, $notation);
         
-		if (count($args) === 0) {
+        if (count($args) === 0) {
             return $this;
         }
-		
-		$last = array_pop($args);
+        
+        $last = array_pop($args);
         
         $pointer = &$this->data;
         foreach ($args as $i => $step) {
@@ -124,7 +124,7 @@ trait DotTrait
 
         return $this;
     }
-	
+    
     /**
      * Creates the name space given the space
      * and sets the value to that name space
@@ -139,11 +139,11 @@ trait DotTrait
     {
         $args = explode($separator, $notation);
         
-		if (count($args) === 0) {
+        if (count($args) === 0) {
             return $this;
         }
-		
-		$last = array_pop($args);
+        
+        $last = array_pop($args);
         
         $pointer = &$this->data;
         foreach ($args as $i => $step) {

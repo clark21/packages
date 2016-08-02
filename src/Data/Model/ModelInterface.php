@@ -11,8 +11,8 @@ namespace Cradle\Data\Model;
 
 /**
  * Models are designed to easily manipulate $data in
- * preparation to integrate with any one dimensional 
- * data store. This is the main model object. This 
+ * preparation to integrate with any one dimensional
+ * data store. This is the main model object. This
  * interface is defined to support depenancy injection.
  *
  * @package  Cradle
@@ -22,17 +22,17 @@ namespace Cradle\Data\Model;
  */
 interface ModelInterface
 {
-	/**
-	 * Attempts to use __callData then __callResolver
-	 *
-	 * @param *string $name name of method
-	 * @param *array  $args arguments to pass
-	 *
-	 * @return mixed
-	 */
-	public function __call($name, $args);
+    /**
+     * Attempts to use __callData then __callResolver
+     *
+     * @param *string $name name of method
+     * @param *array  $args arguments to pass
+     *
+     * @return mixed
+     */
+    public function __call($name, $args);
 
-	/**
+    /**
      * Allow object property magic to redirect to the data variable
      *
      * @param *string $name  The name of the supposed property
@@ -54,32 +54,32 @@ interface ModelInterface
      * @return string
      */
     public function __toString();
-	
-	/**
+    
+    /**
      * Returns the data size
      * For Countable interface
      */
     public function count();
-	
-	/**
+    
+    /**
      * Returns the current item
      * For Iterator interface
      */
     public function current();
-	
-	/**
-	 * Loop generator
-	 */
-	public function generator();
-	
-	/**
-	 * Returns the entire data
-	 * 
-	 * @return array
-	 */
-	public function get();
-	
-	/**
+    
+    /**
+     * Loop generator
+     */
+    public function generator();
+    
+    /**
+     * Returns the entire data
+     *
+     * @return array
+     */
+    public function get();
+    
+    /**
      * Returns th current position
      * For Iterator interface
      */
@@ -90,8 +90,8 @@ interface ModelInterface
      * For Iterator interface
      */
     public function next();
-	
-	/**
+    
+    /**
      * isset using the ArrayAccess interface
      *
      * @param *scalar|null|bool $offset The key to test if exists
@@ -124,20 +124,20 @@ interface ModelInterface
      */
     public function offsetUnset($offset);
 
-	/**
+    /**
      * Rewinds the position
      * For Iterator interface
      */
     public function rewind();
-	
-	/**
-	 * Sets the entire data
-	 *
-	 * @param *array $data
-	 * 
-	 * @return ModelInterface
-	 */
-	public function set(array $data);
+    
+    /**
+     * Sets the entire data
+     *
+     * @param *array $data
+     *
+     * @return ModelInterface
+     */
+    public function set(array $data);
     
     /**
      * Validates whether if the index is set

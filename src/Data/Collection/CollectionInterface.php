@@ -13,8 +13,8 @@ namespace Cradle\Data\Collection;
  * Collections are a managable list of models. Model
  * methods called by the collection are simply passed
  * to each model in the collection. Collections perform
- * the same functionality as a model, except on a more 
- * massive level. This interface is defined to support 
+ * the same functionality as a model, except on a more
+ * massive level. This interface is defined to support
  * depenancy injection.
  *
  * @package  Cradle
@@ -24,17 +24,17 @@ namespace Cradle\Data\Collection;
  */
 interface CollectionInterface
 {
-	/**
-	 * Attempts to use __callData then __callResolver
-	 *
-	 * @param *string $name name of method
-	 * @param *array  $args arguments to pass
-	 *
-	 * @return mixed
-	 */
-	public function __call($name, $args);
+    /**
+     * Attempts to use __callData then __callResolver
+     *
+     * @param *string $name name of method
+     * @param *array  $args arguments to pass
+     *
+     * @return mixed
+     */
+    public function __call($name, $args);
 
-	/**
+    /**
      * Allow object property magic to redirect to the data variable
      *
      * @param *string $name  The name of the supposed property
@@ -56,32 +56,32 @@ interface CollectionInterface
      * @return string
      */
     public function __toString();
-	
-	/**
+    
+    /**
      * Returns the data size
      * For Countable interface
      */
     public function count();
-	
-	/**
+    
+    /**
      * Returns the current item
      * For Iterator interface
      */
     public function current();
-	
-	/**
-	 * Loop generator
-	 */
-	public function generator();
-	
-	/**
-	 * Returns the entire data
-	 * 
-	 * @return array
-	 */
-	public function get();
-	
-	/**
+    
+    /**
+     * Loop generator
+     */
+    public function generator();
+    
+    /**
+     * Returns the entire data
+     *
+     * @return array
+     */
+    public function get();
+    
+    /**
      * Returns the current position
      * For Iterator interface
      */
@@ -92,8 +92,8 @@ interface CollectionInterface
      * For Iterator interface
      */
     public function next();
-	
-	/**
+    
+    /**
      * isset using the ArrayAccess interface
      *
      * @param *scalar|null $offset The key to test if exists
@@ -126,20 +126,20 @@ interface CollectionInterface
      */
     public function offsetUnset($offset);
 
-	/**
+    /**
      * Rewinds the position
      * For Iterator interface
      */
     public function rewind();
-	
-	/**
-	 * Sets the entire data
-	 *
-	 * @param *array $data
-	 * 
-	 * @return CollectionInterface
-	 */
-	public function set(array $data);
+    
+    /**
+     * Sets the entire data
+     *
+     * @param *array $data
+     *
+     * @return CollectionInterface
+     */
+    public function set(array $data);
     
     /**
      * Validates whether if the index is set

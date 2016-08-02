@@ -20,8 +20,9 @@ use Cradle\Http\Request\RequestInterface;
  * @standard PSR-2
  */
 interface RouterInterface
-{	
-	/**
+{
+
+    /**
      * Process routes
      *
      * @return bool

@@ -23,7 +23,7 @@ trait CountableTrait
      * Returns the data size
      * For Countable interface
      */
-    public function count()  
+    public function count()
     {
         return count($this->data);
     }

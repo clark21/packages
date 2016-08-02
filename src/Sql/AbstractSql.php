@@ -38,16 +38,16 @@ use Cradle\Resolver\StateTrait;
  */
 abstract class AbstractSql
 {
-	use EventTrait, 
-		InstanceTrait, 
-		LoopTrait, 
-		ConditionalTrait, 
-		InspectorTrait, 
-		LoggerTrait, 
-		StateTrait
-		{
-			StateTrait::__callResolver as __call;
-		}
+    use EventTrait,
+        InstanceTrait,
+        LoopTrait,
+        ConditionalTrait,
+        InspectorTrait,
+        LoggerTrait,
+        StateTrait
+        {
+            StateTrait::__callResolver as __call;
+        }
 
     /**
      * @const int INSTANCE Flag that designates multiton when using ::i()
@@ -116,10 +116,10 @@ abstract class AbstractSql
      */
     public function collection(array $data = [])
     {
-		return $this
-			->resolve(Collection::class)
-			->setDatabase($this)
-			->set($data);
+        return $this
+            ->resolve(Collection::class)
+            ->setDatabase($this)
+            ->set($data);
     }
     
     /**
@@ -281,7 +281,7 @@ abstract class AbstractSql
     {
         //make the query
         $query = $this
-			->getSelectQuery()
+            ->getSelectQuery()
             ->from($table)
             ->where($name.' = '.$this->bind($value))
             ->limit(0, 1);
@@ -310,7 +310,7 @@ abstract class AbstractSql
      */
     public function getSelectQuery($select = '*')
     {
-		return $this->resolve(QuerySelect::class, $select);
+        return $this->resolve(QuerySelect::class, $select);
     }
     
     /**
@@ -411,19 +411,19 @@ abstract class AbstractSql
         return $this;
     }
 
-	/**
+    /**
      * Adaptor used to force a connection to the handler
      *
      * @param PDO $connection
      *
      * @return AbstractSQL
      */
-	public static function loadPDO(PDO $connection)
-	{
-		$reflection = new ReflectionClass(static::class);
-		$instance = $reflection->newInstanceWithoutConstructor();
-		return $instance->connect($connection);
-	}
+    public static function loadPDO(PDO $connection)
+    {
+        $reflection = new ReflectionClass(static::class);
+        $instance = $reflection->newInstanceWithoutConstructor();
+        return $instance->connect($connection);
+    }
     
     /**
      * Returns model
@@ -434,7 +434,7 @@ abstract class AbstractSql
      */
     public function model(array $data = [])
     {
-		return $this->resolve(Model::class, $data)->setDatabase($this);
+        return $this->resolve(Model::class, $data)->setDatabase($this);
     }
     
     /**
@@ -471,7 +471,7 @@ abstract class AbstractSql
             }
             
             //throw Exception
-			throw SqlException::forQueryError($query, $error[2]);
+            throw SqlException::forQueryError($query, $error[2]);
         }
         
         $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -481,7 +481,7 @@ abstract class AbstractSql
             'query'     => $query,
             'binds'     => $binds,
             'results'   => $results
-		]);
+        ]);
         
         //clear binds
         $this->binds = [];

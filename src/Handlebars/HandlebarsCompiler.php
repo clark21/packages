@@ -26,8 +26,8 @@ use Cradle\Helper\InstanceTrait;
  */
 class HandlebarsCompiler
 {
-	use ResolverTrait, BinderTrait, InstanceTrait;
-	
+    use ResolverTrait, BinderTrait, InstanceTrait;
+    
     /**
      * @const string BLOCK_TEXT_LINE
      */
@@ -266,12 +266,12 @@ class HandlebarsCompiler
     {
         $code = $this->trim($this->source);
         
-		$reference = new StdClass();
-		$reference->buffer = '';
-		$reference->open = [];
-		
-		$callback = $this->getTokenizeCallback($reference);
-		$this->resolve(HandlebarsTokenizer::class, $code)->tokenize($callback);
+        $reference = new StdClass();
+        $reference->buffer = '';
+        $reference->open = [];
+        
+        $callback = $this->getTokenizeCallback($reference);
+        $this->resolve(HandlebarsTokenizer::class, $code)->tokenize($callback);
         
         if (count($reference->open)) {
             throw HandlebarsException::forMissingClosing($reference->open);
@@ -292,11 +292,11 @@ class HandlebarsCompiler
      * @return HandlebarsCompiler
      */
     public function setOffset($offset)
-    {   
+    {
         $this->offset = $offset;
         return $this;
     }
-	
+    
     /**
      * Returns the tokenizer callback
      *
@@ -304,9 +304,9 @@ class HandlebarsCompiler
      *
      * @return Closure
      */
-	protected function getTokenizeCallback(StdClass $reference)
-	{
-		return $this->bindCallback(function ($node) use ($reference) {
+    protected function getTokenizeCallback(StdClass $reference)
+    {
+        return $this->bindCallback(function ($node) use ($reference) {
             switch ($node['type']) {
                 case HandlebarsTokenizer::TYPE_TEXT:
                     $reference->buffer .= $this->generateText($node, $reference->open);
@@ -325,7 +325,7 @@ class HandlebarsCompiler
                     break;
             }
         });
-	}
+    }
     
     /**
      * Partially renders the text tokens
@@ -390,11 +390,11 @@ class HandlebarsCompiler
         }
         
         list($name, $args, $hash) = $this->parseArguments($node['value']);
-		
-        //if it's a helper
-		$helper = $this->resolveStatic(HandlebarsRuntime::class, 'getHelper', $name);
         
-		if ($helper) {
+        //if it's a helper
+        $helper = $this->resolveStatic(HandlebarsRuntime::class, 'getHelper', $name);
+        
+        if ($helper) {
             //form hash
             foreach ($hash as $key => $value) {
                 $hash[$key] = sprintf(self::BLOCK_OPTIONS_HASH_KEY_VALUE, $key, $value);
@@ -440,8 +440,8 @@ class HandlebarsCompiler
         list($name, $args, $hash) = $this->parseArguments($node['value']);
         
         //if it's a helper
-		$helper = $this->resolveStatic(HandlebarsRuntime::class, 'getHelper', $name);
-		
+        $helper = $this->resolveStatic(HandlebarsRuntime::class, 'getHelper', $name);
+        
         if ($helper) {
             //form hash
             foreach ($hash as $key => $value) {
@@ -485,8 +485,8 @@ class HandlebarsCompiler
         list($name, $args, $hash) = $this->parseArguments($node['value']);
         
         //if it's a value
-		$helper = $this->resolveStatic(HandlebarsRuntime::class, 'getHelper', $name);
-		
+        $helper = $this->resolveStatic(HandlebarsRuntime::class, 'getHelper', $name);
+        
         if (!$helper) {
             //run each
             $node['value'] = 'each '.$node['value'];
@@ -751,8 +751,8 @@ class HandlebarsCompiler
         $code = str_replace(
             ['\r', '\n', '\t', '\1', '\2'],
             [
-				"\n", 
-				'"\n"',
+                "\n",
+                '"\n"',
                 str_repeat('    ', $this->offset),
                 str_repeat('    ', 1),
                 str_repeat('    ', 2)

@@ -19,25 +19,25 @@ namespace Cradle\Http\Request;
  */
 trait CliTrait
 {
-	/**
-	 * Returns CLI args if any 
-	 *
-	 * @return array|null
-	 */
-	public function getArgs()
-	{
-		return $this->get('args');
-	}
-	
-	/**
-	 * Sets CLI args
-	 *
-	 * @param *array|null
-	 *
-	 * @return CliTrait
-	 */
-	public function setArgs($argv = null)
-	{
-		return $this->set('args', $argv);
-	}
+    /**
+     * Returns CLI args if any
+     *
+     * @return array|null
+     */
+    public function getArgs()
+    {
+        return $this->get('args');
+    }
+    
+    /**
+     * Sets CLI args
+     *
+     * @param *array|null
+     *
+     * @return CliTrait
+     */
+    public function setArgs($argv = null)
+    {
+        return $this->set('args', $argv);
+    }
 }

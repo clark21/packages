@@ -19,35 +19,35 @@ namespace Cradle\Http\Response;
  */
 trait HeaderTrait
 {
-	/**
-	 * Adds a header parameter
-	 *
-	 * @param *string     $name  Name of the header
-	 * @param string|null $value Value of the header
-	 *
-	 * @return Response
-	 */
-	public function addHeader($name, $value = null) 
-	{
-		if(!is_null($value)) {
-			return $this->set('headers', $name, $value);
-		}
+    /**
+     * Adds a header parameter
+     *
+     * @param *string     $name  Name of the header
+     * @param string|null $value Value of the header
+     *
+     * @return Response
+     */
+    public function addHeader($name, $value = null)
+    {
+        if (!is_null($value)) {
+            return $this->set('headers', $name, $value);
+        }
 
-		return $this->set('headers', $name, null);
-	}
-	
-	/**
-	 * Returns either the header value given
-	 * the name or the all headers
-	 *
-	 * @return mixed
-	 */
-	public function getHeaders($name = null)
-	{
-		if(is_null($name)) {
-			return $this->get('headers');
-		}
+        return $this->set('headers', $name, null);
+    }
+    
+    /**
+     * Returns either the header value given
+     * the name or the all headers
+     *
+     * @return mixed
+     */
+    public function getHeaders($name = null)
+    {
+        if (is_null($name)) {
+            return $this->get('headers');
+        }
 
-		return $this->get('headers', $name);
-	}
+        return $this->get('headers', $name);
+    }
 }

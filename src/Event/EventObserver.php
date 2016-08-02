@@ -21,72 +21,72 @@ use Closure;
  */
 class EventObserver
 {
-	/**
-	 * @var string $id Generated ID
-	 */
-	protected $id = null;
-	
-	/**
-	 * @var callable $callback The observer callback
-	 */
-	protected $callback = null;
-	
-	/**
-	 * We need a callback
-	 *
-	 * @param *callable $callback
-	 */
-	public function __construct($callback)
-	{
-		$this->setCallback($callback);
-	}
-	
-	/**
-	 * You can add a different callback if you want
-	 * 
-	 * @return callable
-	 */
-	public function getCallback()
-	{
-		return $this->callback;
-	}
-	
-	/**
-	 * You can add a different callback if you want
-	 *
-	 * @param *callable $callback
-	 * 
-	 * @return EventObserver
-	 */
-	public function setCallback($callback)
-	{
-		if(!is_callable($callback)) {
-			throw EventException::forInvalidCallback();
-		}
-		
-		$this->callback = $callback;
-		$this->id = $this->getId($callback);
-		
-		return $this;
-	}
-	
-	/**
-	 * Checks to see if the callback passed is the one here
-	 *
-	 * @param *callable $callback
-	 * 
-	 * @return bool
-	 */
-	public function assertEquals($callback)
-	{
-		if(!is_callable($callback)) {
-			throw EventException::forInvalidCallback();
-		}
-		
-		$id = $this->getId($callback);
-		
-		return $this->id === $id;
-	}
+    /**
+     * @var string $id Generated ID
+     */
+    protected $id = null;
+    
+    /**
+     * @var callable $callback The observer callback
+     */
+    protected $callback = null;
+    
+    /**
+     * We need a callback
+     *
+     * @param *callable $callback
+     */
+    public function __construct($callback)
+    {
+        $this->setCallback($callback);
+    }
+    
+    /**
+     * You can add a different callback if you want
+     *
+     * @return callable
+     */
+    public function getCallback()
+    {
+        return $this->callback;
+    }
+    
+    /**
+     * You can add a different callback if you want
+     *
+     * @param *callable $callback
+     *
+     * @return EventObserver
+     */
+    public function setCallback($callback)
+    {
+        if (!is_callable($callback)) {
+            throw EventException::forInvalidCallback();
+        }
+        
+        $this->callback = $callback;
+        $this->id = $this->getId($callback);
+        
+        return $this;
+    }
+    
+    /**
+     * Checks to see if the callback passed is the one here
+     *
+     * @param *callable $callback
+     *
+     * @return bool
+     */
+    public function assertEquals($callback)
+    {
+        if (!is_callable($callback)) {
+            throw EventException::forInvalidCallback();
+        }
+        
+        $id = $this->getId($callback);
+        
+        return $this->id === $id;
+    }
 
     /**
      * Tries to generate an ID for a callable.
@@ -105,17 +105,17 @@ class EventObserver
             }
 
             return $callback[0].'::'.$callable[1];
-		}
-		
-		if ($callback instanceof Closure) {
-			return spl_object_hash($callback);
-		}
-		
-		if (is_string($callback)) {
+        }
+        
+        if ($callback instanceof Closure) {
+            return spl_object_hash($callback);
+        }
+        
+        if (is_string($callback)) {
             return $callback;
         }
-		
-		//it would technically never get to this point but oh well
-		return md5(var_export($callback, true));
+        
+        //it would technically never get to this point but oh well
+        return md5(var_export($callback, true));
     }
 }

@@ -13,7 +13,7 @@ namespace Cradle\Helper;
 /**
  * Instantiates a class without using `new`. This is used
  * primarly to start chaining immediately without assigning
- * this instance to a variable. This particularly follows a 
+ * this instance to a variable. This particularly follows a
  * singleton pattern. No singletons are used in this library
  *
  * @package  Cradle
@@ -45,14 +45,14 @@ trait SingletonTrait
     public static function i()
     {
         $class = get_called_class();
-		
-		//if it's not set
+        
+        //if it's not set
         if (!isset(self::$instances[$class])) {
             //set it
-			$args = func_get_args();
-			self::$instances[$class] = new $class(...$args); 
+            $args = func_get_args();
+            self::$instances[$class] = new $class(...$args);
         }
-		
-		return self::$instances[$class];
+        
+        return self::$instances[$class];
     }
 }

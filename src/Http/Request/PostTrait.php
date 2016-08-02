@@ -19,58 +19,58 @@ namespace Cradle\Http\Request;
  */
 trait PostTrait
 {
-	/**
-	 * Returns POST data given name or all POST data
-	 *
-	 * @param string|null $name    The key name in the POST
-	 * @param mixed       ...$args
-	 *
-	 * @return mixed
-	 */
-	public function getPost($name = null, ...$args)
-	{
-		if(is_null($name)) {
-			return $this->get('post');
-		}
-		
-		return $this->get('post', $name, ...$args);
-	}
-	
-	/**
-	 * Returns POST data given name or all POST data
-	 *
-	 * @param string|null $name    The key name in the POST
-	 * @param mixed       ...$args
-	 *
-	 * @return bool
-	 */
-	public function hasPost($name = null, ...$args)
-	{
-		if(is_null($name)) {
-			return $this->exists('post');
-		}
-		
-		return $this->exists('post', $name, ...$args);
-	}
-	
-	/**
-	 * Sets POST
-	 *
-	 * @param *mixed $data
-	 * @param mixed  ...$args
-	 *
-	 * @return PostTrait
-	 */
-	public function setPost($data, ...$args)
-	{
-		if(is_array($data)) {
-			return $this->set('post', $data);
-		}
-		
-		if(count($args) === 0) {
-			return $this;
-		}
-		
-		return $this->set('post', $data, ...$args);
-	}
+    /**
+     * Returns POST data given name or all POST data
+     *
+     * @param string|null $name    The key name in the POST
+     * @param mixed       ...$args
+     *
+     * @return mixed
+     */
+    public function getPost($name = null, ...$args)
+    {
+        if (is_null($name)) {
+            return $this->get('post');
+        }
+        
+        return $this->get('post', $name, ...$args);
+    }
+    
+    /**
+     * Returns POST data given name or all POST data
+     *
+     * @param string|null $name    The key name in the POST
+     * @param mixed       ...$args
+     *
+     * @return bool
+     */
+    public function hasPost($name = null, ...$args)
+    {
+        if (is_null($name)) {
+            return $this->exists('post');
+        }
+        
+        return $this->exists('post', $name, ...$args);
+    }
+    
+    /**
+     * Sets POST
+     *
+     * @param *mixed $data
+     * @param mixed  ...$args
+     *
+     * @return PostTrait
+     */
+    public function setPost($data, ...$args)
+    {
+        if (is_array($data)) {
+            return $this->set('post', $data);
+        }
+        
+        if (count($args) === 0) {
+            return $this;
+        }
+        
+        return $this->set('post', $data, ...$args);
+    }
 }

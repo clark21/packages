@@ -119,7 +119,7 @@ class Model extends DataModel
             //if no default table either
             if (!$this->table) {
                 //throw error
-				throw SqlException::forTableNotSet();
+                throw SqlException::forTableNotSet();
             }
             
             $table = $this->table;
@@ -129,7 +129,7 @@ class Model extends DataModel
         if (is_null($database)) {
             //and no default database
             if (!$this->database) {
-				throw SqlException::forDatabaseNotSet();
+                throw SqlException::forDatabaseNotSet();
             }
             
             $database = $this->database;
@@ -164,7 +164,7 @@ class Model extends DataModel
         $table = null,
         SqlInterface $database = null,
         $primary = null
-    ) { 
+    ) {
         //if no table
         if (is_null($table)) {
             //if no default table either
@@ -231,7 +231,7 @@ class Model extends DataModel
         $table = null,
         SqlInterface $database = null,
         $primary = null
-    ) { 
+    ) {
         //if no table
         if (is_null($table)) {
             //if no default table either
@@ -443,7 +443,7 @@ class Model extends DataModel
                 'key'       => $column['Key'],
                 'default'   => $column['Default'],
                 'empty'     => $column['Null'] == 'YES'
-			];
+            ];
             
             if ($column['Key'] == 'PRI') {
                 $meta[self::PRIMARY][] = $column['Field'];

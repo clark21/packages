@@ -10,7 +10,7 @@
 namespace Cradle\Profiler;
 
 /**
- * When developing this would be useful to 
+ * When developing this would be useful to
  * find the contents of any object or raw data type
  *
  * @package  Cradle
@@ -20,24 +20,24 @@ namespace Cradle\Profiler;
  */
 trait InspectorTrait
 {
-	/**
-	 * @var Resolver|null $inspectorHandler The inspector instance
-	 */
-	protected $inspectorHandler = null;
+    /**
+     * @var Resolver|null $inspectorHandler The inspector instance
+     */
+    protected $inspectorHandler = null;
 
-	/**
-	 * Returns the inspector handler
-	 *
-	 * @return InspectorHandler
-	 */
-	public function getInspectorHandler()
-	{
-		if(is_null($this->inspectorHandler)) {
-			$this->inspectorHandler = new InspectorHandler();
-		}
-		
-		return $this->inspectorHandler;
-	}
+    /**
+     * Returns the inspector handler
+     *
+     * @return InspectorHandler
+     */
+    public function getInspectorHandler()
+    {
+        if (is_null($this->inspectorHandler)) {
+            $this->inspectorHandler = new InspectorHandler();
+        }
+        
+        return $this->inspectorHandler;
+    }
 
     /**
      * Force outputs any class property
@@ -51,8 +51,8 @@ trait InspectorTrait
     {
         //we are using tool in all cases
         $class = get_class($this);
-		
-		$inspector = $this->getInspectorHandler();
+        
+        $inspector = $this->getInspectorHandler();
 
         //if variable is null
         if (is_null($variable)) {
@@ -98,15 +98,15 @@ trait InspectorTrait
 
         return $this;
     }
-	
-	/**
-	 * Sets the inspector handler
-	 *
-	 * @return InspectorTrait
-	 */
-	public function setInspectorHandler(InspectorInterface $inspector)
-	{
-		$this->inspectorHandler = $inspector;
-		return $this;
-	}
+    
+    /**
+     * Sets the inspector handler
+     *
+     * @return InspectorTrait
+     */
+    public function setInspectorHandler(InspectorInterface $inspector)
+    {
+        $this->inspectorHandler = $inspector;
+        return $this;
+    }
 }

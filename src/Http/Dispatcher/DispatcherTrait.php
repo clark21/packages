@@ -14,7 +14,7 @@ use Cradle\Http\HttpDispatcher;
 /**
  * Designed for the HttpHandler we are parting this out
  * to lessen the confusion
- * 
+ *
  * @package  Cradle
  * @category Http
  * @author   Christian Blanquera <cblanquera@openovate.com>
@@ -22,7 +22,7 @@ use Cradle\Http\HttpDispatcher;
  */
 trait DispatcherTrait
 {
-	/**
+    /**
      * @var HttpDispatcher|null $dispatcher Response object to use
      */
     protected $dispatcher = null;
@@ -34,9 +34,9 @@ trait DispatcherTrait
      */
     public function getDispatcher()
     {
-        if(is_null($this->dispatcher)) {
-			$this->setDispatcher($this->resolve(HttpDispatcher::class));
-		}
+        if (is_null($this->dispatcher)) {
+            $this->setDispatcher($this->resolve(HttpDispatcher::class));
+        }
 
         return $this->dispatcher;
     }

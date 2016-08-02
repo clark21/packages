@@ -25,7 +25,7 @@ use Cradle\Resolver\ResolverTrait;
  */
 class HandlebarsHandler
 {
-	use ResolverTrait, InstanceTrait;
+    use ResolverTrait, InstanceTrait;
 
     /**
      * @const string FILE_PREFIX
@@ -79,7 +79,7 @@ class HandlebarsHandler
         if (is_dir($this->cache) && file_exists($file)) {
             $callback = include($file);
         } else {
-			$code = $this->resolve(HandlebarsCompiler::class, $this, $template)->compile();
+            $code = $this->resolve(HandlebarsCompiler::class, $this, $template)->compile();
             
             if (is_dir($this->cache)) {
                 file_put_contents($file, $code);
@@ -124,7 +124,7 @@ class HandlebarsHandler
      */
     public function getHelpers()
     {
-		return $this->resolveStatic(HandlebarsRuntime::class, 'getHelpers');
+        return $this->resolveStatic(HandlebarsRuntime::class, 'getHelpers');
     }
 
     /**
@@ -136,7 +136,7 @@ class HandlebarsHandler
      */
     public function getPartial($name)
     {
-		return $this->resolveStatic(HandlebarsRuntime::class, 'getPartial', $name);
+        return $this->resolveStatic(HandlebarsRuntime::class, 'getPartial', $name);
     }
 
     /**
@@ -146,7 +146,7 @@ class HandlebarsHandler
      */
     public function getPartials()
     {
-		return $this->resolveStatic(HandlebarsRuntime::class, 'getPartials');
+        return $this->resolveStatic(HandlebarsRuntime::class, 'getPartials');
     }
 
     /**
@@ -159,7 +159,7 @@ class HandlebarsHandler
      */
     public function registerHelper($name, $helper)
     {
-		$this->resolveStatic(HandlebarsRuntime::class, 'registerHelper', $name, $helper);
+        $this->resolveStatic(HandlebarsRuntime::class, 'registerHelper', $name, $helper);
         return $this;
     }
 
@@ -174,7 +174,7 @@ class HandlebarsHandler
      */
     public function registerPartial($name, $partial)
     {
-		$this->resolveStatic(HandlebarsRuntime::class, 'registerPartial', $name, $partial);
+        $this->resolveStatic(HandlebarsRuntime::class, 'registerPartial', $name, $partial);
         return $this;
     }
 
@@ -185,7 +185,7 @@ class HandlebarsHandler
      */
     public function reset()
     {
-		 $this->resolveStatic(HandlebarsRuntime::class, 'flush');
+         $this->resolveStatic(HandlebarsRuntime::class, 'flush');
          $this->__construct();
          return $this;
     }
@@ -226,7 +226,7 @@ class HandlebarsHandler
      */
     public function unregisterHelper($name)
     {
-		$this->resolveStatic(HandlebarsRuntime::class, 'unregisterHelper', $name);
+        $this->resolveStatic(HandlebarsRuntime::class, 'unregisterHelper', $name);
         return $this;
     }
 
@@ -239,7 +239,7 @@ class HandlebarsHandler
      */
     public function unregisterPartial($name)
     {
-		$this->resolveStatic(HandlebarsRuntime::class, 'unregisterPartial', $name);
+        $this->resolveStatic(HandlebarsRuntime::class, 'unregisterPartial', $name);
         return $this;
     }
     
@@ -254,10 +254,10 @@ class HandlebarsHandler
     {
         $error = error_get_last();
             
-        if (isset($error['message']) 
-			&& isset($error['line'])
-			&& $error['message'] === 'parse error'
-		) {
+        if (isset($error['message'])
+            && isset($error['line'])
+            && $error['message'] === 'parse error'
+        ) {
             $code = explode("\n", $code);
             $start = $error['line'] - 25;
             if ($start < 0) {
@@ -270,7 +270,7 @@ class HandlebarsHandler
                 $code[$i] = (++$start) . ': ' . $line;
             }
             
-			throw HandlebarsException::forCompileError($error, $code);
+            throw HandlebarsException::forCompileError($error, $code);
         }
         
         return $this;

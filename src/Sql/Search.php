@@ -31,13 +31,13 @@ use Cradle\Resolver\ResolverException;
  */
 class Search
 {
-	use EventTrait, 
-		InstanceTrait, 
-		LoopTrait, 
-		ConditionalTrait, 
-		InspectorTrait, 
-		LoggerTrait, 
-		StateTrait;
+    use EventTrait,
+        InstanceTrait,
+        LoopTrait,
+        ConditionalTrait,
+        InspectorTrait,
+        LoggerTrait,
+        StateTrait;
 
     /**
      * @const string LEFT Join type
@@ -169,7 +169,7 @@ class Search
             }
             
             //transform method to column name
-			$key = substr($name, 6);
+            $key = substr($name, 6);
             $key = preg_replace("/([A-Z0-9])/", $separator."$1", $key);
             $key = substr($key, strlen($separator));
             $key = strtolower($key);
@@ -244,8 +244,8 @@ class Search
      */
     public function getCollection()
     {
-		return $this->resolve(Collection::class)
-			->setDatabase($this->database)
+        return $this->resolve(Collection::class)
+            ->setDatabase($this->database)
             ->setTable($this->table)
             ->set($this->getRows());
     }
@@ -525,10 +525,10 @@ class Search
         if ($page < 1) {
             $page = 1;
         }
-		
-		if ($this->range == 0) {
-			$this->setRange(25);
-		}
+        
+        if ($this->range == 0) {
+            $this->setRange(25);
+        }
         
         $this->start = ($page - 1) * $this->range;
         

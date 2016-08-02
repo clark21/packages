@@ -97,9 +97,9 @@ return [
     'tokenize->' => function ($name) {
         //get args
         $args = func_get_args();
-		
-		//we need a resolver
-		$resolver = new Cradle\Resolver\ResolverHandler();
+        
+        //we need a resolver
+        $resolver = new Cradle\Resolver\ResolverHandler();
         
         //get the name
         //it will be like 'something'
@@ -122,11 +122,11 @@ return [
         }
         
         //get the partial
-		$partial = $resolver->resolveStatic(
-			Cradle\Handlebars\HandlebarsRuntime::class, 
-			'getPartial', 
-			$name
-		);
+        $partial = $resolver->resolveStatic(
+            Cradle\Handlebars\HandlebarsRuntime::class,
+            'getPartial',
+            $name
+        );
         
         //but if the partial is null
         if (is_null($partial)) {
@@ -181,12 +181,12 @@ return [
             . '\r\t);\r'
         );
         
-		$code = $resolver
-			->resolve(
-				Cradle\Handlebars\HandlebarsCompiler::class, 
-				$options['handlebars'], 
-				$partial
-			)
+        $code = $resolver
+            ->resolve(
+                Cradle\Handlebars\HandlebarsCompiler::class,
+                $options['handlebars'],
+                $partial
+            )
             ->setOffset($options['offset'] + 3)
             ->compile(false);
         

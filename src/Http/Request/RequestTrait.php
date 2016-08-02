@@ -22,7 +22,7 @@ use Cradle\Http\Request;
  */
 trait RequestTrait
 {
-	/**
+    /**
      * @var Request|null $request Request object to use
      */
     protected $request = null;
@@ -34,14 +34,14 @@ trait RequestTrait
      */
     public function getRequest()
     {
-		if(is_null($this->request)) {
-			if(method_exists($this, 'resolve')) {
-				$this->setRequest($this->resolve(Request::class)->load());
-			} else {
-				$request = new Request();
-				$this->setRequest($request->load());
-			}
-		}
+        if (is_null($this->request)) {
+            if (method_exists($this, 'resolve')) {
+                $this->setRequest($this->resolve(Request::class)->load());
+            } else {
+                $request = new Request();
+                $this->setRequest($request->load());
+            }
+        }
 
         return $this->request;
     }

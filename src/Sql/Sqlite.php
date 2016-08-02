@@ -55,14 +55,14 @@ class Sqlite extends AbstractSql implements SqlInterface
      */
     public function connect($options = [])
     {
-		if($options instanceof PDO) {
-			$this->connection = $options;
-			return $this;
-		}
-		
-		if(!is_array($options)) {
-			$options = array();
-		}
+        if ($options instanceof PDO) {
+            $this->connection = $options;
+            return $this;
+        }
+        
+        if (!is_array($options)) {
+            $options = array();
+        }
 
         $this->connection = new PDO('sqlite:'.$this->path);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -109,7 +109,7 @@ class Sqlite extends AbstractSql implements SqlInterface
                 'Default'   => $column['dflt_value'],
                 'Null'      => $column['notnull'] != 1,
                 'Key'       => $key
-			];
+            ];
         }
         
         return $columns;
@@ -123,7 +123,7 @@ class Sqlite extends AbstractSql implements SqlInterface
      * @return QueryCreate
      */
     public function getCreateQuery($name = null)
-    {   
+    {
         return $this->resolve(QueryCreate::class, $name);
     }
     
@@ -195,7 +195,7 @@ class Sqlite extends AbstractSql implements SqlInterface
                     'null'              => $null,
                     'default'           => $field['Default'],
                     'auto_increment'    => $increment
-				]);
+                ]);
                 
                 //set keys where found
                 switch ($field['Key']) {

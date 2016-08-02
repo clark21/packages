@@ -21,37 +21,37 @@ use Exception;
  */
 class FrameException extends Exception
 {
-	/**
-	 * @const string ERROR_PACKAGE_NOT_FOUND Error template
-	 */
-	const ERROR_PACKAGE_NOT_FOUND = 'Could not find package: %s';
+    /**
+     * @const string ERROR_PACKAGE_NOT_FOUND Error template
+     */
+    const ERROR_PACKAGE_NOT_FOUND = 'Could not find package: %s';
 
-	/**
-	 * @const ERROR_METHOD_NOT_FOUND Error template
-	 */
-	const ERROR_METHOD_NOT_FOUND = 'No method named %s was found';
-	
+    /**
+     * @const ERROR_METHOD_NOT_FOUND Error template
+     */
+    const ERROR_METHOD_NOT_FOUND = 'No method named %s was found';
+    
     /**
      * Create a new exception for invalid package
      *
      * @param *string $vendor
-	 *
+     *
      * @return FrameException
      */
-	public static function forPackageNotFound($vendor)
-	{
-		return new static(sprintf(static::ERROR_PACKAGE_NOT_FOUND, $vendor));
-	}
-	
+    public static function forPackageNotFound($vendor)
+    {
+        return new static(sprintf(static::ERROR_PACKAGE_NOT_FOUND, $vendor));
+    }
+    
     /**
      * Create a new exception for invalid method
      *
      * @param *string $name
-	 *
+     *
      * @return FrameException
      */
-	public static function forMethodNotFound($name)
-	{
-		return new static(sprintf(static::ERROR_METHOD_NOT_FOUND, $name));
-	}
+    public static function forMethodNotFound($name)
+    {
+        return new static(sprintf(static::ERROR_METHOD_NOT_FOUND, $name));
+    }
 }

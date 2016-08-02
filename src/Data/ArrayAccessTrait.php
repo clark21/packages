@@ -26,7 +26,7 @@ trait ArrayAccessTrait
      *
      * @return bool
      */
-    public function offsetExists($offset) 
+    public function offsetExists($offset)
     {
         return isset($this->data[$offset]);
     }
@@ -38,7 +38,7 @@ trait ArrayAccessTrait
      *
      * @return mixed
      */
-    public function offsetGet($offset) 
+    public function offsetGet($offset)
     {
         return isset($this->data[$offset]) ? $this->data[$offset] : null;
     }
@@ -49,7 +49,7 @@ trait ArrayAccessTrait
      * @param *scalar|null $offset The key to set
      * @param mixed        $value  The value the key should be set to
      */
-    public function offsetSet($offset, $value) 
+    public function offsetSet($offset, $value)
     {
         if (is_null($offset)) {
             $this->data[] = $value;
@@ -63,7 +63,7 @@ trait ArrayAccessTrait
      *
      * @param *scalar|null $offset The key to unset
      */
-    public function offsetUnset($offset) 
+    public function offsetUnset($offset)
     {
         unset($this->data[$offset]);
     }

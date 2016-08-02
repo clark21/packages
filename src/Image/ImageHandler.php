@@ -21,7 +21,7 @@ use Cradle\Helper\InstanceTrait;
  */
 class ImageHandler
 {
-	use InstanceTrait;
+    use InstanceTrait;
        
     /**
      * @var [RESOURCE] $resource The GD Resource

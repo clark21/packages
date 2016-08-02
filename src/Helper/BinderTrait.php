@@ -21,7 +21,7 @@ use Closure;
  */
 trait BinderTrait
 {
-	/**
+    /**
      * Binds callback with this instance
      *
      * @param *Closure $conditional should evaluate to true
@@ -29,7 +29,7 @@ trait BinderTrait
      * @return Condition
      */
     public function bindCallback(Closure $callback)
-	{
-		return $callback->bindTo($this, get_class($this));
-	}
+    {
+        return $callback->bindTo($this, get_class($this));
+    }
 }

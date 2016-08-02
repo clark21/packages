@@ -19,36 +19,36 @@ namespace Cradle\Http\Request;
  */
 trait ContentTrait
 {
-	/**
-	 * Returns final input stream
-	 *
-	 * @return string|null
-	 */
-	public function getContent()
-	{
-		return $this->get('body');
-	}
-	
-	/**
-	 * Returns true if has content
-	 *
-	 * @return bool
-	 */
-	public function hasContent()
-	{
-		return !$this->isEmpty('body');
-	}
-	
-	/**
-	 * Sets content
-	 *
-	 * @param *mixed $content
-	 *
-	 * @return ContentTrait
-	 */
-	public function setContent($content)
-	{
-		$this->set('body', $content);
-		return $this;
-	}
+    /**
+     * Returns final input stream
+     *
+     * @return string|null
+     */
+    public function getContent()
+    {
+        return $this->get('body');
+    }
+    
+    /**
+     * Returns true if has content
+     *
+     * @return bool
+     */
+    public function hasContent()
+    {
+        return !$this->isEmpty('body');
+    }
+    
+    /**
+     * Sets content
+     *
+     * @param *mixed $content
+     *
+     * @return ContentTrait
+     */
+    public function setContent($content)
+    {
+        $this->set('body', $content);
+        return $this;
+    }
 }

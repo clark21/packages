@@ -12,7 +12,7 @@ namespace Cradle\Http\Dispatcher;
 use Cradle\Http\Response\ResponseInterface;
 
 /**
- * This deals with the releasing of content into the 
+ * This deals with the releasing of content into the
  * main output buffer. Considers headers and post processing
  *
  * @vendor   Cradle
@@ -32,10 +32,10 @@ interface DispatcherInterface
      * @return HttpHandler
      */
     public function output(ResponseInterface $response, $emulate = false);
-	
+    
     /**
      * Starts to process the request
-	 *
+     *
      * @param ResponseInterface $response The response object to evaluate
      * @param bool              $emulate  If you really want it to echo (for testing)
      *

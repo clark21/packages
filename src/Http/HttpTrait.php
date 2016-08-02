@@ -29,123 +29,123 @@ use Cradle\Http\Middleware\ErrorProcessorTrait;
  */
 trait HttpTrait
 {
-	use DispatcherTrait,
-		PreProcessorTrait,
-		PostProcessorTrait,
-		ErrorProcessorTrait,
-		RequestTrait,
-		ResponseTrait,
-		RouterTrait;
+    use DispatcherTrait,
+        PreProcessorTrait,
+        PostProcessorTrait,
+        ErrorProcessorTrait,
+        RequestTrait,
+        ResponseTrait,
+        RouterTrait;
 
-	/**
-	 * Prepares the event and calls the preprocessors
-	 *
-	 * @return bool Whether if the process should continue
-	 */
-	public function prepare()
-	{
-		$request = $this->getRequest();
-		$response = $this->getResponse();
+    /**
+     * Prepares the event and calls the preprocessors
+     *
+     * @return bool Whether if the process should continue
+     */
+    public function prepare()
+    {
+        $request = $this->getRequest();
+        $response = $this->getResponse();
 
-		try {
-			//dispatch an init
-			$continue = $this->getPreprocessor()->process($request, $response);
-		} catch(Throwable $e) {
-			//if there is an exception
-			//you may not want to out 
-			//right throw it out
-			$response->setStatus(500, HttpHandler::STATUS_500);
-			$continue = $this->getErrorProcessor()->process($request, $response, $e);
-			//if there's an error in the errorware then let it be thrown
-		}
+        try {
+            //dispatch an init
+            $continue = $this->getPreprocessor()->process($request, $response);
+        } catch (Throwable $e) {
+            //if there is an exception
+            //you may not want to out
+            //right throw it out
+            $response->setStatus(500, HttpHandler::STATUS_500);
+            $continue = $this->getErrorProcessor()->process($request, $response, $e);
+            //if there's an error in the errorware then let it be thrown
+        }
 
-		return $continue;
-	}
-	
-	/**
-	 * Handles the main routing process
-	 *
-	 * @return bool Whether if the process should continue
-	 */
-	public function process()
-	{
-		$request = $this->getRequest();
-		$response = $this->getResponse();
-		
-		try {
-			//dispatch an init
-			$continue = $this->getRouter()->process($request, $response);
-		} catch(Throwable $e) {
-			//if there is an exception
-			//you may not want to out 
-			//right throw it out
-			$response->setStatus(500, HttpHandler::STATUS_500);
-			$continue = $this->getErrorProcessor()->process($request, $response, $e);
-			//if there's an error in the error processor then let it be thrown
-		}
-		
-		return $continue;
-	}
-	
+        return $continue;
+    }
+    
+    /**
+     * Handles the main routing process
+     *
+     * @return bool Whether if the process should continue
+     */
+    public function process()
+    {
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        
+        try {
+            //dispatch an init
+            $continue = $this->getRouter()->process($request, $response);
+        } catch (Throwable $e) {
+            //if there is an exception
+            //you may not want to out
+            //right throw it out
+            $response->setStatus(500, HttpHandler::STATUS_500);
+            $continue = $this->getErrorProcessor()->process($request, $response, $e);
+            //if there's an error in the error processor then let it be thrown
+        }
+        
+        return $continue;
+    }
+    
     /**
      * Process and output
-	 *
+     *
      * @param bool $emulate  If you really want it to echo (for testing)
      *
      * @return HttpHandler
      */
     public function render($emulate = false)
     {
-        if(!$this->prepare() || !$this->process()) {
-			return $this;
-		}
-		
-		$response = $this->getResponse();
-		
-		$continue = true;
+        if (!$this->prepare() || !$this->process()) {
+            return $this;
+        }
+        
+        $response = $this->getResponse();
+        
+        $continue = true;
 
-		if(!$response->hasContent()) {
-			$request = $this->getRequest();
-			$response->setStatus(404, HttpHandler::STATUS_404);
-			
-			$error = new HttpException(HttpHandler::STATUS_404, 404);
-			
-			$continue = $this->getErrorProcessor()->process($request, $response, $error);
-		}
-		
-		if($continue) {
-			$this->getDispatcher()->dispatch($response, $emulate);
-		}
-		
-		//the connection is already closed
-		//also remember there are no more sessions
-		$this->shutdown();
-		
-		return $this;
+        if (!$response->hasContent()) {
+            $request = $this->getRequest();
+            $response->setStatus(404, HttpHandler::STATUS_404);
+            
+            $error = new HttpException(HttpHandler::STATUS_404, 404);
+            
+            $continue = $this->getErrorProcessor()->process($request, $response, $error);
+        }
+        
+        if ($continue) {
+            $this->getDispatcher()->dispatch($response, $emulate);
+        }
+        
+        //the connection is already closed
+        //also remember there are no more sessions
+        $this->shutdown();
+        
+        return $this;
     }
 
-	/**
-	 * This is called after it is outputted and the connection is closed
-	 *
-	 * @return bool Whether if the process should continue
-	 */
-	public function shutdown()
-	{
-		$request = $this->getRequest();
-		$response = $this->getResponse();
-		
-		try {
-			//dispatch an init
-			$continue = $this->getPostprocessor()->process($request, $response);
-		} catch(Throwable $e) {
-			//if there is an exception
-			//you may not want to out 
-			//right throw it out
-			$response->setStatus(500, '500 Server Error');
-			$continue = $this->getErrorProcessor()->process($request, $response, $e);
-			//if there's an error in the error processor then let it be thrown
-		}
-		
-		return $continue;
-	}
+    /**
+     * This is called after it is outputted and the connection is closed
+     *
+     * @return bool Whether if the process should continue
+     */
+    public function shutdown()
+    {
+        $request = $this->getRequest();
+        $response = $this->getResponse();
+        
+        try {
+            //dispatch an init
+            $continue = $this->getPostprocessor()->process($request, $response);
+        } catch (Throwable $e) {
+            //if there is an exception
+            //you may not want to out
+            //right throw it out
+            $response->setStatus(500, '500 Server Error');
+            $continue = $this->getErrorProcessor()->process($request, $response, $e);
+            //if there's an error in the error processor then let it be thrown
+        }
+        
+        return $continue;
+    }
 }

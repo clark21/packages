@@ -22,7 +22,7 @@ use Cradle\Http\Response;
  */
 trait ResponseTrait
 {
-	/**
+    /**
      * @var Response|null $response Response object to use
      */
     protected $response = null;
@@ -34,14 +34,14 @@ trait ResponseTrait
      */
     public function getResponse()
     {
-        if(is_null($this->response)) {
-			if(method_exists($this, 'resolve')) {
-				$this->setResponse($this->resolve(Response::class)->load());
-			} else {
-				$response = new Response();
-				$this->setResponse($response->load());
-			}
-		}
+        if (is_null($this->response)) {
+            if (method_exists($this, 'resolve')) {
+                $this->setResponse($this->resolve(Response::class)->load());
+            } else {
+                $response = new Response();
+                $this->setResponse($response->load());
+            }
+        }
 
         return $this->response;
     }

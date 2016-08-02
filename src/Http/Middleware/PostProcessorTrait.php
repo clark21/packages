@@ -22,7 +22,7 @@ use Cradle\Http\Middleware;
  */
 trait PostProcessorTrait
 {
-	/**
+    /**
      * @var Middleware|null $preProcessor
      */
     protected $postProcessor = null;
@@ -34,13 +34,13 @@ trait PostProcessorTrait
      */
     public function getPostprocessor()
     {
-        if(is_null($this->postProcessor)) {
-			if(method_exists($this, 'resolve')) {
-				$this->setPostprocessor($this->resolve(Middleware::class));
-			} else {
-				$this->setPostprocessor(new Middleware());
-			}
-		}
+        if (is_null($this->postProcessor)) {
+            if (method_exists($this, 'resolve')) {
+                $this->setPostprocessor($this->resolve(Middleware::class));
+            } else {
+                $this->setPostprocessor(new Middleware());
+            }
+        }
 
         return $this->postProcessor;
     }
@@ -54,9 +54,9 @@ trait PostProcessorTrait
      */
     public function postprocess($callback)
     {
-		if($callback instanceof Closure) {
-			$callback = $callback->bindTo($this, get_class($this));
-		}
+        if ($callback instanceof Closure) {
+            $callback = $callback->bindTo($this, get_class($this));
+        }
 
         $this->getPostprocessor()->register($callback);
         return $this;
