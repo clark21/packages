@@ -32,7 +32,7 @@ class Cradle_Helper_ConditionalTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Helper\ConditionalTrait::when
+     * covers Cradle\Helper\ConditionalTrait::when
      */
     public function testWhen()
     {

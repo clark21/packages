@@ -33,7 +33,7 @@ class Cradle_Http_PostProcessorTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\PostProcessorTrait::getPostprocessor
+     * covers Cradle\Http\PostProcessorTrait::getPostprocessor
      */
     public function testGetPostprocessor()
     {
@@ -42,7 +42,7 @@ class Cradle_Http_PostProcessorTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\PostProcessorTrait::postprocess
+     * covers Cradle\Http\PostProcessorTrait::postprocess
      */
     public function testPostprocess()
     {
@@ -51,7 +51,7 @@ class Cradle_Http_PostProcessorTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\PostProcessorTrait::setPostprocessor
+     * covers Cradle\Http\PostProcessorTrait::setPostprocessor
      */
     public function testSetPostprocessor()
     {

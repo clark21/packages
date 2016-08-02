@@ -38,7 +38,7 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\ContentTrait::getContent
+     * covers Cradle\Http\Response\ContentTrait::getContent
      */
     public function testGetContent()
     {
@@ -54,7 +54,7 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\ContentTrait::hasContent
+     * covers Cradle\Http\Response\ContentTrait::hasContent
      */
     public function testHasContent()
     {
@@ -62,7 +62,7 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\ContentTrait::isContentFlat
+     * covers Cradle\Http\Response\ContentTrait::isContentFlat
      */
     public function testIsContentFlat()
     {
@@ -70,7 +70,7 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\ContentTrait::setContent
+     * covers Cradle\Http\Response\ContentTrait::setContent
      */
     public function testSetContent()
     {

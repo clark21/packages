@@ -254,7 +254,7 @@ class Cradle_Frame_FrameHttp_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Frame\FrameHttp::setBoostrapFile
+     * covers Cradle\Frame\FrameHttp::setBoostrapFile
      */
     public function testSetBoostrapFile()
     {

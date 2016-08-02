@@ -46,7 +46,7 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\RestTrait::addValidation
+     * covers Cradle\Http\Response\RestTrait::addValidation
      */
     public function testAddValidation()
     {
@@ -55,7 +55,7 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\RestTrait::getResults
+     * covers Cradle\Http\Response\RestTrait::getResults
      */
     public function testGetResults()
     {
@@ -66,7 +66,7 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\RestTrait::getValidation
+     * covers Cradle\Http\Response\RestTrait::getValidation
      */
     public function testGetValidation()
     {
@@ -77,7 +77,7 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\RestTrait::setError
+     * covers Cradle\Http\Response\RestTrait::setError
      */
     public function testSetError()
     {
@@ -86,7 +86,7 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\RestTrait::setResults
+     * covers Cradle\Http\Response\RestTrait::setResults
      */
     public function testSetResults()
     {

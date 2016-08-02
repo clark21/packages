@@ -33,7 +33,7 @@ class Cradle_Http_Request_GetTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\GetTrait::getGet
+     * covers Cradle\Http\Request\GetTrait::getGet
      */
     public function testGetGet()
     {
@@ -46,7 +46,7 @@ class Cradle_Http_Request_GetTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\GetTrait::hasGet
+     * covers Cradle\Http\Request\GetTrait::hasGet
      */
     public function testHasGet()
     {
@@ -60,7 +60,7 @@ class Cradle_Http_Request_GetTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\GetTrait::setGet
+     * covers Cradle\Http\Request\GetTrait::setGet
      */
     public function testSetGet()
     {

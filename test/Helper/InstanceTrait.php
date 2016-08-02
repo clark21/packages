@@ -32,7 +32,7 @@ class Cradle_Helper_InstanceTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Helper\InstanceTrait::i
+     * covers Cradle\Helper\InstanceTrait::i
      */
     public function testI()
     {

@@ -33,7 +33,7 @@ class Cradle_Http_ErrorProcessorTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\ErrorProcessorTrait::getErrorProcessor
+     * covers Cradle\Http\ErrorProcessorTrait::getErrorProcessor
      */
     public function testGetErrorProcessor()
     {
@@ -42,7 +42,7 @@ class Cradle_Http_ErrorProcessorTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\ErrorProcessorTrait::error
+     * covers Cradle\Http\ErrorProcessorTrait::error
      */
     public function testError()
     {
@@ -51,7 +51,7 @@ class Cradle_Http_ErrorProcessorTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\ErrorProcessorTrait::setErrorProcessor
+     * covers Cradle\Http\ErrorProcessorTrait::setErrorProcessor
      */
     public function testSetErrorProcessor()
     {

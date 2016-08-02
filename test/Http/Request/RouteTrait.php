@@ -33,7 +33,7 @@ class Cradle_Http_Request_RouteTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\RouteTrait::getRoute
+     * covers Cradle\Http\Request\RouteTrait::getRoute
      */
     public function testGetRoute()
     {
@@ -46,7 +46,7 @@ class Cradle_Http_Request_RouteTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\RouteTrait::getVariables
+     * covers Cradle\Http\Request\RouteTrait::getVariables
      */
     public function testGetVariables()
     {
@@ -59,7 +59,7 @@ class Cradle_Http_Request_RouteTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\RouteTrait::setRoute
+     * covers Cradle\Http\Request\RouteTrait::setRoute
      */
     public function testSetRoute()
     {

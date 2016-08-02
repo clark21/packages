@@ -33,7 +33,7 @@ class Cradle_Http_Request_ContentTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ContentTrait::getContent
+     * covers Cradle\Http\Request\ContentTrait::getContent
      */
     public function testGetContent()
     {
@@ -43,7 +43,7 @@ class Cradle_Http_Request_ContentTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ContentTrait::hasContent
+     * covers Cradle\Http\Request\ContentTrait::hasContent
      */
     public function testHasContent()
     {
@@ -53,7 +53,7 @@ class Cradle_Http_Request_ContentTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ContentTrait::setContent
+     * covers Cradle\Http\Request\ContentTrait::setContent
      */
     public function testSetContent()
     {

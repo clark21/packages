@@ -33,7 +33,7 @@ class Cradle_Http_Request_CookieTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\CookieTrait::getCookies
+     * covers Cradle\Http\Request\CookieTrait::getCookies
      */
     public function testGetCookies()
     {
@@ -46,7 +46,7 @@ class Cradle_Http_Request_CookieTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\CookieTrait::hasCookies
+     * covers Cradle\Http\Request\CookieTrait::hasCookies
      */
     public function testHasCookies()
     {
@@ -60,7 +60,7 @@ class Cradle_Http_Request_CookieTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\CookieTrait::setCookies
+     * covers Cradle\Http\Request\CookieTrait::setCookies
      */
     public function testSetCookies()
     {

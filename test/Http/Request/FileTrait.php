@@ -33,7 +33,7 @@ class Cradle_Http_Request_FileTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\FileTrait::getFiles
+     * covers Cradle\Http\Request\FileTrait::getFiles
      */
     public function testGetFiles()
     {
@@ -46,7 +46,7 @@ class Cradle_Http_Request_FileTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\FileTrait::hasFiles
+     * covers Cradle\Http\Request\FileTrait::hasFiles
      */
     public function testHasFiles()
     {
@@ -60,7 +60,7 @@ class Cradle_Http_Request_FileTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\FileTrait::setFiles
+     * covers Cradle\Http\Request\FileTrait::setFiles
      */
     public function testSetFiles()
     {

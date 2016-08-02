@@ -33,7 +33,7 @@ class Cradle_Http_Request_SessionTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\SessionTrait::getSession
+     * covers Cradle\Http\Request\SessionTrait::getSession
      */
     public function testGetSession()
     {
@@ -46,7 +46,7 @@ class Cradle_Http_Request_SessionTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\SessionTrait::hasSession
+     * covers Cradle\Http\Request\SessionTrait::hasSession
      */
     public function testHasSession()
     {
@@ -60,7 +60,7 @@ class Cradle_Http_Request_SessionTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\SessionTrait::setSession
+     * covers Cradle\Http\Request\SessionTrait::setSession
      */
     public function testSetSession()
     {

@@ -32,7 +32,7 @@ class Cradle_Helper_LoopTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Helper\LoopTrait::loop
+     * covers Cradle\Helper\LoopTrait::loop
      */
     public function testLoop()
     {

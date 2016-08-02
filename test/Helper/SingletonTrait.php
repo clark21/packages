@@ -32,7 +32,7 @@ class Cradle_Helper_SingletonTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Helper\SingletonTrait::i
+     * covers Cradle\Helper\SingletonTrait::i
      */
     public function testI()
     {

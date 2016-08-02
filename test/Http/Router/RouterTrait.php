@@ -33,7 +33,7 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\RouterTrait::all
+     * covers Cradle\Http\RouterTrait::all
      */
     public function testAll()
     {
@@ -42,7 +42,7 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\RouterTrait::delete
+     * covers Cradle\Http\RouterTrait::delete
      */
     public function testDelete()
     {
@@ -51,7 +51,7 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\RouterTrait::get
+     * covers Cradle\Http\RouterTrait::get
      */
     public function testGet()
     {
@@ -60,7 +60,7 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\RouterTrait::getRouter
+     * covers Cradle\Http\RouterTrait::getRouter
      */
     public function testGetRouter()
     {
@@ -69,7 +69,7 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\RouterTrait::post
+     * covers Cradle\Http\RouterTrait::post
      */
     public function testPost()
     {
@@ -78,7 +78,7 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\RouterTrait::put
+     * covers Cradle\Http\RouterTrait::put
      */
     public function testPut()
     {
@@ -87,7 +87,7 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\RouterTrait::route
+     * covers Cradle\Http\RouterTrait::route
      */
     public function testRoute()
     {
@@ -96,7 +96,7 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\RouterTrait::setRouter
+     * covers Cradle\Http\RouterTrait::setRouter
      */
     public function testSetRouter()
     {

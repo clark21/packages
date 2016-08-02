@@ -33,7 +33,7 @@ class Cradle_Http_Request_PostTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\PostTrait::getPost
+     * covers Cradle\Http\Request\PostTrait::getPost
      */
     public function testGetPost()
     {
@@ -46,7 +46,7 @@ class Cradle_Http_Request_PostTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\PostTrait::hasPost
+     * covers Cradle\Http\Request\PostTrait::hasPost
      */
     public function testHasPost()
     {
@@ -60,7 +60,7 @@ class Cradle_Http_Request_PostTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\PostTrait::setPost
+     * covers Cradle\Http\Request\PostTrait::setPost
      */
     public function testSetPost()
     {

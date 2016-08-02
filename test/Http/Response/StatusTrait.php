@@ -39,7 +39,7 @@ class Cradle_Http_Response_StatusTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\StatusTrait::getStatus
+     * covers Cradle\Http\Response\StatusTrait::getStatus
      */
     public function testGetStatus()
     {
@@ -48,7 +48,7 @@ class Cradle_Http_Response_StatusTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\StatusTrait::setStatus
+     * covers Cradle\Http\Response\StatusTrait::setStatus
      */
     public function testSetStatus()
     {

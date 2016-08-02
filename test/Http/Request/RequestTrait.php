@@ -33,7 +33,7 @@ class Cradle_Http_RequestTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\RequestTrait::getRequest
+     * covers Cradle\Http\RequestTrait::getRequest
      */
     public function testGetRequest()
     {
@@ -42,7 +42,7 @@ class Cradle_Http_RequestTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\RequestTrait::setRequest
+     * covers Cradle\Http\RequestTrait::setRequest
      */
     public function testSetRequest()
     {

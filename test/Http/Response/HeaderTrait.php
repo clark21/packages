@@ -38,7 +38,7 @@ class Cradle_Http_Response_HeaderTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\HeaderTrait::addHeader
+     * covers Cradle\Http\Response\HeaderTrait::addHeader
      */
     public function testAddHeader()
     {
@@ -47,7 +47,7 @@ class Cradle_Http_Response_HeaderTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response\HeaderTrait::getHeaders
+     * covers Cradle\Http\Response\HeaderTrait::getHeaders
      */
     public function testGetHeaders()
     {

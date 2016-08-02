@@ -55,7 +55,7 @@ class Cradle_Frame_FrameService_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Frame\FrameService::setBoostrapFile
+     * covers Cradle\Frame\FrameService::setBoostrapFile
      */
     public function testSetBoostrapFile()
     {

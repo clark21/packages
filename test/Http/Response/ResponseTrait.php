@@ -34,7 +34,7 @@ class Cradle_Http_ResponseTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\ResponseTrait::getResponse
+     * covers Cradle\Http\ResponseTrait::getResponse
      */
     public function testGetResponse()
     {
@@ -43,7 +43,7 @@ class Cradle_Http_ResponseTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\ResponseTrait::setResponse
+     * covers Cradle\Http\ResponseTrait::setResponse
      */
     public function testSetResponse()
     {

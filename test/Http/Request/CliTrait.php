@@ -33,7 +33,7 @@ class Cradle_Http_Request_CliTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\CliTrait::getArgs
+     * covers Cradle\Http\Request\CliTrait::getArgs
      */
     public function testGetArgs()
     {
@@ -43,7 +43,7 @@ class Cradle_Http_Request_CliTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\CliTrait::setArgs
+     * covers Cradle\Http\Request\CliTrait::setArgs
      */
     public function testSetArgs()
     {

@@ -33,7 +33,7 @@ class Cradle_Helper_BinderTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Helper\BinderTrait::bindCallback
+     * covers Cradle\Helper\BinderTrait::bindCallback
      */
     public function testBindCallback()
     {

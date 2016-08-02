@@ -33,7 +33,7 @@ class Cradle_Http_PreProcessorTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\PreProcessorTrait::getPreprocessor
+     * covers Cradle\Http\PreProcessorTrait::getPreprocessor
      */
     public function testGetPreprocessor()
     {
@@ -42,7 +42,7 @@ class Cradle_Http_PreProcessorTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\PreProcessorTrait::preprocess
+     * covers Cradle\Http\PreProcessorTrait::preprocess
      */
     public function testPreprocess()
     {
@@ -51,7 +51,7 @@ class Cradle_Http_PreProcessorTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\PreProcessorTrait::setPreprocessor
+     * covers Cradle\Http\PreProcessorTrait::setPreprocessor
      */
     public function testSetPreprocessor()
     {

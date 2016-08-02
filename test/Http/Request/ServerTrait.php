@@ -33,7 +33,7 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ServerTrait::getMethod
+     * covers Cradle\Http\Request\ServerTrait::getMethod
      */
     public function testGetMethod()
     {
@@ -42,7 +42,7 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ServerTrait::getPath
+     * covers Cradle\Http\Request\ServerTrait::getPath
      */
     public function testGetPath()
     {
@@ -51,7 +51,7 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ServerTrait::getQuery
+     * covers Cradle\Http\Request\ServerTrait::getQuery
      */
     public function testGetQuery()
     {
@@ -60,7 +60,7 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ServerTrait::getServer
+     * covers Cradle\Http\Request\ServerTrait::getServer
      */
     public function testGetServer()
     {
@@ -73,7 +73,7 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ServerTrait::hasServer
+     * covers Cradle\Http\Request\ServerTrait::hasServer
      */
     public function testHasServer()
     {
@@ -87,7 +87,7 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ServerTrait::isMethod
+     * covers Cradle\Http\Request\ServerTrait::isMethod
      */
     public function testIsMethod()
     {
@@ -98,7 +98,7 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ServerTrait::setMethod
+     * covers Cradle\Http\Request\ServerTrait::setMethod
      */
     public function testSetMethod()
     {
@@ -108,7 +108,7 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ServerTrait::setPath
+     * covers Cradle\Http\Request\ServerTrait::setPath
      */
     public function testSetPath()
     {
@@ -118,7 +118,7 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ServerTrait::setQuery
+     * covers Cradle\Http\Request\ServerTrait::setQuery
      */
     public function testSetQuery()
     {
@@ -128,7 +128,7 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Request\ServerTrait::setServer
+     * covers Cradle\Http\Request\ServerTrait::setServer
      */
     public function testSetServer()
     {

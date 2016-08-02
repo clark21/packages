@@ -33,7 +33,7 @@ class Cradle_Frame_PackageTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Frame\PackageTrait::package
+     * covers Cradle\Frame\PackageTrait::package
      */
     public function testPackage()
     {
@@ -42,7 +42,7 @@ class Cradle_Frame_PackageTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Frame\PackageTrait::register
+     * covers Cradle\Frame\PackageTrait::register
      */
     public function testRegister()
     {
@@ -51,7 +51,7 @@ class Cradle_Frame_PackageTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Frame\PackageTrait::setBoostrapFile
+     * covers Cradle\Frame\PackageTrait::setBoostrapFile
      */
     public function testSetBoostrapFile()
     {
