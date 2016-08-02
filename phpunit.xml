@@ -139,8 +139,11 @@
         <directory>./vendor</directory>
         <directory>./tests</directory>
 		<file>src/Data/Collection/CollectionInterface.php</file>
+		<file>src/Data/Collection/CollectionException.php</file>
 		<file>src/Data/Registry/RegistryInterface.php</file>
+		<file>src/Data/Registry/RegistryException.php</file>
 		<file>src/Data/Model/ModelInterface.php</file>
+		<file>src/Data/Model/ModelException.php</file>
 		<file>src/Event/EventInterface.php</file>
 		<file>src/Handlebars/helpers.php</file>
 		<file>src/Http/Dispatcher/DispatcherInterface.php</file>

@@ -45,7 +45,7 @@ class Cradle_Sql_PostGreSql_QueryAlter_Test extends PHPUnit_Framework_TestCase
      */
     public function testAddPrimaryKey()
     {
-        $instance = $this->object->addField('foobar', array());
+        $instance = $this->object->addPrimaryKey('foobar');
 		$this->assertInstanceOf('Cradle\Sql\PostGreSql\QueryAlter', $instance);
     }
 
