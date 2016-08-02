@@ -33,49 +33,65 @@ class Cradle_Curl_RestException_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Curl\RestException::forMissingHost
-     * @todo   Implement testForMissingHost().
      */
     public function testForMissingHost()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $message = null;
+		
+		try {
+			throw RestException::forMissingHost();
+		} catch(RestException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('Host is not defined', $message);
     }
 
     /**
      * @covers Cradle\Curl\RestException::forMissingData
-     * @todo   Implement testForMissingData().
      */
     public function testForMissingData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $message = null;
+		
+		try {
+			throw RestException::forMissingData('foobar');
+		} catch(RestException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('foobar does not exist', $message);
     }
 
     /**
      * @covers Cradle\Curl\RestException::forMissingRequired
-     * @todo   Implement testForMissingRequired().
      */
     public function testForMissingRequired()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $message = null;
+		
+		try {
+			throw RestException::forMissingRequired('foobar');
+		} catch(RestException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('foobar is required', $message);
     }
 
     /**
      * @covers Cradle\Curl\RestException::forInvalidData
-     * @todo   Implement testForInvalidData().
      */
     public function testForInvalidData()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $message = null;
+		
+		try {
+			throw RestException::forInvalidData('foobar');
+		} catch(RestException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('foobar does not have a valid value', $message);
     }
 }

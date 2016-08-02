@@ -9,13 +9,13 @@
 
 namespace Cradle\Curl;
 
+use Closure;
 use Cradle\Event\EventTrait;
 
 use Cradle\Helper\InstanceTrait;
 use Cradle\Helper\LoopTrait;
 use Cradle\Helper\ConditionalTrait;
 
-use Cradle\Profiler\CallerTrait;
 use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
@@ -35,7 +35,6 @@ class Rest
         InstanceTrait,
         LoopTrait,
         ConditionalTrait,
-        CallerTrait,
         InspectorTrait,
         LoggerTrait,
         StateTrait;
@@ -106,9 +105,9 @@ class Rest
     protected $headers = [];
     
     /**
-     * @var bool $metaOnly to not actually call, used for testing
+     * @var bool $map to override the curl call
      */
-    protected $metaOnly = false;
+    protected $map = null;
     
     /**
      * @var array $routes Used by children to narrow down the possible options
@@ -217,15 +216,15 @@ class Rest
     /**
      * Sets up the host and if we are in tet mode
      *
-     * @param *string $host     The root host
-     * @param bool    $metaOnly Whether to just get the meta
+     * @param *string      $host The root host
+     * @param Closure|null $map  Whether to just get the meta
      *
      * @return Rest
      */
-    public function __construct($host, $metaOnly = false)
+    public function __construct($host, Closure $map = null)
     {
         $this->host = $host;
-        $this->metaOnly = $metaOnly;
+        $this->map = $map;
     }
     
     /**
@@ -309,12 +308,6 @@ class Rest
         //get the meta data for this url call
         $meta = $this->getMetaData($method, $path, $meta);
         
-        //if in meta mode
-        if ($this->metaOnly) {
-            //return the meta
-            return $meta;
-        }
-        
         //extract the meta data
         $url = $meta['url'];
         $data = $meta['post'];
@@ -323,7 +316,7 @@ class Rest
         $headers = $meta['headers'];
         
         // send it into curl
-        $request = $this('curl')
+        $request = CurlHandler::i($this->map)
             ->setUrl($url)
             ->setConnectTimeout(10) // sets connection timeout to 10 sec.
             ->setFollowLocation(true) // sets the follow location to true
@@ -350,7 +343,7 @@ class Rest
                 //set the post data
                 $this->setPostFields($data);
             });
-        
+       
         //how should we return the data ?
         switch ($encode) {
             case self::ENCODE_QUERY:

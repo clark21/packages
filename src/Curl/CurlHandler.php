@@ -9,7 +9,9 @@
 
 namespace Cradle\Curl;
 
+use Closure;
 use ArrayAccess;
+use DOMDocument;
 
 use Cradle\Event\EventTrait;
 
@@ -17,7 +19,6 @@ use Cradle\Helper\InstanceTrait;
 use Cradle\Helper\LoopTrait;
 use Cradle\Helper\ConditionalTrait;
 
-use Cradle\Profiler\CallerTrait;
 use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
@@ -38,7 +39,6 @@ class CurlHandler implements ArrayAccess
         InstanceTrait,
         LoopTrait,
         ConditionalTrait,
-        CallerTrait,
         InspectorTrait,
         LoggerTrait,
         StateTrait;
@@ -67,6 +67,16 @@ class CurlHandler implements ArrayAccess
      * @const string PATCH Send method type
      */
     const PATCH = 'PATCH';
+       
+    /**
+     * @var Closure|null $mapCache The global curl callback
+     */
+    protected static $mapCache = null;
+       
+    /**
+     * @var Closure|null $map The actual curl callback
+     */
+    protected $map = null;
        
     /**
      * @var array $options List of cURL options
@@ -99,49 +109,15 @@ class CurlHandler implements ArrayAccess
     public function __call($name, $args)
     {
         if (strpos($name, 'set') === 0) {
-            $method = substr($name, 3);
-
-            if (isset(self::$setBoolKeys[$method])) {
-                $key = self::$setBoolKeys[$method];
-                $this->options[$key] = $args[0];
-
+            //'AutoReferer' => CURLOPT_AUTOREFERER,
+			$name = strtoupper(substr($name, 3));
+			
+			$key = constant('CURLOPT_' . $name);
+			
+			if(!is_null($key)) {
+				$this->options[$key] = $args[0];
                 return $this;
-            }
-
-            if (isset(self::$setIntegerKeys[$method])) {
-                $key = self::$setIntegerKeys[$method];
-                $this->options[$key] = $args[0];
-
-                return $this;
-            }
-
-            if (isset(self::$setStringKeys[$method])) {
-                $key = self::$setStringKeys[$method];
-                $this->options[$key] = $args[0];
-
-                return $this;
-            }
-
-            if (isset(self::$setArrayKeys[$method])) {
-                $key = self::$setArrayKeys[$method];
-                $this->options[$key] = $args[0];
-
-                return $this;
-            }
-
-            if (isset(self::$setFileKeys[$method])) {
-                $key = self::$setFileKeys[$method];
-                $this->options[$key] = $args[0];
-
-                return $this;
-            }
-
-            if (isset(self::$setCallbackKeys[$method])) {
-                $key = self::$setCallbackKeys[$method];
-                $this->options[$key] = $args[0];
-
-                return $this;
-            }
+			}
         }
         
         try {
@@ -150,6 +126,24 @@ class CurlHandler implements ArrayAccess
             throw new CurlException($e->getMessage());
         }
     }
+	
+	/**
+	 * Set a curl map, which is usually good for testing
+	 *
+	 * @param Closure $map
+	 */
+	public function __construct(Closure $map = null)
+	{
+		if(is_null(self::$mapCache)) {
+			self::$mapCache = include(__DIR__ . '/map.php');
+		}
+
+		$this->map = self::$mapCache;
+		
+		if(!is_null($map)) {
+			$this->map = $map; 
+		}
+	}
 
     /**
      * Send the curl off and returns the results
@@ -159,9 +153,9 @@ class CurlHandler implements ArrayAccess
      */
     public function getDomDocumentResponse()
     {
-        $this->meta['response'] = $this->getResponse();
+        $response = $this->getResponse();
         $xml = new DOMDocument();
-        $xml->loadXML($this->meta['response']);
+        $xml->loadXML($response);
         return $xml;
     }
 
@@ -175,8 +169,8 @@ class CurlHandler implements ArrayAccess
      */
     public function getJsonResponse($assoc = true)
     {
-        $this->meta['response'] = $this->getResponse();
-        return json_decode($this->meta['response'], $assoc);
+        $response = $this->getResponse();
+        return json_decode($response, $assoc);
     }
 
     /**
@@ -203,9 +197,9 @@ class CurlHandler implements ArrayAccess
      */
     public function getQueryResponse()
     {
-        $this->meta['response'] = $this->getResponse();
-        parse_str($this->meta['response'], $response);
-        return $response;
+        $response = $this->getResponse();
+        parse_str($response, $query);
+        return $query;
     }
 
     /**
@@ -215,24 +209,12 @@ class CurlHandler implements ArrayAccess
      */
     public function getResponse()
     {
-        $curl = curl_init();
-
         $this->addParameters()->addHeaders();
         $this->options[CURLOPT_RETURNTRANSFER] = true;
-        curl_setopt_array($curl, $this->options);
+		
+		$this->meta = call_user_func($this->map, $this->options);
 
-        $response = curl_exec($curl);
-
-        $this->meta = [
-            'info' => curl_getinfo($curl, CURLINFO_HTTP_CODE),
-            'error_message' => curl_errno($curl),
-            'error_code' => curl_error($curl)
-        ];
-
-        curl_close($curl);
-        unset($curl);
-
-        return $response;
+        return $this->meta['response'];
     }
 
     /**
@@ -256,7 +238,18 @@ class CurlHandler implements ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return isset($this->option[$offset]);
+		if(is_string($offset)) {
+			//if it doesn't have a CURL prefix
+			if(strpos($offset, 'CURLOPT_') !== 0) {
+				$offset = 'CURLOPT_' . $offset;
+			}
+			
+			if (defined(strtoupper($offset))) {
+				$offset = constant(strtoupper($offset));
+			}
+		}
+
+        return isset($this->options[$offset]);
     }
 
     /**
@@ -268,7 +261,18 @@ class CurlHandler implements ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return isset($this->option[$offset]) ? $this->option[$offset] : null;
+		if(is_string($offset)) {
+			//if it doesn't have a CURL prefix
+			if(strpos($offset, 'CURLOPT_') !== 0) {
+				$offset = 'CURLOPT_' . $offset;
+			}
+			
+			if (defined(strtoupper($offset))) {
+				$offset = constant(strtoupper($offset));
+			}
+		}
+		
+        return isset($this->options[$offset]) ? $this->options[$offset] : null;
     }
 
     /**
@@ -279,37 +283,20 @@ class CurlHandler implements ArrayAccess
      */
     public function offsetSet($offset, $value)
     {
-        if (!is_null($offset)) {
-            if (in_array($offset, $this->setBoolKeys)) {
-                $method = array_search($offset, $this->setBoolKeys);
-                $this->call('set'.$method, [$value]);
-            }
-
-            if (in_array($offset, $this->setIntegerKeys)) {
-                $method = array_search($offset, $this->setIntegerKeys);
-                $this->call('set'.$method, [$value]);
-            }
-
-            if (in_array($offset, $this->setStringKeys)) {
-                $method = array_search($offset, $this->setStringKeys);
-                $this->call('set'.$method, [$value]);
-            }
-
-            if (in_array($offset, $this->setArrayKeys)) {
-                $method = array_search($offset, $this->setArrayKeys);
-                $this->call('set'.$method, [$value]);
-            }
-
-            if (in_array($offset, $this->setFileKeys)) {
-                $method = array_search($offset, $this->setFileKeys);
-                $this->call('set'.$method, [$value]);
-            }
-
-            if (in_array($offset, $this->setCallbackKeys)) {
-                $method = array_search($offset, $this->setCallbackKeys);
-                $this->call('set'.$method, [$value]);
-            }
-        }
+		if(is_string($offset)) {
+			//if it doesn't have a CURL prefix
+			if(strpos($offset, 'CURLOPT_') !== 0) {
+				$offset = 'CURLOPT_' . $offset;
+			}
+			
+			if (defined(strtoupper($offset))) {
+				$offset = constant(strtoupper($offset));
+			}
+		}
+		
+		if(!is_null($offset)) {
+			$this->options[$offset] = $value;
+		}
     }
 
     /**
@@ -319,7 +306,20 @@ class CurlHandler implements ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        unset($this->option[$offset]);
+		if(is_string($offset)) {
+			//if it doesn't have a CURL prefix
+			if(strpos($offset, 'CURLOPT_') !== 0) {
+				$offset = 'CURLOPT_' . $offset;
+			}
+			
+			if (defined(strtoupper($offset))) {
+				$offset = constant(strtoupper($offset));
+			}
+		}
+		
+		if(isset($this->options[$offset])) {
+        	unset($this->options[$offset]);
+		}
     }
 
     /**
@@ -329,22 +329,11 @@ class CurlHandler implements ArrayAccess
      */
     public function send()
     {
-        $curl = curl_init();
-
         $this->addParameters()->addHeaders();
-        curl_setopt_array($curl, $this->options);
-        curl_exec($curl);
-
-        $this->meta = [
-            'info' => curl_getinfo($curl, CURLINFO_HTTP_CODE),
-            'error_message' => curl_errno($curl),
-            'error_code' => curl_error($curl)
-        ];
-
-        curl_close($curl);
-        unset($curl);
-
-        return $this;
+        
+		$this->meta = call_user_func($this->map, $this->options);
+		
+		return $this;
     }
 
     /**
@@ -463,6 +452,7 @@ class CurlHandler implements ArrayAccess
         }
 
         $this->param[$key] = $value;
+		return $this;
     }
 
     /**
@@ -539,133 +529,4 @@ class CurlHandler implements ArrayAccess
 
         return $this;
     }
-
-    /**
-     * @var array $setBoolKeys cURL options accepting a bool
-     */
-    protected static $setBoolKeys = [
-        'AutoReferer' => CURLOPT_AUTOREFERER,
-        'BinaryTransfer' => CURLOPT_BINARYTRANSFER,
-        'CookieSession' => CURLOPT_COOKIESESSION,
-        'CrlF' => CURLOPT_CRLF,
-        'DnsUseGlobalCache' => CURLOPT_DNS_USE_GLOBAL_CACHE,
-        'FailOnError' => CURLOPT_FAILONERROR,
-        'FileTime' => CURLOPT_FILETIME,
-        'FollowLocation' => CURLOPT_FOLLOWLOCATION,
-        'ForbidReuse' => CURLOPT_FORBID_REUSE,
-        'FreshConnect' => CURLOPT_FRESH_CONNECT,
-        'FtpUseEprt' => CURLOPT_FTP_USE_EPRT,
-        'FtpUseEpsv' => CURLOPT_FTP_USE_EPSV,
-        'FtpAppend' => CURLOPT_FTPAPPEND,
-        'FtpListOnly' => CURLOPT_FTPLISTONLY,
-        'Header' => CURLOPT_HEADER,
-        'HeaderOut' => CURLINFO_HEADER_OUT,
-        'HttpGet' => CURLOPT_HTTPGET,
-        'HttpProxyTunnel' => CURLOPT_HTTPPROXYTUNNEL,
-        'Netrc' => CURLOPT_NETRC,
-        'Nobody' => CURLOPT_NOBODY,
-        'NoProgress' => CURLOPT_NOPROGRESS,
-        'NoSignal' => CURLOPT_NOSIGNAL,
-        'Post' => CURLOPT_POST,
-        'Put' => CURLOPT_PUT,
-        'ReturnTransfer' => CURLOPT_RETURNTRANSFER,
-        'SslVerifyPeer' => CURLOPT_SSL_VERIFYPEER,
-        'TransferText' => CURLOPT_TRANSFERTEXT,
-        'UnrestrictedAuth' => CURLOPT_UNRESTRICTED_AUTH,
-        'Upload' => CURLOPT_UPLOAD,
-        'Verbose' => CURLOPT_VERBOSE
-    ];
-
-    /**
-     * @var array $setIntegerKeys cURL options accepting an integer
-     */
-    protected static $setIntegerKeys = [
-        'BufferSize' => CURLOPT_BUFFERSIZE,
-        'ConnectTimeout' => CURLOPT_CONNECTTIMEOUT,
-        'ConnectTimeoutMs' => CURLOPT_CONNECTTIMEOUT_MS,
-        'DnsCacheTimeout' => CURLOPT_DNS_CACHE_TIMEOUT,
-        'FtpSslAuth' => CURLOPT_FTPSSLAUTH,
-        'HttpVersion' => CURLOPT_HTTP_VERSION,
-        'HttpAuth' => CURLOPT_HTTPAUTH,
-        'InFileSize' => CURLOPT_INFILESIZE,
-        'LowSpeedLimit' => CURLOPT_LOW_SPEED_LIMIT,
-        'LowSpeedTime' => CURLOPT_LOW_SPEED_TIME,
-        'MaxConnects' => CURLOPT_MAXCONNECTS,
-        'MaxRedirs' => CURLOPT_MAXREDIRS,
-        'Port' => CURLOPT_PORT,
-        'ProxyAuth' => CURLOPT_PROXYAUTH,
-        'ProxyPort' => CURLOPT_PROXYPORT,
-        'ProxyType' => CURLOPT_PROXYTYPE,
-        'ResumeFrom' => CURLOPT_RESUME_FROM,
-        'SslVerifyHost' => CURLOPT_SSL_VERIFYHOST,
-        'SslVersion' => CURLOPT_SSLVERSION,
-        'TimeCondition' => CURLOPT_TIMECONDITION,
-        'Timeout' => CURLOPT_TIMEOUT,
-        'TimeoutMs' => CURLOPT_TIMEOUT_MS,
-        'TimeValue' => CURLOPT_TIMEVALUE
-    ];
-
-    /**
-     * @var array $setStringKeys cURL options accepting string values
-     */
-    protected static $setStringKeys = [
-        'CaInfo' => CURLOPT_CAINFO,
-        'CaPath' => CURLOPT_CAPATH,
-        'Cookie' => CURLOPT_COOKIE,
-        'CookieFile' => CURLOPT_COOKIEFILE,
-        'CookieJar' => CURLOPT_COOKIEJAR,
-        'CustomRequest' => CURLOPT_CUSTOMREQUEST,
-        'EgdSocket' => CURLOPT_EGDSOCKET,
-        'Encoding' => CURLOPT_ENCODING,
-        'FtpPort' => CURLOPT_FTPPORT,
-        'Interface' => CURLOPT_INTERFACE,
-        'Krb4Level' => CURLOPT_KRB4LEVEL,
-        'PostFields' => CURLOPT_POSTFIELDS,
-        'Proxy' => CURLOPT_PROXY,
-        'ProxyUserPwd' => CURLOPT_PROXYUSERPWD,
-        'RandomFile' => CURLOPT_RANDOM_FILE,
-        'Range' => CURLOPT_RANGE,
-        'Referer' => CURLOPT_REFERER,
-        'SslCipherList' => CURLOPT_SSL_CIPHER_LIST,
-        'SslCert' => CURLOPT_SSLCERT,
-        'SslCertPassword' => CURLOPT_SSLCERTPASSWD,
-        'SslCertType' => CURLOPT_SSLCERTTYPE,
-        'SslEngine' => CURLOPT_SSLENGINE,
-        'SslEngineDefault' => CURLOPT_SSLENGINE_DEFAULT,
-        'Sslkey' => CURLOPT_SSLKEY,
-        'SslKeyPasswd' => CURLOPT_SSLKEYPASSWD,
-        'SslKeyType' => CURLOPT_SSLKEYTYPE,
-        'Url' => CURLOPT_URL,
-        'UserAgent' => CURLOPT_USERAGENT,
-        'UserPwd' => CURLOPT_USERPWD
-    ];
-
-    /**
-     * @var array $setArrayKeys cURL options accepting an array
-     */
-    protected static $setArrayKeys = [
-        'Http200Aliases' => CURLOPT_HTTP200ALIASES,
-        'HttpHeader' => CURLOPT_HTTPHEADER,
-        'PostQuote' => CURLOPT_POSTQUOTE,
-        'Quote' => CURLOPT_QUOTE
-    ];
-
-    /**
-     * @var array $setFileKeys cURL options accepting a file pointer
-     */
-    protected static $setFileKeys = [
-        'File' => CURLOPT_FILE,
-        'InFile' => CURLOPT_INFILE,
-        'StdErr' => CURLOPT_STDERR,
-        'WriteHeader' => CURLOPT_WRITEHEADER
-    ];
-
-    /**
-     * @var array $setCallbackKeys cURL options accepting a function
-     */
-    protected static $setCallbackKeys = [
-        'HeaderFunction' => CURLOPT_HEADERFUNCTION,
-        'ReadFunction' => CURLOPT_READFUNCTION,
-        'WriteFunction' => CURLOPT_WRITEFUNCTION
-    ];
 }
