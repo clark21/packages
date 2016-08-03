@@ -129,6 +129,7 @@
 	  <file>test/Sql/Sqlite/QueryCreate.php</file>
 	  <file>test/Sql/Sqlite/QueryUtility.php</file>
 	  <file>test/Sql/MySql.php</file>
+	  <file>test/Sql/PostGreSql.php</file>
     </testsuite>
     <testsuite name="CradlePHP Curl Test Suite">
       <file>test/Curl/CurlHandler.php</file>

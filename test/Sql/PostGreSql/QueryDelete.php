@@ -20,7 +20,7 @@ class Cradle_Sql_PostGreSql_QueryDelete_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new QueryDelete;
+        $this->object = new QueryDelete('foobar');
     }
 
     /**
@@ -37,6 +37,6 @@ class Cradle_Sql_PostGreSql_QueryDelete_Test extends PHPUnit_Framework_TestCase
     public function testGetQuery()
     {
         $actual = $this->object->getQuery();
-		$this->assertEquals('DELETE FROM "" WHERE ;', $actual);
+		$this->assertEquals('DELETE FROM "foobar" WHERE ;', $actual);
     }
 }

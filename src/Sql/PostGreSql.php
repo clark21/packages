@@ -11,10 +11,10 @@ namespace Cradle\Sql;
 
 use PDO;
 
-use Cradle\Sql\PostGreSql\QueryDelete;
-use Cradle\Sql\PostGreSql\QueryInsert;
-use Cradle\Sql\PostGreSql\QuerySelect;
-use Cradle\Sql\PostGreSql\QueryUpdate;
+use Cradle\Sql\PostGreSql\QueryDelete as PostGreSqlQueryDelete;
+use Cradle\Sql\PostGreSql\QueryInsert as PostGreSqlQueryInsert;
+use Cradle\Sql\PostGreSql\QuerySelect as PostGreSqlQuerySelect;
+use Cradle\Sql\PostGreSql\QueryUpdate as PostGreSqlQueryUpdate;
 use Cradle\Sql\PostGreSql\QueryAlter;
 use Cradle\Sql\PostGreSql\QueryCreate;
 use Cradle\Sql\PostGreSql\QuerySubSelect;
@@ -213,7 +213,7 @@ class PostGreSql extends AbstractSql implements SqlInterface
      */
     public function getDeleteQuery($table = null)
     {
-        return $this->resolve(QueryDelete::class, $table);
+        return $this->resolve(PostGreSqlQueryDelete::class, $table);
     }
     
     /**
@@ -263,7 +263,7 @@ class PostGreSql extends AbstractSql implements SqlInterface
      */
     public function getInsertQuery($table = null)
     {
-        return $this->resolve(QueryInsert::class, $table);
+        return $this->resolve(PostGreSqlQueryInsert::class, $table);
     }
     
     /**
@@ -310,7 +310,7 @@ class PostGreSql extends AbstractSql implements SqlInterface
      */
     public function getSelectQuery($select = '*')
     {
-        return $this->resolve(QuerySelect::class, $select);
+        return $this->resolve(PostGreSqlQuerySelect::class, $select);
     }
     
     /**
@@ -339,7 +339,7 @@ class PostGreSql extends AbstractSql implements SqlInterface
      */
     public function getUpdateQuery($table = null)
     {
-        return $this->resolve(QueryUpdate::class, $table);
+        return $this->resolve(PostGreSqlQueryUpdate::class, $table);
     }
     
     /**
@@ -351,10 +351,7 @@ class PostGreSql extends AbstractSql implements SqlInterface
      */
     public function setSchema($schema)
     {
-        $schema = [$schema];
-        if (func_num_args() > 0) {
-            $schema = func_get_args();
-        }
+        $schema = func_get_args();
         
         $schema = implode(',', $schema);
         

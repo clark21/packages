@@ -21,6 +21,8 @@ class Cradle_Sql_PostGreSql_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = SqlFactory::load(include(__DIR__.'/../assets/sql/pgsql.php'));
+		$schema = file_get_contents(__DIR__.'/../assets/sql/pgsql-schema.sql');
+		$this->object->query($schema);
     }
 
     /**
@@ -33,157 +35,118 @@ class Cradle_Sql_PostGreSql_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\PostGreSql::connect
-     * @todo   Implement testConnect().
      */
     public function testConnect()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->connect(include(__DIR__.'/../assets/sql/pgsql.php'));
+		$this->assertInstanceOf('Cradle\Sql\PostGreSql', $instance);
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getAlterQuery
-     * @todo   Implement testGetAlterQuery().
      */
     public function testGetAlterQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getAlterQuery('foobar');
+		$this->assertInstanceOf('Cradle\Sql\PostGreSql\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getColumns
-     * @todo   Implement testGetColumns().
      */
     public function testGetColumns()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getColumns('address');
+		$this->assertTrue(is_array($actual));
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getCreateQuery
-     * @todo   Implement testGetCreateQuery().
      */
     public function testGetCreateQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getCreateQuery('foobar');
+		$this->assertInstanceOf('Cradle\Sql\PostGreSql\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getDeleteQuery
-     * @todo   Implement testGetDeleteQuery().
      */
     public function testGetDeleteQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getDeleteQuery('foobar');
+		$this->assertInstanceOf('Cradle\Sql\PostGreSql\QueryDelete', $instance);
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getIndexes
-     * @todo   Implement testGetIndexes().
      */
     public function testGetIndexes()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getIndexes('address');
+		$this->assertTrue(is_array($actual));
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getInsertQuery
-     * @todo   Implement testGetInsertQuery().
      */
     public function testGetInsertQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getInsertQuery('foobar');
+		$this->assertInstanceOf('Cradle\Sql\PostGreSql\QueryInsert', $instance);
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getPrimary
-     * @todo   Implement testGetPrimary().
      */
     public function testGetPrimary()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getPrimary('address');
+		$this->assertTrue(is_array($actual));
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getSelectQuery
-     * @todo   Implement testGetSelectQuery().
      */
     public function testGetSelectQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getSelectQuery('foobar');
+		$this->assertInstanceOf('Cradle\Sql\PostGreSql\QuerySelect', $instance);
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getTables
-     * @todo   Implement testGetTables().
      */
     public function testGetTables()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getTables();
+		$this->assertEquals('address', $actual[0]['tablename']);
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getUpdateQuery
-     * @todo   Implement testGetUpdateQuery().
      */
     public function testGetUpdateQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getUpdateQuery('foobar');
+		$this->assertInstanceOf('Cradle\Sql\PostGreSql\QueryUpdate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::setSchema
-     * @todo   Implement testSetSchema().
      */
     public function testSetSchema()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->setSchema('testing_db');
+		$this->assertInstanceOf('Cradle\Sql\PostGreSql', $instance);
     }
 
     /**
      * @covers Cradle\Sql\PostGreSql::getUtilityQuery
-     * @todo   Implement testGetUtilityQuery().
      */
     public function testGetUtilityQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getUtilityQuery();
+		$this->assertInstanceOf('Cradle\Sql\PostGreSql\QueryUtility', $instance);
     }
 }
