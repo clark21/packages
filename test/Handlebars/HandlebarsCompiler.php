@@ -52,6 +52,15 @@ class Cradle_Handlebars_HandlebarsCompiler_Test extends PHPUnit_Framework_TestCa
     protected function tearDown()
     {
     }
+	
+    /**
+     * @covers Cradle\Handlebars\HandlebarsCompiler::__construct
+     */
+    public function test__construct()
+    {
+		$handler = new HandlebarsHandler;
+        $this->object->__construct($handler, $this->source);
+    }
 
     /**
      * @covers Cradle\Handlebars\HandlebarsCompiler::getSource
@@ -64,6 +73,20 @@ class Cradle_Handlebars_HandlebarsCompiler_Test extends PHPUnit_Framework_TestCa
 
     /**
      * @covers Cradle\Handlebars\HandlebarsCompiler::compile
+     * @covers Cradle\Handlebars\HandlebarsCompiler::getTokenizeCallback
+     * @covers Cradle\Handlebars\HandlebarsCompiler::generateText
+     * @covers Cradle\Handlebars\HandlebarsCompiler::generateVariable
+     * @covers Cradle\Handlebars\HandlebarsCompiler::generateEscape
+     * @covers Cradle\Handlebars\HandlebarsCompiler::generateOpen
+     * @covers Cradle\Handlebars\HandlebarsCompiler::generateClose
+     * @covers Cradle\Handlebars\HandlebarsCompiler::generateHelpers
+     * @covers Cradle\Handlebars\HandlebarsCompiler::generatePartials
+     * @covers Cradle\Handlebars\HandlebarsCompiler::parseArguments
+     * @covers Cradle\Handlebars\HandlebarsCompiler::parseArgument
+     * @covers Cradle\Handlebars\HandlebarsCompiler::tokenize
+     * @covers Cradle\Handlebars\HandlebarsCompiler::prettyPrint
+     * @covers Cradle\Handlebars\HandlebarsCompiler::findSection
+     * @covers Cradle\Handlebars\HandlebarsCompiler::trim
      */
     public function testCompile()
     {
