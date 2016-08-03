@@ -85,6 +85,10 @@ class HttpDispatcher implements DispatcherInterface
             header($name.':'.$value);
         }
         
+        //there can be things echoed already
+        //let's capture it so we can pass it later
+        $trailer = ob_get_contents();
+
         //make sure nothing is already in the buffer
         ob_end_clean();
         
@@ -107,6 +111,7 @@ class HttpDispatcher implements DispatcherInterface
         ob_start();
         
         //business as usual
+		echo $trailer;
         echo $body;
         $this->successful = true;
         
@@ -158,11 +163,8 @@ class HttpDispatcher implements DispatcherInterface
             return $this->redirect($redirect, false, $emulate);
         }
 
-        if (!$response->isContentFlat()
-            && !isset($headers['Content-Type'])
-            && !isset($headers['content-type'])
-        ) {
-            $headers['Content-Type'] = 'text/json';
+        if (!$response->isContentFlat()) {
+            $response->addHeader('Content-Type', 'text/json');
         }
         
         if (!$response->hasContent()) {
@@ -172,10 +174,8 @@ class HttpDispatcher implements DispatcherInterface
             throw HttpException::forResponseNotFound();
         }
         
-        if (!isset($headers['Content-Type'])
-            && !isset($headers['content-type'])
-        ) {
-            $headers['Content-Type'] = 'text/html; charset=utf-8';
+        if (!$response->getHeaders('Content-Type')) {
+            $response->addHeader('Content-Type', 'text/html; charset=utf-8');
         }
 
         return $this->output($response, $emulate);
