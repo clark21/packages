@@ -137,7 +137,7 @@ class Cradle_Sql_PostGreSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetSchema()
     {
-		$instance = $this->object->setSchema('testing_db');
+		$instance = $this->object->setSchema('public');
 		$this->assertInstanceOf('Cradle\Sql\PostGreSql', $instance);
     }
 

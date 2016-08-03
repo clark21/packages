@@ -353,7 +353,7 @@ class PostGreSql extends AbstractSql implements SqlInterface
     {
         $schema = func_get_args();
         
-        $schema = implode(',', $schema);
+        $schema = "'".implode("','", $schema)."'";
         
         $query = $this->getUtilityQuery()->setSchema($schema);
         $this->query($query);
