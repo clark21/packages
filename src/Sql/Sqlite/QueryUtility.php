@@ -85,7 +85,7 @@ class QueryUtility extends AbstractQuery
      */
     public function showTables()
     {
-        $this->query = 'SELECT * FROM dbname.sqlite_master WHERE type=\'table\'';
+        $this->query = 'SELECT * FROM sqlite_master WHERE type=\'table\'';
         return $this;
     }
     

@@ -2,6 +2,7 @@
 
 namespace Cradle\Sql;
 
+use PDO;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -20,7 +21,9 @@ class Cradle_Sql_Sqlite_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Sqlite;
+		$connection = include(__DIR__.'/../assets/sql/sqlite.php');
+        $this->object = SqlFactory::load($connection);
+		$connection->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
     }
 
     /**
@@ -33,133 +36,99 @@ class Cradle_Sql_Sqlite_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\Sqlite::connect
-     * @todo   Implement testConnect().
      */
     public function testConnect()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->connect(include(__DIR__.'/../assets/sql/sqlite.php'));
+		
+		$this->assertInstanceOf('Cradle\Sql\Sqlite', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite::getAlterQuery
-     * @todo   Implement testGetAlterQuery().
      */
     public function testGetAlterQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getAlterQuery('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryAlter', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite::getColumns
-     * @todo   Implement testGetColumns().
      */
     public function testGetColumns()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getColumns('unit_post');
+		$this->assertTrue(is_array($actual));
     }
 
     /**
      * @covers Cradle\Sql\Sqlite::getCreateQuery
-     * @todo   Implement testGetCreateQuery().
      */
     public function testGetCreateQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getCreateQuery('foobar');
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryCreate', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite::getPrimaryKey
-     * @todo   Implement testGetPrimaryKey().
      */
     public function testGetPrimaryKey()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Cradle\Sql\Sqlite::getSchema
-     * @todo   Implement testGetSchema().
-     */
-    public function testGetSchema()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
-
-    /**
-     * @covers Cradle\Sql\Sqlite::getTableSchema
-     * @todo   Implement testGetTableSchema().
-     */
-    public function testGetTableSchema()
-    {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$actual = $this->object->getPrimaryKey('unit_post');
+		$this->assertEquals('post_id', $actual);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite::getTables
-     * @todo   Implement testGetTables().
      */
     public function testGetTables()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $actual = $this->object->getTables();
+		$this->assertEquals('unit_post', $actual[0]['name']);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite::insertRows
-     * @todo   Implement testInsertRows().
      */
     public function testInsertRows()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+        $instance = $this->object->insertRows('unit_post', array(
+			array(
+				'post_slug'			=> 'unit-test-2-'.md5(uniqid()),
+				'post_title' 		=> 'Unit Test 2',
+				'post_detail' 		=> 'Unit Test Detail 2',
+				'post_published' 	=> date('Y-m-d'),
+				'post_created' 		=> date('Y-m-d H:i:s'),
+				'post_updated' 		=> date('Y-m-d H:i:s')),
+			array(
+				'post_slug'			=> 'unit-test-3-'.md5(uniqid()),
+				'post_title' 		=> 'Unit Test 3',
+				'post_detail' 		=> 'Unit Test Detail 3',
+				'post_published' 	=> date('Y-m-d'),
+				'post_created' 		=> date('Y-m-d H:i:s'),
+				'post_updated' 		=> date('Y-m-d H:i:s'))
+		));
+
+		$this->assertInstanceOf('Cradle\Sql\Sqlite', $instance);
     }
 
     /**
      * @covers Cradle\Sql\Sqlite::getSelectQuery
-     * @todo   Implement testGetSelectQuery().
      */
     public function testGetSelectQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
-    }
+		$instance = $this->object->getSelectQuery();
+		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
+	}
 
     /**
      * @covers Cradle\Sql\Sqlite::getUtilityQuery
-     * @todo   Implement testGetUtilityQuery().
      */
     public function testGetUtilityQuery()
     {
-        // Remove the following lines when you implement this test.
-        $this->markTestIncomplete(
-            'This test has not been implemented yet.'
-        );
+		$instance = $this->object->getUtilityQuery();
+		$this->assertInstanceOf('Cradle\Sql\Sqlite\QueryUtility', $instance);
     }
 }

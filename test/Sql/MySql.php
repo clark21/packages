@@ -62,7 +62,6 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\MySql::getCreateQuery
-     * @todo   Implement testGetCreateQuery().
      */
     public function testGetCreateQuery()
     {
@@ -72,7 +71,6 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\MySql::getPrimaryKey
-     * @todo   Implement testGetPrimaryKey().
      */
     public function testGetPrimaryKey()
     {
@@ -109,7 +107,6 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\MySql::getUtilityQuery
-     * @todo   Implement testGetUtilityQuery().
      */
     public function testGetUtilityQuery()
     {

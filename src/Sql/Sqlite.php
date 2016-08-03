@@ -141,100 +141,6 @@ class Sqlite extends AbstractSql implements SqlInterface
     }
     
     /**
-     * Returns the whole enitre schema and rows
-     * of the current databse
-     *
-     * @return string
-     */
-    public function getSchema()
-    {
-        $backup = [];
-        $tables = $this->getTables();
-        foreach ($tables as $table) {
-            $backup[] = $this->getBackup();
-        }
-        
-        return implode("\n\n", $backup);
-    }
-    
-    /**
-     * Returns the whole enitre schema and rows
-     * of the current table
-     *
-     * @param *string $table The table name
-     *
-     * @return string
-     */
-    public function getTableSchema($table)
-    {
-        $backup = [];
-        //get the schema
-        $schema = $this->getColumns($table);
-        if (count($schema)) {
-            //lets rebuild this schema
-            $query = $this->getCreateQuery()->setName($table);
-
-            foreach ($schema as $field) {
-                //first try to parse what we can from each field
-                $fieldTypeArray = explode(' ', $field['Type']);
-                $typeArray = explode('(', $fieldTypeArray[0]);
-                
-                $type = $typeArray[0];
-                $length = str_replace(')', '', $typeArray[1]);
-                $attribute = isset($fieldTypeArray[1]) ? $fieldTypeArray[1] : null;
-                
-                $null = strtolower($field['Null']) == 'no' ? false : true;
-                
-                $increment = strtolower($field['Extra']) == 'auto_increment' ? true : false;
-                
-                //lets now add a field to our schema class
-                $query->addField($field['Field'], [
-                    'type'              => $type,
-                    'length'            => $length,
-                    'attribute'         => $attribute,
-                    'null'              => $null,
-                    'default'           => $field['Default'],
-                    'auto_increment'    => $increment
-                ]);
-                
-                //set keys where found
-                switch ($field['Key']) {
-                    case 'PRI':
-                        $query->addPrimaryKey($field['Field']);
-                        break;
-                    case 'UNI':
-                        $query->addUniqueKey($field['Field'], [$field['Field']]);
-                        break;
-                    case 'MUL':
-                        $query->addKey($field['Field'], [$field['Field']]);
-                        break;
-                }
-            }
-            
-            //store the query but dont run it
-            $backup[] = $query;
-        }
-        
-        //get the rows
-        $rows = $this->query($this->getSelectQuery()->from($table)->getQuery());
-
-        if (count($rows)) {
-            //lets build an insert query
-            $query = $this->getInsertQuery($table);
-            foreach ($rows as $index => $row) {
-                foreach ($row as $key => $value) {
-                    $query->set($key, $this->getBinds($value), $index);
-                }
-            }
-            
-            //store the query but dont run it
-            $backup[] = $query->getQuery(true);
-        }
-        
-        return implode("\n\n", $backup);
-    }
-    
-    /**
      * Returns a listing of tables in the DB
      *
      * @param string|null $like The like pattern
@@ -245,16 +151,7 @@ class Sqlite extends AbstractSql implements SqlInterface
     {
         $query = $this->getUtilityQuery();
         $like = $like ? $this->bind($like) : null;
-        $results = $this->query($query->showTables($like), $this->getBinds());
-        $newResults = [];
-        foreach ($results as $result) {
-            foreach ($result as $key => $value) {
-                $newResults[] = $value;
-                break;
-            }
-        }
-        
-        return $newResults;
+        return $this->query($query->showTables($like), $this->getBinds());
     }
     
     /**
@@ -287,7 +184,7 @@ class Sqlite extends AbstractSql implements SqlInterface
      */
     public function getSelectQuery($select = 'ROWID,*')
     {
-        return parent::select($select);
+        return parent::getSelectQuery($select);
     }
     
     /**

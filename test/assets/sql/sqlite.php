@@ -1,3 +1,3 @@
 <?php //-->
 
-return new PDO('sqlite:/path/to/db.sqlite3', 'root', '');
+return new PDO('sqlite:'.__DIR__.'/sqlite.db', 'root', '');
