@@ -33,6 +33,18 @@ class Cradle_Frame_PackageTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * covers Cradle\Frame\PackageTrait::isPackage
+     */
+    public function testIsPackage()
+    {
+		$actual = $this->object->isPackage('foobar');
+		$this->assertFalse($actual);
+		
+		$actual = $this->object->register('foobar')->isPackage('foobar');
+		$this->assertTrue($actual);
+    }
+
+    /**
      * covers Cradle\Frame\PackageTrait::package
      */
     public function testPackage()

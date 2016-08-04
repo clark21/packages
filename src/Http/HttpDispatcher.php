@@ -111,7 +111,7 @@ class HttpDispatcher implements DispatcherInterface
         ob_start();
         
         //business as usual
-		echo $trailer;
+        echo $trailer;
         echo $body;
         $this->successful = true;
         

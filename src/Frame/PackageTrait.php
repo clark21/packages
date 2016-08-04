@@ -44,6 +44,18 @@ trait PackageTrait
     }
     
     /**
+     * Returns true if given is a registered package
+     *
+     * @param *string $vendor The vendor/package name
+     *
+     * @return PackageTrait
+     */
+    public function isPackage($vendor)
+    {
+        return isset($this->packages[$vendor]);
+    }
+    
+    /**
      * Returns a package space
      *
      * @param *string $vendor The vendor/package name

@@ -60,19 +60,19 @@ return [
         $buffer = [];
         $object = (array) $object;
         
-		$first = $last = null;
+        $first = $last = null;
 
-        if(!empty($object)) {
+        if (!empty($object)) {
             //get last
             end($object);
             $last = key($object);
 
             //get first
             reset($object);
-            $first = key($object);		
+            $first = key($object);
         }
         
-		$i = 0;
+        $i = 0;
         foreach ($object as $key => $value) {
             if (!is_array($value)) {
                 $value = ['this' => $value];
@@ -94,7 +94,7 @@ return [
             $value['@last'] = $last == $key;
             
             $buffer[] = $options['fn']($value);
-			$i++;
+            $i++;
         }
         
         return implode('', $buffer);

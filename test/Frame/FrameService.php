@@ -35,6 +35,18 @@ class Cradle_Frame_FrameService_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * covers Cradle\Frame\FrameService::isPackage
+     */
+    public function testIsPackage()
+    {
+		$actual = $this->object->isPackage('foobar');
+		$this->assertFalse($actual);
+		
+		$actual = $this->object->register('foobar')->isPackage('foobar');
+		$this->assertTrue($actual);
+    }
+
+    /**
      * @covers Cradle\Frame\FrameService::package
      */
     public function testPackage()

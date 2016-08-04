@@ -234,6 +234,18 @@ class Cradle_Frame_FrameHttp_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * covers Cradle\Frame\FrameHttp::isPackage
+     */
+    public function testIsPackage()
+    {
+		$actual = $this->object->isPackage('foobar');
+		$this->assertFalse($actual);
+		
+		$actual = $this->object->register('foobar')->isPackage('foobar');
+		$this->assertTrue($actual);
+    }
+
+    /**
      * @covers Cradle\Frame\FrameHttp::package
      */
     public function testPackage()
