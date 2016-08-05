@@ -104,7 +104,7 @@ trait HttpTrait
         
         $continue = true;
 
-        if (!$response->hasContent()) {
+        if (!$response->hasContent() && !$response->hasJson()) {
             $request = $this->getRequest();
             $response->setStatus(404, HttpHandler::STATUS_404);
             
