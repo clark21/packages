@@ -45,6 +45,11 @@ class FrameHttp
         PackageTrait
         {
             HttpTrait::route as routeHttp;
+            HttpTrait::all as allHttp;
+            HttpTrait::delete as deleteHttp;
+            HttpTrait::get as getHttp;
+            HttpTrait::post as postHttp;
+            HttpTrait::put as putHttp;
             PackageTrait::register as registerPackage;
             PackageTrait::__constructPackage as __construct;
         }
@@ -64,6 +69,48 @@ class FrameHttp
         } catch (ResolverException $e) {
             throw new FrameException($e->getMessage());
         }
+    }
+
+    /**
+     * Adds routing middleware for all methods
+     *
+     * @param *string  $path     The route path
+     * @param *string  $callback The middleware handler
+     * @param string   ...$args  Arguments for flow
+     *
+     * @return RouterTrait
+     */
+    public function all($path, $callback, ...$args)
+    {
+        return $this->route('all', $path, $callback, ...$args);
+    }
+    
+    /**
+     * Adds routing middleware for DELETE method
+     *
+     * @param *string  $path     The route path
+     * @param *string  $callback The middleware handler
+     * @param string   ...$args  Arguments for flow
+     *
+     * @return RouterTrait
+     */
+    public function delete($path, $callback, ...$args)
+    {
+        return $this->route('delete', $path, $callback, ...$args);
+    }
+    
+    /**
+     * Adds routing middleware for GET method
+     *
+     * @param *string  $path     The route path
+     * @param *string  $callback The middleware handler
+     * @param string   ...$args  Arguments for flow
+     *
+     * @return RouterTrait
+     */
+    public function get($path, $callback, ...$args)
+    {
+        return $this->route('get', $path, $callback, ...$args);
     }
     
     /**
@@ -134,6 +181,34 @@ class FrameHttp
     }
     
     /**
+     * Adds routing middleware for POST method
+     *
+     * @param *string  $path     The route path
+     * @param *string  $callback The middleware handler
+     * @param string   ...$args  Arguments for flow
+     *
+     * @return RouterTrait
+     */
+    public function post($path, $callback, ...$args)
+    {
+        return $this->route('post', $path, $callback, ...$args);
+    }
+    
+    /**
+     * Adds routing middleware for PUT method
+     *
+     * @param *string  $path     The route path
+     * @param *string  $callback The middleware handler
+     * @param string   ...$args  Arguments for flow
+     *
+     * @return RouterTrait
+     */
+    public function put($path, $callback, ...$args)
+    {
+        return $this->route('put', $path, $callback, ...$args);
+    }
+    
+    /**
      * Registers and initializes a plugin
      *
      * @param *string $vendor The vendor/package name
@@ -155,9 +230,9 @@ class FrameHttp
     /**
      * Adds routing middleware
      *
-     * @param *string   $method   The request method
-     * @param *string   $path     The route path
-     * @param *callable $callback The middleware handler
+     * @param *string $method   The request method
+     * @param *string $path     The route path
+     * @param *string $callback The middleware handler
      *
      * @return FrameHttp
      */

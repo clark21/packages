@@ -44,6 +44,41 @@ class HttpDispatcher implements DispatcherInterface
     protected $successful = false;
     
     /**
+     * Starts to process the request
+     *
+     * @param ResponseInterface $response The response object to evaluate
+     * @param bool              $emulate  If you really want it to echo (for testing)
+     *
+     * @return array with request and response inside
+     */
+    public function dispatch(ResponseInterface $response, $emulate = false)
+    {
+        $redirect = $response->getHeaders('Location');
+        
+        if ($redirect) {
+            return $this->redirect($redirect, false, $emulate);
+        }
+        
+        if (!$response->hasContent() && !$response->hasJson()) {
+            $response->setStatus(404, '404 Not Found');
+            
+            //throw an exception
+            throw HttpException::forResponseNotFound();
+        }
+
+        if (!$response->hasContent() && $response->hasJson()) {
+            $response->addHeader('Content-Type', 'text/json');
+            $response->setContent($response->get('json'));
+        }
+        
+        if (!$response->getHeaders('Content-Type')) {
+            $response->addHeader('Content-Type', 'text/html; charset=utf-8');
+        }
+
+        return $this->output($response, $emulate);
+    }
+    
+    /**
      * Evaluates the response in order to determine the
      * output. Then of course, output it
      *
@@ -124,41 +159,6 @@ class HttpDispatcher implements DispatcherInterface
         session_write_close();
         
         return $this;
-    }
-    
-    /**
-     * Starts to process the request
-     *
-     * @param ResponseInterface $response The response object to evaluate
-     * @param bool              $emulate  If you really want it to echo (for testing)
-     *
-     * @return array with request and response inside
-     */
-    public function dispatch(ResponseInterface $response, $emulate = false)
-    {
-        $redirect = $response->getHeaders('Location');
-        
-        if ($redirect) {
-            return $this->redirect($redirect, false, $emulate);
-        }
-        
-        if (!$response->hasContent() && !$response->hasJson()) {
-            $response->setStatus(404, '404 Not Found');
-            
-            //throw an exception
-            throw HttpException::forResponseNotFound();
-        }
-
-        if (!$response->hasContent() && $response->hasJson()) {
-            $response->addHeader('Content-Type', 'text/json');
-            $response->setContent($response->get('json'));
-        }
-        
-        if (!$response->getHeaders('Content-Type')) {
-            $response->addHeader('Content-Type', 'text/html; charset=utf-8');
-        }
-
-        return $this->output($response, $emulate);
     }
     
     /**
