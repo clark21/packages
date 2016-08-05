@@ -22,38 +22,11 @@ trait ContentTrait
     /**
      * Returns the content body
      *
-     * @param bool $toString whether to actually make this a string
-     *
      * @return mixed
      */
-    public function getContent($toString = false)
+    public function getContent()
     {
-        $content = $this->get('body');
-
-        if (is_null($content)) {
-            $content = '';
-        }
-        
-        if (is_bool($content)) {
-            $content = $content ? '1': '0';
-        }
-
-        if (!$toString) {
-            return $content;
-        }
-        
-        //if it's not scalar
-        if (!is_scalar($content)) {
-            $content = json_encode($content, JSON_PRETTY_PRINT);
-        }
-        
-        $content = (string) $content;
-        
-        if (!$content) {
-            $content = '';
-        }
-        
-        return $content;
+        return $this->get('body');
     }
     
     /**
@@ -64,18 +37,7 @@ trait ContentTrait
     public function hasContent()
     {
         $body = $this->get('body');
-        return (!is_scalar($body) && !empty($body)) || (!is_null($body) && strlen($body));
-    }
-    
-    /**
-     * Returns true if content is scalar
-     *
-     * @return bool
-     */
-    public function isContentFlat()
-    {
-        $body = $this->get('body');
-        return is_null($body) || is_scalar($body);
+        return !is_null($body) && strlen((string) $body);
     }
     
     /**
@@ -88,7 +50,15 @@ trait ContentTrait
     public function setContent($content)
     {
         if (!is_scalar($content)) {
-            $content = (array) $content;
+            $content = json_encode($content, JSON_PRETTY_PRINT);
+        }
+        
+        if (is_bool($content)) {
+            $content = $content ? '1': '0';
+        }
+
+        if (is_null($content)) {
+            $content = '';
         }
         
         return $this->set('body', $content);

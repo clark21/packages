@@ -48,7 +48,7 @@ trait PackageTrait
      *
      * @param *string $vendor The vendor/package name
      *
-     * @return PackageTrait
+     * @return bool
      */
     public function isPackage($vendor)
     {

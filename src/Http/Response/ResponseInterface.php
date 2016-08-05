@@ -32,11 +32,9 @@ interface ResponseInterface
     /**
      * Returns the content body
      *
-     * @param bool $toString whether to actually make this a string
-     *
      * @return mixed
      */
-    public function getContent($toString = false);
+    public function getContent();
     
     /**
      * Returns either the header value given
@@ -59,13 +57,6 @@ interface ResponseInterface
      * @return bool
      */
     public function hasContent();
-    
-    /**
-     * Returns true if content is scalar
-     *
-     * @return bool
-     */
-    public function isContentFlat();
     
     /**
      * Sets the content

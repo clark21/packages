@@ -32,6 +32,16 @@ class Cradle_Sql_PostGreSql_QueryDelete_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Sql\PostGreSql\QueryDelete::__construct
+     */
+    public function test__construct()
+    {
+        $this->object->__construct('foobar');
+		$actual = $this->object->getQuery();
+		$this->assertEquals('DELETE FROM "foobar" WHERE ;', $actual);
+    }
+
+    /**
      * @covers Cradle\Sql\PostGreSql\QueryDelete::getQuery
      */
     public function testGetQuery()

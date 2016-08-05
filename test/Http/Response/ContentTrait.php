@@ -22,10 +22,7 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new ContentTraitStub(array(
-			'body' => array(
-				'foo' => 'bar',
-				'bar' => 'foo'
-			)
+			'body' => 'foobar'
 		));
     }
 
@@ -43,14 +40,7 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
     public function testGetContent()
     {
 		$actual = $this->object->getContent();
-		$this->assertArrayHasKey('foo', $actual);
-		
-		$actual = $this->object->getContent(true);
-		
-		$this->assertEquals(json_encode(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		), JSON_PRETTY_PRINT), $actual);
+		$this->assertEquals('foobar', $actual);
     }
 
     /**
@@ -62,14 +52,6 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * covers Cradle\Http\Response\ContentTrait::isContentFlat
-     */
-    public function testIsContentFlat()
-    {
-        $this->assertFalse($this->object->isContentFlat());
-    }
-
-    /**
      * covers Cradle\Http\Response\ContentTrait::setContent
      */
     public function testSetContent()
@@ -77,7 +59,6 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
 		$instance = $this->object->setContent('foobar');
 		
 		$this->assertInstanceOf('Cradle\Http\Response\ContentTraitStub', $instance);
-        $this->assertTrue($this->object->isContentFlat());
     }
 }
 

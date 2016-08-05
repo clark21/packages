@@ -21,7 +21,6 @@ trait RestTrait
 {
     /**
      * Adds a JSON validation message
-     * warning: This turns the body into an array
      *
      * @param *string $field
      * @param *string $message
@@ -32,7 +31,7 @@ trait RestTrait
     {
         $args = func_get_args();
 
-        return $this->set('body', 'validation', ...$args);
+        return $this->set('json', 'validation', ...$args);
     }
 
     /**
@@ -45,10 +44,10 @@ trait RestTrait
     public function getResults(...$args)
     {
         if (!count($args)) {
-            return $this->getDot('body.results');
+            return $this->getDot('json.results');
         }
         
-        return $this->get('body', 'results', ...$args);
+        return $this->get('json', 'results', ...$args);
     }
     
     /**
@@ -62,15 +61,30 @@ trait RestTrait
     public function getValidation($name = null, ...$args)
     {
         if (is_null($name)) {
-            return $this->getDot('body.validation');
+            return $this->getDot('json.validation');
         }
         
-        return $this->get('body', 'validation', $name, ...$args);
+        return $this->get('json', 'validation', $name, ...$args);
+    }
+
+    /**
+     * Returns true if there's any JSON
+     *
+     * @param mixed ...$args
+     *
+     * @return mixed
+     */
+    public function hasJson(...$args)
+    {
+        if (!count($args)) {
+            return $this->exists('json');
+        }
+        
+        return $this->exists('json', ...$args);
     }
     
     /**
      * Sets a JSON error message
-     * warning: This turns the body into an array
      *
      * @param *bool  $status  True if there is an error
      * @param string $message A message to describe this error
@@ -79,10 +93,10 @@ trait RestTrait
      */
     public function setError($status, $message = null)
     {
-        $this->setDot('body.error', $status);
+        $this->setDot('json.error', $status);
         
         if (!is_null($message)) {
-            $this->setDot('body.message', $message);
+            $this->setDot('json.message', $message);
         }
         
         return $this;
@@ -90,7 +104,6 @@ trait RestTrait
     
     /**
      * Sets a JSON result
-     * warning: This turns the body into an array
      *
      * @param *mixed $data
      * @param mixed  ...$args
@@ -100,9 +113,9 @@ trait RestTrait
     public function setResults($data, ...$args)
     {
         if (is_array($data) || count($args) === 0) {
-            return $this->setDot('body.results', $data);
+            return $this->setDot('json.results', $data);
         }
         
-        return $this->set('body', 'results', $data, ...$args);
+        return $this->set('json', 'results', $data, ...$args);
     }
 }

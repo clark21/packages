@@ -32,10 +32,11 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
 				'foo' => 'bar',
 				'bar' => 'foo'
 			),
-			'body' => array(
+			'json' => array(
 				'foo' => 'bar',
 				'bar' => 'foo'
-			)
+			),
+			'body' => 'foobar'
 		));
 		
 		$this->rest = new Response(array(
@@ -44,7 +45,7 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
 				'foo' => 'bar',
 				'bar' => 'foo'
 			),
-			'body' => array(
+			'json' => array(
 				'error' => true,
 				'message' => 'foobar',
 				'validation' => array(
@@ -82,14 +83,7 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
     public function testGetContent()
     {
 		$actual = $this->object->getContent();
-		$this->assertArrayHasKey('foo', $actual);
-		
-		$actual = $this->object->getContent(true);
-		
-		$this->assertEquals(json_encode(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		), JSON_PRETTY_PRINT), $actual);
+		$this->assertEquals('foobar', $actual);
     }
 
     /**
@@ -101,14 +95,6 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Http\Response::isContentFlat
-     */
-    public function testIsContentFlat()
-    {
-        $this->assertFalse($this->object->isContentFlat());
-    }
-
-    /**
      * @covers Cradle\Http\Response::setContent
      */
     public function testSetContent()
@@ -116,7 +102,6 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
 		$instance = $this->object->setContent('foobar');
 		
 		$this->assertInstanceOf('Cradle\Http\Response', $instance);
-        $this->assertTrue($this->object->isContentFlat());
     }
 
     /**
@@ -168,6 +153,14 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
 		$this->assertArrayHasKey('foo', $actual);
 		$actual = $this->rest->getValidation('foo');
 		$this->assertEquals('bar', $actual);
+    }
+
+    /**
+     * covers Cradle\Http\Response::hasJson
+     */
+    public function testHasJson()
+    {
+		$this->assertTrue($this->object->hasJson());
     }
 
     /**

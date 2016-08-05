@@ -22,7 +22,7 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new RestTraitStub(array(
-			'body' => array(
+			'json' => array(
 				'error' => true,
 				'message' => 'foobar',
 				'validation' => array(
@@ -74,6 +74,14 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
 		$this->assertArrayHasKey('foo', $actual);
 		$actual = $this->object->getValidation('foo');
 		$this->assertEquals('bar', $actual);
+    }
+
+    /**
+     * covers Cradle\Http\Response\RestTrait::hasJson
+     */
+    public function testHasJson()
+    {
+		$this->assertTrue($this->object->hasJson());
     }
 
     /**

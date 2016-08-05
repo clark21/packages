@@ -23,12 +23,6 @@ use Cradle\Http\Response\ResponseInterface;
  */
 class HttpDispatcher implements DispatcherInterface
 {
-
-    /**
-     * @const string BACK The back keyword for redirect
-     */
-    const BACK = '<back>';
-    
     /**
      * @const string HEADER_CONNECTION_CLOSE Template for closing
      */
@@ -62,7 +56,7 @@ class HttpDispatcher implements DispatcherInterface
     {
         $code = $response->getStatus();
         $headers = $response->getHeaders();
-        $body = $response->getContent(true);
+        $body = $response->getContent();
         
         //make sure it's a string
         $body = (string) $body;
@@ -145,33 +139,19 @@ class HttpDispatcher implements DispatcherInterface
         $redirect = $response->getHeaders('Location');
         
         if ($redirect) {
-            //if redirect is <BACK>
-            if ($redirect === self::BACK) {
-                //set up the redirect to something special
-                $redirect = 'javascript://history.go(-1)';
-                
-                //but we prefer the referrer
-                $referrer = $response->getServer('HTTP_REFERER');
-                
-                //we got one ?
-                if ($referrer) {
-                    //set it
-                    $redirect = $referrer;
-                }
-            }
-            
             return $this->redirect($redirect, false, $emulate);
         }
-
-        if (!$response->isContentFlat()) {
-            $response->addHeader('Content-Type', 'text/json');
-        }
         
-        if (!$response->hasContent()) {
+        if (!$response->hasContent() && !$response->hasJson()) {
             $response->setStatus(404, '404 Not Found');
             
             //throw an exception
             throw HttpException::forResponseNotFound();
+        }
+
+        if (!$response->hasContent() && $response->hasJson()) {
+            $response->addHeader('Content-Type', 'text/json');
+            $response->setContent($response->get('json'));
         }
         
         if (!$response->getHeaders('Content-Type')) {
