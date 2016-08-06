@@ -19,28 +19,34 @@ namespace Cradle\Http\Request;
  */
 trait SessionTrait
 {
-
     /**
-     * Returns SESSION data given name or all SESSION data
+     * Returns $_SESSION given name or all $_SESSION
      *
-     * @param string|null $name The key name in the SESSION
-     * @param mixed       ...$args
+     * @param mixed ...$args
      *
      * @return mixed
      */
-    public function getSession($name = null, ...$args)
+    public function getSession(...$args)
     {
-        if (is_null($name)) {
-            return $this->get('session');
-        }
-        
-        return $this->get('session', $name, ...$args);
+        return $this->get('session', ...$args);
     }
     
     /**
-     * Returns SESSION data given name or all SESSION data
+     * Removes $_SESSION given name or all $_SESSION
      *
-     * @param mixed  ...$args
+     * @param mixed ...$args
+     *
+     * @return bool
+     */
+    public function removeSession(...$args)
+    {
+        return $this->remove('session', ...$args);
+    }
+    
+    /**
+     * Returns true if has $_SESSION given name or if $_SESSION is set
+     *
+     * @param mixed ...$args
      *
      * @return bool
      */
@@ -48,9 +54,9 @@ trait SessionTrait
     {
         return $this->exists('session', ...$args);
     }
-    
+
     /**
-     * Sets SESSION
+     * Sets $_SESSION
      *
      * @param *array $data
      * @param mixed  ...$args
@@ -60,7 +66,6 @@ trait SessionTrait
     public function setSession(&$data, ...$args)
     {
         if (is_array($data)) {
-            //pass reference
             return $this->set('session', $data);
         }
         

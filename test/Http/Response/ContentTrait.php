@@ -22,8 +22,8 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new ContentTraitStub(array(
-			'body' => 'foobar'
-		));
+            'body' => 'foobar'
+        ));
     }
 
     /**
@@ -39,8 +39,8 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetContent()
     {
-		$actual = $this->object->getContent();
-		$this->assertEquals('foobar', $actual);
+        $actual = $this->object->getContent();
+        $this->assertEquals('foobar', $actual);
     }
 
     /**
@@ -56,15 +56,15 @@ class Cradle_Http_Response_ContentTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetContent()
     {
-		$instance = $this->object->setContent('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\Response\ContentTraitStub', $instance);
+        $instance = $this->object->setContent('foobar');
+        
+        $this->assertInstanceOf('Cradle\Http\Response\ContentTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Response\ContentTraitStub')) {
-	class ContentTraitStub extends Registry
-	{
-		use ContentTrait;
-	}
+    class ContentTraitStub extends Registry
+    {
+        use ContentTrait;
+    }
 }

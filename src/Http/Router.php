@@ -61,59 +61,80 @@ class Router implements RouterInterface
      * Adds routing middleware
      *
      * @param string   $method   The request method
-     * @param string   $path     The route path
+     * @param string   $pattern  The route pattern
      * @param function $callback The middleware handler
      *
      * @return Router
      */
-    public function route($method, $path, $callback)
+    public function route($method, $pattern, $callback)
     {
-        if ($method === 'ALL') {
-            return $this
-                ->route('get', $path, $callback)
-                ->route('post', $path, $callback)
-                ->route('put', $path, $callback)
-                ->route('delete', $path, $callback);
+        if (strtoupper($method) === 'ALL') {
+            $method = '[a-zA-Z0-9]+';
         }
 
-        $separator = md5(uniqid());
+        //find and organize all the dynamic parameters
+        preg_match_all('#(\:[a-zA-Z0-9\-_]+)|(\*\*)|(\*)#s', $pattern, $matches);
 
-        $regex = str_replace('**', $separator, $path);
+        $keys = array();
+        if (isset($matches[0]) && is_array($matches[0])) {
+            $keys = $matches[0];
+        }
+
+        //replace the :variable-_name01
+        $regex = preg_replace('#(\:[a-zA-Z0-9\-_]+)#s', '*', $pattern);
+
+        //replace the stars
+        //* -> ([^/]+)
         $regex = str_replace('*', '([^/]+)', $regex);
-        $regex = str_replace($separator, '(.*)', $regex);
+        //** -> ([^/]+)([^/]+) -> (.*)
+        $regex = str_replace('([^/]+)([^/]+)', '(.*)', $regex);
 
-        $event = '#^' . $method . '\s' . $regex . '$#is';
-        
+        //now form the event pattern
+        $event = '#^' . $method . '\s' . $regex . '/*$#is';
+
+        //we need the handler for later
         $handler = $this->getEventHandler();
-        
+
         $handler->on($event, function (
             RequestInterface $request,
             ...$args
         ) use (
             $handler,
             $callback,
-            $method,
-            $path
+            $pattern,
+            $keys
         ) {
             $route = $handler->getMeta();
             $variables = array();
-            
+            $parameters = array();
+
             //sanitize the variables
-            foreach ($route['variables'] as $variable) {
-                if (strpos($variable, '/') === false) {
-                    $variables[] = $variable;
+            foreach ($route['variables'] as $i => $variable) {
+                //if it's a * variable
+                if (!isset($keys[$i]) || strpos($keys[$i], '*') === 0) {
+                    //it's a variable
+                    if (strpos($variable, '/') === false) {
+                        $variables[] = $variable;
+                        continue;
+                    }
+
+                    $variables = array_merge($variables, explode('/', $variable));
                     continue;
                 }
-                
-                $variables = array_merge($variables, explode('/', $variable));
+
+                //if it's a :parameter
+                if (isset($keys[$i])) {
+                    $key = substr($keys[$i], 1);
+                    $parameters[$key] = $variable;
+                }
             }
 
             $request->setRoute(array(
-                'method' => $method,
-                'path' => $path,
-                'variables' => $variables
+                'event' => $route['event'],
+                'variables' => $variables,
+                'parameters' => $parameters
             ));
-            
+
             return call_user_func($callback, $request, ...$args);
         });
 

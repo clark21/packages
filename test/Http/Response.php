@@ -27,37 +27,37 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new Response(array(
-			'code' => 200,
-			'headers' => array(
-				'foo' => 'bar',
-				'bar' => 'foo'
-			),
-			'json' => array(
-				'foo' => 'bar',
-				'bar' => 'foo'
-			),
-			'body' => 'foobar'
-		));
-		
-		$this->rest = new Response(array(
-			'code' => 200,
-			'headers' => array(
-				'foo' => 'bar',
-				'bar' => 'foo'
-			),
-			'json' => array(
-				'error' => true,
-				'message' => 'foobar',
-				'validation' => array(
-					'foo' => 'bar',
-					'bar' => 'foo'
-				), 
-				'results' => array(
-					'foo' => 'bar',
-					'bar' => 'foo'
-				)
-			)
-		));
+            'code' => 200,
+            'headers' => array(
+                'foo' => 'bar',
+                'bar' => 'foo'
+            ),
+            'json' => array(
+                'foo' => 'bar',
+                'bar' => 'foo'
+            ),
+            'body' => 'foobar'
+        ));
+        
+        $this->rest = new Response(array(
+            'code' => 200,
+            'headers' => array(
+                'foo' => 'bar',
+                'bar' => 'foo'
+            ),
+            'json' => array(
+                'error' => true,
+                'message' => 'foobar',
+                'validation' => array(
+                    'foo' => 'bar',
+                    'bar' => 'foo'
+                ), 
+                'results' => array(
+                    'foo' => 'bar',
+                    'bar' => 'foo'
+                )
+            )
+        ));
     }
 
     /**
@@ -73,8 +73,8 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testLoad()
     {
-		$instance = $this->object->load();
-		$this->assertInstanceOf('Cradle\Http\Response', $instance);
+        $instance = $this->object->load();
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 
     /**
@@ -82,8 +82,8 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetContent()
     {
-		$actual = $this->object->getContent();
-		$this->assertEquals('foobar', $actual);
+        $actual = $this->object->getContent();
+        $this->assertEquals('foobar', $actual);
     }
 
     /**
@@ -99,9 +99,9 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetContent()
     {
-		$instance = $this->object->setContent('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\Response', $instance);
+        $instance = $this->object->setContent('foobar');
+        
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 
     /**
@@ -109,8 +109,8 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testAddHeader()
     {
-		$instance = $this->object->addHeader('zoo', 'foo');
-		$this->assertInstanceOf('Cradle\Http\Response', $instance);
+        $instance = $this->object->addHeader('zoo', 'foo');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 
     /**
@@ -118,10 +118,10 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetHeaders()
     {
-		$actual = $this->object->getHeaders();
-		$this->assertArrayHasKey('foo', $actual);
-		$actual = $this->object->getHeaders('foo');
-		$this->assertEquals('bar', $actual);
+        $actual = $this->object->getHeaders();
+        $this->assertArrayHasKey('foo', $actual);
+        $actual = $this->object->getHeaders('foo');
+        $this->assertEquals('bar', $actual);
     }
 
     /**
@@ -129,8 +129,8 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testAddValidation()
     {
-		$instance = $this->rest->addValidation('zoo', 'foo');
-		$this->assertInstanceOf('Cradle\Http\Response', $instance);
+        $instance = $this->rest->addValidation('zoo', 'foo');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 
     /**
@@ -138,10 +138,27 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetResults()
     {
-		$actual = $this->rest->getResults();
-		$this->assertArrayHasKey('foo', $actual);
-		$actual = $this->rest->getResults('foo');
-		$this->assertEquals('bar', $actual);
+        $actual = $this->rest->getResults();
+        $this->assertArrayHasKey('foo', $actual);
+        $actual = $this->rest->getResults('foo');
+        $this->assertEquals('bar', $actual);
+    }
+
+    /**
+     * covers Cradle\Http\Response::getMessageType
+     */
+    public function testGetMessageType()
+    {
+        $actual = $this->rest->getMessageType();
+        $this->assertEquals('error', $actual);
+        
+        $this->rest->setError(false);
+        $actual = $this->rest->getMessageType();
+        $this->assertEquals('success', $actual);
+        
+        $this->rest->setError(null);
+        $actual = $this->rest->getMessageType();
+        $this->assertEquals('info', $actual);
     }
 
     /**
@@ -149,10 +166,10 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetValidation()
     {
-		$actual = $this->rest->getValidation();
-		$this->assertArrayHasKey('foo', $actual);
-		$actual = $this->rest->getValidation('foo');
-		$this->assertEquals('bar', $actual);
+        $actual = $this->rest->getValidation();
+        $this->assertArrayHasKey('foo', $actual);
+        $actual = $this->rest->getValidation('foo');
+        $this->assertEquals('bar', $actual);
     }
 
     /**
@@ -160,16 +177,91 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasJson()
     {
-		$this->assertTrue($this->object->hasJson());
+        $this->assertTrue($this->object->hasJson());
     }
+
+    /**
+     * covers Cradle\Http\Response::hasMessage
+     */
+    public function testHasMessage()
+    {
+        $this->assertTrue($this->rest->hasMessage());
+    }
+
+    /**
+     * covers Cradle\Http\Response::hasResults
+     */
+    public function testHasResults()
+    {
+        $this->assertTrue($this->rest->hasResults());
+        $this->assertTrue($this->rest->hasResults('foo'));
+        $this->assertFalse($this->rest->hasResults('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Response::hasValidation
+     */
+    public function testHasValidation()
+    {
+        $this->assertTrue($this->rest->hasValidation());
+        $this->assertTrue($this->rest->hasValidation('foo'));
+        $this->assertFalse($this->rest->hasValidation('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Response::isError
+     */
+    public function testIsError()
+    {
+        $this->assertTrue($this->rest->isError());
+        
+        $this->rest->setError(false);
+        $this->assertFalse($this->rest->isError());
+        
+        $this->rest->setError(null);
+        $this->assertFalse($this->rest->isError());
+    }
+
+    /**
+     * covers Cradle\Http\Response::isSuccess
+     */
+    public function testIsSuccess()
+    {
+        $this->assertFalse($this->rest->isSuccess());
+        
+        $this->rest->setError(false);
+        $this->assertTrue($this->rest->isSuccess());
+        
+        $this->rest->setError(null);
+        $this->assertFalse($this->rest->isSuccess());
+    }
+
+    /**
+     * covers Cradle\Http\Response::removeResults
+     */
+    public function testRemoveResults()
+    {
+        $instance = $this->rest->removeResults('foo');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
+    }
+
+    /**
+     * covers Cradle\Http\Response::removeValidation
+     */
+    public function testRemoveValidation()
+    {
+        $instance = $this->rest->removeValidation('foo');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
+    }
+
 
     /**
      * @covers Cradle\Http\Response::setError
      */
     public function testSetError()
     {
-		$instance = $this->rest->setError(false);
-		$this->assertInstanceOf('Cradle\Http\Response', $instance);
+        $instance = $this->rest->setError(false);
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 
     /**
@@ -177,8 +269,8 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetResults()
     {
-		$instance = $this->rest->setResults('zoo', 'foo');
-		$this->assertInstanceOf('Cradle\Http\Response', $instance);
+        $instance = $this->rest->setResults('zoo', 'foo');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 
     /**
@@ -186,8 +278,8 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetStatus()
     {
-		$code = $this->object->getStatus();
-		$this->assertEquals(200, $code);
+        $code = $this->object->getStatus();
+        $this->assertEquals(200, $code);
     }
 
     /**
@@ -195,7 +287,7 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetStatus()
     {
-		$instance = $this->object->setStatus(404, '404 Not Found');
-		$this->assertInstanceOf('Cradle\Http\Response', $instance);
+        $instance = $this->object->setStatus(404, '404 Not Found');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 }

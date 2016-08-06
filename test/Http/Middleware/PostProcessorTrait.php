@@ -37,8 +37,8 @@ class Cradle_Http_PostProcessorTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetPostprocessor()
     {
-		$instance = $this->object->getPostprocessor();
-		$this->assertInstanceOf('Cradle\Http\Middleware', $instance);
+        $instance = $this->object->getPostprocessor();
+        $this->assertInstanceOf('Cradle\Http\Middleware', $instance);
     }
 
     /**
@@ -47,7 +47,7 @@ class Cradle_Http_PostProcessorTrait_Test extends PHPUnit_Framework_TestCase
     public function testPostprocess()
     {
         $instance = $this->object->postprocess(function() {});
-		$this->assertInstanceOf('Cradle\Http\Middleware\PostProcessorTraitStub', $instance);
+        $this->assertInstanceOf('Cradle\Http\Middleware\PostProcessorTraitStub', $instance);
     }
 
     /**
@@ -55,14 +55,14 @@ class Cradle_Http_PostProcessorTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetPostprocessor()
     {
-		$instance = $this->object->setPostprocessor(new Middleware);
-		$this->assertInstanceOf('Cradle\Http\Middleware\PostProcessorTraitStub', $instance);
+        $instance = $this->object->setPostprocessor(new Middleware);
+        $this->assertInstanceOf('Cradle\Http\Middleware\PostProcessorTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\PostProcessorTraitStub')) {
-	class PostProcessorTraitStub
-	{
-		use PostProcessorTrait;
-	}
+    class PostProcessorTraitStub
+    {
+        use PostProcessorTrait;
+    }
 }

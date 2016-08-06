@@ -37,8 +37,8 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-		$this->object->set('method', 'foobar');
-		$this->assertEquals('FOOBAR', $this->object->getMethod());
+        $this->object->set('method', 'foobar');
+        $this->assertEquals('FOOBAR', $this->object->getMethod());
     }
 
     /**
@@ -46,8 +46,8 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetPath()
     {
-		$this->object->setPath('/foo/bar');
-		$this->assertEquals('/foo/bar', $this->object->getPath('string'));
+        $this->object->setPath('/foo/bar');
+        $this->assertEquals('/foo/bar', $this->object->getPath('string'));
     }
 
     /**
@@ -55,8 +55,8 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetQuery()
     {
-		$this->object->set('query', 'foobar');
-		$this->assertEquals('foobar', $this->object->getQuery());
+        $this->object->set('query', 'foobar');
+        $this->assertEquals('foobar', $this->object->getQuery());
     }
 
     /**
@@ -64,12 +64,12 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetServer()
     {
-		$this->object->set('server', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getServer('foo'));
+        $this->object->set('server', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertEquals('bar', $this->object->getServer('foo'));
     }
 
     /**
@@ -77,13 +77,13 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasServer()
     {
-		$this->object->set('server', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasServer('foo'));
-		$this->assertFalse($this->object->hasServer('zoo'));
+        $this->object->set('server', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertTrue($this->object->hasServer('foo'));
+        $this->assertFalse($this->object->hasServer('zoo'));
     }
 
     /**
@@ -91,10 +91,10 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testIsMethod()
     {
-		$this->assertFalse($this->object->isMethod('foobar'));
-		
-		$this->object->setMethod('foobar');
-		$this->assertTrue($this->object->isMethod('foobar'));
+        $this->assertFalse($this->object->isMethod('foobar'));
+        
+        $this->object->setMethod('foobar');
+        $this->assertTrue($this->object->isMethod('foobar'));
     }
 
     /**
@@ -103,8 +103,8 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     public function testSetMethod()
     {
         $instance = $this->object->setMethod('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\Request\ServerTraitStub', $instance);
+        
+        $this->assertInstanceOf('Cradle\Http\Request\ServerTraitStub', $instance);
     }
 
     /**
@@ -113,8 +113,8 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     public function testSetPath()
     {
         $instance = $this->object->setPath('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\Request\ServerTraitStub', $instance);
+        
+        $this->assertInstanceOf('Cradle\Http\Request\ServerTraitStub', $instance);
     }
 
     /**
@@ -123,8 +123,8 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
     public function testSetQuery()
     {
         $instance = $this->object->setQuery('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\Request\ServerTraitStub', $instance);
+        
+        $this->assertInstanceOf('Cradle\Http\Request\ServerTraitStub', $instance);
     }
 
     /**
@@ -132,18 +132,18 @@ class Cradle_Http_Request_ServerTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetServer()
     {
-		$instance = $this->object->setServer(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request\ServerTraitStub', $instance);
+        $instance = $this->object->setServer(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request\ServerTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Request\ServerTraitStub')) {
-	class ServerTraitStub extends Registry
-	{
-		use ServerTrait;
-	}
+    class ServerTraitStub extends Registry
+    {
+        use ServerTrait;
+    }
 }

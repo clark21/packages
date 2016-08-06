@@ -22,6 +22,11 @@ class Cradle_Http_Request_CookieTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new CookieTraitStub;
+        
+        $this->object->set('cookie', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
     }
 
     /**
@@ -37,12 +42,7 @@ class Cradle_Http_Request_CookieTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetCookies()
     {
-		$this->object->set('cookie', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getCookies('foo'));
+        $this->assertEquals('bar', $this->object->getCookies('foo'));
     }
 
     /**
@@ -50,13 +50,17 @@ class Cradle_Http_Request_CookieTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasCookies()
     {
-		$this->object->set('cookie', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasCookies('foo'));
-		$this->assertFalse($this->object->hasCookies('zoo'));
+        $this->assertTrue($this->object->hasCookies('foo'));
+        $this->assertFalse($this->object->hasCookies('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request\CookieTrait::removeCookies
+     */
+    public function testRemoveCookies()
+    {
+        $this->object->removeCookies('foo');
+        $this->assertFalse($this->object->hasCookies('foo'));
     }
 
     /**
@@ -64,18 +68,18 @@ class Cradle_Http_Request_CookieTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetCookies()
     {
-		$instance = $this->object->setCookies(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request\CookieTraitStub', $instance);
+        $instance = $this->object->setCookies(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request\CookieTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Request\CookieTraitStub')) {
-	class CookieTraitStub extends Registry
-	{
-		use CookieTrait;
-	}
+    class CookieTraitStub extends Registry
+    {
+        use CookieTrait;
+    }
 }

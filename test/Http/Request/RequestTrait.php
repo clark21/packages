@@ -37,8 +37,8 @@ class Cradle_Http_RequestTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetRequest()
     {
-		$instance = $this->object->getRequest();
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $instance = $this->object->getRequest();
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -47,13 +47,13 @@ class Cradle_Http_RequestTrait_Test extends PHPUnit_Framework_TestCase
     public function testSetRequest()
     {
         $instance = $this->object->setRequest(new Request);
-		$this->assertInstanceOf('Cradle\Http\Request\RequestTraitStub', $instance);
+        $this->assertInstanceOf('Cradle\Http\Request\RequestTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Request\RequestTraitStub')) {
-	class RequestTraitStub
-	{
-		use RequestTrait;
-	}
+    class RequestTraitStub
+    {
+        use RequestTrait;
+    }
 }

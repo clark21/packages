@@ -22,6 +22,11 @@ class Cradle_Http_Request_FileTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new FileTraitStub;
+        
+        $this->object->set('files', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
     }
 
     /**
@@ -37,12 +42,7 @@ class Cradle_Http_Request_FileTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetFiles()
     {
-		$this->object->set('files', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getFiles('foo'));
+        $this->assertEquals('bar', $this->object->getFiles('foo'));
     }
 
     /**
@@ -50,13 +50,17 @@ class Cradle_Http_Request_FileTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasFiles()
     {
-		$this->object->set('files', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasFiles('foo'));
-		$this->assertFalse($this->object->hasFiles('zoo'));
+        $this->assertTrue($this->object->hasFiles('foo'));
+        $this->assertFalse($this->object->hasFiles('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request\FileTrait::removeFiles
+     */
+    public function testRemoveFiles()
+    {
+        $this->object->removeFiles('foo');
+        $this->assertFalse($this->object->hasFiles('foo'));
     }
 
     /**
@@ -64,18 +68,18 @@ class Cradle_Http_Request_FileTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetFiles()
     {
-		$instance = $this->object->setFiles(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request\FileTraitStub', $instance);
+        $instance = $this->object->setFiles(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request\FileTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Request\FileTraitStub')) {
-	class FileTraitStub extends Registry
-	{
-		use FileTrait;
-	}
+    class FileTraitStub extends Registry
+    {
+        use FileTrait;
+    }
 }

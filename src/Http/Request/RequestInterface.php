@@ -34,34 +34,31 @@ interface RequestInterface
     public function getContent();
     
     /**
-     * Returns cookies given name or all cookies
+     * Returns $_COOKIE given name or all $_COOKIE
      *
-     * @param string|null $name The key name in the COOKIE
-     * @param mixed       $args
+     * @param mixed $args
      *
      * @return mixed
      */
-    public function getCookies($name = null, ...$args);
+    public function getCookies(...$args);
     
     /**
-     * Returns file data given name or all files
+     * Returns $_FILES data given name or all $_FILES
      *
-     * @param string|null $name The key name in the FILES
-     * @param mixed       $args
+     * @param mixed $args
      *
      * @return mixed
      */
-    public function getFiles($name = null, ...$args);
+    public function getFiles(...$args);
     
     /**
-     * Returns GET data given name or all GET
+     * Returns $_GET data given name or all $_GET
      *
-     * @param string|null $name The key name in the GET
-     * @param mixed       $args
+     * @param mixed $args
      *
      * @return mixed
      */
-    public function getGet($name = null, ...$args);
+    public function getGet(...$args);
     
     /**
      * Returns method if set
@@ -80,14 +77,13 @@ interface RequestInterface
     public function getPath($name = null);
     
     /**
-     * Returns POST data given name or all POST data
+     * Returns $_POST data given name or all $_POST data
      *
-     * @param string|null $name The key name in the POST
-     * @param mixed       $args
+     * @param mixed $args
      *
      * @return mixed
      */
-    public function getPost($name = null, ...$args);
+    public function getPost(...$args);
     
     /**
      * Returns string query if set
@@ -97,7 +93,7 @@ interface RequestInterface
     public function getQuery();
     
     /**
-     * Returns SERVER data given name or all SERVER data
+     * Returns $_SERVER data given name or all $_SERVER data
      *
      * @param string|null $name The key name in the SERVER
      *
@@ -106,14 +102,13 @@ interface RequestInterface
     public function getServer($name = null);
     
     /**
-     * Returns SESSION data given name or all SESSION data
+     * Returns $_SESSION data given name or all $_SESSION data
      *
-     * @param string|null $name The key name in the SESSION
-     * @param mixed       $args
+     * @param mixed $args
      *
      * @return mixed
      */
-    public function getSession($name = null, ...$args);
+    public function getSession(...$args);
     
     /**
      * Returns true if has content
@@ -123,47 +118,43 @@ interface RequestInterface
     public function hasContent();
     
     /**
-     * Returns cookies given name or all cookies
+     * Returns true if has $_COOKIE given name or if $_COOKIE is set
      *
-     * @param string|null $name The key name in the COOKIE
-     * @param mixed       $args
-     *
-     * @return bool
-     */
-    public function hasCookies($name = null, ...$args);
-    
-    /**
-     * Returns file data given name or all files
-     *
-     * @param string|null $name The key name in the FILES
-     * @param mixed       $args
+     * @param mixed $args
      *
      * @return bool
      */
-    public function hasFiles($name = null, ...$args);
+    public function hasCookies(...$args);
     
     /**
-     * Returns GET data given name or all GET
+     * Returns true if has $_FILES given name or if $_FILES is set
      *
-     * @param string|null $name The key name in the GET
-     * @param mixed       $args
+     * @param mixed $args
      *
      * @return bool
      */
-    public function hasGet($name = null, ...$args);
+    public function hasFiles(...$args);
     
     /**
-     * Returns POST data given name or all POST data
+     * Returns true if has $_GET given name or if $_GET is set
      *
-     * @param string|null $name The key name in the POST
-     * @param mixed       $args
+     * @param mixed $args
      *
      * @return bool
      */
-    public function hasPost($name = null, ...$args);
+    public function hasGet(...$args);
     
     /**
-     * Returns SERVER data given name or all SERVER data
+     * Returns true if has $_POST given name or if $_POST is set
+     *
+     * @param mixed $args
+     *
+     * @return bool
+     */
+    public function hasPost(...$args);
+    
+    /**
+     * Returns true if has $_SERVER given name or if $_SERVER is set
      *
      * @param string|null $name The key name in the SERVER
      *
@@ -172,7 +163,7 @@ interface RequestInterface
     public function hasServer($name = null);
     
     /**
-     * Returns SESSION data given name or all SESSION data
+     * Returns true if has $_SESSION given name or if $_SESSION is set
      *
      * @param mixed $args
      *
@@ -208,7 +199,7 @@ interface RequestInterface
     public function setContent($content);
 
     /**
-     * Sets COOKIE
+     * Sets $_COOKIE
      *
      * @param *array $cookies
      *
@@ -217,7 +208,7 @@ interface RequestInterface
     public function setCookies($data, ...$args);
     
     /**
-     * Sets FILES
+     * Sets $_FILES
      *
      * @param *array $files
      *
@@ -226,7 +217,7 @@ interface RequestInterface
     public function setFiles($data, ...$args);
     
     /**
-     * Sets GET
+     * Sets $_GET
      *
      * @param *array $get
      *
@@ -253,7 +244,7 @@ interface RequestInterface
     public function setPath($path);
     
     /**
-     * Sets POST
+     * Sets $_POST
      *
      * @param *array $post
      *
@@ -280,7 +271,7 @@ interface RequestInterface
     public function setRoute(array $route);
     
     /**
-     * Sets SERVER
+     * Sets $_SERVER
      *
      * @param *array $server
      *
@@ -289,7 +280,7 @@ interface RequestInterface
     public function setServer(array $server);
     
     /**
-     * Sets SESSION
+     * Sets $_SESSION
      *
      * @param *array $session
      *

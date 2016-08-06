@@ -25,7 +25,7 @@ trait HeaderTrait
      * @param *string     $name  Name of the header
      * @param string|null $value Value of the header
      *
-     * @return Response
+     * @return HeaderTrait
      */
     public function addHeader($name, $value = null)
     {
@@ -49,5 +49,17 @@ trait HeaderTrait
         }
 
         return $this->get('headers', $name);
+    }
+
+    /**
+     * Removes a header parameter
+     *
+     * @param string $name Name of the header
+     *
+     * @return HeaderTrait
+     */
+    public function removeHeader($name)
+    {
+        return $this->remove('headers', $name);
     }
 }

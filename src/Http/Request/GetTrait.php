@@ -20,41 +20,43 @@ namespace Cradle\Http\Request;
 trait GetTrait
 {
     /**
-     * Returns GET data given name or all GET
+     * Returns $_GET given name or all $_GET
      *
-     * @param string|null $name The key name in the GET
-     * @param mixed       ...$args
+     * @param mixed ...$args
      *
      * @return mixed
      */
-    public function getGet($name = null, ...$args)
+    public function getGet(...$args)
     {
-        if (is_null($name)) {
-            return $this->get('get');
-        }
-        
-        return $this->get('get', $name, ...$args);
+        return $this->get('get', ...$args);
     }
     
     /**
-     * Returns GET data given name or all GET
+     * Removes $_GET given name or all $_GET
      *
-     * @param string|null $name The key name in the GET
-     * @param mixed       ...$args
+     * @param mixed ...$args
      *
      * @return bool
      */
-    public function hasGet($name = null, ...$args)
+    public function removeGet(...$args)
     {
-        if (is_null($name)) {
-            return $this->exists('get');
-        }
-        
-        return $this->exists('get', $name, ...$args);
+        return $this->remove('get', ...$args);
     }
     
     /**
-     * Sets GET
+     * Returns true if has $_GET given name or if $_GET is set
+     *
+     * @param mixed ...$args
+     *
+     * @return bool
+     */
+    public function hasGet(...$args)
+    {
+        return $this->exists('get', ...$args);
+    }
+
+    /**
+     * Sets $_GET
      *
      * @param *array $data
      * @param mixed  ...$args

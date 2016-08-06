@@ -28,11 +28,11 @@ class Cradle_Http_HttpDispatcher_Test extends PHPUnit_Framework_TestCase
     {
         $this->object = new HttpDispatcher;
         $this->response = new Response;
-		
-		$this->response
-			->load()
-			->addHeader('foo', 'bar')
-			->setContent('foobar');
+        
+        $this->response
+            ->load()
+            ->addHeader('foo', 'bar')
+            ->setContent('foobar');
     }
 
     /**
@@ -48,8 +48,8 @@ class Cradle_Http_HttpDispatcher_Test extends PHPUnit_Framework_TestCase
      */
     public function testOutput()
     {
-		$actual = $this->object->output($this->response, true);
-		$this->assertEquals('foobar', $actual);
+        $actual = $this->object->output($this->response, true);
+        $this->assertEquals('foobar', $actual);
     }
 
     /**
@@ -57,12 +57,12 @@ class Cradle_Http_HttpDispatcher_Test extends PHPUnit_Framework_TestCase
      */
     public function testDispatch()
     {
-		$actual = $this->object->dispatch($this->response, true);
-		$this->assertEquals('foobar', $actual);
-		
-		$this->response->addHeader('Location', '/foo/bar');
-		$actual = $this->object->dispatch($this->response, true);
-		$this->assertEquals('/foo/bar', $actual);
+        $actual = $this->object->dispatch($this->response, true);
+        $this->assertEquals('foobar', $actual);
+        
+        $this->response->addHeader('Location', '/foo/bar');
+        $actual = $this->object->dispatch($this->response, true);
+        $this->assertEquals('/foo/bar', $actual);
     }
 
     /**
@@ -70,8 +70,8 @@ class Cradle_Http_HttpDispatcher_Test extends PHPUnit_Framework_TestCase
      */
     public function testRedirect()
     {
-		$actual = $this->object->redirect('/foo/bar', false, true);
-		$this->assertEquals('/foo/bar', $actual);
+        $actual = $this->object->redirect('/foo/bar', false, true);
+        $this->assertEquals('/foo/bar', $actual);
     }
 
     /**
@@ -79,8 +79,8 @@ class Cradle_Http_HttpDispatcher_Test extends PHPUnit_Framework_TestCase
      */
     public function testIsSuccessful()
     {
-		$this->assertFalse($this->object->isSuccessful());
-		$actual = $this->object->dispatch($this->response, true);
-		$this->assertTrue($this->object->isSuccessful());
+        $this->assertFalse($this->object->isSuccessful());
+        $actual = $this->object->dispatch($this->response, true);
+        $this->assertTrue($this->object->isSuccessful());
     }
 }

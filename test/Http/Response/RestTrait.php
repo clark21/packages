@@ -22,19 +22,19 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new RestTraitStub(array(
-			'json' => array(
-				'error' => true,
-				'message' => 'foobar',
-				'validation' => array(
-					'foo' => 'bar',
-					'bar' => 'foo'
-				), 
-				'results' => array(
-					'foo' => 'bar',
-					'bar' => 'foo'
-				)
-			)
-		));
+            'json' => array(
+                'error' => true,
+                'message' => 'foobar',
+                'validation' => array(
+                    'foo' => 'bar',
+                    'bar' => 'foo'
+                ), 
+                'results' => array(
+                    'foo' => 'bar',
+                    'bar' => 'foo'
+                )
+            )
+        ));
     }
 
     /**
@@ -50,8 +50,8 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testAddValidation()
     {
-		$instance = $this->object->addValidation('zoo', 'foo');
-		$this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
+        $instance = $this->object->addValidation('zoo', 'foo');
+        $this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
     }
 
     /**
@@ -59,10 +59,27 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetResults()
     {
-		$actual = $this->object->getResults();
-		$this->assertArrayHasKey('foo', $actual);
-		$actual = $this->object->getResults('foo');
-		$this->assertEquals('bar', $actual);
+        $actual = $this->object->getResults();
+        $this->assertArrayHasKey('foo', $actual);
+        $actual = $this->object->getResults('foo');
+        $this->assertEquals('bar', $actual);
+    }
+
+    /**
+     * covers Cradle\Http\Response\RestTrait::getMessageType
+     */
+    public function testGetMessageType()
+    {
+        $actual = $this->object->getMessageType();
+        $this->assertEquals('error', $actual);
+        
+        $this->object->setError(false);
+        $actual = $this->object->getMessageType();
+        $this->assertEquals('success', $actual);
+        
+        $this->object->setError(null);
+        $actual = $this->object->getMessageType();
+        $this->assertEquals('info', $actual);
     }
 
     /**
@@ -70,10 +87,10 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetValidation()
     {
-		$actual = $this->object->getValidation();
-		$this->assertArrayHasKey('foo', $actual);
-		$actual = $this->object->getValidation('foo');
-		$this->assertEquals('bar', $actual);
+        $actual = $this->object->getValidation();
+        $this->assertArrayHasKey('foo', $actual);
+        $actual = $this->object->getValidation('foo');
+        $this->assertEquals('bar', $actual);
     }
 
     /**
@@ -81,7 +98,81 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasJson()
     {
-		$this->assertTrue($this->object->hasJson());
+        $this->assertTrue($this->object->hasJson());
+    }
+
+    /**
+     * covers Cradle\Http\Response\RestTrait::hasMessage
+     */
+    public function testHasMessage()
+    {
+        $this->assertTrue($this->object->hasMessage());
+    }
+
+    /**
+     * covers Cradle\Http\Response\RestTrait::hasResults
+     */
+    public function testHasResults()
+    {
+        $this->assertTrue($this->object->hasResults());
+        $this->assertTrue($this->object->hasResults('foo'));
+        $this->assertFalse($this->object->hasResults('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Response\RestTrait::hasValidation
+     */
+    public function testHasValidation()
+    {
+        $this->assertTrue($this->object->hasValidation());
+        $this->assertTrue($this->object->hasValidation('foo'));
+        $this->assertFalse($this->object->hasValidation('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Response\RestTrait::isError
+     */
+    public function testIsError()
+    {
+        $this->assertTrue($this->object->isError());
+        
+        $this->object->setError(false);
+        $this->assertFalse($this->object->isError());
+        
+        $this->object->setError(null);
+        $this->assertFalse($this->object->isError());
+    }
+
+    /**
+     * covers Cradle\Http\Response\RestTrait::isSuccess
+     */
+    public function testIsSuccess()
+    {
+        $this->assertFalse($this->object->isSuccess());
+        
+        $this->object->setError(false);
+        $this->assertTrue($this->object->isSuccess());
+        
+        $this->object->setError(null);
+        $this->assertFalse($this->object->isSuccess());
+    }
+
+    /**
+     * covers Cradle\Http\Response\RestTrait::removeResults
+     */
+    public function testRemoveResults()
+    {
+        $instance = $this->object->removeResults('foo');
+        $this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
+    }
+
+    /**
+     * covers Cradle\Http\Response\RestTrait::removeValidation
+     */
+    public function testRemoveValidation()
+    {
+        $instance = $this->object->removeValidation('foo');
+        $this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
     }
 
     /**
@@ -89,8 +180,8 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetError()
     {
-		$instance = $this->object->setError(false);
-		$this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
+        $instance = $this->object->setError(false);
+        $this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
     }
 
     /**
@@ -98,14 +189,14 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetResults()
     {
-		$instance = $this->object->setResults('zoo', 'foo');
-		$this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
+        $instance = $this->object->setResults('zoo', 'foo');
+        $this->assertInstanceOf('Cradle\Http\Response\RestTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Response\RestTraitStub')) {
-	class RestTraitStub extends Registry
-	{
-		use RestTrait;
-	}
+    class RestTraitStub extends Registry
+    {
+        use RestTrait;
+    }
 }

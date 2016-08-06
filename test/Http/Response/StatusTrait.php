@@ -22,12 +22,12 @@ class Cradle_Http_Response_StatusTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new StatusTraitStub(array(
-			'code' => 200,
-			'headers' => array(
-				'foo' => 'bar',
-				'bar' => 'foo'
-			)
-		));
+            'code' => 200,
+            'headers' => array(
+                'foo' => 'bar',
+                'bar' => 'foo'
+            )
+        ));
     }
 
     /**
@@ -43,8 +43,8 @@ class Cradle_Http_Response_StatusTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetStatus()
     {
-		$code = $this->object->getStatus();
-		$this->assertEquals(200, $code);
+        $code = $this->object->getStatus();
+        $this->assertEquals(200, $code);
     }
 
     /**
@@ -52,14 +52,14 @@ class Cradle_Http_Response_StatusTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetStatus()
     {
-		$instance = $this->object->setStatus(404, '404 Not Found');
-		$this->assertInstanceOf('Cradle\Http\Response\StatusTraitStub', $instance);
+        $instance = $this->object->setStatus(404, '404 Not Found');
+        $this->assertInstanceOf('Cradle\Http\Response\StatusTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Request\StatusTraitStub')) {
-	class StatusTraitStub extends Registry
-	{
-		use StatusTrait;
-	}
+    class StatusTraitStub extends Registry
+    {
+        use StatusTrait;
+    }
 }

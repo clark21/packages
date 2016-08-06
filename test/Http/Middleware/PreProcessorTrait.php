@@ -37,8 +37,8 @@ class Cradle_Http_PreProcessorTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetPreprocessor()
     {
-		$instance = $this->object->getPreprocessor();
-		$this->assertInstanceOf('Cradle\Http\Middleware', $instance);
+        $instance = $this->object->getPreprocessor();
+        $this->assertInstanceOf('Cradle\Http\Middleware', $instance);
     }
 
     /**
@@ -47,7 +47,7 @@ class Cradle_Http_PreProcessorTrait_Test extends PHPUnit_Framework_TestCase
     public function testPreprocess()
     {
         $instance = $this->object->preprocess(function() {});
-		$this->assertInstanceOf('Cradle\Http\Middleware\PreProcessorTraitStub', $instance);
+        $this->assertInstanceOf('Cradle\Http\Middleware\PreProcessorTraitStub', $instance);
     }
 
     /**
@@ -55,14 +55,14 @@ class Cradle_Http_PreProcessorTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetPreprocessor()
     {
-		$instance = $this->object->setPreprocessor(new Middleware);
-		$this->assertInstanceOf('Cradle\Http\Middleware\PreProcessorTraitStub', $instance);
+        $instance = $this->object->setPreprocessor(new Middleware);
+        $this->assertInstanceOf('Cradle\Http\Middleware\PreProcessorTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\PreProcessorTraitStub')) {
-	class PreProcessorTraitStub
-	{
-		use PreProcessorTrait;
-	}
+    class PreProcessorTraitStub
+    {
+        use PreProcessorTrait;
+    }
 }

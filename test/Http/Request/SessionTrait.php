@@ -22,6 +22,11 @@ class Cradle_Http_Request_SessionTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new SessionTraitStub;
+        
+        $this->object->set('session', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
     }
 
     /**
@@ -37,12 +42,7 @@ class Cradle_Http_Request_SessionTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetSession()
     {
-		$this->object->set('session', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getSession('foo'));
+        $this->assertEquals('bar', $this->object->getSession('foo'));
     }
 
     /**
@@ -50,13 +50,17 @@ class Cradle_Http_Request_SessionTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasSession()
     {
-		$this->object->set('session', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasSession('foo'));
-		$this->assertFalse($this->object->hasSession('zoo'));
+        $this->assertTrue($this->object->hasSession('foo'));
+        $this->assertFalse($this->object->hasSession('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request\SessionTrait::removeSession
+     */
+    public function testRemoveSession()
+    {
+        $this->object->removeSession('foo');
+        $this->assertFalse($this->object->hasSession('foo'));
     }
 
     /**
@@ -64,20 +68,20 @@ class Cradle_Http_Request_SessionTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetSession()
     {
-		$session = array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		);
+        $session = array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        );
 
-		$instance = $this->object->setSession($session);
-		
-		$this->assertInstanceOf('Cradle\Http\Request\SessionTraitStub', $instance);
+        $instance = $this->object->setSession($session);
+        
+        $this->assertInstanceOf('Cradle\Http\Request\SessionTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Request\SessionTraitStub')) {
-	class SessionTraitStub extends Registry
-	{
-		use SessionTrait;
-	}
+    class SessionTraitStub extends Registry
+    {
+        use SessionTrait;
+    }
 }

@@ -20,43 +20,45 @@ namespace Cradle\Http\Request;
 trait PostTrait
 {
     /**
-     * Returns POST data given name or all POST data
+     * Returns $_POST given name or all $_POST
      *
-     * @param string|null $name    The key name in the POST
-     * @param mixed       ...$args
+     * @param mixed ...$args
      *
      * @return mixed
      */
-    public function getPost($name = null, ...$args)
+    public function getPost(...$args)
     {
-        if (is_null($name)) {
-            return $this->get('post');
-        }
-        
-        return $this->get('post', $name, ...$args);
+        return $this->get('post', ...$args);
     }
     
     /**
-     * Returns POST data given name or all POST data
+     * Removes $_POST given name or all $_POST
      *
-     * @param string|null $name    The key name in the POST
-     * @param mixed       ...$args
+     * @param mixed ...$args
      *
      * @return bool
      */
-    public function hasPost($name = null, ...$args)
+    public function removePost(...$args)
     {
-        if (is_null($name)) {
-            return $this->exists('post');
-        }
-        
-        return $this->exists('post', $name, ...$args);
+        return $this->remove('post', ...$args);
     }
     
     /**
-     * Sets POST
+     * Returns true if has $_POST given name or if $_POST is set
      *
-     * @param *mixed $data
+     * @param mixed ...$args
+     *
+     * @return bool
+     */
+    public function hasPost(...$args)
+    {
+        return $this->exists('post', ...$args);
+    }
+
+    /**
+     * Sets $_POST
+     *
+     * @param *array $data
      * @param mixed  ...$args
      *
      * @return PostTrait

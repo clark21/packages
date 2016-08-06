@@ -22,6 +22,11 @@ class Cradle_Http_Request_GetTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new GetTraitStub;
+        
+        $this->object->set('get', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
     }
 
     /**
@@ -37,12 +42,7 @@ class Cradle_Http_Request_GetTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetGet()
     {
-		$this->object->set('get', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getGet('foo'));
+        $this->assertEquals('bar', $this->object->getGet('foo'));
     }
 
     /**
@@ -50,13 +50,17 @@ class Cradle_Http_Request_GetTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasGet()
     {
-		$this->object->set('get', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasGet('foo'));
-		$this->assertFalse($this->object->hasGet('zoo'));
+        $this->assertTrue($this->object->hasGet('foo'));
+        $this->assertFalse($this->object->hasGet('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request\GetTrait::removeGet
+     */
+    public function testRemoveGet()
+    {
+        $this->object->removeGet('foo');
+        $this->assertFalse($this->object->hasGet('foo'));
     }
 
     /**
@@ -64,18 +68,18 @@ class Cradle_Http_Request_GetTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetGet()
     {
-		$instance = $this->object->setGet(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request\GetTraitStub', $instance);
+        $instance = $this->object->setGet(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request\GetTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Request\GetTraitStub')) {
-	class GetTraitStub extends Registry
-	{
-		use GetTrait;
-	}
+    class GetTraitStub extends Registry
+    {
+        use GetTrait;
+    }
 }

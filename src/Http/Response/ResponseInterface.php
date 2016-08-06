@@ -57,6 +57,15 @@ interface ResponseInterface
      * @return bool
      */
     public function hasContent();
+
+    /**
+     * Removes a header parameter
+     *
+     * @param string $name Name of the header
+     *
+     * @return ResponseInterface
+     */
+    public function removeHeader($name);
     
     /**
      * Sets the content

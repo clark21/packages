@@ -20,7 +20,7 @@ namespace Cradle\Http\Response;
 trait RestTrait
 {
     /**
-     * Adds a JSON validation message
+     * Adds a JSON validation message or sets all the validations
      *
      * @param *string $field
      * @param *string $message
@@ -49,6 +49,26 @@ trait RestTrait
         
         return $this->get('json', 'results', ...$args);
     }
+
+    /**
+     * Determines the message type based on error
+     *
+     * @return string
+     */
+    public function getMessageType()
+    {
+        $error = $this->get('json', 'error');
+        
+        if ($error === true) {
+            return 'error';
+        }
+        
+        if ($error === false) {
+            return 'success';
+        }
+        
+        return 'info';
+    }
     
     /**
      * Returns JSON validations if still in array mode
@@ -72,7 +92,7 @@ trait RestTrait
      *
      * @param mixed ...$args
      *
-     * @return mixed
+     * @return bool
      */
     public function hasJson(...$args)
     {
@@ -81,6 +101,86 @@ trait RestTrait
         }
         
         return $this->exists('json', ...$args);
+    }
+
+    /**
+     * Returns true if there's a message
+     *
+     * @return bool
+     */
+    public function hasMessage()
+    {
+        return $this->hasJson('message');
+    }
+
+    /**
+     * Returns true if there's any results given name
+     *
+     * @param mixed ...$args
+     *
+     * @return bool
+     */
+    public function hasResults(...$args)
+    {
+        return $this->hasJson('results', ...$args);
+    }
+
+    /**
+     * Returns true if there's any validations given name
+     *
+     * @param mixed ...$args
+     *
+     * @return bool
+     */
+    public function hasValidation(...$args)
+    {
+        return $this->hasJson('validation', ...$args);
+    }
+
+    /**
+     * Returns true if there's an error
+     *
+     * @return bool
+     */
+    public function isError()
+    {
+        return $this->get('json', 'error') === true;
+    }
+
+    /**
+     * Returns true if there's no error
+     *
+     * @return bool
+     */
+    public function isSuccess()
+    {
+        return $this->get('json', 'error') === false;
+    }
+
+    /**
+     * Removes results given name or all of the results
+     *
+     * @param string $name Name of the validation
+     *
+     * @return RestTrait
+     */
+    public function removeResults($name)
+    {
+        $args = func_get_args();
+        return $this->remove('json', 'results', ...$args);
+    }
+
+    /**
+     * Removes a validation given name or all the validations
+     *
+     * @param string $name Name of the validation
+     *
+     * @return RestTrait
+     */
+    public function removeValidation($name)
+    {
+        $args = func_get_args();
+        return $this->remove('json', 'validation', ...$args);
     }
     
     /**
@@ -112,7 +212,7 @@ trait RestTrait
      */
     public function setResults($data, ...$args)
     {
-        if (is_array($data) || count($args) === 0) {
+        if (is_array($data)) {
             return $this->setDot('json.results', $data);
         }
         

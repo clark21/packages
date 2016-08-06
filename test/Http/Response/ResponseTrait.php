@@ -38,8 +38,8 @@ class Cradle_Http_ResponseTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetResponse()
     {
-		$instance = $this->object->getResponse();
-		$this->assertInstanceOf('Cradle\Http\Response', $instance);
+        $instance = $this->object->getResponse();
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 
     /**
@@ -48,13 +48,13 @@ class Cradle_Http_ResponseTrait_Test extends PHPUnit_Framework_TestCase
     public function testSetResponse()
     {
         $instance = $this->object->setResponse(new Response);
-		$this->assertInstanceOf('Cradle\Http\Response\ResponseTraitStub', $instance);
+        $this->assertInstanceOf('Cradle\Http\Response\ResponseTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Response\ResponseTraitStub')) {
-	class ResponseTraitStub
-	{
-		use ResponseTrait;
-	}
+    class ResponseTraitStub
+    {
+        use ResponseTrait;
+    }
 }

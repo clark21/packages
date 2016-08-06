@@ -37,8 +37,8 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testAll()
     {
-		$instance = $this->object->all('/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
+        $instance = $this->object->all('/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
     }
 
     /**
@@ -46,8 +46,8 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testDelete()
     {
-		$instance = $this->object->delete('/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
+        $instance = $this->object->delete('/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
     }
 
     /**
@@ -55,8 +55,8 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGet()
     {
-		$instance = $this->object->get('/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
+        $instance = $this->object->get('/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
     }
 
     /**
@@ -64,8 +64,8 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetRouter()
     {
-		$instance = $this->object->getRouter();
-		$this->assertInstanceOf('Cradle\Http\Router', $instance);
+        $instance = $this->object->getRouter();
+        $this->assertInstanceOf('Cradle\Http\Router', $instance);
     }
 
     /**
@@ -73,8 +73,8 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testPost()
     {
-		$instance = $this->object->post('/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
+        $instance = $this->object->post('/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
     }
 
     /**
@@ -82,8 +82,8 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testPut()
     {
-		$instance = $this->object->put('/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
+        $instance = $this->object->put('/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
     }
 
     /**
@@ -91,8 +91,8 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testRoute()
     {
-		$instance = $this->object->route('foobar', '/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
+        $instance = $this->object->route('foobar', '/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
     }
 
     /**
@@ -100,14 +100,14 @@ class Cradle_Http_RouterTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetRouter()
     {
-		$instance = $this->object->setRouter(new Router);
-		$this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
+        $instance = $this->object->setRouter(new Router);
+        $this->assertInstanceOf('Cradle\Http\Router\RouterTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Router\RouterTraitStub')) {
-	class RouterTraitStub
-	{
-		use RouterTrait;
-	}
+    class RouterTraitStub
+    {
+        use RouterTrait;
+    }
 }

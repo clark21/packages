@@ -19,7 +19,6 @@ namespace Cradle\Http\Request;
  */
 trait RouteTrait
 {
-
     /**
      * Returns route data given name or all route data
      *
@@ -40,7 +39,23 @@ trait RouteTrait
     /**
      * Returns route data given name or all route data
      *
-     * @param string|null $index The variable index
+     * @param string|null $name The parameter name
+     *
+     * @return mixed
+     */
+    public function getParameters($name = null)
+    {
+        if (is_null($name)) {
+            return $this->getRoute('parameters');
+        }
+        
+        return $this->getRoute('parameters', $name);
+    }
+    
+    /**
+     * Returns route data given name or all route data
+     *
+     * @param int|null $index The variable index
      *
      * @return mixed
      */

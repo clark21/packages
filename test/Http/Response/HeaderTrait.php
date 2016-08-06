@@ -22,11 +22,11 @@ class Cradle_Http_Response_HeaderTrait_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new HeaderTraitStub(array(
-			'headers' => array(
-				'foo' => 'bar',
-				'bar' => 'foo'
-			)
-		));
+            'headers' => array(
+                'foo' => 'bar',
+                'bar' => 'foo'
+            )
+        ));
     }
 
     /**
@@ -42,8 +42,8 @@ class Cradle_Http_Response_HeaderTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testAddHeader()
     {
-		$instance = $this->object->addHeader('zoo', 'foo');
-		$this->assertInstanceOf('Cradle\Http\Response\HeaderTraitStub', $instance);
+        $instance = $this->object->addHeader('zoo', 'foo');
+        $this->assertInstanceOf('Cradle\Http\Response\HeaderTraitStub', $instance);
     }
 
     /**
@@ -51,16 +51,16 @@ class Cradle_Http_Response_HeaderTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetHeaders()
     {
-		$actual = $this->object->getHeaders();
-		$this->assertArrayHasKey('foo', $actual);
-		$actual = $this->object->getHeaders('foo');
-		$this->assertEquals('bar', $actual);
+        $actual = $this->object->getHeaders();
+        $this->assertArrayHasKey('foo', $actual);
+        $actual = $this->object->getHeaders('foo');
+        $this->assertEquals('bar', $actual);
     }
 }
 
 if(!class_exists('Cradle\Http\Response\HeaderTraitStub')) {
-	class HeaderTraitStub extends Registry
-	{
-		use HeaderTrait;
-	}
+    class HeaderTraitStub extends Registry
+    {
+        use HeaderTrait;
+    }
 }

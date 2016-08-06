@@ -33,10 +33,10 @@ interface RouterInterface
      * Adds routing middleware
      *
      * @param string   $method   The request method
-     * @param string   $path     The route path
+     * @param string   $pattern  The route pattern
      * @param function $callback The middleware handler
      *
-     * @return RouterInterface
+     * @return Router
      */
-    public function route($method, $path, $callback);
+    public function route($method, $pattern, $callback);
 }

@@ -20,41 +20,43 @@ namespace Cradle\Http\Request;
 trait FileTrait
 {
     /**
-     * Returns file data given name or all files
+     * Returns $_FILES given name or all $_FILES
      *
-     * @param string|null $name The key name in the FILES
-     * @param mixed       ...$args
+     * @param mixed ...$args
      *
      * @return mixed
      */
-    public function getFiles($name = null, ...$args)
+    public function getFiles(...$args)
     {
-        if (is_null($name)) {
-            return $this->get('files');
-        }
-        
-        return $this->get('files', $name, ...$args);
+        return $this->get('files', ...$args);
     }
     
     /**
-     * Returns file data given name or all files
+     * Removes $_FILES given name or all $_FILES
      *
-     * @param string|null $name The key name in the FILES
-     * @param mixed       ...$args
+     * @param mixed ...$args
      *
      * @return bool
      */
-    public function hasFiles($name = null, ...$args)
+    public function removeFiles(...$args)
     {
-        if (is_null($name)) {
-            return $this->exists('files');
-        }
-        
-        return $this->exists('files', $name, ...$args);
+        return $this->remove('files', ...$args);
     }
     
     /**
-     * Sets FILES
+     * Returns true if has $_FILES given name or if $_FILES is set
+     *
+     * @param mixed ...$args
+     *
+     * @return bool
+     */
+    public function hasFiles(...$args)
+    {
+        return $this->exists('files', ...$args);
+    }
+
+    /**
+     * Sets $_FILES
      *
      * @param *array $data
      * @param mixed  ...$args
@@ -64,7 +66,7 @@ trait FileTrait
     public function setFiles($data, ...$args)
     {
         if (is_array($data)) {
-            return $this->set('files', $data);
+            return $this->set('cookie', $data);
         }
         
         if (count($args) === 0) {

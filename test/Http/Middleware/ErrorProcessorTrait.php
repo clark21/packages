@@ -37,8 +37,8 @@ class Cradle_Http_ErrorProcessorTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetErrorProcessor()
     {
-		$instance = $this->object->getErrorProcessor();
-		$this->assertInstanceOf('Cradle\Http\Middleware', $instance);
+        $instance = $this->object->getErrorProcessor();
+        $this->assertInstanceOf('Cradle\Http\Middleware', $instance);
     }
 
     /**
@@ -47,7 +47,7 @@ class Cradle_Http_ErrorProcessorTrait_Test extends PHPUnit_Framework_TestCase
     public function testError()
     {
         $instance = $this->object->error(function() {});
-		$this->assertInstanceOf('Cradle\Http\Middleware\ErrorProcessorTraitStub', $instance);
+        $this->assertInstanceOf('Cradle\Http\Middleware\ErrorProcessorTraitStub', $instance);
     }
 
     /**
@@ -55,14 +55,14 @@ class Cradle_Http_ErrorProcessorTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetErrorProcessor()
     {
-		$instance = $this->object->setErrorProcessor(new Middleware);
-		$this->assertInstanceOf('Cradle\Http\Middleware\ErrorProcessorTraitStub', $instance);
+        $instance = $this->object->setErrorProcessor(new Middleware);
+        $this->assertInstanceOf('Cradle\Http\Middleware\ErrorProcessorTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Middleware\ErrorProcessorTrait')) {
-	class ErrorProcessorTraitStub
-	{
-		use ErrorProcessorTrait;
-	}
+    class ErrorProcessorTraitStub
+    {
+        use ErrorProcessorTrait;
+    }
 }

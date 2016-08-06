@@ -36,13 +36,13 @@ class Cradle_Http_HttpException_Test extends PHPUnit_Framework_TestCase
      */
     public function testForResponseNotFound()
     {
-		$message = null;
-		try {
-			throw HttpException::forResponseNotFound();
-		} catch(HttpException $e) {
-			$message = $e->getMessage();
-		}
-		
-		$this->assertEquals('Not Found.', $message);
+        $message = null;
+        try {
+            throw HttpException::forResponseNotFound();
+        } catch(HttpException $e) {
+            $message = $e->getMessage();
+        }
+        
+        $this->assertEquals('Not Found.', $message);
     }
 }

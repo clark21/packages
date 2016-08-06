@@ -37,9 +37,9 @@ class Cradle_Http_Request_CliTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetArgs()
     {
-		$this->object->set('args', array(1, 2, 3));	
-		$actual = $this->object->getArgs();
-		$this->assertEquals(2, $actual[1]);
+        $this->object->set('args', array(1, 2, 3));    
+        $actual = $this->object->getArgs();
+        $this->assertEquals(2, $actual[1]);
     }
 
     /**
@@ -47,15 +47,15 @@ class Cradle_Http_Request_CliTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetArgs()
     {
-        $this->object->setArgs(array(1, 2, 3));	
-		$actual = $this->object->getArgs();
-		$this->assertEquals(2, $actual[1]);
+        $this->object->setArgs(array(1, 2, 3));    
+        $actual = $this->object->getArgs();
+        $this->assertEquals(2, $actual[1]);
     }
 }
 
 if(!class_exists('Cradle\Http\Request\CliTraitStub')) {
-	class CliTraitStub extends Registry
-	{
-		use CliTrait;
-	}
+    class CliTraitStub extends Registry
+    {
+        use CliTrait;
+    }
 }

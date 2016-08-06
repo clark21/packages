@@ -21,6 +21,36 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new Request;
+        
+        $this->object->set('cookie', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->object->set('files', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->object->set('get', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->object->set('post', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->object->set('session', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->object->set('server', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
     }
 
     /**
@@ -36,8 +66,8 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testLoad()
     {
-		$instance = $this->object->load();
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $instance = $this->object->load();
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -45,9 +75,9 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetArgs()
     {
-		$this->object->set('args', array(1, 2, 3));	
-		$actual = $this->object->getArgs();
-		$this->assertEquals(2, $actual[1]);
+        $this->object->set('args', array(1, 2, 3));    
+        $actual = $this->object->getArgs();
+        $this->assertEquals(2, $actual[1]);
     }
 
     /**
@@ -55,9 +85,9 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetArgs()
     {
-        $this->object->setArgs(array(1, 2, 3));	
-		$actual = $this->object->getArgs();
-		$this->assertEquals(2, $actual[1]);
+        $this->object->setArgs(array(1, 2, 3));    
+        $actual = $this->object->getArgs();
+        $this->assertEquals(2, $actual[1]);
     }
 
     /**
@@ -65,9 +95,9 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetContent()
     {
-        $this->object->set('body', 'foobar');	
-		$actual = $this->object->getContent();
-		$this->assertEquals('foobar', $actual);
+        $this->object->set('body', 'foobar');    
+        $actual = $this->object->getContent();
+        $this->assertEquals('foobar', $actual);
     }
 
     /**
@@ -75,9 +105,9 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasContent()
     {
-		$this->assertFalse($this->object->hasContent());
-		$this->object->set('body', 'foobar');
-		$this->assertTrue($this->object->hasContent());
+        $this->assertFalse($this->object->hasContent());
+        $this->object->set('body', 'foobar');
+        $this->assertTrue($this->object->hasContent());
     }
 
     /**
@@ -85,8 +115,8 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetContent()
     {
-		$instance = $this->object->setContent('foobar');
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $instance = $this->object->setContent('foobar');
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -94,12 +124,7 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetCookies()
     {
-		$this->object->set('cookie', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getCookies('foo'));
+        $this->assertEquals('bar', $this->object->getCookies('foo'));
     }
 
     /**
@@ -107,13 +132,17 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasCookies()
     {
-		$this->object->set('cookie', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasCookies('foo'));
-		$this->assertFalse($this->object->hasCookies('zoo'));
+        $this->assertTrue($this->object->hasCookies('foo'));
+        $this->assertFalse($this->object->hasCookies('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request::removeCookies
+     */
+    public function testRemoveCookies()
+    {
+        $this->object->removeCookies('foo');
+        $this->assertFalse($this->object->hasCookies('foo'));
     }
 
     /**
@@ -121,12 +150,12 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetCookies()
     {
-		$instance = $this->object->setCookies(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $instance = $this->object->setCookies(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -134,12 +163,7 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetFiles()
     {
-		$this->object->set('files', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getFiles('foo'));
+        $this->assertEquals('bar', $this->object->getFiles('foo'));
     }
 
     /**
@@ -147,13 +171,17 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasFiles()
     {
-		$this->object->set('files', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasFiles('foo'));
-		$this->assertFalse($this->object->hasFiles('zoo'));
+        $this->assertTrue($this->object->hasFiles('foo'));
+        $this->assertFalse($this->object->hasFiles('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request::removeFiles
+     */
+    public function testRemoveFiles()
+    {
+        $this->object->removeFiles('foo');
+        $this->assertFalse($this->object->hasFiles('foo'));
     }
 
     /**
@@ -161,12 +189,12 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetFiles()
     {
-		$instance = $this->object->setFiles(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $instance = $this->object->setFiles(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -174,12 +202,7 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetGet()
     {
-		$this->object->set('get', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getGet('foo'));
+        $this->assertEquals('bar', $this->object->getGet('foo'));
     }
 
     /**
@@ -187,13 +210,17 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasGet()
     {
-		$this->object->set('get', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasGet('foo'));
-		$this->assertFalse($this->object->hasGet('zoo'));
+        $this->assertTrue($this->object->hasGet('foo'));
+        $this->assertFalse($this->object->hasGet('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request::removeGet
+     */
+    public function testRemoveGet()
+    {
+        $this->object->removeGet('foo');
+        $this->assertFalse($this->object->hasGet('foo'));
     }
 
     /**
@@ -201,12 +228,12 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetGet()
     {
-		$instance = $this->object->setGet(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $instance = $this->object->setGet(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -214,12 +241,7 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetPost()
     {
-		$this->object->set('post', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getPost('foo'));
+        $this->assertEquals('bar', $this->object->getPost('foo'));
     }
 
     /**
@@ -227,13 +249,17 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasPost()
     {
-		$this->object->set('post', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasPost('foo'));
-		$this->assertFalse($this->object->hasPost('zoo'));
+        $this->assertTrue($this->object->hasPost('foo'));
+        $this->assertFalse($this->object->hasPost('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request::removePost
+     */
+    public function testRemovePost()
+    {
+        $this->object->removePost('foo');
+        $this->assertFalse($this->object->hasPost('foo'));
     }
 
     /**
@@ -241,12 +267,12 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetPost()
     {
-		$instance = $this->object->setPost(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $instance = $this->object->setPost(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -254,12 +280,25 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetRoute()
     {
-		$this->object->set('route', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getRoute('foo'));
+        $this->object->set('route', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertEquals('bar', $this->object->getRoute('foo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request::getParameters
+     */
+    public function testGetParameters()
+    {
+        $this->object->set('route', array(
+            'foo' => 'bar',
+            'parameters' => array('foo' => 'bar')
+        ));
+        
+        $this->assertEquals('bar', $this->object->getParameters('foo'));
     }
 
     /**
@@ -267,12 +306,12 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetVariables()
     {
-		$this->object->set('route', array(
-			'foo' => 'bar',
-			'variables' => array('foo', 'bar')
-		));
-		
-		$this->assertEquals('bar', $this->object->getVariables(1));
+        $this->object->set('route', array(
+            'foo' => 'bar',
+            'variables' => array('foo', 'bar')
+        ));
+        
+        $this->assertEquals('bar', $this->object->getVariables(1));
     }
 
     /**
@@ -280,12 +319,12 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetRoute()
     {
-		$instance = $this->object->setRoute(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $instance = $this->object->setRoute(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -293,8 +332,8 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetMethod()
     {
-		$this->object->set('method', 'foobar');
-		$this->assertEquals('FOOBAR', $this->object->getMethod());
+        $this->object->set('method', 'foobar');
+        $this->assertEquals('FOOBAR', $this->object->getMethod());
     }
 
     /**
@@ -302,8 +341,8 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetPath()
     {
-		$this->object->setPath('/foo/bar');
-		$this->assertEquals('/foo/bar', $this->object->getPath('string'));
+        $this->object->setPath('/foo/bar');
+        $this->assertEquals('/foo/bar', $this->object->getPath('string'));
     }
 
     /**
@@ -311,8 +350,8 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetQuery()
     {
-		$this->object->set('query', 'foobar');
-		$this->assertEquals('foobar', $this->object->getQuery());
+        $this->object->set('query', 'foobar');
+        $this->assertEquals('foobar', $this->object->getQuery());
     }
 
     /**
@@ -320,26 +359,16 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetServer()
     {
-		$this->object->set('server', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getServer('foo'));
+        $this->assertEquals('bar', $this->object->getServer('foo'));
     }
 
     /**
      * @covers Cradle\Http\Request::hasServer
      */
     public function testHasServer()
-    {
-		$this->object->set('server', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasServer('foo'));
-		$this->assertFalse($this->object->hasServer('zoo'));
+    {    
+        $this->assertTrue($this->object->hasServer('foo'));
+        $this->assertFalse($this->object->hasServer('zoo'));
     }
 
     /**
@@ -347,10 +376,10 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testIsMethod()
     {
-		$this->assertFalse($this->object->isMethod('foobar'));
-		
-		$this->object->setMethod('foobar');
-		$this->assertTrue($this->object->isMethod('foobar'));
+        $this->assertFalse($this->object->isMethod('foobar'));
+        
+        $this->object->setMethod('foobar');
+        $this->assertTrue($this->object->isMethod('foobar'));
     }
 
     /**
@@ -359,8 +388,8 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
     public function testSetMethod()
     {
         $instance = $this->object->setMethod('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -369,8 +398,8 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
     public function testSetPath()
     {
         $instance = $this->object->setPath('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -379,8 +408,8 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
     public function testSetQuery()
     {
         $instance = $this->object->setQuery('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -388,12 +417,12 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetServer()
     {
-		$instance = $this->object->setServer(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $instance = $this->object->setServer(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -401,12 +430,7 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetSession()
     {
-		$this->object->set('session', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getSession('foo'));
+        $this->assertEquals('bar', $this->object->getSession('foo'));
     }
 
     /**
@@ -414,13 +438,17 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasSession()
     {
-		$this->object->set('session', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertTrue($this->object->hasSession('foo'));
-		$this->assertFalse($this->object->hasSession('zoo'));
+        $this->assertTrue($this->object->hasSession('foo'));
+        $this->assertFalse($this->object->hasSession('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request::removeSession
+     */
+    public function testRemoveSession()
+    {
+        $this->object->removeSession('foo');
+        $this->assertFalse($this->object->hasSession('foo'));
     }
 
     /**
@@ -428,13 +456,13 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetSession()
     {
-		$session = array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		);
+        $session = array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        );
 
-		$instance = $this->object->setSession($session);
-		
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $instance = $this->object->setSession($session);
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 }

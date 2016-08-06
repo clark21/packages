@@ -39,8 +39,8 @@ class Cradle_Http_DispatcherTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetDispatcher()
     {
-		$instance = $this->object->getDispatcher();
-		$this->assertInstanceOf('Cradle\Http\HttpDispatcher', $instance);
+        $instance = $this->object->getDispatcher();
+        $this->assertInstanceOf('Cradle\Http\HttpDispatcher', $instance);
     }
 
     /**
@@ -48,14 +48,14 @@ class Cradle_Http_DispatcherTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetDispatcher()
     {
-		$instance = $this->object->setDispatcher(new HttpDispatcher);
-		$this->assertInstanceOf('Cradle\Http\Dispatcher\DispatcherTraitStub', $instance);
+        $instance = $this->object->setDispatcher(new HttpDispatcher);
+        $this->assertInstanceOf('Cradle\Http\Dispatcher\DispatcherTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Dispatcher\DispatcherTraitStub')) {
-	class DispatcherTraitStub
-	{
-		use DispatcherTrait, ResolverTrait;
-	}
+    class DispatcherTraitStub
+    {
+        use DispatcherTrait, ResolverTrait;
+    }
 }

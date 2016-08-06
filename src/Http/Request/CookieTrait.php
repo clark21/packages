@@ -20,41 +20,43 @@ namespace Cradle\Http\Request;
 trait CookieTrait
 {
     /**
-     * Returns cookies given name or all cookies
+     * Returns $_COOKIE given name or all $_COOKIE
      *
-     * @param string|null $name The key name in the COOKIE
-     * @param mixed       ...$args
+     * @param mixed ...$args
      *
      * @return mixed
      */
-    public function getCookies($name = null, ...$args)
+    public function getCookies(...$args)
     {
-        if (is_null($name)) {
-            return $this->get('cookie');
-        }
-        
-        return $this->get('cookie', $name, ...$args);
+        return $this->get('cookie', ...$args);
     }
     
     /**
-     * Returns cookies given name or all cookies
+     * Removes $_COOKIE given name or all $_COOKIE
      *
-     * @param string|null $name The key name in the COOKIE
-     * @param mixed       ...$args
+     * @param mixed ...$args
      *
      * @return bool
      */
-    public function hasCookies($name = null, ...$args)
+    public function removeCookies(...$args)
     {
-        if (is_null($name)) {
-            return $this->exists('cookie');
-        }
-        
-        return $this->exists('cookie', $name, ...$args);
+        return $this->remove('cookie', ...$args);
+    }
+    
+    /**
+     * Returns true if has $_COOKIE given name or if $_COOKIE is set
+     *
+     * @param mixed ...$args
+     *
+     * @return bool
+     */
+    public function hasCookies(...$args)
+    {
+        return $this->exists('cookie', ...$args);
     }
 
     /**
-     * Sets COOKIE
+     * Sets $_COOKIE
      *
      * @param *array $data
      * @param mixed  ...$args

@@ -37,12 +37,25 @@ class Cradle_Http_Request_RouteTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetRoute()
     {
-		$this->object->set('route', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertEquals('bar', $this->object->getRoute('foo'));
+        $this->object->set('route', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertEquals('bar', $this->object->getRoute('foo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request\RouteTrait::getParameters
+     */
+    public function testGetParameters()
+    {
+        $this->object->set('route', array(
+            'foo' => 'bar',
+            'parameters' => array('foo' => 'bar')
+        ));
+        
+        $this->assertEquals('bar', $this->object->getParameters('foo'));
     }
 
     /**
@@ -50,12 +63,12 @@ class Cradle_Http_Request_RouteTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetVariables()
     {
-		$this->object->set('route', array(
-			'foo' => 'bar',
-			'variables' => array('foo', 'bar')
-		));
-		
-		$this->assertEquals('bar', $this->object->getVariables(1));
+        $this->object->set('route', array(
+            'foo' => 'bar',
+            'variables' => array('foo', 'bar')
+        ));
+        
+        $this->assertEquals('bar', $this->object->getVariables(1));
     }
 
     /**
@@ -63,18 +76,18 @@ class Cradle_Http_Request_RouteTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetRoute()
     {
-		$instance = $this->object->setRoute(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
-		
-		$this->assertInstanceOf('Cradle\Http\Request\RouteTraitStub', $instance);
+        $instance = $this->object->setRoute(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request\RouteTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Request\RouteTraitStub')) {
-	class RouteTraitStub extends Registry
-	{
-		use RouteTrait;
-	}
+    class RouteTraitStub extends Registry
+    {
+        use RouteTrait;
+    }
 }

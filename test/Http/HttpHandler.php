@@ -62,9 +62,9 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testRender()
     {
-		$this->object->getResponse()->setContent('foobar');
+        $this->object->getResponse()->setContent('foobar');
         $instance = $this->object->render(true);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -81,7 +81,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testGetDispatcher()
     {
         $instance = $this->object->getDispatcher();
-		$this->assertInstanceOf('Cradle\Http\HttpDispatcher', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpDispatcher', $instance);
     }
 
     /**
@@ -90,7 +90,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetDispatcher()
     {
         $instance = $this->object->setDispatcher(new HttpDispatcher);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -99,7 +99,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testGetPreprocessor()
     {
         $instance = $this->object->getPreprocessor();
-		$this->assertInstanceOf('Cradle\Http\Middleware', $instance);
+        $this->assertInstanceOf('Cradle\Http\Middleware', $instance);
     }
 
     /**
@@ -108,7 +108,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testPreprocess()
     {
         $instance = $this->object->preprocess(function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -117,7 +117,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetPreprocessor()
     {
         $instance = $this->object->setPreprocessor(new Middleware);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -126,7 +126,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testGetPostprocessor()
     {
         $instance = $this->object->getPostprocessor();
-		$this->assertInstanceOf('Cradle\Http\Middleware', $instance);
+        $this->assertInstanceOf('Cradle\Http\Middleware', $instance);
     }
 
     /**
@@ -135,7 +135,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testPostprocess()
     {
         $instance = $this->object->postprocess(function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -144,7 +144,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetPostprocessor()
     {
         $instance = $this->object->setPostprocessor(new Middleware);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -153,7 +153,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testGetErrorProcessor()
     {
         $instance = $this->object->getErrorProcessor();
-		$this->assertInstanceOf('Cradle\Http\Middleware', $instance);
+        $this->assertInstanceOf('Cradle\Http\Middleware', $instance);
     }
 
     /**
@@ -162,7 +162,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testError()
     {
         $instance = $this->object->error(function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -171,7 +171,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetErrorProcessor()
     {
         $instance = $this->object->setErrorProcessor(new Middleware);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -180,7 +180,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testGetRequest()
     {
         $instance = $this->object->getRequest();
-		$this->assertInstanceOf('Cradle\Http\Request', $instance);
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }
 
     /**
@@ -189,7 +189,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetRequest()
     {
         $instance = $this->object->setRequest(new Request);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -198,7 +198,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testGetResponse()
     {
         $instance = $this->object->getResponse();
-		$this->assertInstanceOf('Cradle\Http\Response', $instance);
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 
     /**
@@ -207,7 +207,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetResponse()
     {
         $instance = $this->object->setResponse(new Response);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -215,8 +215,8 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testAll()
     {
-		$instance = $this->object->all('/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $instance = $this->object->all('/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -224,8 +224,8 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testDelete()
     {
-		$instance = $this->object->delete('/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $instance = $this->object->delete('/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -233,8 +233,8 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testGet()
     {
-		$instance = $this->object->get('/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $instance = $this->object->get('/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -242,8 +242,8 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetRouter()
     {
-		$instance = $this->object->getRouter();
-		$this->assertInstanceOf('Cradle\Http\Router', $instance);
+        $instance = $this->object->getRouter();
+        $this->assertInstanceOf('Cradle\Http\Router', $instance);
     }
 
     /**
@@ -251,8 +251,8 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testPost()
     {
-		$instance = $this->object->post('/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $instance = $this->object->post('/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -260,8 +260,8 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testPut()
     {
-		$instance = $this->object->put('/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $instance = $this->object->put('/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -269,8 +269,8 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testRoute()
     {
-		$instance = $this->object->route('foobar', '/foo/bar', function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $instance = $this->object->route('foobar', '/foo/bar', function() {});
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -279,7 +279,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetRouter()
     {
         $instance = $this->object->setRouter(new Router);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -287,8 +287,8 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetEventHandler()
     {
-		$instance = $this->object->getEventHandler();
-		$this->assertInstanceOf('Cradle\Event\EventHandler', $instance);
+        $instance = $this->object->getEventHandler();
+        $this->assertInstanceOf('Cradle\Event\EventHandler', $instance);
     }
 
     /**
@@ -297,19 +297,19 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testOn()
     {
         $trigger = new StdClass();
-		$trigger->success = null;
-		
+        $trigger->success = null;
+        
         $callback = function() use ($trigger) {
-			$trigger->success = true;
-		};
-		
-		$instance = $this
-			->object
-			->on('foobar', $callback)
-			->trigger('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
-		$this->assertTrue($trigger->success);
+            $trigger->success = true;
+        };
+        
+        $instance = $this
+            ->object
+            ->on('foobar', $callback)
+            ->trigger('foobar');
+        
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertTrue($trigger->success);
     }
 
     /**
@@ -318,7 +318,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetEventHandler()
     {
         $instance = $this->object->setEventHandler(new EventHandler);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -326,20 +326,20 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testTrigger()
     {
-		$trigger = new StdClass();
-		$trigger->success = null;
-		
+        $trigger = new StdClass();
+        $trigger->success = null;
+        
         $callback = function() use ($trigger) {
-			$trigger->success = true;
-		};
-		
-		$instance = $this
-			->object
-			->on('foobar', $callback)
-			->trigger('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
-		$this->assertTrue($trigger->success);
+            $trigger->success = true;
+        };
+        
+        $instance = $this
+            ->object
+            ->on('foobar', $callback)
+            ->trigger('foobar');
+        
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertTrue($trigger->success);
     }
 
     /**
@@ -349,16 +349,16 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     {
         $trigger = new StdClass;
         $trigger->success = null;
-		$trigger->test = $this;
-		
-		$callback = $this->object->bindCallback(function() use ($trigger) {
-	    	$trigger->success = true;
-			$trigger->test->assertInstanceOf('Cradle\Http\HttpHandler', $this);
-		});
-		
-		$callback();
-		
-		$this->assertTrue($trigger->success);
+        $trigger->test = $this;
+        
+        $callback = $this->object->bindCallback(function() use ($trigger) {
+            $trigger->success = true;
+            $trigger->test->assertInstanceOf('Cradle\Http\HttpHandler', $this);
+        });
+        
+        $callback();
+        
+        $this->assertTrue($trigger->success);
     }
 
     /**
@@ -367,10 +367,10 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testI()
     {
         $instance1 = HttpHandler::i();
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance1);
-		
-		$instance2 = HttpHandler::i();
-		$this->assertTrue($instance1 !== $instance2);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance1);
+        
+        $instance2 = HttpHandler::i();
+        $this->assertTrue($instance1 !== $instance2);
     }
 
     /**
@@ -410,7 +410,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testGetInspectorHandler()
     {
         $instance = $this->object->getInspectorHandler();
-		$this->assertInstanceOf('Cradle\Profiler\InspectorHandler', $instance);
+        $this->assertInstanceOf('Cradle\Profiler\InspectorHandler', $instance);
     }
 
     /**
@@ -419,14 +419,14 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testInspect()
     {
         ob_start();
-		$this->object->inspect('foobar');
-		$contents = ob_get_contents();
-		ob_end_clean();  
-		
-		$this->assertEquals(
-			'<pre>INSPECTING Variable:</pre><pre>foobar</pre>', 
-			$contents
-		);
+        $this->object->inspect('foobar');
+        $contents = ob_get_contents();
+        ob_end_clean();  
+        
+        $this->assertEquals(
+            '<pre>INSPECTING Variable:</pre><pre>foobar</pre>', 
+            $contents
+        );
     }
 
     /**
@@ -435,7 +435,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetInspectorHandler()
     {
         $instance = $this->object->setInspectorHandler(new InspectorHandler);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -444,7 +444,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testAddLogger()
     {
         $instance = $this->object->addLogger(function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $instance);
     }
 
     /**
@@ -452,15 +452,15 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testLog()
     {
-		$trigger = new StdClass();
-		$trigger->success = null;
+        $trigger = new StdClass();
+        $trigger->success = null;
         $this->object->addLogger(function($trigger) {
-			$trigger->success = true;
-		})
-		->log($trigger);
-		
-		
-		$this->assertTrue($trigger->success);
+            $trigger->success = true;
+        })
+        ->log($trigger);
+        
+        
+        $this->assertTrue($trigger->success);
     }
 
     /**
@@ -468,14 +468,14 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testLoadState()
     {
-		$state1 = new HttpHandler();
-		$state2 = new HttpHandler();
-		
-		$state1->saveState('state1');
-		$state2->saveState('state2');
-		
-		$this->assertTrue($state2 === $state1->loadState('state2'));
-		$this->assertTrue($state1 === $state2->loadState('state1'));
+        $state1 = new HttpHandler();
+        $state2 = new HttpHandler();
+        
+        $state1->saveState('state1');
+        $state2->saveState('state2');
+        
+        $this->assertTrue($state2 === $state1->loadState('state2'));
+        $this->assertTrue($state1 === $state2->loadState('state1'));
     }
 
     /**
@@ -483,14 +483,14 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSaveState()
     {
-		$state1 = new HttpHandler();
-		$state2 = new HttpHandler();
-		
-		$state1->saveState('state1');
-		$state2->saveState('state2');
-		
-		$this->assertTrue($state2 === $state1->loadState('state2'));
-		$this->assertTrue($state1 === $state2->loadState('state1'));
+        $state1 = new HttpHandler();
+        $state2 = new HttpHandler();
+        
+        $state1->saveState('state1');
+        $state2->saveState('state2');
+        
+        $this->assertTrue($state2 === $state1->loadState('state2'));
+        $this->assertTrue($state1 === $state2->loadState('state1'));
     }
 
     /**
@@ -499,7 +499,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function test__call()
     {
         $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $actual);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $actual);
     }
 
     /**
@@ -508,7 +508,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function test__callResolver()
     {
         $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $actual);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $actual);
     }
 
     /**
@@ -517,7 +517,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testAddResolver()
     {
         $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $actual);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $actual);
     }
 
     /**
@@ -526,7 +526,7 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testGetResolverHandler()
     {
         $actual = $this->object->getResolverHandler();
-		$this->assertInstanceOf('Cradle\Resolver\ResolverHandler', $actual);
+        $this->assertInstanceOf('Cradle\Resolver\ResolverHandler', $actual);
     }
 
     /**
@@ -535,14 +535,14 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testResolve()
     {
         $actual = $this->object->addResolver(
-			ResolverCallStub::class, 
-			function() {
-				return new ResolverAddStub();
-			}
-		)
-		->resolve(ResolverCallStub::class)
-		->foo('bar');
-		
+            ResolverCallStub::class, 
+            function() {
+                return new ResolverAddStub();
+            }
+        )
+        ->resolve(ResolverCallStub::class)
+        ->foo('bar');
+        
         $this->assertEquals('barfoo', $actual);
     }
 
@@ -552,18 +552,18 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testResolveShared()
     {
         $actual = $this
-			->object
-			->resolveShared(ResolverSharedStub::class)
-			->reset()
-			->foo('bar');
-		
+            ->object
+            ->resolveShared(ResolverSharedStub::class)
+            ->reset()
+            ->foo('bar');
+        
         $this->assertEquals('barfoo', $actual);
-		
-		$actual = $this
-			->object
-			->resolveShared(ResolverSharedStub::class)
-			->foo('bar');
-		
+        
+        $actual = $this
+            ->object
+            ->resolveShared(ResolverSharedStub::class)
+            ->foo('bar');
+        
         $this->assertEquals('barbar', $actual);
     }
 
@@ -573,13 +573,13 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testResolveStatic()
     {
         $actual = $this
-			->object
-			->resolveStatic(
-				ResolverStaticStub::class, 
-				'foo', 
-				'bar'
-			);
-		
+            ->object
+            ->resolveStatic(
+                ResolverStaticStub::class, 
+                'foo', 
+                'bar'
+            );
+        
         $this->assertEquals('barfoo', $actual);
     }
 
@@ -589,56 +589,56 @@ class Cradle_Http_HttpHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetResolverHandler()
     {
         $actual = $this->object->setResolverHandler(new ResolverHandler);
-		$this->assertInstanceOf('Cradle\Http\HttpHandler', $actual);
+        $this->assertInstanceOf('Cradle\Http\HttpHandler', $actual);
     }
 }
 
 if(!class_exists('Cradle\Http\ResolverCallStub')) {
-	class ResolverCallStub
-	{
-		public function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverCallStub
+    {
+        public function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
 
 if(!class_exists('Cradle\Http\ResolverAddStub')) {
-	class ResolverAddStub
-	{
-		public function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverAddStub
+    {
+        public function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
 
 if(!class_exists('Cradle\Http\ResolverSharedStub')) {
-	class ResolverSharedStub
-	{
-		public $name = 'foo';
-		
-		public function foo($string)
-		{
-			$name = $this->name;
-			$this->name = $string;
-			return $string . $name;
-		}
-		
-		public function reset()
-		{
-			$this->name = 'foo';
-			return $this;
-		}
-	}
+    class ResolverSharedStub
+    {
+        public $name = 'foo';
+        
+        public function foo($string)
+        {
+            $name = $this->name;
+            $this->name = $string;
+            return $string . $name;
+        }
+        
+        public function reset()
+        {
+            $this->name = 'foo';
+            return $this;
+        }
+    }
 }
 
 if(!class_exists('Cradle\Http\ResolverStaticStub')) {
-	class ResolverStaticStub
-	{
-		public static function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverStaticStub
+    {
+        public static function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }

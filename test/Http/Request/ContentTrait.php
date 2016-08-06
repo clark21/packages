@@ -37,9 +37,9 @@ class Cradle_Http_Request_ContentTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetContent()
     {
-        $this->object->set('body', 'foobar');	
-		$actual = $this->object->getContent();
-		$this->assertEquals('foobar', $actual);
+        $this->object->set('body', 'foobar');    
+        $actual = $this->object->getContent();
+        $this->assertEquals('foobar', $actual);
     }
 
     /**
@@ -47,9 +47,9 @@ class Cradle_Http_Request_ContentTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testHasContent()
     {
-		$this->assertFalse($this->object->hasContent());
-		$this->object->set('body', 'foobar');
-		$this->assertTrue($this->object->hasContent());
+        $this->assertFalse($this->object->hasContent());
+        $this->object->set('body', 'foobar');
+        $this->assertTrue($this->object->hasContent());
     }
 
     /**
@@ -57,15 +57,15 @@ class Cradle_Http_Request_ContentTrait_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetContent()
     {
-		$instance = $this->object->setContent('foobar');
-		
-		$this->assertInstanceOf('Cradle\Http\Request\ContentTraitStub', $instance);
+        $instance = $this->object->setContent('foobar');
+        
+        $this->assertInstanceOf('Cradle\Http\Request\ContentTraitStub', $instance);
     }
 }
 
 if(!class_exists('Cradle\Http\Request\ContentTraitStub')) {
-	class ContentTraitStub extends Registry
-	{
-		use ContentTrait;
-	}
+    class ContentTraitStub extends Registry
+    {
+        use ContentTrait;
+    }
 }

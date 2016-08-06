@@ -37,7 +37,7 @@ class Cradle_Http_Middleware_Test extends PHPUnit_Framework_TestCase
     public function testRegister()
     {
         $instance = $this->object->register(function() {});
-		$this->assertInstanceOf('Cradle\Http\Middleware', $instance);
+        $this->assertInstanceOf('Cradle\Http\Middleware', $instance);
     }
 
     /**
@@ -45,6 +45,6 @@ class Cradle_Http_Middleware_Test extends PHPUnit_Framework_TestCase
      */
     public function testProcess()
     {
-		$this->assertTrue($this->object->process());
+        $this->assertTrue($this->object->process());
     }
 }
