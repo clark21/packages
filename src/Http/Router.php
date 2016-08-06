@@ -68,6 +68,11 @@ class Router implements RouterInterface
      */
     public function route($method, $pattern, $callback)
     {
+        //hard requirement
+        if (!is_callable($callback)) {
+            throw HttpException::forInvalidRouteCallback();
+        }
+        
         if (strtoupper($method) === 'ALL') {
             $method = '[a-zA-Z0-9]+';
         }
@@ -129,11 +134,13 @@ class Router implements RouterInterface
                 }
             }
 
-            $request->setRoute(array(
-                'event' => $route['event'],
-                'variables' => $variables,
-                'parameters' => $parameters
-            ));
+            $request
+                ->setStage($parameters)
+                ->setRoute(array(
+                    'event' => $route['event'],
+                    'variables' => $variables,
+                    'parameters' => $parameters
+                ));
 
             return call_user_func($callback, $request, ...$args);
         });

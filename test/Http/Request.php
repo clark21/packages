@@ -51,6 +51,11 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
             'foo' => 'bar',
             'bar' => 'foo'
         ));
+		
+        $this->object->set('stage', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
     }
 
     /**
@@ -462,6 +467,45 @@ class Cradle_Http_Request_Test extends PHPUnit_Framework_TestCase
         );
 
         $instance = $this->object->setSession($session);
+        
+        $this->assertInstanceOf('Cradle\Http\Request', $instance);
+    }
+	
+	/**
+     * covers Cradle\Http\Request\StageTrait::getStage
+     */
+    public function testGetStage()
+    {    
+        $this->assertEquals('bar', $this->object->getStage('foo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request\StageTrait::hasStage
+     */
+    public function testHasStage()
+    {    
+        $this->assertTrue($this->object->hasStage('foo'));
+        $this->assertFalse($this->object->hasStage('zoo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request\StageTrait::removeStage
+     */
+    public function testRemoveStage()
+    {
+        $this->object->removeStage('foo');
+        $this->assertFalse($this->object->hasStage('foo'));
+    }
+
+    /**
+     * covers Cradle\Http\Request\StageTrait::setStage
+     */
+    public function testSetStage()
+    {
+        $instance = $this->object->setStage(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
         
         $this->assertInstanceOf('Cradle\Http\Request', $instance);
     }

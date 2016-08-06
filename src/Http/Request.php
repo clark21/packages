@@ -22,6 +22,7 @@ use Cradle\Http\Request\RouteTrait;
 use Cradle\Http\Request\PostTrait;
 use Cradle\Http\Request\ServerTrait;
 use Cradle\Http\Request\SessionTrait;
+use Cradle\Http\Request\StageTrait;
 
 /**
  * Http Request Object
@@ -41,7 +42,8 @@ class Request extends Registry implements RequestInterface
         PostTrait,
         RouteTrait,
         ServerTrait,
-        SessionTrait;
+        SessionTrait,
+        StageTrait;
     
     /**
      * Loads default data given by PHP
@@ -57,24 +59,28 @@ class Request extends Registry implements RequestInterface
             ->setContent(file_get_contents('php://input'));
         
         if (isset($_COOKIE)) {
-            $this->setCookies($_COOKIE);
+            $this->setCookies($_COOKIE)->setStage($_COOKIE);
+        }
+
+        if (isset($_SESSION)) {
+            //so whatever changes will be reflected
+            $this->setSession($_SESSION)->setStage($_SESSION);
+        }
+
+        if (isset($_GET)) {
+            $this->setGet($_GET)->setStage($_GET);
+        }
+
+        if (isset($_POST)) {
+            $this->setPost($_POST)->setStage($_POST);
         }
 
         if (isset($_FILES)) {
             $this->setFiles($_FILES);
         }
 
-        if (isset($_POST)) {
-            $this->setPost($_POST);
-        }
-
         if (isset($_SERVER)) {
             $this->setServer($_SERVER);
-        }
-
-        if (isset($_SESSION)) {
-            //so whatever changes will be reflected
-            $this->setSession($_SESSION);
         }
         
         return $this;
