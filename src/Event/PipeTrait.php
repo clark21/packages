@@ -116,7 +116,7 @@ trait PipeTrait
         }
         
         if (is_callable($name)) {
-            if($name instanceof Closure) {
+            if ($name instanceof Closure) {
                 $name = $this->bindCallback($name);
             }
 
