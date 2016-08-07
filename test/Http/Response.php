@@ -145,6 +145,15 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * covers Cradle\Http\Response::getMessage
+     */
+    public function testGetMessage()
+    {
+        $actual = $this->rest->getMessage();
+        $this->assertEquals('foobar', $actual);
+    }
+
+    /**
      * covers Cradle\Http\Response::getMessageType
      */
     public function testGetMessageType()

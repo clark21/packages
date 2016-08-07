@@ -96,13 +96,6 @@
       <file>test/Http/Response/StatusTrait.php</file>
       <file>test/Http/Router/RouterTrait.php</file>
     </testsuite>
-    <testsuite name="CradlePHP Micro Framework Test Suite">
-      <file>test/Frame/FrameException.php</file>
-      <file>test/Frame/PackageTrait.php</file>
-      <file>test/Frame/Package.php</file>
-      <file>test/Frame/FrameService.php</file>
-      <file>test/Frame/FrameHttp.php</file>
-    </testsuite>
     <testsuite name="CradlePHP Sql Test Suite">
 	  <file>test/Sql/AbstractQuery.php</file>
 	  <file>test/Sql/AbstractSql.php</file>

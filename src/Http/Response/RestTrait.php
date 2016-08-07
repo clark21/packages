@@ -51,6 +51,16 @@ trait RestTrait
     }
 
     /**
+     * Returns the message
+     *
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->getDot('json.message');
+    }
+
+    /**
      * Determines the message type based on error
      *
      * @return string

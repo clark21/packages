@@ -56,17 +56,17 @@ trait StageTrait
     }
     
     /**
-     * Clusters request data together
+     * Clusters request data together softly
      *
      * @param array $data
      *
      * @return StageTrait
      */
-    public function setStage(array $data, $overwrite = true)
+    public function setSoftStage(array $data)
     {
         //one dimenstions soft setter
         foreach ($data as $key => $value) {
-            if (!$overwrite && $this->exists('stage', $key)) {
+            if ($this->exists('stage', $key)) {
                 continue;
             }
             
@@ -74,5 +74,31 @@ trait StageTrait
         }
         
         return $this;
+    }
+
+    /**
+     * Sets $_POST
+     *
+     * @param *array $data
+     * @param mixed  ...$args
+     *
+     * @return PostTrait
+     */
+    public function setStage($data, ...$args)
+    {
+        if (is_array($data)) {
+            //one dimenstions soft setter
+            foreach ($data as $key => $value) {
+                $this->set('stage', $key, $value);
+            }
+
+            return $this;
+        }
+        
+        if (count($args) === 0) {
+            return $this;
+        }
+        
+        return $this->set('stage', $data, ...$args);
     }
 }

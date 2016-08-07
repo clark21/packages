@@ -64,6 +64,20 @@ class Cradle_Http_Request_StageTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * covers Cradle\Http\Request\StageTrait::setSoftStage
+     */
+    public function testSetSoftStage()
+    {
+        $instance = $this->object->setSoftStage(array(
+            'foo' => 'bar',
+            'bar' => 'zoo'
+        ));
+        
+        $this->assertInstanceOf('Cradle\Http\Request\StageTraitStub', $instance);
+		$this->assertEquals('foo', $this->object->getStage('bar'));
+    }
+
+    /**
      * covers Cradle\Http\Request\StageTrait::setStage
      */
     public function testSetStage()

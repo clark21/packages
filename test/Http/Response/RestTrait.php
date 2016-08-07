@@ -66,6 +66,15 @@ class Cradle_Http_Response_RestTrait_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * covers Cradle\Http\Response\RestTrait::getMessage
+     */
+    public function testGetMessage()
+    {
+        $actual = $this->object->getMessage();
+        $this->assertEquals('foobar', $actual);
+    }
+
+    /**
      * covers Cradle\Http\Response\RestTrait::getMessageType
      */
     public function testGetMessageType()

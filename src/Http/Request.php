@@ -59,12 +59,11 @@ class Request extends Registry implements RequestInterface
             ->setContent(file_get_contents('php://input'));
         
         if (isset($_COOKIE)) {
-            $this->setCookies($_COOKIE)->setStage($_COOKIE);
+            $this->setCookies($_COOKIE);
         }
 
         if (isset($_SESSION)) {
-            //so whatever changes will be reflected
-            $this->setSession($_SESSION)->setStage($_SESSION);
+            $this->setSession($_SESSION);
         }
 
         if (isset($_GET)) {

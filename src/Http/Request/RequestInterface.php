@@ -286,5 +286,5 @@ interface RequestInterface
      *
      * @return RequestInterface
      */
-    public function setSession(&$data, ...$args);
+    public function setSession($data, ...$args);
 }

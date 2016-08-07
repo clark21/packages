@@ -116,6 +116,10 @@ trait PipeTrait
         }
         
         if (is_callable($name)) {
+            if($name instanceof Closure) {
+                $name = $this->bindCallback($name);
+            }
+
             call_user_func_array($name, $args);
         }
         

@@ -63,9 +63,13 @@ trait SessionTrait
      *
      * @return SessionTrait
      */
-    public function setSession(&$data, ...$args)
+    public function setSession($data, ...$args)
     {
         if (is_array($data)) {
+            if (isset($_SESSION) && $data !== $_SESSION) {
+                $_SESSION = $data;
+            }
+
             return $this->set('session', $data);
         }
         
@@ -73,6 +77,12 @@ trait SessionTrait
             return $this;
         }
         
-        return $this->set('session', $data, ...$args);
+        $this->set('session', $data, ...$args);
+        
+        if (isset($_SESSION) && $data !== $_SESSION) {
+            $_SESSION = $this->get('session');
+        }
+
+        return $this;
     }
 }
