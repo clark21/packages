@@ -38,11 +38,6 @@ class EventHandler implements EventInterface
     protected $regex = [];
 
      /**
-     * @var array $sprintf listeners with sprintf
-     */
-    protected $sprintf = [];
-
-     /**
      * @var array|bool $meta The meta data for the current event
      */
     protected $meta = true;
@@ -75,26 +70,6 @@ class EventHandler implements EventInterface
                 'pattern' => $event,
                 'variables' => array()
             );
-        }
-        
-        //deal with sprintf
-        foreach ($this->sprintf as $pattern) {
-            $variables = sscanf($event, $pattern);
-            
-            //if it matches
-            //Render %s Body and Render %s Page
-            //will match the same
-            $quote = '#' . preg_replace('#%[a-z]#is', '.+', preg_quote($pattern)) . '#is';
-            if (is_array($variables)
-                && strlen(implode('', $variables))
-                && preg_match($quote, $event)
-            ) {
-                $matches[] = array(
-                    'event' => $event,
-                    'pattern' => $pattern,
-                    'variables' => $variables
-                );
-            }
         }
 
         //deal with regexp
@@ -190,15 +165,23 @@ class EventHandler implements EventInterface
         //set up the observer
         $observer = $this->resolve(EventObserver::class, $callback);
 
-        $this->observers[$event][$priority][] = $observer;
-
-        //is there a sprintf ?
-        if (preg_match('#%[sducoxXbgGeEfF]#', $event)) {
-            $this->sprintf[] = $event;
         //is there a regexp ?
-        } else if (strpos($event, '#') === 0 && strrpos($event, '#') !== 0) {
+        if (strpos($event, '#') === 0 && strrpos($event, '#') !== 0) {
+            $this->regex[] = $event;
+        //is there a sprintf ?
+        //because sscanf will match Render Home Page
+        //and Render Home Body with Render %s Page
+        //so this needs to be pseudo
+        } else if (preg_match('#%[sducoxXbgGeEfF]#s', $event)) {
+            //transform that into a regex
+            $event = preg_quote($event, '#');
+            $event = preg_replace('#%[sducoxXbgGeEfF]#s', '(.+)', $event);
+            $event = '#' . $event . '#s';
+            
             $this->regex[] = $event;
         }
+        
+        $this->observers[$event][$priority][] = $observer;
 
         return $this;
     }

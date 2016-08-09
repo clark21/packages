@@ -290,7 +290,7 @@ class Cradle_Event_EventHandler_Test extends PHPUnit_Framework_TestCase
 				$event = $handler->getMeta();
 				
 				$test->assertEquals('foo zoo bar', $event['event']);
-				$test->assertEquals('foo %s bar', $event['pattern']);
+				$test->assertEquals('#foo (.+) bar#s', $event['pattern']);
 				$test->assertEquals('zoo', $event['variables'][0]);
 				$this->assertCount(3, $event['args']);
 			})
