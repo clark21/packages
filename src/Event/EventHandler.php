@@ -82,7 +82,13 @@ class EventHandler implements EventInterface
             $variables = sscanf($event, $pattern);
             
             //if it matches
-            if (is_array($variables) && strlen(implode('', $variables))) {
+            //Render %s Body and Render %s Page
+            //will match the same
+            $quote = '#' . preg_replace('#%[a-z]#is', '.+', preg_quote($pattern)) . '#is';
+            if (is_array($variables)
+                && strlen(implode('', $variables))
+                && preg_match($quote, $event)
+            ) {
                 $matches[] = array(
                     'event' => $event,
                     'pattern' => $pattern,
