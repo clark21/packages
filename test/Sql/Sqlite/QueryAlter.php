@@ -32,6 +32,16 @@ class Cradle_Sql_Sqlite_QueryAlter_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Sql\Sqlite\QueryAlter::__construct
+     */
+    public function test__construct()
+    {
+        $actual = $this->object->__construct('foobar');
+		
+		$this->assertNull($actual);
+    }
+
+    /**
      * @covers Cradle\Sql\Sqlite\QueryAlter::addField
      */
     public function testAddField()
@@ -72,8 +82,36 @@ class Cradle_Sql_Sqlite_QueryAlter_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetQuery()
     {
-        $actual = $this->object->getQuery();
-		$this->assertEquals('ALTER TABLE "foobar" ;', $actual);
+		$this->object->addField('foobar', array(
+			'type'		=> 'varchar',
+			'default'	=> 'something',
+			'null'		=> true,
+			'attribute'	=> 'unsigned',
+			'length'	=> 255
+		));
+
+		$this->object->changeField('foobar', array(
+			'type'		=> 'varchar',
+			'default'	=> 'something',
+			'null'		=> true,
+			'attribute'	=> 'unsigned',
+			'length'	=> 255
+		));
+
+		$this->object->addUniqueKey('foobar');
+		$this->object->addForeignKey('foobar', 'foo', 'bar');
+		$this->object->removeField('foobar');
+		$this->object->removeForeignKey('foobar');
+		$this->object->removeUniqueKey('foobar');
+        
+		$actual = $this->object->getQuery();
+		$this->assertEquals('ALTER TABLE "foobar" DROP "foobar", 
+ADD "foobar" varchar(255) unsigned DEFAULT NULL, 
+CHANGE "foobar"  "foobar" varchar(255) unsigned DEFAULT NULL, 
+DROP FOREIGN KEY "foobar", 
+ADD FOREIGN KEY "foobar" REFERENCES foo(bar), 
+DROP UNIQUE "foobar", 
+ADD UNIQUE ("foobar");', $actual);
     }
 
     /**

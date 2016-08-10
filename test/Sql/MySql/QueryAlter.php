@@ -32,6 +32,16 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Sql\MySql\QueryAlter::__construct
+     */
+    public function test__construct()
+    {
+        $actual = $this->object->__construct('foobar');
+		
+		$this->assertNull($actual);
+    }
+
+    /**
      * @covers Cradle\Sql\MySql\QueryAlter::addField
      */
     public function testAddField()
@@ -81,8 +91,38 @@ class Cradle_Sql_MySql_QueryAlter_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetQuery()
     {
+		$this->object->addField('foobar', array(
+			'type'		=> 'varchar',
+			'default'	=> 'something',
+			'null'		=> true,
+			'attribute'	=> 'unsigned',
+			'length'	=> 255
+		));
+
+		$this->object->changeField('foobar', array(
+			'type'		=> 'varchar',
+			'default'	=> 'something',
+			'null'		=> true,
+			'attribute'	=> 'unsigned',
+			'length'	=> 255
+		));
+
+		$this->object->addPrimaryKey('foobar');
+		$this->object->addUniqueKey('foobar', array());
+		$this->object->addKey('foobar');
+		$this->object->removeField('foobar');
+		$this->object->removeKey('foobar');
+		$this->object->addPrimaryKey('foobar');
+		$this->object->removeUniqueKey('foobar');
         $actual = $this->object->getQuery();
-		$this->assertEquals('ALTER TABLE `foobar` ;', $actual);
+		$this->assertEquals('ALTER TABLE `foobar` DROP `foobar`, 
+ADD `foobar` varchar(255) unsigned DEFAULT NULL, 
+CHANGE `foobar`  `foobar` varchar(255) unsigned DEFAULT NULL, 
+DROP INDEX `foobar`, 
+ADD INDEX (`foobar`), 
+DROP INDEX `foobar`, 
+ADD UNIQUE (`foobar`), 
+ADD PRIMARY KEY (`foobar`, `foobar`);', $actual);
     }
 
     /**

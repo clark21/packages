@@ -32,6 +32,16 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Sql\MySql\QueryCreate::__construct
+     */
+    public function test__construct()
+    {
+        $actual = $this->object->__construct('foobar');
+		
+		$this->assertNull($actual);
+    }
+
+    /**
      * @covers Cradle\Sql\MySql\QueryCreate::addField
      */
     public function testAddField()
@@ -72,8 +82,19 @@ class Cradle_Sql_MySql_QueryCreate_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetQuery()
     {
+		$this->object->addField('foobar', array(
+			'type'		=> 'varchar',
+			'default'	=> 'something',
+			'null'		=> true,
+			'attribute'	=> 'unsigned',
+			'length'	=> 255
+		));
+		$this->object->addKey('foobar', array('foobar'));
+		$this->object->addPrimaryKey('foobar');
+		$this->object->addUniqueKey('foobar', array('foobar'));
+		$this->object->setComments('foobar');
         $actual = $this->object->getQuery();
-		$this->assertEquals('CREATE TABLE `foobar` ();', $actual);
+		$this->assertEquals('CREATE TABLE `foobar` (`foobar` varchar(255) unsigned DEFAULT NULL, PRIMARY KEY (`foobar`), UNIQUE KEY `foobar` (`foobar`), KEY `foobar` (`foobar`));', $actual);
     }
 
     /**

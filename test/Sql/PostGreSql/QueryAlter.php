@@ -32,6 +32,16 @@ class Cradle_Sql_PostGreSql_QueryAlter_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Sql\PostGreSql\QueryAlter::__construct
+     */
+    public function test__construct()
+    {
+        $actual = $this->object->__construct('foobar');
+		
+		$this->assertNull($actual);
+    }
+
+    /**
      * @covers Cradle\Sql\PostGreSql\QueryAlter::addField
      */
     public function testAddField()
@@ -79,6 +89,30 @@ class Cradle_Sql_PostGreSql_QueryAlter_Test extends PHPUnit_Framework_TestCase
 ALTER COLUMN "foobar", 
 DROP PRIMARY KEY "foobar", 
 ADD PRIMARY KEY ("foobar");', $actual);
+
+		$this->object->addField('foobar', array(
+			'type'		=> 'varchar',
+			'default'	=> 'something',
+			'null'		=> true,
+			'attribute'	=> 'unsigned',
+			'length'	=> 255
+		));
+
+		$this->object->changeField('foobar', array(
+			'type'		=> 'varchar',
+			'default'	=> 'something',
+			'null'		=> true,
+			'attribute'	=> 'unsigned',
+			'length'	=> 255
+		));
+		
+		$actual = $this->object->getQuery();
+		$this->assertEquals('ALTER TABLE "foobar" DROP COLUMN "foobar", 
+ADD "foobar" varchar(255) unsigned DEFAULT NULL, 
+ALTER COLUMN "foobar" varchar(255) unsigned DEFAULT NULL, 
+DROP PRIMARY KEY "foobar", 
+ADD PRIMARY KEY ("foobar");', $actual);
+
     }
 
     /**
