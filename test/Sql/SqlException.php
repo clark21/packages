@@ -75,4 +75,19 @@ class Cradle_Sql_SqlException_Test extends PHPUnit_Framework_TestCase
 		
 		$this->assertEquals('No default database set or was passed.', $message);
     }
+
+    /**
+     * @covers Cradle\Sql\SqlException::forUnknownPDO
+     */
+    public function testForUnknownPDO()
+    {
+		$message = null;
+		try {
+			throw SqlException::forUnknownPDO('foo');
+		} catch(SqlException $e) {
+			$message = $e->getMessage();
+		}
+		
+		$this->assertEquals('Could not match an SQL handler with foo', $message);
+    }
 }
