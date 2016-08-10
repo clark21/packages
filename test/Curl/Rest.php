@@ -40,6 +40,9 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Curl\Rest::__call
+     * @covers Cradle\Curl\Rest::getKey
+     * @covers Cradle\Curl\Rest::getPath
+     * @covers Cradle\Curl\Rest::getRoute
      */
     public function test__call()
     {
@@ -76,12 +79,56 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
 			'data' => array('access_token' => 'required')
 		));
 		
+		$this->object->addRoute('get/post', 'get/posts');
+		
 		$actual = $this->object
 			->setData('access_token', '123')
 			->__call('getPosts', array('foobar1'));
 		
 		$this->assertEquals('bar', $actual['foo']);
+		
+		$actual = $this->object
+			->setData('access_token', '123')
+			->__call('getPost', array('foobar1'));
+		
+		$this->assertEquals('bar', $actual['foo']);
+		
+		$this->object->addRoute('friend/tweet/posts', array(
+			'method' => 'get', 	
+			'route' => '/*/feed',
+			'data' => array('access_token' => 'required')
+		));
+		
+		$actual = $this->object
+			->setData('access_token', '123')
+			->__call('friend', array())
+			->__call('tweet', array())
+			->__call('post', array('foobar1'));
+		
+		$this->assertEquals('bar', $actual['foo']);
+		
+		$trigger = false;
+		try {
+			$this->object->__call('foobarzoo', array(123));
+		} catch(RestException $e) {
+			$trigger = true;
+		}
+		
+		$this->assertTrue($trigger);
     }
+
+	/**
+     * @covers Cradle\Curl\Rest::__construct
+     */
+    public function test__construct()
+    {
+		$actual = $this->object->__construct('http://foobar.com', function($options) {
+			$options['response'] = '{"foo":"bar"}';
+			return $options;
+		});
+		
+		$this->assertNull($actual);
+	}
 
     /**
      * @covers Cradle\Curl\Rest::addHeader
@@ -124,10 +171,42 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Curl\Rest::send
+     * @covers Cradle\Curl\Rest::getMetaData
+     * @covers Cradle\Curl\Rest::getQueryAndPost
+     * @covers Cradle\Curl\Rest::getRequestEncode
+     * @covers Cradle\Curl\Rest::getResponseEncode
+     * @covers Cradle\Curl\Rest::isFieldValid
      */
     public function testSend()
     {
 		$actual = $this->object->send('GET', '/foo/bar');
+		$this->assertEquals('bar', $actual['foo']);
+		
+		$actual = $this->object->send('PUT', '/foo/bar', array(
+			'url' => '/foo/bar',
+			'post' => array('foo' => 'bar'),
+			'agent' => 'Mozilla',
+			'encode' => 'query',
+			'headers' => array('foo' => 'bar')
+		));
+		$this->assertEquals('bar', $actual['foo']);
+		
+		$actual = $this->object->send('PUT', '/foo/bar', array(
+			'url' => '/foo/bar',
+			'post' => array('foo' => 'bar'),
+			'agent' => 'Mozilla',
+			'encode' => 'xml',
+			'headers' => array('foo' => 'bar')
+		));
+		$this->assertEquals('bar', $actual['foo']);
+		
+		$actual = $this->object->send('PUT', '/foo/bar', array(
+			'url' => '/foo/bar',
+			'post' => array('foo' => 'bar'),
+			'agent' => 'Mozilla',
+			'encode' => 'raw',
+			'headers' => array('foo' => 'bar')
+		));
 		$this->assertEquals('bar', $actual['foo']);
     }
 

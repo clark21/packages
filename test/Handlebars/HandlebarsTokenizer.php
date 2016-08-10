@@ -37,6 +37,16 @@ class Cradle_Handlebars_HandlebarsTokenizer_Test extends PHPUnit_Framework_TestC
     {
     }
 
+	/**
+     * @covers Cradle\Handlebars\HandlebarsTokenizer::__construct
+     */
+    public function test__construct()
+    {
+		$actual = $this->object->__construct($this->source);
+		
+		$this->assertNull($actual);
+	}
+
     /**
      * @covers Cradle\Handlebars\HandlebarsTokenizer::tokenize
      */

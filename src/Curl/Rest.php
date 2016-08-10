@@ -20,6 +20,7 @@ use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
 use Cradle\Resolver\StateTrait;
+use Cradle\Resolver\ResolverException;
 
 /**
  * A handy tool for building REST Interfaces
