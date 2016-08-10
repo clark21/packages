@@ -54,8 +54,17 @@ class Cradle_Sql_PostGreSql_QueryCreate_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetQuery()
     {
+		$this->object->addField('foobar', array(
+			'type'		=> 'varchar',
+			'default'	=> 'something',
+			'null'		=> true,
+			'attribute'	=> 'unsigned',
+			'length'	=> 255
+		));
+		$this->object->addPrimaryKey('foobar');
+		$this->object->withOids(123);
         $actual = $this->object->getQuery();
-		$this->assertEquals('CREATE TABLE "foobar" () ;', $actual);
+		$this->assertEquals('CREATE TABLE "foobar" ("foobar" varchar(255) unsigned DEFAULT NULL, PRIMARY KEY ("foobar")) WITH OIDS;', $actual);
     }
 
     /**

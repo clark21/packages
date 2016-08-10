@@ -42,6 +42,8 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testBind()
     {
         $this->assertEquals(':bind0bind', $this->object->bind('foobar'));
+		$this->assertEquals('(:bind1bind,:bind2bind)', $this->object->bind(array('foo','bar')));
+		$this->assertEquals(1, $this->object->bind(1));
     }
 
     /**
@@ -59,6 +61,12 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testDeleteRows()
     {
         $instance = $this->object->deleteRows('foobar', 'foo=bar');
+		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+		
+        $instance = $this->object->deleteRows('foobar', array('foo=%s', 'bar'));
+		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+		
+        $instance = $this->object->deleteRows('foobar', array(array('foo=%s', 'bar')));
 		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
     }
 
@@ -155,7 +163,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     {
         $instance = $this->object->insertRow('foobar', array(
 			'foo' => 'bar',
-			'bar' => 'foo'
+			'bar' => null
 		));
 
 		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
@@ -166,7 +174,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testInsertRows()
     {
-        $instance = $this->object->insertRow('foobar', array(
+        $instance = $this->object->insertRows('foobar', array(
 			array(
 				'foo' => 'bar',
 				'bar' => 'foo'

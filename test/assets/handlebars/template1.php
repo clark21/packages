@@ -134,35 +134,15 @@ return function($data = array()) {
     $buffer .= '</textarea>'."\n";
     $buffer .= "\n";
     $buffer .= '            ';
-    $buffer .= $helper['if'](
-        $data->find('errors.product_detail'), 
-        array(
-            'name' => 'if',
-            'args' => 'if errors.product_detail',
-            'hash' => array(),
-            'fn' => function($context = null) use ($noop, $data, &$helper) {
-                if(is_array($context)) {
-                    $data->push($context);
-                }
+    $buffer .= $data->find('#if errors.product_detail');
 
-                $buffer = '';
-                $buffer .= "\n";
-                $buffer .= '            <span class="help-text text-danger">';
-                $buffer .= htmlspecialchars($data->find('errors.product_detail'), ENT_COMPAT, 'UTF-8');
+    $buffer .= "\n";
+    $buffer .= '            <span class="help-text text-danger">';
+    $buffer .= htmlspecialchars($data->find('errors.product_detail'), ENT_COMPAT, 'UTF-8');
 
-                $buffer .= '</span>'."\n";
-                $buffer .= '            ';
-
-                if(is_array($context)) {
-                    $data->pop();
-                }
-
-                return $buffer;
-            },
-
-            'inverse' => $noop
-        )
-    );
+    $buffer .= '</span>'."\n";
+    $buffer .= '            ';
+    $buffer .= $data->find('/if');
 
     $buffer .= "\n";
     $buffer .= '        </div>'."\n";

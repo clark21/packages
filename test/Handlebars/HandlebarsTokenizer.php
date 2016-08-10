@@ -49,6 +49,9 @@ class Cradle_Handlebars_HandlebarsTokenizer_Test extends PHPUnit_Framework_TestC
 
     /**
      * @covers Cradle\Handlebars\HandlebarsTokenizer::tokenize
+     * @covers Cradle\Handlebars\HandlebarsTokenizer::addNode
+     * @covers Cradle\Handlebars\HandlebarsTokenizer::flushText
+     * @covers Cradle\Handlebars\HandlebarsTokenizer::findVariable
      */
     public function testTokenize()
     {
