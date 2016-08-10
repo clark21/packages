@@ -74,7 +74,12 @@ class Cradle_Http_Request_SessionTrait_Test extends PHPUnit_Framework_TestCase
         );
 
         $instance = $this->object->setSession($session);
-        
+        $this->assertInstanceOf('Cradle\Http\Request\SessionTraitStub', $instance);
+
+        $instance = $this->object->setSession('zoo');
+        $this->assertInstanceOf('Cradle\Http\Request\SessionTraitStub', $instance);
+
+        $instance = $this->object->setSession('zoo', 'foo', 'bar');
         $this->assertInstanceOf('Cradle\Http\Request\SessionTraitStub', $instance);
     }
 }
