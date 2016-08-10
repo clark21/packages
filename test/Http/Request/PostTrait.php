@@ -74,6 +74,12 @@ class Cradle_Http_Request_PostTrait_Test extends PHPUnit_Framework_TestCase
         ));
         
         $this->assertInstanceOf('Cradle\Http\Request\PostTraitStub', $instance);
+		
+		$instance = $this->object->setPost('zoo');
+        $this->assertInstanceOf('Cradle\Http\Request\PostTraitStub', $instance);
+
+        $instance = $this->object->setPost('zoo', 'foo', 'bar');
+        $this->assertInstanceOf('Cradle\Http\Request\PostTraitStub', $instance);
     }
 }
 

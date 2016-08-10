@@ -74,6 +74,12 @@ class Cradle_Http_Request_CookieTrait_Test extends PHPUnit_Framework_TestCase
         ));
         
         $this->assertInstanceOf('Cradle\Http\Request\CookieTraitStub', $instance);
+		
+		$instance = $this->object->setCookies('zoo');
+        $this->assertInstanceOf('Cradle\Http\Request\CookieTraitStub', $instance);
+
+        $instance = $this->object->setCookies('zoo', 'foo', 'bar');
+        $this->assertInstanceOf('Cradle\Http\Request\CookieTraitStub', $instance);
     }
 }
 

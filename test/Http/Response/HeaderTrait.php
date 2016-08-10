@@ -44,6 +44,9 @@ class Cradle_Http_Response_HeaderTrait_Test extends PHPUnit_Framework_TestCase
     {
         $instance = $this->object->addHeader('zoo', 'foo');
         $this->assertInstanceOf('Cradle\Http\Response\HeaderTraitStub', $instance);
+
+        $instance = $this->object->addHeader('zoo');
+        $this->assertInstanceOf('Cradle\Http\Response\HeaderTraitStub', $instance);
     }
 
     /**

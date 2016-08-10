@@ -74,6 +74,12 @@ class Cradle_Http_Request_FileTrait_Test extends PHPUnit_Framework_TestCase
         ));
         
         $this->assertInstanceOf('Cradle\Http\Request\FileTraitStub', $instance);
+		
+		$instance = $this->object->setFiles('zoo');
+        $this->assertInstanceOf('Cradle\Http\Request\FileTraitStub', $instance);
+
+        $instance = $this->object->setFiles('zoo', 'foo', 'bar');
+        $this->assertInstanceOf('Cradle\Http\Request\FileTraitStub', $instance);
     }
 }
 
