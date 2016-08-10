@@ -34,6 +34,11 @@ trait PipeTrait
     protected $protocols = array();
 
     /**
+     * @var array $flows are short lived and volatile
+     */
+    public static $flows = array();
+
+    /**
      * Sets up a process flow
      *
      * @param *string         $name     The name of this rule
@@ -43,24 +48,9 @@ trait PipeTrait
      */
     public function flow($event, ...$flow)
     {
-        //listen for the main
-        $this->on($event, function (...$args) use (&$flow, $event) {
-            foreach ($flow as $i => $step) {
-                //subflows will trigger separately
-                if (is_array($step)) {
-                    continue;
-                }
-
-                //rule the subtasks first
-                $j = 1;
-
-                while (isset($flow[$i + $j]) && is_array($flow[$i + $j])) {
-                    $this->flow(...$flow[$i + $j]);
-                    $j++;
-                }
-
-                $this->trigger($step, ...$args);
-            }
+        //listen for the main on global
+        $this->on($event, function (...$args) use (&$flow) {
+            $this->triggerFlow($flow, ...$args);
         });
 
         return $this;
@@ -158,6 +148,54 @@ trait PipeTrait
     }
     
     /**
+     * Separate trigger for flows
+     * has nothing to do with `trigger()`
+     *
+     * @param *array $flow
+     * @param mixed  ...$args
+     *
+     * @return PipeTrait
+     */
+    public function triggerFlow(array $flow, ...$args)
+    {
+        //if the flow doesn't have
+        //an event and a handler
+        if (count($flow) < 2) {
+            return $this;
+        }
+
+        foreach ($flow as $i => $step) {
+            //subflows will trigger separately
+            if (is_array($step)) {
+                continue;
+            }
+
+            //rule the subtasks first
+            $j = 1;
+            
+            while (isset($flow[$i + $j]) && is_array($flow[$i + $j])) {
+                //subflows should have
+                //an event and a handler
+                if (count($flow[$i + $j]) > 1) {
+                    //the subflow is valid
+                    //extract the event out
+                    $event = array_shift($flow[$i + $j]);
+                    self::$flows[$event] = $flow[$i + $j];
+                }
+                
+                $j++;
+            }
+            
+            //now trigger the event
+            $this->trigger($step, ...$args);
+            
+            self::$flows = array();
+        }
+
+        return $this;
+    }
+    
+    /**
      * Calls a protocol
      *
      * @param *string $protocol In the form of protocol://event
@@ -201,6 +239,24 @@ trait PipeTrait
         //we don't want to throw an error
         //because it could just be a pseudo
         //placeholder
+        return $this;
+    }
+    
+    /**
+     * Sets the subflow to be called
+     * when there is an array fork
+     *
+     * @param string $event
+     * @param mixed  ...$args
+     *
+     * @return PipeTrait
+     */
+    public function triggerSubflow($event, ...$args)
+    {
+        if (isset(self::$flows[$event])) {
+            $this->triggerFlow(self::$flows[$event], ...$args);
+        }
+
         return $this;
     }
 }

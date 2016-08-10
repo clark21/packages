@@ -105,7 +105,7 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
 			)
 			->on('step4', function($trigger, $foo, $bar) {
 				$trigger->success1 = true;
-				$this->triggerEvent('step5', $trigger, $foo, $bar);
+				$this->triggerSubflow('step5', $trigger, $foo, $bar);
 			})
 			->on('step6', function($trigger, $foo, $bar) {
 				$trigger->success2 = true;
@@ -167,6 +167,81 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
 		$this->assertTrue($trigger->success3);
 		$this->assertTrue($trigger->success4);
 		$this->assertEquals(24, $trigger->total);
+    }
+
+    /**
+     * @covers Cradle\Event\PipeTrait::triggerFlow
+     * @covers Cradle\Event\PipeTrait::triggerSubflow
+     */
+    public function testTriggerFlow()
+    {
+		$trigger = new StdClass();
+		$trigger->success1 = null;
+		$trigger->success2 = null;
+		$trigger->success3 = null;
+		$trigger->total = 0;
+		
+        $instance = $this
+			->object
+			
+			->on('step1', function($trigger, $foo, $bar) {
+				$foo += 1;
+				$bar += 2;
+				$trigger->success1 = true;
+				$trigger->total += $foo + $bar;
+			})
+			->on('step2', function($trigger, $foo, $bar) {
+				$foo += 1;
+				$bar += 2;
+				$trigger->success2 = true;
+				$trigger->total += $foo + $bar;
+			})
+			->on('step3', function($trigger, $foo, $bar) {
+				$foo += 1;
+				$bar += 2;
+				$trigger->success3 = true;
+				
+				$trigger->total += $foo + $bar;
+			})
+			->triggerFlow(array(
+				'step1',
+				'step2',
+				'step3'
+			), $trigger, 1, 2);
+		
+		$this->assertInstanceOf('Cradle\Event\PipeTraitStub', $instance);
+		$this->assertTrue($trigger->success1);
+		$this->assertTrue($trigger->success2);
+		$this->assertTrue($trigger->success3);
+		$this->assertEquals(18, $trigger->total);
+		
+		$trigger = new StdClass();
+		$trigger->success1 = null;
+		$trigger->success2 = null;
+		$trigger->success3 = null;
+		
+		$instance = $this
+			->object
+			->on('step4', function($trigger, $foo, $bar) {
+				$trigger->success1 = true;
+				$this->triggerSubflow('step5', $trigger, $foo, $bar);
+			})
+			->on('step6', function($trigger, $foo, $bar) {
+				$trigger->success2 = true;
+			})
+			->triggerFlow(array(
+				'step4',
+				array(
+					'step5',
+					'step6',
+					'foo://bar@foo',
+					'foo://bar::foo'
+				)
+			), $trigger, 1, 2);
+		
+		$this->assertInstanceOf('Cradle\Event\PipeTraitStub', $instance);
+		$this->assertTrue($trigger->success1);
+		$this->assertTrue($trigger->success2);
     }
 
     /**
