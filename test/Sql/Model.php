@@ -24,7 +24,8 @@ class Cradle_Sql_Model_Test extends PHPUnit_Framework_TestCase
 		$this->object
 			->setDatabase(new AbstractSqlStub)
 			->setFoobarTitle('Foo Bar 1')
-			->setFoobarDate('January 12, 2015');
+			->setFoobarDate('January 12, 2015')
+			->setFooDate(1234567890);
     }
 
     /**
@@ -42,34 +43,183 @@ class Cradle_Sql_Model_Test extends PHPUnit_Framework_TestCase
     {
 		$actual = $this->object->formatTime('foobar_date');
 		$this->assertEquals('2015-01-12 12:00:00', $actual->getFoobarDate());
+		$actual = $this->object->formatTime('foo_date');
+		$this->assertEquals('2009-02-13 11:31:30', $actual->getFooDate());
+		$actual = $this->object->formatTime('foo_title');
+		$this->assertEquals('Foo Bar 1', $actual->getFoobarTitle());
     }
 
     /**
      * @covers Cradle\Sql\Model::insert
+	 * @covers Cradle\Sql\Model::getMeta
+	 * @covers Cradle\Sql\Model::getValidColumns
      */
     public function testInsert()
     {
 		$instance = $this->object->insert('foo');
 		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
 		$this->assertEquals(123, $this->object->getFoobarId());
+		
+		$instance = $this->object->setTable('foo')->insert();
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
+		$this->assertEquals(123, $this->object->getFoobarId());
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->insert();
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertTrue($triggered);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->insert('foo');
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertTrue($triggered);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->insert('foo', new AbstractSqlStub);
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertFalse($triggered);
     }
 
     /**
      * @covers Cradle\Sql\Model::remove
+	 * @covers Cradle\Sql\Model::getMeta
+	 * @covers Cradle\Sql\Model::getValidColumns
      */
     public function testRemove()
     {
-		$instance = $this->object->remove('foo');
+		$instance = $this->object->setFoobarId(321)->remove('foo');
 		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
+		
+		$instance = $this->object->setFoobarId(321)->setTable('foo')->remove();
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarId(321)
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->remove();
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertTrue($triggered);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarId(321)
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->remove('foo');
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertTrue($triggered);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarId(321)
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->remove('foo', new AbstractSqlStub, 'foobar_id');
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertFalse($triggered);
     }
 
     /**
      * @covers Cradle\Sql\Model::save
+	 * @covers Cradle\Sql\Model::isPrimarySet
      */
     public function testSave()
     {
 		$instance = $this->object->save('foo');
 		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
+		
+		$instance = $this->object->setTable('foo')->save();
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->save();
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertTrue($triggered);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->save('foo');
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertTrue($triggered);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarId(321)
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->save('foo', new AbstractSqlStub, 'foobar_id');
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertFalse($triggered);
     }
 
     /**
@@ -83,7 +233,6 @@ class Cradle_Sql_Model_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\Model::setTable
-     * @todo   Implement testSetTable().
      */
     public function testSetTable()
     {
@@ -93,12 +242,59 @@ class Cradle_Sql_Model_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Sql\Model::update
-     * @todo   Implement testUpdate().
+	 * @covers Cradle\Sql\Model::getMeta
+	 * @covers Cradle\Sql\Model::getValidColumns
      */
     public function testUpdate()
     {
 		$instance = $this->object->setFoobarId(321)->update('foo');
 		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
+	
+		$instance = $this->object->setFoobarId(321)->setTable('foo')->update();
+		$this->assertInstanceOf('Cradle\Sql\Model', $instance);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->update();
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertTrue($triggered);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->update('foo');
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertTrue($triggered);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Model();
+			$this->object
+				->setFoobarId(321)
+				->setFoobarTitle('Foo Bar 1')
+				->setFoobarDate('January 12, 2015')
+				->setFooDate(1234567890)
+				->update('foo', new AbstractSqlStub, 'foobar_id');
+		} catch(SqlException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertFalse($triggered);
     }
 }
 

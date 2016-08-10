@@ -75,12 +75,6 @@ class Cradle_Http_Request_StageTrait_Test extends PHPUnit_Framework_TestCase
         
         $this->assertInstanceOf('Cradle\Http\Request\StageTraitStub', $instance);
 		$this->assertEquals('foo', $this->object->getStage('bar'));
-		
-		$instance = $this->object->setSoftStage('zoo');
-        $this->assertInstanceOf('Cradle\Http\Request\StageTraitStub', $instance);
-
-        $instance = $this->object->setSoftStage('zoo', 'foo', 'bar');
-        $this->assertInstanceOf('Cradle\Http\Request\StageTraitStub', $instance);
     }
 
     /**
@@ -93,6 +87,9 @@ class Cradle_Http_Request_StageTrait_Test extends PHPUnit_Framework_TestCase
             'bar' => 'foo'
         ));
         
+        $this->assertInstanceOf('Cradle\Http\Request\StageTraitStub', $instance);
+		
+		$instance = $this->object->setStage();
         $this->assertInstanceOf('Cradle\Http\Request\StageTraitStub', $instance);
 		
 		$instance = $this->object->setStage('zoo');

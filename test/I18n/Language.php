@@ -47,6 +47,25 @@ class Cradle_I18n_Language_Test extends PHPUnit_Framework_TestCase
 			->__call('getGoodBye', [' ']);
 		
 		$this->assertEquals('pa alaam', $actual);
+		
+		$triggered = false;
+		try {	
+			$this->object->__call('foobar', []);
+		} catch(LanguageException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertTrue($triggered);
+    }
+
+    /**
+     * @covers Cradle\I18n\Language::__construct
+     */
+    public function test__construct()
+    {
+		$actual = $this->object->__construct(__DIR__.'/../assets/language/tagalog.php');
+		
+		$this->assertNull($actual);
     }
 
     /**
@@ -56,6 +75,9 @@ class Cradle_I18n_Language_Test extends PHPUnit_Framework_TestCase
     {
         $string = $this->object->get('How are you?');
 		$this->assertEquals('Kumusta ka?', $string);
+		
+        $string = $this->object->get('How are you??');
+		$this->assertEquals('How are you??', $string);
     }
 
     /**
@@ -78,6 +100,16 @@ class Cradle_I18n_Language_Test extends PHPUnit_Framework_TestCase
 			->save();
 		
 		$this->assertInstanceOf('Cradle\I18n\Language', $class);
+		
+		$triggered = false;
+		try {	
+			$this->object = new Language();
+			$this->object->save();
+		} catch(LanguageException $e) {
+			$triggered = true;
+		}
+		
+		$this->assertTrue($triggered);
     }
 
     /**

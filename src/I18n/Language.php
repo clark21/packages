@@ -16,6 +16,7 @@ use Cradle\Data\ArrayAccessTrait;
 use Cradle\Data\IteratorTrait;
 use Cradle\Data\MagicTrait;
 use Cradle\Data\GeneratorTrait;
+use Cradle\Data\DataException;
 
 use Cradle\Event\EventTrait;
 
@@ -27,6 +28,7 @@ use Cradle\Profiler\InspectorTrait;
 use Cradle\Profiler\LoggerTrait;
 
 use Cradle\Resolver\StateTrait;
+use Cradle\Resolver\ResolverException;
 
 /**
  * Language class implementation
@@ -140,7 +142,7 @@ class Language implements ArrayAccess, Iterator
     public function save($file = null)
     {
         if (is_null($file) && is_null($this->file)) {
-            throw I18n::forFileNotSet();
+            throw LanguageException::forFileNotSet();
         }
 
         if (is_null($file)) {

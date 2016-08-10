@@ -33,6 +33,15 @@ class Cradle_Sql_MySql_QuerySubSelect_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Sql\MySql\QuerySubSelect::__construct
+     */
+    public function test__construct()
+    {
+        $actual = $this->object->__construct(new QuerySelect);
+		$this->assertNull($actual);
+    }
+
+    /**
      * @covers Cradle\Sql\MySql\QuerySubSelect::getQuery
      */
     public function testGetQuery()

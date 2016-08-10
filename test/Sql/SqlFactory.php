@@ -37,5 +37,9 @@ class Cradle_Sql_SqlFactory_Test extends PHPUnit_Framework_TestCase
 		$pgsql = SqlFactory::load(include(__DIR__.'/../assets/sql/pgsql.php'));
 		
 		$this->assertInstanceOf('Cradle\Sql\PostGreSql', $pgsql);
+		
+		$sqlite = SqlFactory::load(include(__DIR__.'/../assets/sql/sqlite.php'));
+		
+		$this->assertInstanceOf('Cradle\Sql\Sqlite', $sqlite);
     }
 }

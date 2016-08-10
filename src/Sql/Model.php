@@ -367,41 +367,6 @@ class Model extends DataModel
     }
     
     /**
-     * Checks to see if the model is populated
-     *
-     * @param string|null         $table    Table name
-     * @param SqlInterface|null $database Database object
-     *
-     * @return Model
-     */
-    protected function isLoaded($table = null, SqlInterface $database = null)
-    {
-        //if no table
-        if (is_null($table)) {
-            //if no default table either
-            if (!$this->table) {
-                return false;
-            }
-            
-            $table = $this->table;
-        }
-        
-        //if no database
-        if (is_null($database)) {
-            //and no default database
-            if (!$this->database) {
-                return false;
-            }
-            
-            $database = $this->database;
-        }
-        
-        $meta = $this->getMeta($table, $database);
-        
-        return $this->isPrimarySet($meta[self::PRIMARY]);
-    }
-    
-    /**
      * Checks to see if we have a primary value/s set
      *
      * @param array $primary List of primary columns
