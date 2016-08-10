@@ -66,6 +66,21 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
 		
 		$actual = $this->object->__call('deleteFriendTweet', array('foobar1'));
 		$this->assertEquals('bar', $actual['foo']);
+		
+		$actual = $this->object->__call('removeFriendTweet', array('foobar1'));
+		$this->assertEquals('bar', $actual['foo']);
+		
+		$this->object->addRoute('get/posts', array(
+			'method' => 'get', 	
+			'route' => '/*/feed',
+			'data' => array('access_token' => 'required')
+		));
+		
+		$actual = $this->object
+			->setData('access_token', '123')
+			->__call('getPosts', array('foobar1'));
+		
+		$this->assertEquals('bar', $actual['foo']);
     }
 
     /**

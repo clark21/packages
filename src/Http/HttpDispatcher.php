@@ -42,6 +42,40 @@ class HttpDispatcher implements DispatcherInterface
      * @var bool $successful If we were able to output it
      */
     protected $successful = false;
+       
+    /**
+     * @var array $mapCache The global curl callback
+     */
+    protected static $mapCache = array();
+       
+    /**
+     * @var array $map The actual response callbacks
+     */
+    protected $map = array();
+    
+    /**
+     * Set response maps, which is usually good for testing
+     *
+     * @param Closure $output
+     * @param Closure $redirect
+     */
+    public function __construct(Closure $output = null, Closure $redirect = null)
+    {
+        if (empty(self::$mapCache)) {
+            self::$mapCache['output'] = include(__DIR__ . '/map/output.php');
+            self::$mapCache['redirect'] = include(__DIR__ . '/map/redirect.php');
+        }
+
+        $this->map = self::$mapCache;
+        
+        if (!is_null($output)) {
+            $this->map['output'] = $output;
+        }
+        
+        if (!is_null($redirect)) {
+            $this->map['redirect'] = $redirect;
+        }
+    }
     
     /**
      * Starts to process the request
@@ -101,62 +135,10 @@ class HttpDispatcher implements DispatcherInterface
             return $body;
         }
         
-        if (is_int($code)) {
-            http_response_code($code);
-        }
+        //now map it out
+        call_user_func($this->map['output'], $code, $headers, $body);
         
-        foreach ($headers as $name => $value) {
-            if (!$value) {
-                header($name);
-                continue;
-            }
-            
-            header($name.':'.$value);
-        }
-        
-        //there can be things echoed already
-        //let's capture it so we can pass it later
-        $trailer = ob_get_contents();
-
-        //make sure nothing is already in the buffer
-        ob_end_clean();
-        
-        //close the connection
-        header(self::HEADER_CONNECTION_CLOSE);
-        
-        //add content encoding only if there is none set
-        if (!isset($headers['Content-Encoding'])
-            && !isset($headers['content-encoding'])
-        ) {
-            header(self::HEADER_CONTENT_ENCODING);
-        }
-        
-        //if they were waiting for a response
-        //and they hit stop, it should mean that
-        //we should also stop
-        ignore_user_abort(false);
-        
-        //startup the buffer again
-        ob_start();
-        
-        //business as usual
-        echo $trailer;
-        echo $body;
         $this->successful = true;
-        
-        //send the content size
-        $size = ob_get_length();
-        header(sprintf(self::HEADER_CONTENT_LENGTH, $size));
-        
-        //send out the buffer
-        //clean up the buffer
-        //3 times a charm
-        ob_end_flush();
-        flush();
-        ob_end_clean();
-        
-        //sorry no more sessions
-        session_write_close();
         
         return $this;
     }
@@ -174,34 +156,8 @@ class HttpDispatcher implements DispatcherInterface
             return $path;
         }
         
-        if ($force) {
-            header('Location: ' . $path);
-            exit;
-        }
-        
-        //if they were waiting for a response
-        //and they hit stop, it should mean that
-        //we should also stop
-        ignore_user_abort(false);
-        
-        header('Location: ' . $path);
-        
-        //close the connection
-        header(self::HEADER_CONNECTION_CLOSE);
-        
-        //add content encoding
-        header(self::HEADER_CONTENT_ENCODING);
-        
-        //add 0 size
-        header(sprintf(self::HEADER_CONTENT_LENGTH, 0));
-        
-        //clean up the buffer
-        //2 times a charm
-        flush();
-        ob_flush();
-        
-        //sorry no more sessions
-        session_write_close();
+        //now map it out
+        call_user_func($this->map['redirect'], $path, $force);
         
         return $this;
     }

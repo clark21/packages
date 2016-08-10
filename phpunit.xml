@@ -158,6 +158,8 @@
 		<file>src/Http/Request/RequestInterface.php</file>
 		<file>src/Http/Response/ResponseInterface.php</file>
 		<file>src/Http/Router/RouterInterface.php</file>
+		<file>src/Http/map/output.php</file>
+		<file>src/Http/map/redirect.php</file>
 		<file>src/Profiler/InspectorInterface.php</file>
 		<file>src/Resolver/ResolverInterface.php</file>
 		<file>src/Sql/SqlInterface.php</file>
