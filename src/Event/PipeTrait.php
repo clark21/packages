@@ -36,7 +36,7 @@ trait PipeTrait
     /**
      * @var array $flows are short lived and volatile
      */
-    public static $flows = array();
+    protected static $flows = array();
 
     /**
      * Sets up a process flow
@@ -55,7 +55,7 @@ trait PipeTrait
 
         return $this;
     }
-    
+
     /**
      * Adds a protocol used to custom parse an event name
      *
@@ -68,7 +68,7 @@ trait PipeTrait
     {
         //create a space
         $this->protocols[$name] = $callback;
-        
+
         return $this;
     }
 
@@ -90,21 +90,21 @@ trait PipeTrait
             if (strpos($name, '://') !== false) {
                 return $this->triggerProtocol($name, ...$args);
             }
-    
+
             //they can call a class
             if (strpos($name, '@') !== false) {
                 return $this->triggerController($name, ...$args);
             }
-            
+
             //unless it's a static call
             if (strpos($name, '::') !== false && is_callable($name)) {
                 call_user_func_array($name, $args);
                 return $this;
             }
-            
+
             return $this->triggerEvent($name, ...$args);
         }
-        
+
         if (is_callable($name)) {
             if ($name instanceof Closure) {
                 $name = $this->bindCallback($name);
@@ -112,14 +112,14 @@ trait PipeTrait
 
             call_user_func_array($name, $args);
         }
-        
+
         //we can only deal with callable and strings
         //we don't want to throw an error
         //because it could just be a pseudo
         //placeholder
         return $this;
     }
-    
+
     /**
      * Calls a controller method
      *
@@ -132,21 +132,21 @@ trait PipeTrait
     {
         //extract the class and method
         list($class, $method) = explode('@', $controller, 2);
-        
+
         //if the class exists
         if (class_exists($class)) {
             //instantiate it
             $instance = new $class();
-            
+
             //does the method exist ?
             if (method_exists($instance, $method)) {
                 call_user_func_array([$instance, $method], $args);
             }
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Separate trigger for flows
      * has nothing to do with `trigger()`
@@ -172,7 +172,7 @@ trait PipeTrait
 
             //rule the subtasks first
             $j = 1;
-            
+
             while (isset($flow[$i + $j]) && is_array($flow[$i + $j])) {
                 //subflows should have
                 //an event and a handler
@@ -182,19 +182,19 @@ trait PipeTrait
                     $event = array_shift($flow[$i + $j]);
                     self::$flows[$event] = $flow[$i + $j];
                 }
-                
+
                 $j++;
             }
-            
+
             //now trigger the event
             $this->trigger($step, ...$args);
-            
+
             self::$flows = array();
         }
 
         return $this;
     }
-    
+
     /**
      * Calls a protocol
      *
@@ -206,7 +206,7 @@ trait PipeTrait
     public function triggerProtocol($protocol, ...$args)
     {
         list($protocol, $name) = explode('://', $protocol, 2);
-        
+
         //if it's not a registered protocol
         if (!isset($this->protocols[$protocol])) {
             //oops?
@@ -215,16 +215,16 @@ trait PipeTrait
 
         //get the protocol
         $protocol = $this->protocols[$protocol];
-        
+
         //we should deal with strings
         //then callables respectively
         //to allow overriding
-        
+
         //they can call a class
         if (is_string($protocol) && strpos($protocol, '@') !== false) {
             return $this->triggerController($protocol, $name, ...$args);
         }
-        
+
         //late binding ?
         if ($protocol instanceof Closure) {
             $protocol = $this->bindCallback($protocol);
@@ -234,14 +234,14 @@ trait PipeTrait
             //call the protocol
             call_user_func($protocol, $name, ...$args);
         }
-        
+
         //we can only deal with callable and strings
         //we don't want to throw an error
         //because it could just be a pseudo
         //placeholder
         return $this;
     }
-    
+
     /**
      * Sets the subflow to be called
      * when there is an array fork
