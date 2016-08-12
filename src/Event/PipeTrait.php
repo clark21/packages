@@ -158,12 +158,6 @@ trait PipeTrait
      */
     public function triggerFlow(array $flow, ...$args)
     {
-        //if the flow doesn't have
-        //an event and a handler
-        if (count($flow) < 2) {
-            return $this;
-        }
-
         foreach ($flow as $i => $step) {
             //subflows will trigger separately
             if (is_array($step)) {
