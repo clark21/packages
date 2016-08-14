@@ -15,6 +15,7 @@ use Cradle\Http\Response\ResponseInterface;
 
 use Cradle\Http\Response\ContentTrait;
 use Cradle\Http\Response\HeaderTrait;
+use Cradle\Http\Response\PageTrait;
 use Cradle\Http\Response\RestTrait;
 use Cradle\Http\Response\StatusTrait;
 
@@ -30,9 +31,10 @@ class Response extends Registry implements ResponseInterface
 {
     use ContentTrait,
         HeaderTrait,
+        PageTrait,
         RestTrait,
         StatusTrait;
-    
+
     /**
      * Loads default data
      *
@@ -43,7 +45,7 @@ class Response extends Registry implements ResponseInterface
         $this
             ->addHeader('Content-Type', 'text/html; charset=utf-8')
             ->setStatus(200, '200 OK');
-        
+
         return $this;
     }
 }

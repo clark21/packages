@@ -36,9 +36,20 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
                 'foo' => 'bar',
                 'bar' => 'foo'
             ),
+            'page' => array(
+                'title' => 'foobar',
+                'flash' => array(
+                    'message' => 'bar',
+                    'type' => 'foo'
+                ),
+                'meta' => array(
+                    'foo' => 'bar',
+                    'bar' => 'foo'
+                )
+            ),
             'body' => 'foobar'
         ));
-        
+
         $this->rest = new Response(array(
             'code' => 200,
             'headers' => array(
@@ -51,7 +62,7 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
                 'validation' => array(
                     'foo' => 'bar',
                     'bar' => 'foo'
-                ), 
+                ),
                 'results' => array(
                     'foo' => 'bar',
                     'bar' => 'foo'
@@ -100,7 +111,7 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
     public function testSetContent()
     {
         $instance = $this->object->setContent('foobar');
-        
+
         $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 
@@ -122,6 +133,91 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('foo', $actual);
         $actual = $this->object->getHeaders('foo');
         $this->assertEquals('bar', $actual);
+    }
+
+    /**
+     * covers Cradle\Http\Response\PageTrait::addMeta
+     */
+    public function testAddMeta()
+    {
+        $instance = $this->object->addMeta('zoo', 'foo');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
+    }
+
+    /**
+     * covers Cradle\Http\Response\PageTrait::getFlash
+     */
+    public function testGetFlash()
+    {
+        $actual = $this->object->getFlash();
+        $this->assertArrayHasKey('message', $actual);
+        $this->assertEquals('foo', $actual['type']);
+    }
+
+    /**
+     * covers Cradle\Http\Response\PageTrait::getMeta
+     */
+    public function testGetMeta()
+    {
+        $actual = $this->object->getMeta();
+        $this->assertArrayHasKey('foo', $actual);
+        $actual = $this->object->getMeta('foo');
+        $this->assertEquals('bar', $actual);
+    }
+
+    /**
+     * covers Cradle\Http\Response\PageTrait::getPage
+     */
+    public function testGetPage()
+    {
+        $actual = $this->object->getPage();
+        $this->assertArrayHasKey('title', $actual);
+        $actual = $this->object->getPage('flash', 'message');
+        $this->assertEquals('bar', $actual);
+    }
+
+    /**
+     * covers Cradle\Http\Response\PageTrait::hasPage
+     */
+    public function testHasPage()
+    {
+        $this->assertTrue($this->object->hasPage());
+    }
+
+    /**
+     * covers Cradle\Http\Response\PageTrait::removePage
+     */
+    public function testRemovePage()
+    {
+        $instance = $this->object->removePage('meta');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
+    }
+
+    /**
+     * covers Cradle\Http\Response\PageTrait::setFlash
+     */
+    public function testSetFlash()
+    {
+        $instance = $this->object->setFlash('foo', 'bar');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
+    }
+
+    /**
+     * covers Cradle\Http\Response\PageTrait::setPage
+     */
+    public function testSetPage()
+    {
+        $instance = $this->object->setPage('foo', 'bar');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
+    }
+
+    /**
+     * covers Cradle\Http\Response\PageTrait::setTitle
+     */
+    public function testSetTitle()
+    {
+        $instance = $this->object->setTitle('foo');
+        $this->assertInstanceOf('Cradle\Http\Response', $instance);
     }
 
     /**
@@ -160,11 +256,11 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
     {
         $actual = $this->rest->getMessageType();
         $this->assertEquals('error', $actual);
-        
+
         $this->rest->setError(false);
         $actual = $this->rest->getMessageType();
         $this->assertEquals('success', $actual);
-        
+
         $this->rest->setError(null);
         $actual = $this->rest->getMessageType();
         $this->assertEquals('info', $actual);
@@ -223,10 +319,10 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
     public function testIsError()
     {
         $this->assertTrue($this->rest->isError());
-        
+
         $this->rest->setError(false);
         $this->assertFalse($this->rest->isError());
-        
+
         $this->rest->setError(null);
         $this->assertFalse($this->rest->isError());
     }
@@ -237,10 +333,10 @@ class Cradle_Http_Response_Test extends PHPUnit_Framework_TestCase
     public function testIsSuccess()
     {
         $this->assertFalse($this->rest->isSuccess());
-        
+
         $this->rest->setError(false);
         $this->assertTrue($this->rest->isSuccess());
-        
+
         $this->rest->setError(null);
         $this->assertFalse($this->rest->isSuccess());
     }
