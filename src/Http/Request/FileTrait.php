@@ -30,7 +30,7 @@ trait FileTrait
     {
         return $this->get('files', ...$args);
     }
-    
+
     /**
      * Removes $_FILES given name or all $_FILES
      *
@@ -42,7 +42,7 @@ trait FileTrait
     {
         return $this->remove('files', ...$args);
     }
-    
+
     /**
      * Returns true if has $_FILES given name or if $_FILES is set
      *
@@ -66,13 +66,13 @@ trait FileTrait
     public function setFiles($data, ...$args)
     {
         if (is_array($data)) {
-            return $this->set('cookie', $data);
+            return $this->set('files', $data);
         }
-        
+
         if (count($args) === 0) {
             return $this;
         }
-        
+
         return $this->set('files', $data, ...$args);
     }
 }
