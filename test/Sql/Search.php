@@ -37,7 +37,7 @@ class Cradle_Sql_Search_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Cradle\Sql\Sql\Search::__construct
+     * @covers Cradle\Sql\Search::__construct
      */
     public function test__construct()
     {
