@@ -36,15 +36,15 @@ trait LoggerTrait
     public function addLogger($callback)
     {
         if (!is_callable($callback)) {
-            throw ProfilerException::forInvalidCallback();
+            throw LoggerException::forInvalidCallback();
         }
 
         if ($callback instanceof Closure) {
             $callback = $callback->bindTo($this, get_class($this));
         }
-        
+
         $this->loggers[] = $callback;
-        
+
         return $this;
     }
 
@@ -60,7 +60,7 @@ trait LoggerTrait
         foreach ($this->loggers as $callback) {
             call_user_func_array($callback, $args);
         }
-        
+
         return $this;
     }
 }

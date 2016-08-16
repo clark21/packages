@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Cradle\Sql;
 
@@ -34,11 +34,24 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Sql\MySql::__construct
+     */
+    public function test__construct()
+    {
+		$actual = $this->object->__construct('foo', 'foo', 'foo');
+		$this->assertNull($actual);
+    }
+
+    /**
      * @covers Cradle\Sql\MySql::connect
      */
     public function testConnect()
     {
 		$instance = $this->object->connect(include(__DIR__.'/../assets/sql/mysql.php'));
+		$this->assertInstanceOf('Cradle\Sql\MySql', $instance);
+
+        $this->object->__construct('127.0.0.1', 'testing_db', 'root');
+        $instance = $this->object->connect();
 		$this->assertInstanceOf('Cradle\Sql\MySql', $instance);
     }
 
@@ -58,6 +71,9 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
     {
 		$actual = $this->object->getColumns('address');
 		$this->assertTrue(is_array($actual));
+
+        //$actual = $this->object->getColumns('address', array(array("Field LIKE 'address_%'")));
+		//$this->assertTrue(is_array($actual));
     }
 
     /**
@@ -92,7 +108,7 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetTables()
     {
-		$actual = $this->object->getColumns('address');
+		$actual = $this->object->getTables();
 		$this->assertTrue(is_array($actual));
     }
 
@@ -101,6 +117,15 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetTableSchema()
     {
+        $this->object->insertRow('address', array(
+            'address_label' => 'Foo Bar',
+            'address_street' => 'foobar',
+            'address_city' => 'foobar',
+            'address_country' => 'foobar',
+            'address_postal' => 'foobar',
+            'address_created' => date('Y-m-d H:i:s'),
+            'address_updated' => date('Y-m-d H:i:s')
+        ));
 		$actual = $this->object->getTableSchema('address');
 		$this->assertContains('CREATE TABLE `address`', $actual);
     }

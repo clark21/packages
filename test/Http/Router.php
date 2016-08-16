@@ -52,13 +52,13 @@ class Cradle_Http_Router_Test extends PHPUnit_Framework_TestCase
     {
         $instance = $this->object->route('foobar', '/foo/bar', function() {});
         $this->assertInstanceOf('Cradle\Http\Router', $instance);
-        
+
         $request = new Request();
         $request->setPath('/foo/bar/zoo');
         $request->setMethod('get');
-        
+
         $response = new Response();
-        
+
         $trigger = new StdClass();
         $trigger->success1 = null;
         $trigger->success2 = null;
@@ -66,7 +66,7 @@ class Cradle_Http_Router_Test extends PHPUnit_Framework_TestCase
         $trigger->success4 = null;
         $trigger->success5 = null;
         $trigger->success6 = null;
-        
+
         $this
             ->object
             ->route('get', '/foo/bar/zoo', function($request, $response, $trigger, $test) {
@@ -94,36 +94,45 @@ class Cradle_Http_Router_Test extends PHPUnit_Framework_TestCase
                 $test->assertEquals('zoo', $request->getVariables(1));
             })
             ->process($request, $response, $trigger, $this);
-            
+
         $this->assertTrue($trigger->success1);
         $this->assertTrue($trigger->success2);
         $this->assertTrue($trigger->success3);
         $this->assertTrue($trigger->success4);
         $this->assertNull($trigger->success5);
         $this->assertTrue($trigger->success6);
-		
+
 		$request = new Request();
         $request->setPath('/zoo/bar-foo/something/cool/1/2');
         $request->setMethod('get');
-        
+
         $response = new Response();
-        
+
         $trigger = new StdClass();
         $trigger->success = null;
-		
+
 		$this
             ->object
             ->route('get', '/zoo/bar-foo/*/*/:auth-id/:auth-id2', function($request, $response, $trigger, $test) {
                 $trigger->success = true;
-				
+
 				$test->assertEquals('something', $request->getVariables(0));
 				$test->assertEquals('cool', $request->getVariables(1));
-				
+
 				$test->assertEquals('1', $request->getParameters('auth-id'));
 				$test->assertEquals('2', $request->getParameters('auth-id2'));
             })
 			->process($request, $response, $trigger, $this);
-			
+
 		$this->assertTrue($trigger->success);
+
+        $trigger = false;
+        try {
+            $this->object->route('get', '/foo/bar/zoo', 'zoobarfoo');
+        } catch(HttpException $e) {
+            $trigger = true;
+        }
+
+        $this->assertTrue($trigger);
     }
 }

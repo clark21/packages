@@ -45,47 +45,47 @@ class Cradle_Helper_ConditionalTrait_Test extends PHPUnit_Framework_TestCase
             $self->assertInstanceOf('Cradle\Helper\ConditionalTraitStub', $this);
             $test = 'Bad';
         });
-        
+
         $this->assertSame('Good', $test);
-        
+
         $test = 'Good';
         $this->object->when(null, function() use (&$test) {
             $test = 'Bad';
         });
-        
+
         $this->assertSame('Good', $test);
-        
+
         $test = 'Good';
         $this->object->when(false, function() use (&$test) {
             $test = 'Bad';
         });
-        
+
         $this->assertSame('Good', $test);
-        
-        
+
+
         $test = 'Good';
         $this->object->when(function() {
             return true;
         }, function() use (&$test) {
             $test = 'Bad';
         });
-        
+
         $this->assertSame('Bad', $test);
-        
+
         $test = 'Good';
         $this->object->when('hi', function() use (&$test) {
             $test = 'Bad';
         });
-        
+
         $this->assertSame('Bad', $test);
-        
+
         $test = 'Good';
         $this->object->when(true, function() use (&$test) {
             $test = 'Bad';
         });
-        
+
         $this->assertSame('Bad', $test);
-        
+
         $test = 'Not Sure';
         $this->object->when(function() use ($self) {
             $self->assertInstanceOf('Cradle\Helper\ConditionalTraitStub', $this);
@@ -97,8 +97,12 @@ class Cradle_Helper_ConditionalTrait_Test extends PHPUnit_Framework_TestCase
             $self->assertInstanceOf('Cradle\Helper\ConditionalTraitStub', $this);
             $test = 'Bad';
         });
-        
+
         $this->assertSame('Bad', $test);
+
+        $this->assertSame('Bad', $this->object->when(true, function() {
+            return 'Bad';
+        }));
     }
 }
 

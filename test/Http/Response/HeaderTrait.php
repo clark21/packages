@@ -59,6 +59,15 @@ class Cradle_Http_Response_HeaderTrait_Test extends PHPUnit_Framework_TestCase
         $actual = $this->object->getHeaders('foo');
         $this->assertEquals('bar', $actual);
     }
+
+    /**
+     * covers Cradle\Http\Response\HeaderTrait::removeHeader
+     */
+    public function testRemoveHeader()
+    {
+        $instance = $this->object->removeHeader('foo');
+        $this->assertInstanceOf('Cradle\Http\Response\HeaderTraitStub', $instance);
+    }
 }
 
 if(!class_exists('Cradle\Http\Response\HeaderTraitStub')) {
