@@ -3,9 +3,10 @@
     "type": "library",
     "description": "Framework Agnotic Packages for the Cradle micro framework",
     "minimum-stability": "dev",
+    "homepage": "https://cradlephp.github.io/",
     "keywords": [
-        "library", 
-        "cradle", 
+        "library",
+        "cradle",
         "cradlephp"
     ],
     "license": "MIT",
