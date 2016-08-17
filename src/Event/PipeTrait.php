@@ -73,6 +73,24 @@ trait PipeTrait
     }
 
     /**
+     * Sets the subflow to be called
+     * when there is an array fork
+     *
+     * @param string $event
+     * @param mixed  ...$args
+     *
+     * @return PipeTrait
+     */
+    public function subflow($event, ...$args)
+    {
+        if (isset(self::$flows[$event])) {
+            $this->triggerFlow(self::$flows[$event], ...$args);
+        }
+
+        return $this;
+    }
+
+    /**
      * Calls an event considering classes and protocols
      *
      * @param *string|callable $name
@@ -233,24 +251,6 @@ trait PipeTrait
         //we don't want to throw an error
         //because it could just be a pseudo
         //placeholder
-        return $this;
-    }
-
-    /**
-     * Sets the subflow to be called
-     * when there is an array fork
-     *
-     * @param string $event
-     * @param mixed  ...$args
-     *
-     * @return PipeTrait
-     */
-    public function triggerSubflow($event, ...$args)
-    {
-        if (isset(self::$flows[$event])) {
-            $this->triggerFlow(self::$flows[$event], ...$args);
-        }
-
         return $this;
     }
 }

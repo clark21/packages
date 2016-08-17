@@ -105,7 +105,7 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
 			)
 			->on('step4', function($trigger, $foo, $bar) {
 				$trigger->success1 = true;
-				$this->triggerSubflow('step5', $trigger, $foo, $bar);
+				$this->subflow('step5', $trigger, $foo, $bar);
 			})
 			->on('step6', function($trigger, $foo, $bar) {
 				$trigger->success2 = true;
@@ -171,7 +171,7 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
 
     /**
      * @covers Cradle\Event\PipeTrait::triggerFlow
-     * @covers Cradle\Event\PipeTrait::triggerSubflow
+     * @covers Cradle\Event\PipeTrait::subflow
      */
     public function testTriggerFlow()
     {
@@ -224,7 +224,7 @@ class Cradle_Event_PipeTrait_Test extends PHPUnit_Framework_TestCase
 			->object
 			->on('step4', function($trigger, $foo, $bar) {
 				$trigger->success1 = true;
-				$this->triggerSubflow('step5', $trigger, $foo, $bar);
+				$this->subflow('step5', $trigger, $foo, $bar);
 			})
 			->on('step6', function($trigger, $foo, $bar) {
 				$trigger->success2 = true;
