@@ -12,6 +12,27 @@
          bootstrap="test/bootstrap.php"
 >
   <testsuites>
+  	<testsuite name="CradlePHP Helper Test Suite">
+      <file>test/Helper/BinderTrait.php</file>
+      <file>test/Helper/ConditionalTrait.php</file>
+      <file>test/Helper/InstanceTrait.php</file>
+      <file>test/Helper/LoopTrait.php</file>
+      <file>test/Helper/SingletonTrait.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Resolver Test Suite">
+      <file>test/Resolver/ResolverException.php</file>
+ 	  <file>test/Resolver/ResolverHandler.php</file>
+	  <file>test/Resolver/ResolverTrait.php</file>
+	  <file>test/Resolver/StateTrait.php</file>
+    </testsuite>
+    <testsuite name="CradlePHP Profiler Test Suite">
+      <file>test/Profiler/CallerTrait.php</file>
+  	  <file>test/Profiler/InspectorHandler.php</file>
+	  <file>test/Profiler/InspectorTrait.php</file>
+	  <file>test/Profiler/LoggerException.php</file>
+	  <file>test/Profiler/LoggerTrait.php</file>
+    </testsuite>
+    
     <testsuite name="CradlePHP Handlebars Test Suite">
       <file>test/Handlebars/HandlebarsCompiler.php</file>
       <file>test/Handlebars/HandlebarsData.php</file>
@@ -64,7 +85,9 @@
       <directory suffix=".php">./src</directory>
 	  <exclude>
         <directory>./vendor</directory>
-        <directory>./tests</directory>
+        <directory>./test</directory>
+		<file>src/Profiler/InspectorInterface.php</file>
+		<file>src/Resolver/ResolverInterface.php</file>
 		<file>src/Curl/CurlException.php</file>
 		<file>src/Curl/map.php</file>
 		<file>src/Handlebars/helpers.php</file>
