@@ -24,7 +24,7 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->object = new Rest('http://foobar.com', function($options) {
+        $this->object = new RestStub('http://foobar.com', function($options) {
 			$options['response'] = '{"foo":"bar"}';
 			return $options;
 		});
@@ -48,72 +48,72 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
     {
 		$instance = $this->object->__call('setPostData', array('foobar', '_'));
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance);
-		
+
 		$instance = $this->object->__call('addComment', array('foobar1', '_'));
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance);
-		
+
 		$actual = $this->object->__call('getFriendTweets', array('foobar1'));
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$actual = $this->object->__call('createFriendTweet', array('foobar1'));
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$actual = $this->object->__call('postFriendTweet', array('foobar1'));
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$actual = $this->object->__call('updateFriendTweet', array('foobar1'));
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$actual = $this->object->__call('putFriendTweet', array('foobar1'));
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$actual = $this->object->__call('deleteFriendTweet', array('foobar1'));
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$actual = $this->object->__call('removeFriendTweet', array('foobar1'));
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$this->object->addRoute('get/posts', array(
-			'method' => 'get', 	
+			'method' => 'get',
 			'route' => '/*/feed',
 			'data' => array('access_token' => 'required')
 		));
-		
+
 		$this->object->addRoute('get/post', 'get/posts');
-		
+
 		$actual = $this->object
 			->setData('access_token', '123')
 			->__call('getPosts', array('foobar1'));
-		
+
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$actual = $this->object
 			->setData('access_token', '123')
 			->__call('getPost', array('foobar1'));
-		
+
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$this->object->addRoute('friend/tweet/posts', array(
-			'method' => 'get', 	
+			'method' => 'get',
 			'route' => '/*/feed',
 			'data' => array('access_token' => 'required')
 		));
-		
+
 		$actual = $this->object
 			->setData('access_token', '123')
 			->__call('friend', array())
 			->__call('tweet', array())
 			->__call('post', array('foobar1'));
-		
+
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$trigger = false;
 		try {
 			$this->object->__call('foobarzoo', array(123));
 		} catch(RestException $e) {
 			$trigger = true;
 		}
-		
+
 		$this->assertTrue($trigger);
     }
 
@@ -126,7 +126,7 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
 			$options['response'] = '{"foo":"bar"}';
 			return $options;
 		});
-		
+
 		$this->assertNull($actual);
 	}
 
@@ -137,10 +137,10 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
     {
 		$instance = $this->object->addHeader(array());
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance);
-		
+
 		$instance = $this->object->addHeader('Expect');
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance);
-		
+
 		$instance = $this->object->addHeader('Content-Type', 'text/html');
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance);
     }
@@ -161,10 +161,10 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
     {
 		$instance = $this->object->setData(array());
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance);
-		
+
 		$instance = $this->object->setData('post_title');
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance);
-		
+
 		$instance = $this->object->setData('post_title', 'foobar');
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance);
     }
@@ -176,36 +176,40 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
      * @covers Cradle\Curl\Rest::getRequestEncode
      * @covers Cradle\Curl\Rest::getResponseEncode
      * @covers Cradle\Curl\Rest::isFieldValid
+     * @covers Cradle\Curl\Rest::throwErrors
      */
     public function testSend()
     {
 		$actual = $this->object->send('GET', '/foo/bar');
 		$this->assertEquals('bar', $actual['foo']);
-		
+
+        $this->object->addHeader('Content-Type', 'text/html');
+
 		$actual = $this->object->send('PUT', '/foo/bar', array(
-			'url' => '/foo/bar',
+            'query' => array('foo' => 'bar'),
 			'post' => array('foo' => 'bar'),
-			'agent' => 'Mozilla',
-			'encode' => 'query',
-			'headers' => array('foo' => 'bar')
+			'encode' => 'query'
 		));
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$actual = $this->object->send('PUT', '/foo/bar', array(
-			'url' => '/foo/bar',
+            'query' => array('foo' => 'bar'),
 			'post' => array('foo' => 'bar'),
-			'agent' => 'Mozilla',
-			'encode' => 'xml',
-			'headers' => array('foo' => 'bar')
+			'encode' => 'xml'
 		));
 		$this->assertEquals('bar', $actual['foo']);
-		
+
 		$actual = $this->object->send('PUT', '/foo/bar', array(
-			'url' => '/foo/bar',
+            'query' => array('foo' => 'bar'),
 			'post' => array('foo' => 'bar'),
-			'agent' => 'Mozilla',
-			'encode' => 'raw',
-			'headers' => array('foo' => 'bar')
+			'encode' => 'json'
+		));
+		$this->assertEquals('bar', $actual['foo']);
+
+		$actual = $this->object->send('PUT', '/foo/bar', array(
+            'query' => array('foo' => 'bar'),
+            'post' => array('foo' => 'bar'),
+			'encode' => 'raw'
 		));
 		$this->assertEquals('bar', $actual['foo']);
     }
@@ -226,16 +230,16 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
     {
         $trigger = new StdClass();
 		$trigger->success = null;
-		
+
         $callback = function() use ($trigger) {
 			$trigger->success = true;
 		};
-		
+
 		$instance = $this
 			->object
 			->on('foobar', $callback)
 			->trigger('foobar');
-		
+
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance);
 		$this->assertTrue($trigger->success);
     }
@@ -256,14 +260,14 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
     {
 		$trigger = new StdClass();
 		$trigger->success = null;
-		
+
         $instance = $this
 			->object
 			->on('foobar', function($trigger) {
 				$trigger->success = true;
 			})
 			->trigger('foobar', $trigger);
-		
+
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance);
 		$this->assertTrue($trigger->success);
     }
@@ -274,11 +278,11 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
     public function testI()
     {
         $instance1 = Rest::i('http://foobar.com');
-		
+
 		$this->assertInstanceOf('Cradle\Curl\Rest', $instance1);
-		
+
 		$instance2 = Rest::i('http://foobar.com');
-		
+
 		$this->assertTrue($instance1 !== $instance2);
     }
 
@@ -290,7 +294,7 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
         $self = $this;
         $this->object->loop(function($i) use ($self) {
             $self->assertInstanceOf('Cradle\Curl\Rest', $this);
-            
+
             if ($i == 2) {
                 return false;
             }
@@ -330,10 +334,10 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
         ob_start();
 		$this->object->inspect('foobar');
 		$contents = ob_get_contents();
-		ob_end_clean();  
-		
+		ob_end_clean();
+
 		$this->assertEquals(
-			'<pre>INSPECTING Variable:</pre><pre>foobar</pre>', 
+			'<pre>INSPECTING Variable:</pre><pre>foobar</pre>',
 			$contents
 		);
     }
@@ -367,8 +371,8 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
 			$trigger->success = true;
 		})
 		->log($trigger);
-		
-		
+
+
 		$this->assertTrue($trigger->success);
     }
 
@@ -379,10 +383,10 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
     {
 		$state1 = new Rest('http://foobar.com');
 		$state2 = new Rest('http://foobar.com');
-		
+
 		$state1->saveState('state1');
 		$state2->saveState('state2');
-		
+
 		$this->assertTrue($state2 === $state1->loadState('state2'));
 		$this->assertTrue($state1 === $state2->loadState('state1'));
     }
@@ -394,10 +398,10 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
     {
 		$state1 = new Rest('http://foobar.com');
 		$state2 = new Rest('http://foobar.com');
-		
+
 		$state1->saveState('state1');
 		$state2->saveState('state2');
-		
+
 		$this->assertTrue($state2 === $state1->loadState('state2'));
 		$this->assertTrue($state1 === $state2->loadState('state1'));
     }
@@ -435,14 +439,14 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
     public function testResolve()
     {
         $actual = $this->object->addResolver(
-			ResolverCallStub::class, 
+			ResolverCallStub::class,
 			function() {
 				return new ResolverAddStub();
 			}
 		)
 		->resolve(ResolverCallStub::class)
 		->foo('bar');
-		
+
         $this->assertEquals('barfoo', $actual);
     }
 
@@ -456,14 +460,14 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
 			->resolveShared(ResolverSharedStub::class)
 			->reset()
 			->foo('bar');
-		
+
         $this->assertEquals('barfoo', $actual);
-		
+
 		$actual = $this
 			->object
 			->resolveShared(ResolverSharedStub::class)
 			->foo('bar');
-		
+
         $this->assertEquals('barbar', $actual);
     }
 
@@ -475,11 +479,11 @@ class Cradle_Curl_Rest_Test extends PHPUnit_Framework_TestCase
         $actual = $this
 			->object
 			->resolveStatic(
-				ResolverStaticStub::class, 
-				'foo', 
+				ResolverStaticStub::class,
+				'foo',
 				'bar'
 			);
-		
+
         $this->assertEquals('barfoo', $actual);
     }
 
@@ -517,14 +521,14 @@ if(!class_exists('Cradle\Curl\ResolverSharedStub')) {
 	class ResolverSharedStub
 	{
 		public $name = 'foo';
-		
+
 		public function foo($string)
 		{
 			$name = $this->name;
 			$this->name = $string;
 			return $string . $name;
 		}
-		
+
 		public function reset()
 		{
 			$this->name = 'foo';
@@ -540,5 +544,14 @@ if(!class_exists('Cradle\Curl\ResolverStaticStub')) {
 		{
 			return $string . 'foo';
 		}
+	}
+}
+
+if(!class_exists('Cradle\Curl\RestStub')) {
+	class RestStub extends Rest
+	{
+        protected $agent = 'Mozilla';
+
+        protected $data = ['bar' => 'foo'];
 	}
 }
