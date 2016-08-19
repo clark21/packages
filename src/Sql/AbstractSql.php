@@ -13,8 +13,6 @@ use StdClass;
 use PDO;
 use ReflectionClass;
 
-use Cradle\Event\EventTrait;
-
 use Cradle\Helper\InstanceTrait;
 use Cradle\Helper\LoopTrait;
 use Cradle\Helper\ConditionalTrait;
@@ -175,9 +173,6 @@ abstract class AbstractSql
         //run the query
         $this->query($query, $this->getBinds());
         
-        //trigger event
-        $this->trigger('sql-delete', $table, $filters);
-        
         return $this;
     }
     
@@ -289,9 +284,6 @@ abstract class AbstractSql
         //get the results
         $results = $this->query($query, $this->getBinds());
         
-        //event trigger
-        $this->trigger('sql-row', $table, $name, $value, $results);
-        
         //if we have results
         if (isset($results[0])) {
             //return it
@@ -361,9 +353,6 @@ abstract class AbstractSql
         //run the query
         $this->query($query, $this->getBinds());
         
-        //event trigger
-        $this->trigger('sql-insert', $table, $settings);
-        
         return $this;
     }
     
@@ -405,8 +394,6 @@ abstract class AbstractSql
         
         //run the query
         $this->query($query, $this->getBinds());
-        
-        $this->trigger('sql-inserts', $table, $settings);
         
         return $this;
     }
@@ -619,9 +606,6 @@ abstract class AbstractSql
         
         //run the query
         $this->query($query, $this->getBinds());
-        
-        //event trigger
-        $this->trigger('sql-update', $table, $settings, $filters);
         
         return $this;
     }

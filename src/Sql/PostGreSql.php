@@ -110,8 +110,6 @@ class PostGreSql extends AbstractSql implements SqlInterface
         
         $this->connection = new PDO($connection, $this->user, $this->pass, $options);
         
-        $this->trigger('postgre-connect');
-        
         return $this;
     }
         

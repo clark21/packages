@@ -101,8 +101,6 @@ class MySql extends AbstractSql implements SqlInterface
         
         $this->connection = new PDO($connection, $this->user, $this->pass, $options);
         
-        $this->trigger('mysql-connect');
-        
         return $this;
     }
     

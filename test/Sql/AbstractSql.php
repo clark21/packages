@@ -6,7 +6,6 @@ use StdClass;
 use PHPUnit_Framework_TestCase;
 
 use Cradle\Resolver\ResolverHandler;
-use Cradle\Event\EventHandler;
 use Cradle\Profiler\InspectorHandler;
 
 /**
@@ -252,66 +251,6 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
 		), 'foo=bar');
 
 		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
-    }
-
-    /**
-     * @covers Cradle\Sql\AbstractSql::getEventHandler
-     */
-    public function testGetEventHandler()
-    {
-		$instance = $this->object->getEventHandler();
-		$this->assertInstanceOf('Cradle\Event\EventHandler', $instance);
-    }
-
-    /**
-     * @covers Cradle\Sql\AbstractSql::on
-     */
-    public function testOn()
-    {
-        $trigger = new StdClass();
-		$trigger->success = null;
-		
-        $callback = function() use ($trigger) {
-			$trigger->success = true;
-		};
-		
-		$instance = $this
-			->object
-			->on('foobar', $callback)
-			->trigger('foobar');
-		
-		$this->assertInstanceOf('Cradle\Sql\AbstractSql', $instance);
-		$this->assertTrue($trigger->success);
-    }
-
-    /**
-     * @covers Cradle\Sql\AbstractSql::setEventHandler
-     */
-    public function testSetEventHandler()
-    {
-        $instance = $this->object->setEventHandler(new EventHandler);
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
-    }
-
-    /**
-     * @covers Cradle\Sql\AbstractSql::trigger
-     */
-    public function testTrigger()
-    {
-		$trigger = new StdClass();
-		$trigger->success = null;
-		
-        $callback = function() use ($trigger) {
-			$trigger->success = true;
-		};
-		
-		$instance = $this
-			->object
-			->on('foobar', $callback)
-			->trigger('foobar');
-		
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
-		$this->assertTrue($trigger->success);
     }
 
     /**

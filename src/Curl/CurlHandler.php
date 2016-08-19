@@ -13,8 +13,6 @@ use Closure;
 use ArrayAccess;
 use DOMDocument;
 
-use Cradle\Event\EventTrait;
-
 use Cradle\Helper\InstanceTrait;
 use Cradle\Helper\LoopTrait;
 use Cradle\Helper\ConditionalTrait;
@@ -35,8 +33,7 @@ use Cradle\Resolver\ResolverException;
  */
 class CurlHandler implements ArrayAccess
 {
-    use EventTrait,
-        InstanceTrait,
+    use InstanceTrait,
         LoopTrait,
         ConditionalTrait,
         InspectorTrait,

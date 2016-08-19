@@ -66,7 +66,6 @@ class Sqlite extends AbstractSql implements SqlInterface
 
         $this->connection = new PDO('sqlite:'.$this->path);
         $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $this->trigger('connect');
         
         return $this;
     }
