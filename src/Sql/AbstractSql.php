@@ -36,8 +36,7 @@ use Cradle\Resolver\StateTrait;
  */
 abstract class AbstractSql
 {
-    use EventTrait,
-        InstanceTrait,
+    use InstanceTrait,
         LoopTrait,
         ConditionalTrait,
         InspectorTrait,
