@@ -113,7 +113,7 @@ class Search
      * @var array $range Pagination range
      */
     protected $range = 0;
-    
+
     /**
      * Magical processing of sortBy
      * and filterBy Methods
@@ -133,32 +133,32 @@ class Search
             if (isset($args[1]) && is_scalar($args[1])) {
                 $separator = (string) $args[1];
             }
-            
+
             //transform method to column name
             $key = substr($name, 8);
             $key = preg_replace("/([A-Z0-9])/", $separator."$1", $key);
             $key = substr($key, strlen($separator));
             $key = strtolower($key);
-            
+
             //if arg isn't set
             if (!isset($args[0])) {
                 //default is null
                 $args[0] = null;
             }
-            
+
             //generate key
             if (is_array($args[0])) {
                 $key = $key.' IN %s';
             } else {
                 $key = $key.'=%s';
             }
-                
+
             //add it to the search filter
             $this->addFilter($key, $args[0]);
-            
+
             return $this;
         }
-        
+
         //if method starts with sortBy
         if (strpos($name, 'sortBy') === 0) {
             //ex. sortByUserName('Chris', '-')
@@ -167,32 +167,32 @@ class Search
             if (isset($args[1]) && is_scalar($args[1])) {
                 $separator = (string) $args[1];
             }
-            
+
             //transform method to column name
             $key = substr($name, 6);
             $key = preg_replace("/([A-Z0-9])/", $separator."$1", $key);
             $key = substr($key, strlen($separator));
             $key = strtolower($key);
-            
+
             //if arg isn't set
             if (!isset($args[0])) {
                 //default is null
                 $args[0] = null;
             }
-                
+
             //add it to the search sort
             $this->addSort($key, $args[0]);
-            
+
             return $this;
         }
-        
+
         try {
             return $this->__callResolver($name, $args);
         } catch (ResolverException $e) {
             throw new SqlException($e->getMessage());
         }
     }
-    
+
     /**
      * Construct: Store database
      *
@@ -202,7 +202,7 @@ class Search
     {
         $this->database = $database;
     }
-    
+
     /**
      * Adds filter
      *
@@ -214,10 +214,10 @@ class Search
     public function addFilter()
     {
         $this->filter[] = func_get_args();
-        
+
         return $this;
     }
-    
+
     /**
      * Adds sort
      *
@@ -231,12 +231,12 @@ class Search
         if ($order != self::DESC) {
             $order = self::ASC;
         }
-        
+
         $this->sort[$column] = $order;
-        
+
         return $this;
     }
-    
+
     /**
      * Returns the results in a collection
      *
@@ -249,7 +249,7 @@ class Search
             ->setTable($this->table)
             ->set($this->getRows());
     }
-    
+
     /**
      * Returns the one result in a model
      *
@@ -261,7 +261,7 @@ class Search
     {
         return $this->getCollection()->offsetGet($index);
     }
-    
+
     /**
      * Returns the one result
      *
@@ -276,46 +276,54 @@ class Search
             $column = $index;
             $index = 0;
         }
-        
+
         $rows = $this->getRows();
-        
+
         if (!is_null($column) && isset($rows[$index][$column])) {
             return $rows[$index][$column];
         } else if (is_null($column) && isset($rows[$index])) {
             return $rows[$index];
         }
-        
+
         return null;
     }
-    
+
     /**
      * Returns the array rows
      *
+     * @param callable|null $callback
+     *
      * @return array
      */
-    public function getRows()
+    public function getRows($callback = null)
     {
         $query = $this->getQuery();
-        
+
         if (!empty($this->columns)) {
             $query->select(implode(', ', $this->columns));
         }
-        
+
         foreach ($this->sort as $key => $value) {
             $query->sortBy($key, $value);
         }
-        
+
         if ($this->range) {
             $query->limit($this->start, $this->range);
         }
-        
+
         if (!empty($this->group)) {
             $query->groupBy($this->group);
         }
-        
-        return $this->database->query($query, $this->database->getBinds());
+
+        $rows = $this->database->query($query, $this->database->getBinds(), $callback);
+
+        if (!$callback) {
+            return $rows;
+        }
+
+        return $this;
     }
-    
+
     /**
      * Group by clause
      *
@@ -328,11 +336,11 @@ class Search
         if (is_string($group)) {
             $group = [$group];
         }
-        
+
         $this->group = $group;
         return $this;
     }
-    
+
     /**
      * Returns the total results
      *
@@ -341,16 +349,16 @@ class Search
     public function getTotal()
     {
         $query = $this->getQuery()->select('COUNT(*) as total');
-        
+
         $rows = $this->database->query($query, $this->database->getBinds());
-        
+
         if (!isset($rows[0]['total'])) {
             return 0;
         }
-        
+
         return $rows[0]['total'];
     }
-    
+
     /**
      * Adds Inner Join On
      *
@@ -363,12 +371,12 @@ class Search
     {
         $where = func_get_args();
         $table = array_shift($where);
-        
+
         $this->join[] = [self::INNER, $table, $where, false];
-        
+
         return $this;
     }
-    
+
     /**
      * Adds Inner Join Using
      *
@@ -381,12 +389,12 @@ class Search
     {
         $where = func_get_args();
         $table = array_shift($where);
-        
+
         $this->join[] = [self::INNER, $table, $where, true];
-        
+
         return $this;
     }
-    
+
     /**
      * Adds Left Join On
      *
@@ -399,12 +407,12 @@ class Search
     {
         $where = func_get_args();
         $table = array_shift($where);
-        
+
         $this->join[] = [self::LEFT, $table, $where, false];
-        
+
         return $this;
     }
-    
+
     /**
      * Adds Left Join Using
      *
@@ -417,12 +425,12 @@ class Search
     {
         $where = func_get_args();
         $table = array_shift($where);
-        
+
         $this->join[] = [self::LEFT, $table, $where, true];
-        
+
         return $this;
     }
-    
+
     /**
      * Adds Outer Join On
      *
@@ -435,12 +443,12 @@ class Search
     {
         $where = func_get_args();
         $table = array_shift($where);
-        
+
         $this->join[] = [self::OUTER, $table, $where, false];
-        
+
         return $this;
     }
-    
+
     /**
      * Adds Outer Join USing
      *
@@ -453,12 +461,12 @@ class Search
     {
         $where = func_get_args();
         $table = array_shift($where);
-        
+
         $this->join[] = [self::OUTER, $table, $where, true];
-        
+
         return $this;
     }
-    
+
     /**
      * Adds Right Join On
      *
@@ -471,12 +479,12 @@ class Search
     {
         $where = func_get_args();
         $table = array_shift($where);
-        
+
         $this->join[] = [self::RIGHT, $table, $where, false];
-        
+
         return $this;
     }
-    
+
     /**
      * Adds Right Join Using
      *
@@ -489,12 +497,12 @@ class Search
     {
         $where = func_get_args();
         $table = array_shift($where);
-        
+
         $this->join[] = [self::RIGHT, $table, $where, true];
-        
+
         return $this;
     }
-    
+
     /**
      * Sets Columns
      *
@@ -507,12 +515,12 @@ class Search
         if (!is_array($columns)) {
             $columns = func_get_args();
         }
-        
+
         $this->columns = $columns;
-        
+
         return $this;
     }
-    
+
     /**
      * Sets the pagination page
      *
@@ -525,16 +533,16 @@ class Search
         if ($page < 1) {
             $page = 1;
         }
-        
+
         if ($this->range == 0) {
             $this->setRange(25);
         }
-        
+
         $this->start = ($page - 1) * $this->range;
-        
+
         return $this;
     }
-    
+
     /**
      * Sets the pagination range
      *
@@ -547,12 +555,12 @@ class Search
         if ($range < 0) {
             $range = 25;
         }
-        
+
         $this->range = $range;
-        
+
         return $this;
     }
-    
+
     /**
      * Sets the pagination start
      *
@@ -565,12 +573,12 @@ class Search
         if ($start < 0) {
             $start = 0;
         }
-        
+
         $this->start = $start;
-        
+
         return $this;
     }
-    
+
     /**
      * Sets Table
      *
@@ -583,7 +591,7 @@ class Search
         $this->table = $table;
         return $this;
     }
-    
+
     /**
      * Builds query based on the data given
      *
@@ -592,24 +600,24 @@ class Search
     protected function getQuery()
     {
         $query = $this->database->getSelectQuery()->from($this->table);
-        
+
         foreach ($this->join as $join) {
             if (!is_array($join[2])) {
                 $join[2] = [$join[2]];
             }
-            
+
             $where = array_shift($join[2]);
             if (!empty($join[2])) {
                 foreach ($join[2] as $i => $value) {
                     $join[2][$i] = $this->database->bind($value);
                 }
-                
+
                 $where = vsprintf($where, $join[2]);
             }
-            
+
             $query->join($join[0], $join[1], $where, $join[3]);
         }
-        
+
         foreach ($this->filter as $i => $filter) {
             //array('post_id=%s AND post_title IN %s', 123, array('asd'));
             $where = array_shift($filter);
@@ -617,13 +625,13 @@ class Search
                 foreach ($filter as $i => $value) {
                     $filter[$i] = $this->database->bind($value);
                 }
-                
+
                 $where = vsprintf($where, $filter);
             }
-            
+
             $query->where($where);
         }
-        
+
         return $query;
     }
 }

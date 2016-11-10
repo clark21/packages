@@ -10,6 +10,7 @@
 namespace Cradle\Sql;
 
 use StdClass;
+use Closure;
 use PDO;
 use ReflectionClass;
 
@@ -60,17 +61,17 @@ abstract class AbstractSql
      * @const string LAST The last index in getQueries
      */
     const LAST = 'last';
-       
+
     /**
      * @var [RESOURCE] $connection PDO resource
      */
     protected $connection = null;
-       
+
     /**
      * @var array $binds Bound data from the current query
      */
     protected $binds = [];
-    
+
     /**
      * Connects to the database
      *
@@ -79,7 +80,7 @@ abstract class AbstractSql
      * @return AbstractSQL
      */
     abstract public function connect($options = []);
-    
+
     /**
      * Binds a value and returns the bound key
      *
@@ -93,17 +94,17 @@ abstract class AbstractSql
             foreach ($value as $i => $item) {
                 $value[$i] = $this->bind($item);
             }
-            
+
             return '('.implode(",", $value).')';
         } else if (is_int($value) || ctype_digit($value)) {
             return $value;
         }
-        
+
         $name = ':bind'.count($this->binds).'bind';
         $this->binds[$name] = $value;
         return $name;
     }
-    
+
     /**
      * Returns collection
      *
@@ -118,7 +119,7 @@ abstract class AbstractSql
             ->setDatabase($this)
             ->set($data);
     }
-    
+
     /**
      * Removes rows that match a filter
      *
@@ -130,7 +131,7 @@ abstract class AbstractSql
     public function deleteRows($table, $filters = null)
     {
         $query = $this->getDeleteQuery($table);
-        
+
         //array('post_id=%s AND post_title IN %s', 123, array('asd'));
         if (is_array($filters)) {
             //can be array of arrays
@@ -138,43 +139,43 @@ abstract class AbstractSql
                 foreach ($filters as $i => $filter) {
                     if (is_array($filters)) {
                         $format = array_shift($filter);
-                        
+
                         //reindex filters
                         $filter = array_values($filter);
-                        
+
                         //bind filters
                         foreach ($filter as $i => $value) {
                             $filter[$i] = $this->bind($value);
                         }
-                        
+
                         //combine
                         $query->where(vsprintf($format, $filter));
                     }
                 }
             } else {
                 $format = array_shift($filters);
-                
+
                 //reindex filters
                 $filters = array_values($filters);
-                
+
                 //bind filters
                 foreach ($filters as $i => $value) {
                     $filters[$i] = $this->bind($value);
                 }
-                
+
                 //combine
                 $query->where(vsprintf($format, $filters));
             }
         } else {
             $query->where($filters);
         }
-        
+
         //run the query
         $this->query($query, $this->getBinds());
-        
+
         return $this;
     }
-    
+
     /**
      * Returns all the bound values of this query
      *
@@ -184,7 +185,7 @@ abstract class AbstractSql
     {
         return $this->binds;
     }
-    
+
     /**
      * Returns the connection object
      * if no connection has been made
@@ -197,10 +198,10 @@ abstract class AbstractSql
         if (!$this->connection) {
             $this->connect();
         }
-        
+
         return $this->connection;
     }
-    
+
     /**
      * Returns the delete query builder
      *
@@ -212,7 +213,7 @@ abstract class AbstractSql
     {
         return $this->resolve(QueryDelete::class, $table);
     }
-    
+
     /**
      * Returns the insert query builder
      *
@@ -224,7 +225,7 @@ abstract class AbstractSql
     {
         return $this->resolve(QueryInsert::class, $table);
     }
-    
+
     /**
      * Returns the last inserted id
      *
@@ -237,10 +238,10 @@ abstract class AbstractSql
         if (is_string($column)) {
             return $this->getConnection()->lastInsertId($column);
         }
-        
+
         return $this->getConnection()->lastInsertId();
     }
-    
+
     /**
      * Returns a model given the column name and the value
      *
@@ -254,14 +255,14 @@ abstract class AbstractSql
     {
         //get the row
         $result = $this->getRow($table, $name, $value);
-        
+
         if (is_null($result)) {
             return null;
         }
-        
+
         return $this->model()->setTable($table)->set($result);
     }
-    
+
     /**
      * Returns a 1 row result given the column name and the value
      *
@@ -279,19 +280,19 @@ abstract class AbstractSql
             ->from($table)
             ->where($name.' = '.$this->bind($value))
             ->limit(0, 1);
-        
+
         //get the results
         $results = $this->query($query, $this->getBinds());
-        
+
         //if we have results
         if (isset($results[0])) {
             //return it
             return $results[0];
         }
-        
+
         return null;
     }
-    
+
     /**
      * Returns the select query builder
      *
@@ -303,7 +304,7 @@ abstract class AbstractSql
     {
         return $this->resolve(QuerySelect::class, $select);
     }
-    
+
     /**
      * Returns the update query builder
      *
@@ -315,7 +316,7 @@ abstract class AbstractSql
     {
         return $this->resolve(QueryUpdate::class, $table);
     }
-    
+
     /**
      * Inserts data into a table and returns the ID
      *
@@ -329,7 +330,7 @@ abstract class AbstractSql
     {
         //build insert query
         $query = $this->getInsertQuery($table);
-        
+
         //foreach settings
         foreach ($settings as $key => $value) {
             //if value is not a vulnerability
@@ -338,23 +339,23 @@ abstract class AbstractSql
                 $query->set($key, $value);
                 continue;
             }
-            
+
             //if bind is true or is an array and we want to bind it
             if ($bind === true || (is_array($bind) && in_array($key, $bind))) {
                 //bind the value
                 $value = $this->bind($value);
             }
-            
+
             //add it to the query
             $query->set($key, $value);
         }
-        
+
         //run the query
         $this->query($query, $this->getBinds());
-        
+
         return $this;
     }
-    
+
     /**
      * Inserts multiple rows into a table
      *
@@ -368,7 +369,7 @@ abstract class AbstractSql
     {
         //build insert query
         $query = $this->getInsertQuery($table);
-        
+
         //this is an array of arrays
         foreach ($settings as $index => $setting) {
             //for each column
@@ -379,21 +380,21 @@ abstract class AbstractSql
                     $query->set($key, $value, $index);
                     continue;
                 }
-                
+
                 //if bind is true or is an array and we want to bind it
                 if ($bind === true || (is_array($bind) && in_array($key, $bind))) {
                     //bind the value
                     $value = $this->bind($value);
                 }
-                
+
                 //add it to the query
                 $query->set($key, $value, $index);
             }
         }
-        
+
         //run the query
         $this->query($query, $this->getBinds());
-        
+
         return $this;
     }
 
@@ -410,7 +411,7 @@ abstract class AbstractSql
         $instance = $reflection->newInstanceWithoutConstructor();
         return $instance->connect($connection);
     }
-    
+
     /**
      * Returns model
      *
@@ -422,59 +423,74 @@ abstract class AbstractSql
     {
         return $this->resolve(Model::class, $data)->setDatabase($this);
     }
-    
+
     /**
      * Queries the database
      *
-     * @param *string $query The query to ran
-     * @param array   $binds List of binded values
+     * @param *string       $query The query to ran
+     * @param array         $binds List of binded values
+     * @param callable|null $fetch Whether to fetch all the rows
      *
      * @return array
      */
-    public function query($query, array $binds = [])
+    public function query($query, array $binds = [], $fetch = null)
     {
         $request = new StdClass();
-        
+
         $request->query = $query;
         $request->binds = $binds;
-        
+
         $connection = $this->getConnection();
         $query      = (string) $request->query;
         $stmt       = $connection->prepare($query);
-        
+
         //bind some more values
         foreach ($request->binds as $key => $value) {
             $stmt->bindValue($key, $value);
         }
-        
+
         //PDO Execute
         if (!$stmt->execute()) {
             $error = $stmt->errorInfo();
-            
+
             //unpack binds for the report
             foreach ($binds as $key => $value) {
                 $query = str_replace($key, "'$value'", $query);
             }
-            
+
             //throw Exception
             throw SqlException::forQueryError($query, $error[2]);
         }
-        
-        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        //log query
-        $this->log([
-            'query'     => $query,
-            'binds'     => $binds,
-            'results'   => $results
-        ]);
-        
+
         //clear binds
         $this->binds = [];
-        
-        return $results;
+
+        if (!is_callable($fetch)) {
+            $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            //log query
+            $this->log([
+                'query'     => $query,
+                'binds'     => $binds,
+                'results'   => $results
+            ]);
+
+            return $results;
+        }
+
+        if ($fetch instanceof Closure) {
+            $fetch = $fetch->bindTo($this, get_class($this));
+        }
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if (call_user_func($fetch, $row, $this) === false) {
+                break;
+            }
+        }
+
+        return $this;
     }
-    
+
     /**
      * Returns search
      *
@@ -485,14 +501,14 @@ abstract class AbstractSql
     public function search($table = null)
     {
         $search = $this->resolve(Search::class, $this);
-        
+
         if ($table) {
             $search->setTable($table);
         }
-        
+
         return $search;
     }
-    
+
     /**
      * Sets all the bound values of this query
      *
@@ -505,7 +521,7 @@ abstract class AbstractSql
         $this->binds = $binds;
         return $this;
     }
-    
+
     /**
      * Sets only 1 row given the column name and the value
      *
@@ -520,17 +536,42 @@ abstract class AbstractSql
     {
         //first check to see if the row exists
         $row = $this->getRow($table, $name, $value);
-        
+
         if (!$row) {
             //we need to insert
             $setting[$name] = $value;
             return $this->insertRow($table, $setting);
         }
-        
+
         //we need to update this row
         return $this->updateRows($table, $setting, [$name.'=%s', $value]);
     }
-    
+
+    /**
+     * Sets up a transaction call
+     *
+     * @param *callable $callback
+     *
+     * @return AbstractSql
+     */
+    public function transaction($callback)
+    {
+        $connection = $this->getConnection();
+        $connection->beginTransaction();
+
+        if ($callback instanceof Closure) {
+            $callback = $callback->bindTo($this, get_class($this));
+        }
+
+        if (call_user_func($callback, $this) === false) {
+            $connection->rollBack();
+        } else {
+            $connection->commit();
+        }
+
+        return $this;
+    }
+
     /**
      * Updates rows that match a filter given the update settings
      *
@@ -545,7 +586,7 @@ abstract class AbstractSql
     {
         //build the query
         $query = $this->getUpdateQuery($table);
-        
+
         //foreach settings
         foreach ($settings as $key => $value) {
             //if value is not a vulnerability
@@ -554,17 +595,17 @@ abstract class AbstractSql
                 $query->set($key, $value);
                 continue;
             }
-            
+
             //if bind is true or is an array and we want to bind it
             if ($bind === true || (is_array($bind) && in_array($key, $bind))) {
                 //bind the value
                 $value = $this->bind($value);
             }
-            
+
             //add it to the query
             $query->set($key, $value);
         }
-        
+
         //array('post_id=%s AND post_title IN %s', 123, array('asd'));
         if (is_array($filters)) {
             //can be array of arrays
@@ -572,40 +613,40 @@ abstract class AbstractSql
                 foreach ($filters as $i => $filter) {
                     if (is_array($filters)) {
                         $format = array_shift($filter);
-                        
+
                         //reindex filters
                         $filter = array_values($filter);
-                        
+
                         //bind filters
                         foreach ($filter as $i => $value) {
                             $filter[$i] = $this->bind($value);
                         }
-                        
+
                         //combine
                         $query->where(vsprintf($format, $filter));
                     }
                 }
             } else {
                 $format = array_shift($filters);
-                
+
                 //reindex filters
                 $filters = array_values($filters);
-                
+
                 //bind filters
                 foreach ($filters as $i => $value) {
                     $filters[$i] = $this->bind($value);
                 }
-                
+
                 //combine
                 $query->where(vsprintf($format, $filters));
             }
         } else {
             $query->where($filters);
         }
-        
+
         //run the query
         $this->query($query, $this->getBinds());
-        
+
         return $this;
     }
 }

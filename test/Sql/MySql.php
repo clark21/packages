@@ -21,8 +21,8 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = SqlFactory::load(include(__DIR__.'/../assets/sql/mysql.php'));
-		$schema = file_get_contents(__DIR__.'/../assets/sql/mysql-schema.sql');
-		$this->object->query($schema);
+        $schema = file_get_contents(__DIR__.'/../assets/sql/mysql-schema.sql');
+        $this->object->query($schema);
     }
 
     /**
@@ -38,8 +38,8 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function test__construct()
     {
-		$actual = $this->object->__construct('foo', 'foo', 'foo');
-		$this->assertNull($actual);
+        $actual = $this->object->__construct('foo', 'foo', 'foo');
+        $this->assertNull($actual);
     }
 
     /**
@@ -47,12 +47,12 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testConnect()
     {
-		$instance = $this->object->connect(include(__DIR__.'/../assets/sql/mysql.php'));
-		$this->assertInstanceOf('Cradle\Sql\MySql', $instance);
+        $instance = $this->object->connect(include(__DIR__.'/../assets/sql/mysql.php'));
+        $this->assertInstanceOf('Cradle\Sql\MySql', $instance);
 
         $this->object->__construct('127.0.0.1', 'testing_db', 'root');
         $instance = $this->object->connect();
-		$this->assertInstanceOf('Cradle\Sql\MySql', $instance);
+        $this->assertInstanceOf('Cradle\Sql\MySql', $instance);
     }
 
     /**
@@ -60,8 +60,8 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetAlterQuery()
     {
-		$instance = $this->object->getAlterQuery('foobar');
-		$this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
+        $instance = $this->object->getAlterQuery('foobar');
+        $this->assertInstanceOf('Cradle\Sql\MySql\QueryAlter', $instance);
     }
 
     /**
@@ -69,11 +69,11 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetColumns()
     {
-		$actual = $this->object->getColumns('address');
-		$this->assertTrue(is_array($actual));
+        $actual = $this->object->getColumns('address');
+        $this->assertTrue(is_array($actual));
 
         //$actual = $this->object->getColumns('address', array(array("Field LIKE 'address_%'")));
-		//$this->assertTrue(is_array($actual));
+        //$this->assertTrue(is_array($actual));
     }
 
     /**
@@ -81,8 +81,8 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetCreateQuery()
     {
-		$instance = $this->object->getCreateQuery('foobar');
-		$this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
+        $instance = $this->object->getCreateQuery('foobar');
+        $this->assertInstanceOf('Cradle\Sql\MySql\QueryCreate', $instance);
     }
 
     /**
@@ -90,8 +90,8 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetPrimaryKey()
     {
-		$actual = $this->object->getPrimaryKey('address');
-		$this->assertEquals('address_id', $actual);
+        $actual = $this->object->getPrimaryKey('address');
+        $this->assertEquals('address_id', $actual);
     }
 
     /**
@@ -99,8 +99,8 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetSubSelectQuery()
     {
-		$instance = $this->object->getSubSelectQuery(new QuerySelect);
-		$this->assertInstanceOf('Cradle\Sql\MySql\QuerySubSelect', $instance);
+        $instance = $this->object->getSubSelectQuery(new QuerySelect);
+        $this->assertInstanceOf('Cradle\Sql\MySql\QuerySubSelect', $instance);
     }
 
     /**
@@ -108,8 +108,8 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetTables()
     {
-		$actual = $this->object->getTables();
-		$this->assertTrue(is_array($actual));
+        $actual = $this->object->getTables();
+        $this->assertTrue(is_array($actual));
     }
 
     /**
@@ -126,8 +126,8 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
             'address_created' => date('Y-m-d H:i:s'),
             'address_updated' => date('Y-m-d H:i:s')
         ));
-		$actual = $this->object->getTableSchema('address');
-		$this->assertContains('CREATE TABLE `address`', $actual);
+        $actual = $this->object->getTableSchema('address');
+        $this->assertContains('CREATE TABLE `address`', $actual);
     }
 
     /**
@@ -135,7 +135,91 @@ class Cradle_Sql_MySql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetUtilityQuery()
     {
-		$instance = $this->object->getUtilityQuery();
-		$this->assertInstanceOf('Cradle\Sql\MySql\QueryUtility', $instance);
+        $instance = $this->object->getUtilityQuery();
+        $this->assertInstanceOf('Cradle\Sql\MySql\QueryUtility', $instance);
+    }
+
+    /**
+     * @covers Cradle\Sql\AbstractSql::query
+     * @covers Cradle\Sql\Search::getRows
+     */
+    public function testQuery()
+    {
+        $test = $this;
+        $triggered = false;
+        $instance = $this->object->query('SELECT * FROM address', array(), function($row) use ($test, &$triggered) {
+            $triggered = true;
+            $test->assertInstanceOf('Cradle\Sql\MySql', $this);
+            $test->assertEquals($row['address_label'], 'Foo Bar');
+            return false;
+        });
+
+        $this->assertInstanceOf('Cradle\Sql\MySql', $instance);
+        $this->assertTrue($triggered);
+
+        $row = $this->object->search('address')->getRow();
+        $this->assertEquals($row['address_label'], 'Foo Bar');
+
+        $triggered = false;
+        $instance = $this->object->search('address')->getRows(function($row) use ($test, &$triggered) {
+            $triggered = true;
+            $test->assertInstanceOf('Cradle\Sql\MySql', $this);
+            $test->assertEquals($row['address_label'], 'Foo Bar');
+            return false;
+        });
+
+        $this->assertInstanceOf('Cradle\Sql\Search', $instance);
+        $this->assertTrue($triggered);
+    }
+
+    /**
+     * @covers Cradle\Sql\AbstractSql::transaction
+     * @covers Cradle\Sql\Search::getTotal
+     */
+    public function testTransaction()
+    {
+        $test = $this;
+        $triggered = false;
+
+        $total = $this->object->search('address')->getTotal();
+
+        $this->object->transaction(function() use ($test, &$triggered) {
+            $triggered = true;
+            $test->assertInstanceOf('Cradle\Sql\MySql', $this);
+
+            $this->insertRow('address', array(
+                'address_label' => 'Foo Bar',
+                'address_street' => 'foobar',
+                'address_city' => 'foobar',
+                'address_country' => 'foobar',
+                'address_postal' => 'foobar',
+                'address_created' => date('Y-m-d H:i:s'),
+                'address_updated' => date('Y-m-d H:i:s')
+            ));
+        });
+
+        $this->assertTrue($triggered);
+        $this->assertEquals($total + 1, $this->object->search('address')->getTotal());
+
+        $triggered = false;
+        $this->object->transaction(function() use ($test, &$triggered) {
+            $triggered = true;
+            $test->assertInstanceOf('Cradle\Sql\MySql', $this);
+
+            $this->insertRow('address', array(
+                'address_label' => 'Foo Bar',
+                'address_street' => 'foobar',
+                'address_city' => 'foobar',
+                'address_country' => 'foobar',
+                'address_postal' => 'foobar',
+                'address_created' => date('Y-m-d H:i:s'),
+                'address_updated' => date('Y-m-d H:i:s')
+            ));
+
+            return false;
+        });
+
+        $this->assertTrue($triggered);
+        $this->assertEquals($total + 1, $this->object->search('address')->getTotal());
     }
 }

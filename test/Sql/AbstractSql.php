@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Cradle\Sql;
 
@@ -41,8 +41,8 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testBind()
     {
         $this->assertEquals(':bind0bind', $this->object->bind('foobar'));
-		$this->assertEquals('(:bind1bind,:bind2bind)', $this->object->bind(array('foo','bar')));
-		$this->assertEquals(1, $this->object->bind(1));
+        $this->assertEquals('(:bind1bind,:bind2bind)', $this->object->bind(array('foo','bar')));
+        $this->assertEquals(1, $this->object->bind(1));
     }
 
     /**
@@ -51,7 +51,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testCollection()
     {
         $collection = $this->object->collection();
-		$this->assertInstanceOf('Cradle\Sql\Collection', $collection);
+        $this->assertInstanceOf('Cradle\Sql\Collection', $collection);
     }
 
     /**
@@ -60,13 +60,13 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testDeleteRows()
     {
         $instance = $this->object->deleteRows('foobar', 'foo=bar');
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
-		
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+
         $instance = $this->object->deleteRows('foobar', array('foo=%s', 'bar'));
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
-		
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+
         $instance = $this->object->deleteRows('foobar', array(array('foo=%s', 'bar')));
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
     }
 
     /**
@@ -74,13 +74,13 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetBinds()
     {
-		 $this->assertEquals(':bind0bind', $this->object->bind('foo'));
-		 $this->assertEquals(':bind1bind', $this->object->bind('bar'));
-		 
-		 $binds = $this->object->getBinds();
-		 
-		 $this->assertEquals('foo', $binds[':bind0bind']);
-		 $this->assertEquals('bar', $binds[':bind1bind']);
+         $this->assertEquals(':bind0bind', $this->object->bind('foo'));
+         $this->assertEquals(':bind1bind', $this->object->bind('bar'));
+
+         $binds = $this->object->getBinds();
+
+         $this->assertEquals('foo', $binds[':bind0bind']);
+         $this->assertEquals('bar', $binds[':bind1bind']);
     }
 
     /**
@@ -88,8 +88,8 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetConnection()
     {
-		$actual = $this->object->getConnection();
-		$this->assertEquals('foobar', $actual);
+        $actual = $this->object->getConnection();
+        $this->assertEquals('foobar', $actual);
     }
 
     /**
@@ -97,8 +97,8 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetDeleteQuery()
     {
-		$actual = $this->object->getDeleteQuery('foobar');
-		$this->assertInstanceOf('Cradle\Sql\QueryDelete', $actual);
+        $actual = $this->object->getDeleteQuery('foobar');
+        $this->assertInstanceOf('Cradle\Sql\QueryDelete', $actual);
     }
 
     /**
@@ -106,8 +106,8 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetInsertQuery()
     {
-		$actual = $this->object->getInsertQuery('foobar');
-		$this->assertInstanceOf('Cradle\Sql\QueryInsert', $actual);
+        $actual = $this->object->getInsertQuery('foobar');
+        $this->assertInstanceOf('Cradle\Sql\QueryInsert', $actual);
     }
 
     /**
@@ -115,8 +115,8 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetLastInsertedId()
     {
-		$actual = $this->object->getLastInsertedId();
-		$this->assertEquals(123, $actual);
+        $actual = $this->object->getLastInsertedId();
+        $this->assertEquals(123, $actual);
     }
 
     /**
@@ -125,7 +125,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testGetModel()
     {
         $model = $this->object->getModel('foobar', 'foo_id', 3);
-		$this->assertInstanceOf('Cradle\Sql\Model', $model);
+        $this->assertInstanceOf('Cradle\Sql\Model', $model);
     }
 
     /**
@@ -134,7 +134,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testGetRow()
     {
         $actual = $this->object->getRow('foobar', 'foo_id', 3);
-		$this->assertEquals('SELECT * FROM foobar WHERE foo_id = 3  LIMIT 0,1;', $actual['query']);
+        $this->assertEquals('SELECT * FROM foobar WHERE foo_id = 3  LIMIT 0,1;', $actual['query']);
     }
 
     /**
@@ -142,8 +142,8 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetSelectQuery()
     {
-		$actual = $this->object->getSelectQuery('foobar');
-		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $actual);
+        $actual = $this->object->getSelectQuery('foobar');
+        $this->assertInstanceOf('Cradle\Sql\QuerySelect', $actual);
     }
 
     /**
@@ -151,8 +151,8 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetUpdateQuery()
     {
-		$actual = $this->object->getUpdateQuery('foobar');
-		$this->assertInstanceOf('Cradle\Sql\QueryUpdate', $actual);
+        $actual = $this->object->getUpdateQuery('foobar');
+        $this->assertInstanceOf('Cradle\Sql\QueryUpdate', $actual);
     }
 
     /**
@@ -161,11 +161,11 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testInsertRow()
     {
         $instance = $this->object->insertRow('foobar', array(
-			'foo' => 'bar',
-			'bar' => null
-		));
+            'foo' => 'bar',
+            'bar' => null
+        ));
 
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
     }
 
     /**
@@ -174,17 +174,17 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testInsertRows()
     {
         $instance = $this->object->insertRows('foobar', array(
-			array(
-				'foo' => 'bar',
-				'bar' => 'foo'
-			),
-			array(
-				'foo' => 'bar',
-				'bar' => 'foo'
-			)
-		));
+            array(
+                'foo' => 'bar',
+                'bar' => 'foo'
+            ),
+            array(
+                'foo' => 'bar',
+                'bar' => 'foo'
+            )
+        ));
 
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
     }
 
     /**
@@ -193,7 +193,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testModel()
     {
         $collection = $this->object->model();
-		$this->assertInstanceOf('Cradle\Sql\Model', $collection);
+        $this->assertInstanceOf('Cradle\Sql\Model', $collection);
     }
 
     /**
@@ -201,8 +201,8 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testQuery()
     {
-		$actual = $this->object->query('foobar', array('foo', 'bar'));
-		$this->assertEquals('foobar', $actual[0]['query']);
+        $actual = $this->object->query('foobar', array('foo', 'bar'));
+        $this->assertEquals('foobar', $actual[0]['query']);
     }
 
     /**
@@ -211,7 +211,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testSearch()
     {
         $collection = $this->object->search('foobar');
-		$this->assertInstanceOf('Cradle\Sql\Search', $collection);
+        $this->assertInstanceOf('Cradle\Sql\Search', $collection);
     }
 
     /**
@@ -219,12 +219,12 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetBinds()
     {
-		$instance = $this->object->setBinds(array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
+        $instance = $this->object->setBinds(array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
 
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
     }
 
     /**
@@ -232,12 +232,12 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetRow()
     {
-		$instance = $this->object->setRow('foobar', 'foo_id', 3, array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		));
+        $instance = $this->object->setRow('foobar', 'foo_id', 3, array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ));
 
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
     }
 
     /**
@@ -245,12 +245,12 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testUpdateRows()
     {
-		$instance = $this->object->updateRows('foobar', array(
-			'foo' => 'bar',
-			'bar' => 'foo'
-		), 'foo=bar');
+        $instance = $this->object->updateRows('foobar', array(
+            'foo' => 'bar',
+            'bar' => 'foo'
+        ), 'foo=bar');
 
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
     }
 
     /**
@@ -259,10 +259,10 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testI()
     {
         $instance1 = AbstractSqlStub::i();
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance1);
-		
-		$instance2 = AbstractSqlStub::i();
-		$this->assertTrue($instance1 !== $instance2);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance1);
+
+        $instance2 = AbstractSqlStub::i();
+        $this->assertTrue($instance1 !== $instance2);
     }
 
     /**
@@ -273,7 +273,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
         $self = $this;
         $this->object->loop(function($i) use ($self) {
             $self->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $this);
-            
+
             if ($i == 2) {
                 return false;
             }
@@ -302,7 +302,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testGetInspectorHandler()
     {
         $instance = $this->object->getInspectorHandler();
-		$this->assertInstanceOf('Cradle\Profiler\InspectorHandler', $instance);
+        $this->assertInstanceOf('Cradle\Profiler\InspectorHandler', $instance);
     }
 
     /**
@@ -311,14 +311,14 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testInspect()
     {
         ob_start();
-		$this->object->inspect('foobar');
-		$contents = ob_get_contents();
-		ob_end_clean();  
-		
-		$this->assertEquals(
-			'<pre>INSPECTING Variable:</pre><pre>foobar</pre>', 
-			$contents
-		);
+        $this->object->inspect('foobar');
+        $contents = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertEquals(
+            '<pre>INSPECTING Variable:</pre><pre>foobar</pre>',
+            $contents
+        );
     }
 
     /**
@@ -327,7 +327,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testSetInspectorHandler()
     {
         $instance = $this->object->setInspectorHandler(new InspectorHandler);
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
     }
 
     /**
@@ -336,7 +336,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testAddLogger()
     {
         $instance = $this->object->addLogger(function() {});
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $instance);
     }
 
     /**
@@ -344,15 +344,15 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testLog()
     {
-		$trigger = new StdClass();
-		$trigger->success = null;
+        $trigger = new StdClass();
+        $trigger->success = null;
         $this->object->addLogger(function($trigger) {
-			$trigger->success = true;
-		})
-		->log($trigger);
-		
-		
-		$this->assertTrue($trigger->success);
+            $trigger->success = true;
+        })
+        ->log($trigger);
+
+
+        $this->assertTrue($trigger->success);
     }
 
     /**
@@ -360,14 +360,14 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testLoadState()
     {
-		$state1 = new AbstractSqlStub();
-		$state2 = new AbstractSqlStub();
-		
-		$state1->saveState('state1');
-		$state2->saveState('state2');
-		
-		$this->assertTrue($state2 === $state1->loadState('state2'));
-		$this->assertTrue($state1 === $state2->loadState('state1'));
+        $state1 = new AbstractSqlStub();
+        $state2 = new AbstractSqlStub();
+
+        $state1->saveState('state1');
+        $state2->saveState('state2');
+
+        $this->assertTrue($state2 === $state1->loadState('state2'));
+        $this->assertTrue($state1 === $state2->loadState('state1'));
     }
 
     /**
@@ -375,14 +375,14 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
      */
     public function testSaveState()
     {
-		$state1 = new AbstractSqlStub();
-		$state2 = new AbstractSqlStub();
-		
-		$state1->saveState('state1');
-		$state2->saveState('state2');
-		
-		$this->assertTrue($state2 === $state1->loadState('state2'));
-		$this->assertTrue($state1 === $state2->loadState('state1'));
+        $state1 = new AbstractSqlStub();
+        $state2 = new AbstractSqlStub();
+
+        $state1->saveState('state1');
+        $state2->saveState('state2');
+
+        $this->assertTrue($state2 === $state1->loadState('state2'));
+        $this->assertTrue($state1 === $state2->loadState('state1'));
     }
 
     /**
@@ -392,7 +392,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function test__call()
     {
         $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $actual);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $actual);
     }
 
     /**
@@ -402,7 +402,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function test__callResolver()
     {
         $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $actual);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $actual);
     }
 
     /**
@@ -411,7 +411,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testAddResolver()
     {
         $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $actual);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $actual);
     }
 
     /**
@@ -420,7 +420,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testGetResolverHandler()
     {
         $actual = $this->object->getResolverHandler();
-		$this->assertInstanceOf('Cradle\Resolver\ResolverHandler', $actual);
+        $this->assertInstanceOf('Cradle\Resolver\ResolverHandler', $actual);
     }
 
     /**
@@ -429,14 +429,14 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testResolve()
     {
         $actual = $this->object->addResolver(
-			ResolverCallStub::class, 
-			function() {
-				return new ResolverAddStub();
-			}
-		)
-		->resolve(ResolverCallStub::class)
-		->foo('bar');
-		
+            ResolverCallStub::class,
+            function() {
+                return new ResolverAddStub();
+            }
+        )
+        ->resolve(ResolverCallStub::class)
+        ->foo('bar');
+
         $this->assertEquals('barfoo', $actual);
     }
 
@@ -446,18 +446,18 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testResolveShared()
     {
         $actual = $this
-			->object
-			->resolveShared(ResolverSharedStub::class)
-			->reset()
-			->foo('bar');
-		
+            ->object
+            ->resolveShared(ResolverSharedStub::class)
+            ->reset()
+            ->foo('bar');
+
         $this->assertEquals('barfoo', $actual);
-		
-		$actual = $this
-			->object
-			->resolveShared(ResolverSharedStub::class)
-			->foo('bar');
-		
+
+        $actual = $this
+            ->object
+            ->resolveShared(ResolverSharedStub::class)
+            ->foo('bar');
+
         $this->assertEquals('barbar', $actual);
     }
 
@@ -467,13 +467,13 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testResolveStatic()
     {
         $actual = $this
-			->object
-			->resolveStatic(
-				ResolverStaticStub::class, 
-				'foo', 
-				'bar'
-			);
-		
+            ->object
+            ->resolveStatic(
+                ResolverStaticStub::class,
+                'foo',
+                'bar'
+            );
+
         $this->assertEquals('barfoo', $actual);
     }
 
@@ -483,108 +483,108 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testSetResolverHandler()
     {
         $actual = $this->object->setResolverHandler(new ResolverHandler);
-		$this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $actual);
+        $this->assertInstanceOf('Cradle\Sql\AbstractSqlStub', $actual);
     }
 }
 
 if(!class_exists('Cradle\Sql\AbstractSqlStub')) {
-	class AbstractSqlStub extends AbstractSql implements SqlInterface
-	{
-		public function connect($options = [])
-		{
-			$this->connection = 'foobar';
-			return $this;
-		}
-		
-		public function getLastInsertedId($column = null)
-		{
-			return 123;
-		}
-		
-		public function query($query, array $binds = [])
-    	{
-			return array(array(
-				'total' => 123,
-				'query' => (string) $query, 
-				'binds' => $binds
-			));
-		}
-		
-		public function getColumns()
-		{
-			return array(
-				array(
-					'Field' => 'foobar_id',
-					'Type' => 'int',
-					'Key' => 'PRI',
-					'Default' => null,
-					'Null' => 1
-				),
-				array(
-					'Field' => 'foobar_title',
-					'Type' => 'vachar',
-					'Key' => null,
-					'Default' => null,
-					'Null' => 1
-				),
-				array(
-					'Field' => 'foobar_date',
-					'Type' => 'datetime',
-					'Key' => null,
-					'Default' => null,
-					'Null' => 1
-				)
-			);
-		}
-	}
+    class AbstractSqlStub extends AbstractSql implements SqlInterface
+    {
+        public function connect($options = [])
+        {
+            $this->connection = 'foobar';
+            return $this;
+        }
+
+        public function getLastInsertedId($column = null)
+        {
+            return 123;
+        }
+
+        public function query($query, array $binds = [], $fetch = null)
+        {
+            return array(array(
+                'total' => 123,
+                'query' => (string) $query,
+                'binds' => $binds
+            ));
+        }
+
+        public function getColumns()
+        {
+            return array(
+                array(
+                    'Field' => 'foobar_id',
+                    'Type' => 'int',
+                    'Key' => 'PRI',
+                    'Default' => null,
+                    'Null' => 1
+                ),
+                array(
+                    'Field' => 'foobar_title',
+                    'Type' => 'vachar',
+                    'Key' => null,
+                    'Default' => null,
+                    'Null' => 1
+                ),
+                array(
+                    'Field' => 'foobar_date',
+                    'Type' => 'datetime',
+                    'Key' => null,
+                    'Default' => null,
+                    'Null' => 1
+                )
+            );
+        }
+    }
 }
 
 if(!class_exists('Cradle\Sql\ResolverCallStub')) {
-	class ResolverCallStub
-	{
-		public function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverCallStub
+    {
+        public function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
 
 if(!class_exists('Cradle\Sql\ResolverAddStub')) {
-	class ResolverAddStub
-	{
-		public function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverAddStub
+    {
+        public function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
 
 if(!class_exists('Cradle\Sql\ResolverSharedStub')) {
-	class ResolverSharedStub
-	{
-		public $name = 'foo';
-		
-		public function foo($string)
-		{
-			$name = $this->name;
-			$this->name = $string;
-			return $string . $name;
-		}
-		
-		public function reset()
-		{
-			$this->name = 'foo';
-			return $this;
-		}
-	}
+    class ResolverSharedStub
+    {
+        public $name = 'foo';
+
+        public function foo($string)
+        {
+            $name = $this->name;
+            $this->name = $string;
+            return $string . $name;
+        }
+
+        public function reset()
+        {
+            $this->name = 'foo';
+            return $this;
+        }
+    }
 }
 
 if(!class_exists('Cradle\Sql\ResolverStaticStub')) {
-	class ResolverStaticStub
-	{
-		public static function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverStaticStub
+    {
+        public static function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
