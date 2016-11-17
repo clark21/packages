@@ -220,8 +220,10 @@ return [
         $options = array_pop($args);
         $context = null;
 
-        if (count($args)) {
+        if (count($args) && is_array($args[0])) {
             $context = array_merge($args[0], $options['hash']);
+        } else if (count($args)) {
+            $context = $args[0];
         } else if (!empty($options['hash'])) {
             $context = $options['hash'];
             $parent = $this->get();
