@@ -409,7 +409,7 @@ class CurlHandler implements ArrayAccess
      */
     public function setPostFields($fields)
     {
-        if(is_array($fields)) {
+        if (is_array($fields)) {
             $fields = http_build_query($fields);
         }
 
