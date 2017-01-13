@@ -44,52 +44,52 @@ class CurlHandler implements ArrayAccess
      * @const string PUT Send method type
      */
     const PUT = 'PUT';
-       
+
     /**
      * @const string DELETE Send method type
      */
     const DELETE = 'DELETE';
-       
+
     /**
      * @const string GET Send method type
      */
     const GET = 'GET';
-       
+
     /**
      * @const string POST Send method type
      */
     const POST = 'POST';
-       
+
     /**
      * @const string PATCH Send method type
      */
     const PATCH = 'PATCH';
-       
+
     /**
      * @var Closure|null $mapCache The global curl callback
      */
     protected static $mapCache = null;
-       
+
     /**
      * @var Closure|null $map The actual curl callback
      */
     protected $map = null;
-       
+
     /**
      * @var array $options List of cURL options
      */
     protected $options = [];
-       
+
     /**
      * @var array $meta Stored meta data
      */
     protected $meta = [];
-       
+
     /**
      * @var array $query List of URL queries
      */
     protected $query = [];
-       
+
     /**
      * @var array $headers List of headers
      */
@@ -108,22 +108,22 @@ class CurlHandler implements ArrayAccess
         if (strpos($name, 'set') === 0) {
             //'AutoReferer' => CURLOPT_AUTOREFERER,
             $name = strtoupper(substr($name, 3));
-            
+
             $key = constant('CURLOPT_' . $name);
-            
+
             if (!is_null($key)) {
                 $this->options[$key] = $args[0];
                 return $this;
             }
         }
-        
+
         try {
             return $this->__callResolver($name, $args);
         } catch (ResolverException $e) {
             throw new CurlException($e->getMessage());
         }
     }
-    
+
     /**
      * Set a curl map, which is usually good for testing
      *
@@ -136,7 +136,7 @@ class CurlHandler implements ArrayAccess
         }
 
         $this->map = self::$mapCache;
-        
+
         if (!is_null($map)) {
             $this->map = $map;
         }
@@ -208,7 +208,7 @@ class CurlHandler implements ArrayAccess
     {
         $this->addParameters()->addHeaders();
         $this->options[CURLOPT_RETURNTRANSFER] = true;
-        
+
         $this->meta = call_user_func($this->map, $this->options);
 
         return $this->meta['response'];
@@ -240,7 +240,7 @@ class CurlHandler implements ArrayAccess
             if (strpos($offset, 'CURLOPT_') !== 0) {
                 $offset = 'CURLOPT_' . $offset;
             }
-            
+
             if (defined(strtoupper($offset))) {
                 $offset = constant(strtoupper($offset));
             }
@@ -263,12 +263,12 @@ class CurlHandler implements ArrayAccess
             if (strpos($offset, 'CURLOPT_') !== 0) {
                 $offset = 'CURLOPT_' . $offset;
             }
-            
+
             if (defined(strtoupper($offset))) {
                 $offset = constant(strtoupper($offset));
             }
         }
-        
+
         return isset($this->options[$offset]) ? $this->options[$offset] : null;
     }
 
@@ -285,12 +285,12 @@ class CurlHandler implements ArrayAccess
             if (strpos($offset, 'CURLOPT_') !== 0) {
                 $offset = 'CURLOPT_' . $offset;
             }
-            
+
             if (defined(strtoupper($offset))) {
                 $offset = constant(strtoupper($offset));
             }
         }
-        
+
         if (!is_null($offset)) {
             $this->options[$offset] = $value;
         }
@@ -308,12 +308,12 @@ class CurlHandler implements ArrayAccess
             if (strpos($offset, 'CURLOPT_') !== 0) {
                 $offset = 'CURLOPT_' . $offset;
             }
-            
+
             if (defined(strtoupper($offset))) {
                 $offset = constant(strtoupper($offset));
             }
         }
-        
+
         if (isset($this->options[$offset])) {
             unset($this->options[$offset]);
         }
@@ -327,9 +327,9 @@ class CurlHandler implements ArrayAccess
     public function send()
     {
         $this->addParameters()->addHeaders();
-        
+
         $this->meta = call_user_func($this->map, $this->options);
-        
+
         return $this;
     }
 
@@ -358,7 +358,7 @@ class CurlHandler implements ArrayAccess
         $this->setCustomRequest(self::POST);
         return $this;
     }
-    
+
     /**
      * Curl has problems handling custom request types
      * from misconfigured end points or vice versa.
@@ -409,7 +409,7 @@ class CurlHandler implements ArrayAccess
      */
     public function setPostFields($fields)
     {
-        $this->options[CURLOPT_POSTFIELDS] = $fields;
+        $this->options[CURLOPT_POSTFIELDS] = http_build_query($fields);
 
         return $this;
     }
