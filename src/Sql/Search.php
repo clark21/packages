@@ -315,6 +315,10 @@ class Search
             $query->groupBy($this->group);
         }
 
+        if (!empty($this->having)) {
+            $query->having($this->having);
+        }
+
         $rows = $this->database->query($query, $this->database->getBinds(), $callback);
 
         if (!$callback) {
@@ -357,6 +361,23 @@ class Search
         }
 
         return $rows[0]['total'];
+    }
+
+    /**
+     * Having clause
+     *
+     * @param string $having Column name
+     *
+     * @return Search
+     */
+    public function having($having)
+    {
+        if (is_string($having)) {
+            $having = [$having];
+        }
+
+        $this->having = $having;
+        return $this;
     }
 
     /**

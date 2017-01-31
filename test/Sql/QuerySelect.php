@@ -46,7 +46,7 @@ class Cradle_Sql_QuerySelect_Test extends PHPUnit_Framework_TestCase
     public function testGetQuery()
     {
         $actual = $this->object->getQuery();
-		$this->assertEquals('SELECT * FROM   ;', $actual);
+		$this->assertEquals('SELECT * FROM    ;', $actual);
     }
 
     /**
@@ -56,6 +56,15 @@ class Cradle_Sql_QuerySelect_Test extends PHPUnit_Framework_TestCase
     {
         $instance = $this->object->groupBy('foobar');
 		$this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
+    }
+
+    /**
+     * @covers Cradle\Sql\QuerySelect::having
+     */
+    public function testHaving()
+    {
+        $instance = $this->object->having('foobar');
+        $this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
     }
 
     /**

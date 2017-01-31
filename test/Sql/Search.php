@@ -118,7 +118,7 @@ class Cradle_Sql_Search_Test extends PHPUnit_Framework_TestCase
     public function testGetRow()
     {
         $actual = $this->object->getRow();
-        $this->assertEquals('SELECT * FROM   ;', $actual['query']);
+        $this->assertEquals('SELECT * FROM    ;', $actual['query']);
 
         $actual = $this->object->getRow('foobar');
         $this->assertNull($actual['query']);
@@ -151,6 +151,15 @@ class Cradle_Sql_Search_Test extends PHPUnit_Framework_TestCase
     public function testGroupBy()
     {
         $instance = $this->object->groupBy('foo');
+        $this->assertInstanceOf('Cradle\Sql\Search', $instance);
+    }
+
+    /**
+     * @covers Cradle\Sql\Search::having
+     */
+    public function testHaving()
+    {
+        $instance = $this->object->having('foo');
         $this->assertInstanceOf('Cradle\Sql\Search', $instance);
     }
 
