@@ -46,7 +46,7 @@ class Cradle_Sql_QuerySelect_Test extends PHPUnit_Framework_TestCase
     public function testGetQuery()
     {
         $actual = $this->object->getQuery();
-		$this->assertEquals('SELECT * FROM   ;', $actual);
+		$this->assertEquals('SELECT * FROM    ;', $actual);
     }
 
     /**

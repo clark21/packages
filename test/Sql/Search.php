@@ -118,7 +118,7 @@ class Cradle_Sql_Search_Test extends PHPUnit_Framework_TestCase
     public function testGetRow()
     {
         $actual = $this->object->getRow();
-        $this->assertEquals('SELECT * FROM   ;', $actual['query']);
+        $this->assertEquals('SELECT * FROM    ;', $actual['query']);
 
         $actual = $this->object->getRow('foobar');
         $this->assertNull($actual['query']);

@@ -97,7 +97,7 @@ class QuerySelect extends AbstractQuery
         $having = empty($this->having) ? '' : 'HAVING ' . implode(', ', $this->having);
         
         $query = sprintf(
-            'SELECT %s FROM %s %s %s %s %s %s;',
+            'SELECT %s FROM %s %s %s %s %s %s %s;',
             $this->select,
             $this->from,
             $joins,
