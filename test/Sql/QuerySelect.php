@@ -59,6 +59,15 @@ class Cradle_Sql_QuerySelect_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Sql\QuerySelect::having
+     */
+    public function testHaving()
+    {
+        $instance = $this->object->having('foobar');
+        $this->assertInstanceOf('Cradle\Sql\QuerySelect', $instance);
+    }
+
+    /**
      * @covers Cradle\Sql\QuerySelect::innerJoin
      */
     public function testInnerJoin()

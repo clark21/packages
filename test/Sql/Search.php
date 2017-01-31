@@ -155,6 +155,15 @@ class Cradle_Sql_Search_Test extends PHPUnit_Framework_TestCase
     }
 
     /**
+     * @covers Cradle\Sql\Search::having
+     */
+    public function testHaving()
+    {
+        $instance = $this->object->having('foo');
+        $this->assertInstanceOf('Cradle\Sql\Search', $instance);
+    }
+
+    /**
      * @covers Cradle\Sql\Search::innerJoinOn
      */
     public function testInnerJoinOn()

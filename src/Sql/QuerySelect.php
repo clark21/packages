@@ -94,6 +94,7 @@ class QuerySelect extends AbstractQuery
         $sort = empty($this->sortBy) ? '' : 'ORDER BY '.implode(', ', $this->sortBy);
         $limit = is_null($this->page) ? '' : 'LIMIT ' . $this->page .',' .$this->length;
         $group = empty($this->group) ? '' : 'GROUP BY ' . implode(', ', $this->group);
+        $having = empty($this->having) ? '' : 'HAVING ' . implode(', ', $this->having);
         
         $query = sprintf(
             'SELECT %s FROM %s %s %s %s %s %s;',
@@ -102,6 +103,7 @@ class QuerySelect extends AbstractQuery
             $joins,
             $where,
             $group,
+            $having,
             $sort,
             $limit
         );
@@ -123,6 +125,23 @@ class QuerySelect extends AbstractQuery
         }
         
         $this->group = $group;
+        return $this;
+    }
+
+    /**
+     * Having clause
+     *
+     * @param string $having Column name
+     *
+     * @return Search
+     */
+    public function having($having)
+    {
+        if (is_string($having)) {
+            $having = [$having];
+        }
+
+        $this->having = $having;
         return $this;
     }
     
