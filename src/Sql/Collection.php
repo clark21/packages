@@ -9,6 +9,9 @@
 
 namespace Cradle\Sql;
 
+use Cradle\Data\Model\ModelInterface;
+use Cradle\Data\Collection\CollectionInterface;
+
 use Cradle\Data\Model as DataModel;
 use Cradle\Data\Collection as DataCollection;
 
@@ -26,12 +29,12 @@ class Collection extends DataCollection
      * @var SqlInterface|null $database The database resource
      */
     protected $database = null;
-       
+
     /**
      * @var string|null $table Default table name
      */
     protected $table = null;
-    
+
     /**
      * Returns the entire data
      *
@@ -39,21 +42,21 @@ class Collection extends DataCollection
      *
      * @return Model
      */
-    public function getModel(array $row = [])
+    public function getModel(array $row = []): ModelInterface
     {
         $model = $this->resolve(Model::class, $row);
-        
+
         if (!is_null($this->database)) {
             $model->setDatabase($this->database);
         }
-        
+
         if (!is_null($this->table)) {
             $model->setTable($this->table);
         }
-        
+
         return $model;
     }
-    
+
     /**
      * Sets the default database
      *
@@ -64,20 +67,20 @@ class Collection extends DataCollection
     public function setDatabase(SqlInterface $database)
     {
         $this->database = $database;
-        
+
         //for each row
         foreach ($this->data as $row) {
             if (!is_object($row) || !method_exists($row, __FUNCTION__)) {
                 continue;
             }
-            
+
             //let the row handle this
             $row->setDatabase($database);
         }
-        
+
         return $this;
     }
-    
+
     /**
      * Sets the default database
      *
@@ -88,17 +91,17 @@ class Collection extends DataCollection
     public function setTable($table)
     {
         $this->table = $table;
-        
+
         //for each row
         foreach ($this->data as $row) {
             if (!is_object($row) || !method_exists($row, __FUNCTION__)) {
                 continue;
             }
-            
+
             //let the row handle this
             $row->setTable($table);
         }
-        
+
         return $this;
     }
 }

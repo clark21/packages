@@ -23,7 +23,7 @@
     },
     "require": {
         "php": ">=5.6.0",
-		"cradlephp/framework": "dev-master"
+		"cradlephp/components": "1.1.1"
     },
     "autoload": {
         "psr-4": {
