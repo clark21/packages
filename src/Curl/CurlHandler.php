@@ -404,13 +404,18 @@ class CurlHandler implements ArrayAccess
      * does not handle
      *
      * @param *string|array $fields the post data to send
+     * @param string        $type   query or json
      *
      * @return CurlHandler
      */
-    public function setPostFields($fields)
+    public function setPostFields($fields, string $type = 'query')
     {
         if (is_array($fields)) {
-            $fields = http_build_query($fields);
+            if ($type === 'json') {
+                 $fields = json_encode($fields);
+            } else {
+                 $fields = http_build_query($fields);
+            }
         }
 
         $this->options[CURLOPT_POSTFIELDS] = $fields;

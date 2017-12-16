@@ -24,9 +24,9 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $this->object = new CurlHandler(function($options) {
-			$options['response'] = 'foobar';
-			return $options;
-		});
+            $options['response'] = 'foobar';
+            return $options;
+        });
     }
 
     /**
@@ -42,18 +42,18 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function test__call()
     {
-		//CURLOPT_FOLLOWLOCATION
-		$instance = $this->object->__call('setFollowLocation', true);
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
-		
-		$thrown = false;
-		try {
-			$this->object->__call('foobar', array());
-		} catch(CurlException $e) {
-			$thrown = true;
-		}
-		
-		$this->assertTrue($thrown);
+        //CURLOPT_FOLLOWLOCATION
+        $instance = $this->object->__call('setFollowLocation', true);
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+
+        $thrown = false;
+        try {
+            $this->object->__call('foobar', array());
+        } catch(CurlException $e) {
+            $thrown = true;
+        }
+
+        $this->assertTrue($thrown);
     }
 
     /**
@@ -61,14 +61,14 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetDomDocumentResponse()
     {
-		$this->object = new CurlHandler(function($options) {
-			return array('response' => '<?xml version="1.0" encoding="UTF-8"?>
-			<foo>Bar</foo>');
-		});
+        $this->object = new CurlHandler(function($options) {
+            return array('response' => '<?xml version="1.0" encoding="UTF-8"?>
+            <foo>Bar</foo>');
+        });
 
-		$instance = $this->object->getDomDocumentResponse();
-		
-		$this->assertInstanceOf('DOMDocument', $instance);
+        $instance = $this->object->getDomDocumentResponse();
+
+        $this->assertInstanceOf('DOMDocument', $instance);
     }
 
     /**
@@ -76,13 +76,13 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetJsonResponse()
     {
-		$this->object = new CurlHandler(function($options) {
-			return array('response' => '{"foo":"bar"}');
-		});
+        $this->object = new CurlHandler(function($options) {
+            return array('response' => '{"foo":"bar"}');
+        });
 
-		$actual = $this->object->getJsonResponse();
-		
-		$this->assertEquals('bar', $actual['foo']);
+        $actual = $this->object->getJsonResponse();
+
+        $this->assertEquals('bar', $actual['foo']);
     }
 
     /**
@@ -90,9 +90,9 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetMeta()
     {
-		$actual = $this->object->getMeta();
-		
-		$this->assertTrue(is_array($actual));
+        $actual = $this->object->getMeta();
+
+        $this->assertTrue(is_array($actual));
     }
 
     /**
@@ -100,14 +100,14 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetQueryResponse()
     {
-		$this->object = new CurlHandler(function($options) {
-			return array('response' => 'foo=bar&bar=zoo');
-		});
+        $this->object = new CurlHandler(function($options) {
+            return array('response' => 'foo=bar&bar=zoo');
+        });
 
-		$actual = $this->object->getQueryResponse();
-		
-		$this->assertEquals('bar', $actual['foo']);
-		$this->assertEquals('zoo', $actual['bar']);
+        $actual = $this->object->getQueryResponse();
+
+        $this->assertEquals('bar', $actual['foo']);
+        $this->assertEquals('zoo', $actual['bar']);
     }
 
     /**
@@ -115,9 +115,9 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetResponse()
     {
-		$actual = $this->object->getResponse();
-		
-		$this->assertEquals('foobar', $actual);
+        $actual = $this->object->getResponse();
+
+        $this->assertEquals('foobar', $actual);
     }
 
     /**
@@ -126,14 +126,14 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testGetSimpleXmlResponse()
     {
-		$this->object = new CurlHandler(function($options) {
-			return array('response' => '<?xml version="1.0" encoding="UTF-8"?>
-			<foo>Bar</foo>');
-		});
+        $this->object = new CurlHandler(function($options) {
+            return array('response' => '<?xml version="1.0" encoding="UTF-8"?>
+            <foo>Bar</foo>');
+        });
 
-		$instance = $this->object->getSimpleXmlResponse();
-		
-		$this->assertInstanceOf('SimpleXMLElement', $instance);
+        $instance = $this->object->getSimpleXmlResponse();
+
+        $this->assertInstanceOf('SimpleXMLElement', $instance);
     }
 
     /**
@@ -141,9 +141,9 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testOffsetExists()
     {
-		//CURLOPT_FOLLOWLOCATION
-		$actual = $this->object->offsetExists('foobar');
-		$this->assertFalse($actual);
+        //CURLOPT_FOLLOWLOCATION
+        $actual = $this->object->offsetExists('foobar');
+        $this->assertFalse($actual);
     }
 
     /**
@@ -151,13 +151,13 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testOffsetGet()
     {
-		//CURLOPT_FOLLOWLOCATION
-		$actual = $this->object->offsetGet('foobar');
-		$this->assertNull($actual);
-		
-		$this->object->offsetSet('FOLLOWLOCATION', 1);
-		$actual = $this->object->offsetGet('FOLLOWLOCATION');
-		$this->assertEquals(1, $actual);
+        //CURLOPT_FOLLOWLOCATION
+        $actual = $this->object->offsetGet('foobar');
+        $this->assertNull($actual);
+
+        $this->object->offsetSet('FOLLOWLOCATION', 1);
+        $actual = $this->object->offsetGet('FOLLOWLOCATION');
+        $this->assertEquals(1, $actual);
     }
 
     /**
@@ -165,9 +165,9 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testOffsetSet()
     {
-		$this->object->offsetSet('FOLLOWLOCATION', 1);
-		$actual = $this->object->offsetGet('FOLLOWLOCATION');
-		$this->assertEquals(1, $actual);
+        $this->object->offsetSet('FOLLOWLOCATION', 1);
+        $actual = $this->object->offsetGet('FOLLOWLOCATION');
+        $this->assertEquals(1, $actual);
     }
 
     /**
@@ -175,11 +175,11 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testOffsetUnset()
     {
-		
-		$this->object->offsetSet('FOLLOWLOCATION', 1);
-		$this->object->offsetUnset('FOLLOWLOCATION');
-		$actual = $this->object->offsetGet('FOLLOWLOCATION');
-		$this->assertNull($actual);
+
+        $this->object->offsetSet('FOLLOWLOCATION', 1);
+        $this->object->offsetUnset('FOLLOWLOCATION');
+        $actual = $this->object->offsetGet('FOLLOWLOCATION');
+        $this->assertNull($actual);
     }
 
     /**
@@ -187,8 +187,8 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSend()
     {
-		$instance = $this->object->send();
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->send();
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -196,8 +196,8 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetCustomGet()
     {
-		$instance = $this->object->setCustomGet();
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->setCustomGet();
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -205,8 +205,8 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetCustomPost()
     {
-		$instance = $this->object->setCustomPost();
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->setCustomPost();
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -214,8 +214,8 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetCustomPatch()
     {
-		$instance = $this->object->setCustomPatch();
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->setCustomPatch();
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -223,8 +223,8 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetCustomPut()
     {
-		$instance = $this->object->setCustomPut();
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->setCustomPut();
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -232,8 +232,8 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetCustomDelete()
     {
-		$instance = $this->object->setCustomDelete();
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->setCustomDelete();
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -241,8 +241,14 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetPostFields()
     {
-		$instance = $this->object->setPostFields('foo=bar');
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->setPostFields('foo=bar');
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+
+        $instance = $this->object->setPostFields(['foo' => 'bar']);
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+
+        $instance = $this->object->setPostFields(['foo' => 'bar'], 'json');
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -250,11 +256,11 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetHeaders()
     {
-		$instance = $this->object->setHeaders(array('Expect'));
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
-		
-		$instance = $this->object->setHeaders('Foo', 'Bar');
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->setHeaders(array('Expect'));
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+
+        $instance = $this->object->setHeaders('Foo', 'Bar');
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -262,11 +268,11 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSetUrlParameter()
     {
-		$instance = $this->object->setUrlParameter(array('Expect'));
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
-		
-		$instance = $this->object->setUrlParameter('Foo', 'Bar');
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->setUrlParameter(array('Expect'));
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+
+        $instance = $this->object->setUrlParameter('Foo', 'Bar');
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -274,8 +280,8 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testVerifyHost()
     {
-		$instance = $this->object->verifyHost();
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->verifyHost();
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -283,8 +289,8 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testVerifyPeer()
     {
-		$instance = $this->object->verifyPeer();
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $instance = $this->object->verifyPeer();
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -293,12 +299,12 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testI()
     {
         $instance1 = CurlHandler::i();
-		
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance1);
-		
-		$instance2 = CurlHandler::i();
-		
-		$this->assertTrue($instance1 !== $instance2);
+
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance1);
+
+        $instance2 = CurlHandler::i();
+
+        $this->assertTrue($instance1 !== $instance2);
     }
 
      /**
@@ -309,7 +315,7 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
         $self = $this;
         $this->object->loop(function($i) use ($self) {
             $self->assertInstanceOf('Cradle\Curl\CurlHandler', $this);
-            
+
             if ($i == 2) {
                 return false;
             }
@@ -338,7 +344,7 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testGetInspectorHandler()
     {
         $instance = $this->object->getInspectorHandler();
-		$this->assertInstanceOf('Cradle\Profiler\InspectorHandler', $instance);
+        $this->assertInstanceOf('Cradle\Profiler\InspectorHandler', $instance);
     }
 
     /**
@@ -347,14 +353,14 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testInspect()
     {
         ob_start();
-		$this->object->inspect('foobar');
-		$contents = ob_get_contents();
-		ob_end_clean();  
-		
-		$this->assertEquals(
-			'<pre>INSPECTING Variable:</pre><pre>foobar</pre>', 
-			$contents
-		);
+        $this->object->inspect('foobar');
+        $contents = ob_get_contents();
+        ob_end_clean();
+
+        $this->assertEquals(
+            '<pre>INSPECTING Variable:</pre><pre>foobar</pre>',
+            $contents
+        );
     }
 
     /**
@@ -363,7 +369,7 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetInspectorHandler()
     {
         $instance = $this->object->setInspectorHandler(new InspectorHandler);
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -372,7 +378,7 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testAddLogger()
     {
         $instance = $this->object->addLogger(function() {});
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $instance);
     }
 
     /**
@@ -380,15 +386,15 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testLog()
     {
-		$trigger = new StdClass();
-		$trigger->success = null;
+        $trigger = new StdClass();
+        $trigger->success = null;
         $this->object->addLogger(function($trigger) {
-			$trigger->success = true;
-		})
-		->log($trigger);
-		
-		
-		$this->assertTrue($trigger->success);
+            $trigger->success = true;
+        })
+        ->log($trigger);
+
+
+        $this->assertTrue($trigger->success);
     }
 
     /**
@@ -396,14 +402,14 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testLoadState()
     {
-		$state1 = new CurlHandler();
-		$state2 = new CurlHandler();
-		
-		$state1->saveState('state1');
-		$state2->saveState('state2');
-		
-		$this->assertTrue($state2 === $state1->loadState('state2'));
-		$this->assertTrue($state1 === $state2->loadState('state1'));
+        $state1 = new CurlHandler();
+        $state2 = new CurlHandler();
+
+        $state1->saveState('state1');
+        $state2->saveState('state2');
+
+        $this->assertTrue($state2 === $state1->loadState('state2'));
+        $this->assertTrue($state1 === $state2->loadState('state1'));
     }
 
     /**
@@ -411,14 +417,14 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
      */
     public function testSaveState()
     {
-		$state1 = new CurlHandler();
-		$state2 = new CurlHandler();
-		
-		$state1->saveState('state1');
-		$state2->saveState('state2');
-		
-		$this->assertTrue($state2 === $state1->loadState('state2'));
-		$this->assertTrue($state1 === $state2->loadState('state1'));
+        $state1 = new CurlHandler();
+        $state2 = new CurlHandler();
+
+        $state1->saveState('state1');
+        $state2->saveState('state2');
+
+        $this->assertTrue($state2 === $state1->loadState('state2'));
+        $this->assertTrue($state1 === $state2->loadState('state1'));
     }
 
     /**
@@ -427,7 +433,7 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function test__callResolver()
     {
         $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $actual);
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $actual);
     }
 
     /**
@@ -436,7 +442,7 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testAddResolver()
     {
         $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $actual);
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $actual);
     }
 
     /**
@@ -445,7 +451,7 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testGetResolverHandler()
     {
         $actual = $this->object->getResolverHandler();
-		$this->assertInstanceOf('Cradle\Resolver\ResolverHandler', $actual);
+        $this->assertInstanceOf('Cradle\Resolver\ResolverHandler', $actual);
     }
 
     /**
@@ -454,14 +460,14 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testResolve()
     {
         $actual = $this->object->addResolver(
-			ResolverCallStub::class, 
-			function() {
-				return new ResolverAddStub();
-			}
-		)
-		->resolve(ResolverCallStub::class)
-		->foo('bar');
-		
+            ResolverCallStub::class,
+            function() {
+                return new ResolverAddStub();
+            }
+        )
+        ->resolve(ResolverCallStub::class)
+        ->foo('bar');
+
         $this->assertEquals('barfoo', $actual);
     }
 
@@ -471,18 +477,18 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testResolveShared()
     {
         $actual = $this
-			->object
-			->resolveShared(ResolverSharedStub::class)
-			->reset()
-			->foo('bar');
-		
+            ->object
+            ->resolveShared(ResolverSharedStub::class)
+            ->reset()
+            ->foo('bar');
+
         $this->assertEquals('barfoo', $actual);
-		
-		$actual = $this
-			->object
-			->resolveShared(ResolverSharedStub::class)
-			->foo('bar');
-		
+
+        $actual = $this
+            ->object
+            ->resolveShared(ResolverSharedStub::class)
+            ->foo('bar');
+
         $this->assertEquals('barbar', $actual);
     }
 
@@ -492,13 +498,13 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testResolveStatic()
     {
         $actual = $this
-			->object
-			->resolveStatic(
-				ResolverStaticStub::class, 
-				'foo', 
-				'bar'
-			);
-		
+            ->object
+            ->resolveStatic(
+                ResolverStaticStub::class,
+                'foo',
+                'bar'
+            );
+
         $this->assertEquals('barfoo', $actual);
     }
 
@@ -508,56 +514,56 @@ class Cradle_Curl_CurlHandler_Test extends PHPUnit_Framework_TestCase
     public function testSetResolverHandler()
     {
         $actual = $this->object->setResolverHandler(new ResolverHandler);
-		$this->assertInstanceOf('Cradle\Curl\CurlHandler', $actual);
+        $this->assertInstanceOf('Cradle\Curl\CurlHandler', $actual);
     }
 }
 
 if(!class_exists('Cradle\Curl\ResolverCallStub')) {
-	class ResolverCallStub
-	{
-		public function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverCallStub
+    {
+        public function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
 
 if(!class_exists('Cradle\Curl\ResolverAddStub')) {
-	class ResolverAddStub
-	{
-		public function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverAddStub
+    {
+        public function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
 
 if(!class_exists('Cradle\Curl\ResolverSharedStub')) {
-	class ResolverSharedStub
-	{
-		public $name = 'foo';
-		
-		public function foo($string)
-		{
-			$name = $this->name;
-			$this->name = $string;
-			return $string . $name;
-		}
-		
-		public function reset()
-		{
-			$this->name = 'foo';
-			return $this;
-		}
-	}
+    class ResolverSharedStub
+    {
+        public $name = 'foo';
+
+        public function foo($string)
+        {
+            $name = $this->name;
+            $this->name = $string;
+            return $string . $name;
+        }
+
+        public function reset()
+        {
+            $this->name = 'foo';
+            return $this;
+        }
+    }
 }
 
 if(!class_exists('Cradle\Curl\ResolverStaticStub')) {
-	class ResolverStaticStub
-	{
-		public static function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverStaticStub
+    {
+        public static function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
