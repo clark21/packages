@@ -85,7 +85,6 @@ class HandlebarsHandler
             $callback = include($file);
         } else {
             $code = $this->resolve(HandlebarsCompiler::class, $this, $template)
-                ->setBars($this->bars)
                 ->compile();
 
             if (is_dir($this->cache)) {
@@ -100,6 +99,16 @@ class HandlebarsHandler
         self::$callbacks[$name] = $callback;
 
         return $callback;
+    }
+
+    /**
+     * Returns the bars template
+     *
+     * @return string
+     */
+    public function getBars()
+    {
+        return $this->bars;
     }
 
     /**

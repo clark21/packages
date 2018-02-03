@@ -243,6 +243,7 @@ class HandlebarsCompiler
     {
         $this->source = $source;
         $this->handlebars = $handlebars;
+        $this->bars = $this->handlebars->getBars();
 
         if (is_null(self::$layout)) {
             self::$layout = file_get_contents(__DIR__.'/layout.template');
@@ -289,22 +290,6 @@ class HandlebarsCompiler
         }
 
         return sprintf(self::$layout, $reference->buffer);
-    }
-
-    /**
-     * Sets the handlebars characters
-     *
-     * @param string $bars
-     *
-     * @return HandlebarsCompiler
-     */
-    public function setBars($bars)
-    {
-        if (is_string($bars) && strlen($bars) > 1) {
-            $this->bars = $bars;
-        }
-
-        return $this;
     }
 
     /**

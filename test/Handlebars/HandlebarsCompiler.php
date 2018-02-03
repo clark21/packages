@@ -60,6 +60,7 @@ class Cradle_Handlebars_HandlebarsCompiler_Test extends PHPUnit_Framework_TestCa
     {
         $handler = new HandlebarsHandler;
         $this->object->__construct($handler, $this->source);
+        $this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $handler);
     }
 
     /**
@@ -95,24 +96,6 @@ class Cradle_Handlebars_HandlebarsCompiler_Test extends PHPUnit_Framework_TestCa
 
         $actual = $this->object->compile(false);
         $this->assertEquals($this->template2, $actual);
-    }
-
-    /**
-     * @covers Cradle\Handlebars\HandlebarsCompiler::setBars
-     */
-    public function testSetBars()
-    {
-        $template = file_get_contents(__DIR__ . '/../assets/handlebars/barstest.html');
-        $template = $this->object->setBars('[]')->compile($template);
-
-        $expected = '1<b>Post</b>&lt;b&gt;Post&lt;/b&gt;{{post_title}}'."\n";
-
-        $results = $template([
-            'post_id' => '1',
-            'post_title' => '<b>Post</b>'
-        ]);
-
-        $this->assertEquals($expected, $results);
     }
 
     /**
@@ -227,6 +210,8 @@ class Cradle_Handlebars_HandlebarsCompiler_Test extends PHPUnit_Framework_TestCa
             $trigger->success = true;
             $trigger->test->assertInstanceOf('Cradle\Handlebars\HandlebarsCompiler', $this);
         });
+
+        $this->assertInstanceOf('Cradle\Handlebars\HandlebarsCompiler', $this->object);
     }
 }
 

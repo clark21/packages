@@ -5,3 +5,4 @@ composer.phar
 /vendor/
 /logs/
 *.db
+test/assets/sql/sqlite.db
