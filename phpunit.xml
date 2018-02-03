@@ -12,7 +12,7 @@
          bootstrap="test/bootstrap.php"
 >
   <testsuites>
-  	<testsuite name="CradlePHP Handlebars Test Suite">
+    <testsuite name="CradlePHP Handlebars Test Suite">
       <file>test/Handlebars/HandlebarsCompiler.php</file>
       <file>test/Handlebars/HandlebarsData.php</file>
       <file>test/Handlebars/HandlebarsException.php</file>
@@ -21,34 +21,34 @@
       <file>test/Handlebars/HandlebarsTokenizer.php</file>
     </testsuite>
     <testsuite name="CradlePHP Sql Test Suite">
-	  <file>test/Sql/AbstractQuery.php</file>
-	  <file>test/Sql/AbstractSql.php</file>
-	  <file>test/Sql/Collection.php</file>
-	  <file>test/Sql/Model.php</file>
-	  <file>test/Sql/Search.php</file>
-	  <file>test/Sql/QueryDelete.php</file>
-	  <file>test/Sql/QueryInsert.php</file>
-	  <file>test/Sql/QuerySelect.php</file>
-	  <file>test/Sql/QueryUpdate.php</file>
-	  <file>test/Sql/SqlException.php</file>
-	  <file>test/Sql/MySql/QueryAlter.php</file>
-	  <file>test/Sql/MySql/QueryCreate.php</file>
-	  <file>test/Sql/MySql/QuerySubSelect.php</file>
-	  <file>test/Sql/MySql/QueryUtility.php</file>
-	  <file>test/Sql/PostGreSql/QueryAlter.php</file>
-	  <file>test/Sql/PostGreSql/QueryCreate.php</file>
-	  <file>test/Sql/PostGreSql/QueryDelete.php</file>
-	  <file>test/Sql/PostGreSql/QueryInsert.php</file>
-	  <file>test/Sql/PostGreSql/QuerySelect.php</file>
-	  <file>test/Sql/PostGreSql/QueryUpdate.php</file>
-	  <file>test/Sql/PostGreSql/QueryUtility.php</file>
-	  <file>test/Sql/Sqlite/QueryAlter.php</file>
-	  <file>test/Sql/Sqlite/QueryCreate.php</file>
-	  <file>test/Sql/Sqlite/QueryUtility.php</file>
-	  <file>test/Sql/MySql.php</file>
-	  <file>test/Sql/PostGreSql.php</file>
-	  <file>test/Sql/Sqlite.php</file>
-	  <file>test/Sql/SqlFactory.php</file>
+      <file>test/Sql/AbstractQuery.php</file>
+      <file>test/Sql/AbstractSql.php</file>
+      <file>test/Sql/Collection.php</file>
+      <file>test/Sql/Model.php</file>
+      <file>test/Sql/Search.php</file>
+      <file>test/Sql/QueryDelete.php</file>
+      <file>test/Sql/QueryInsert.php</file>
+      <file>test/Sql/QuerySelect.php</file>
+      <file>test/Sql/QueryUpdate.php</file>
+      <file>test/Sql/SqlException.php</file>
+      <file>test/Sql/MySql/QueryAlter.php</file>
+      <file>test/Sql/MySql/QueryCreate.php</file>
+      <file>test/Sql/MySql/QuerySubSelect.php</file>
+      <file>test/Sql/MySql/QueryUtility.php</file>
+      <file>test/Sql/PostGreSql/QueryAlter.php</file>
+      <file>test/Sql/PostGreSql/QueryCreate.php</file>
+      <file>test/Sql/PostGreSql/QueryDelete.php</file>
+      <file>test/Sql/PostGreSql/QueryInsert.php</file>
+      <file>test/Sql/PostGreSql/QuerySelect.php</file>
+      <file>test/Sql/PostGreSql/QueryUpdate.php</file>
+      <file>test/Sql/PostGreSql/QueryUtility.php</file>
+      <file>test/Sql/Sqlite/QueryAlter.php</file>
+      <file>test/Sql/Sqlite/QueryCreate.php</file>
+      <file>test/Sql/Sqlite/QueryUtility.php</file>
+      <file>test/Sql/MySql.php</file>
+      <file>test/Sql/PostGreSql.php</file>
+      <file>test/Sql/Sqlite.php</file>
+      <file>test/Sql/SqlFactory.php</file>
     </testsuite>
     <testsuite name="CradlePHP Curl Test Suite">
       <file>test/Curl/CurlHandler.php</file>
@@ -62,13 +62,13 @@
   <filter>
     <whitelist>
       <directory suffix=".php">./src</directory>
-	  <exclude>
+      <exclude>
         <directory>./vendor</directory>
         <directory>./test</directory>
-		<file>src/Curl/CurlException.php</file>
-		<file>src/Curl/map.php</file>
-		<file>src/Handlebars/helpers.php</file>
-		<file>src/Sql/SqlInterface.php</file>
+        <file>src/Curl/CurlException.php</file>
+        <file>src/Curl/map.php</file>
+        <file>src/Handlebars/helpers.php</file>
+        <file>src/Sql/SqlInterface.php</file>
       </exclude>
     </whitelist>
   </filter>
