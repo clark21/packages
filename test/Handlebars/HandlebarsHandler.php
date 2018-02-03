@@ -39,10 +39,28 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testCompile()
     {
         $template = $this->object->compile('{{foo}}{{{foo}}}');
-		
-		$results = $template(['foo' => '<strong>foo</strong>']);
-		
-		$this->assertEquals('&lt;strong&gt;foo&lt;/strong&gt;<strong>foo</strong>', $results); 
+
+        $results = $template(['foo' => '<strong>foo</strong>']);
+
+        $this->assertEquals('&lt;strong&gt;foo&lt;/strong&gt;<strong>foo</strong>', $results);
+    }
+
+    /**
+     * @covers Cradle\Handlebars\HandlebarsHandler::setBars
+     */
+    public function testSetBars()
+    {
+        $template = file_get_contents(__DIR__ . '/../assets/handlebars/barstest.html');
+        $template = $this->object->setBars('[]')->compile($template);
+
+        $expected = '1<b>Post</b>&lt;b&gt;Post&lt;/b&gt;{{post_title}}'."\n";
+
+        $results = $template([
+            'post_id' => '1',
+            'post_title' => '<b>Post</b>'
+        ]);
+
+        $this->assertEquals($expected, $results);
     }
 
     /**
@@ -59,7 +77,7 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testGetHelper()
     {
         $this->assertInstanceOf('Closure', $this->object->getHelper('if'));
-		$this->assertNull($this->object->getHelper('foobar'));
+        $this->assertNull($this->object->getHelper('foobar'));
     }
 
     /**
@@ -67,8 +85,8 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
      */
     public function testGetHelpers()
     {
-		$helpers = $this->object->getHelpers();
-		$this->assertTrue(is_array($helpers));
+        $helpers = $this->object->getHelpers();
+        $this->assertTrue(is_array($helpers));
     }
 
     /**
@@ -76,7 +94,7 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
      */
     public function testGetPartial()
     {
-		$this->assertNull($this->object->getPartial('foobar'));
+        $this->assertNull($this->object->getPartial('foobar'));
     }
 
     /**
@@ -85,7 +103,7 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testGetPartials()
     {
         $partials = $this->object->getPartials();
-		$this->assertTrue(is_array($partials));
+        $this->assertTrue(is_array($partials));
     }
 
     /**
@@ -94,99 +112,99 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testRegisterHelper()
     {
         //simple helper
-		$this->object->registerHelper('root', function() {
-			return '/some/root';
-		});
-		
-		$template = $this->object->compile('{{root}}/bower_components/eve-font-awesome/awesome.css');
-			
-		$results = $template();
-		$this->assertEquals('/some/root/bower_components/eve-font-awesome/awesome.css', $results); 
-		
-		$found = false;
-		$self = $this;
-		$template = $this
-			->object
-			->reset()
-			->registerHelper('foo', function(
-				$bar, 
-				$four, 
-				$true, 
-				$null, 
-				$false,
-				$zoo
-			) use ($self, &$found) {
-				$self->assertEquals('', $bar);
-				$self->assertEquals(4, $four);
-				$self->assertTrue($true);
-				$self->assertNull($null);
-				$self->assertFalse($false);
-				$self->assertEquals('foobar', $zoo);
-				$found = true;
-				return $four + 1;
-			})
-			->compile('{{foo bar 4 true null false zoo}}');
-		
-		$results = $template(['zoo' => 'foobar']);
-		$this->assertTrue($found);
-		$this->assertEquals(5, $results); 
-		
-		$found = false;
-		$template = $this
-			->object
-			->reset()
-			->registerHelper('foo', function(
-				$number, 
-				$something1, 
-				$number2, 
-				$something2
-			) use ($self, &$found) {
-				$self->assertEquals(4.5, $number);
-				$self->assertEquals(4, $number2);
-				$self->assertEquals('some"thi " ng', $something1);
-				$self->assertEquals("some'thi ' ng", $something2);
-				$found = true;
-				
-				return $something1.$something2;
-			})
-			->compile('{{{foo 4.5 \'some"thi " ng\' 4 "some\'thi \' ng"}}}');
-		
-		$results = $template();
-		
-		$this->assertTrue($found);
-		$this->assertEquals('some"thi " ng'."some'thi ' ng", $results); 
-		
-		//attributes test
-		$found = false;
-		$template = $this
-			->object
-			->reset()
-			->registerHelper('foo', function(
-				$bar, 
-				$number,
-				$something1, 
-				$number2, 
-				$something2,
-				$options
-			) use ($self, &$found) {
-				$self->assertEquals(4.5, $number);
-				$self->assertEquals(4, $number2);
-				$self->assertEquals('some"thi " ng', $something1);
-				$self->assertEquals("some'thi ' ng", $something2);
-				$self->assertFalse($options['hash']['dog']);
-				$self->assertEquals('meow', $options['hash']['cat']);
-				$self->assertEquals('squeak squeak', $options['hash']['mouse']);
-				
-				$found = true;
-				return $number2 + 1;
-			})
-			->compile(
-				'{{foo 4bar4 4.5 \'some"thi " ng\' 4 "some\'thi \' ng" '
-				.'dog=false cat="meow" mouse=\'squeak squeak\'}}');
-		
-		$results = $template(['zoo' => 'foobar']);
-		$this->assertTrue($found);
-		$this->assertEquals(5, $results);
+        $this->object->registerHelper('root', function() {
+            return '/some/root';
+        });
+
+        $template = $this->object->compile('{{root}}/bower_components/eve-font-awesome/awesome.css');
+
+        $results = $template();
+        $this->assertEquals('/some/root/bower_components/eve-font-awesome/awesome.css', $results);
+
+        $found = false;
+        $self = $this;
+        $template = $this
+            ->object
+            ->reset()
+            ->registerHelper('foo', function(
+                $bar,
+                $four,
+                $true,
+                $null,
+                $false,
+                $zoo
+            ) use ($self, &$found) {
+                $self->assertEquals('', $bar);
+                $self->assertEquals(4, $four);
+                $self->assertTrue($true);
+                $self->assertNull($null);
+                $self->assertFalse($false);
+                $self->assertEquals('foobar', $zoo);
+                $found = true;
+                return $four + 1;
+            })
+            ->compile('{{foo bar 4 true null false zoo}}');
+
+        $results = $template(['zoo' => 'foobar']);
+        $this->assertTrue($found);
+        $this->assertEquals(5, $results);
+
+        $found = false;
+        $template = $this
+            ->object
+            ->reset()
+            ->registerHelper('foo', function(
+                $number,
+                $something1,
+                $number2,
+                $something2
+            ) use ($self, &$found) {
+                $self->assertEquals(4.5, $number);
+                $self->assertEquals(4, $number2);
+                $self->assertEquals('some"thi " ng', $something1);
+                $self->assertEquals("some'thi ' ng", $something2);
+                $found = true;
+
+                return $something1.$something2;
+            })
+            ->compile('{{{foo 4.5 \'some"thi " ng\' 4 "some\'thi \' ng"}}}');
+
+        $results = $template();
+
+        $this->assertTrue($found);
+        $this->assertEquals('some"thi " ng'."some'thi ' ng", $results);
+
+        //attributes test
+        $found = false;
+        $template = $this
+            ->object
+            ->reset()
+            ->registerHelper('foo', function(
+                $bar,
+                $number,
+                $something1,
+                $number2,
+                $something2,
+                $options
+            ) use ($self, &$found) {
+                $self->assertEquals(4.5, $number);
+                $self->assertEquals(4, $number2);
+                $self->assertEquals('some"thi " ng', $something1);
+                $self->assertEquals("some'thi ' ng", $something2);
+                $self->assertFalse($options['hash']['dog']);
+                $self->assertEquals('meow', $options['hash']['cat']);
+                $self->assertEquals('squeak squeak', $options['hash']['mouse']);
+
+                $found = true;
+                return $number2 + 1;
+            })
+            ->compile(
+                '{{foo 4bar4 4.5 \'some"thi " ng\' 4 "some\'thi \' ng" '
+                .'dog=false cat="meow" mouse=\'squeak squeak\'}}');
+
+        $results = $template(['zoo' => 'foobar']);
+        $this->assertTrue($found);
+        $this->assertEquals(5, $results);
     }
 
     /**
@@ -195,40 +213,40 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testRegisterPartial()
     {
         //basic
-		$template = $this
-			->object
-			->reset()
-			->registerPartial('foo', 'This is {{ foo }}')
-			->registerPartial('bar', 'Foo is not {{ bar }}')
-			->compile('{{> foo }} ... {{> bar }}');
-			
-		$results = $template(['foo' => 'FOO', 'bar' => 'BAR']);
-		
-		$this->assertEquals('This is FOO ... Foo is not BAR', $results); 
-		
-		//with scope
-		$template = $this
-			->object
-			->reset()
-			->registerPartial('foo', 'This is {{ foo }}')
-			->registerPartial('bar', 'Foo is not {{ bar }}')
-			->compile('{{> foo }} ... {{> bar zoo}}');
-			
-		$results = $template(['foo' => 'FOO', 'bar' => 'BAR', 'zoo' => ['bar' => 'ZOO']]);
-		
-		$this->assertEquals('This is FOO ... Foo is not ZOO', $results); 
-		
-		//with attributes
-		$template = $this
-			->object
-			->reset()
-			->registerPartial('foo', 'This is {{ foo }}')
-			->registerPartial('bar', 'Foo is not {{ something }}')
-			->compile('{{> foo }} ... {{> bar zoo something="Amazing"}}');
-			
-		$results = $template(['foo' => 'FOO', 'bar' => 'BAR', 'zoo' => ['bar' => 'ZOO']]);
-		
-		$this->assertEquals('This is FOO ... Foo is not Amazing', $results);
+        $template = $this
+            ->object
+            ->reset()
+            ->registerPartial('foo', 'This is {{ foo }}')
+            ->registerPartial('bar', 'Foo is not {{ bar }}')
+            ->compile('{{> foo }} ... {{> bar }}');
+
+        $results = $template(['foo' => 'FOO', 'bar' => 'BAR']);
+
+        $this->assertEquals('This is FOO ... Foo is not BAR', $results);
+
+        //with scope
+        $template = $this
+            ->object
+            ->reset()
+            ->registerPartial('foo', 'This is {{ foo }}')
+            ->registerPartial('bar', 'Foo is not {{ bar }}')
+            ->compile('{{> foo }} ... {{> bar zoo}}');
+
+        $results = $template(['foo' => 'FOO', 'bar' => 'BAR', 'zoo' => ['bar' => 'ZOO']]);
+
+        $this->assertEquals('This is FOO ... Foo is not ZOO', $results);
+
+        //with attributes
+        $template = $this
+            ->object
+            ->reset()
+            ->registerPartial('foo', 'This is {{ foo }}')
+            ->registerPartial('bar', 'Foo is not {{ something }}')
+            ->compile('{{> foo }} ... {{> bar zoo something="Amazing"}}');
+
+        $results = $template(['foo' => 'FOO', 'bar' => 'BAR', 'zoo' => ['bar' => 'ZOO']]);
+
+        $this->assertEquals('This is FOO ... Foo is not Amazing', $results);
     }
 
     /**
@@ -237,21 +255,21 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testReset()
     {
         //simple helper
-		$helper = $this
-			->object
-			->registerHelper('root', function() {
-				return '/some/root';
-			})
-			->reset()
-			->getHelper('root');
-			
-		$this->assertNull($helper);
-		
-		$helper = $this
-			->object
-			->getHelper('if');
-		
-		$this->assertInstanceOf('Closure', $helper);
+        $helper = $this
+            ->object
+            ->registerHelper('root', function() {
+                return '/some/root';
+            })
+            ->reset()
+            ->getHelper('root');
+
+        $this->assertNull($helper);
+
+        $helper = $this
+            ->object
+            ->getHelper('if');
+
+        $this->assertInstanceOf('Closure', $helper);
     }
 
     /**
@@ -268,7 +286,7 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testSetPrefix()
     {
         $instance = $this->object->setPrefix('foobar');
-		$this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $instance);
+        $this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $instance);
     }
 
     /**
@@ -277,9 +295,9 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testUnregisterHelper()
     {
         $instance = $this->object->unregisterHelper('if');
-		$this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $instance);
-		
-		$this->assertNull($instance->getHelper('if'));
+        $this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $instance);
+
+        $this->assertNull($instance->getHelper('if'));
     }
 
     /**
@@ -287,13 +305,13 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
      */
     public function testUnregisterPartial()
     {
-		$instance = $this->object
-			->registerPartial('foo', 'bar')
-			->unregisterPartial('foo');
-			
-		$this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $instance);
-		
-		$this->assertNull($instance->getPartial('foo'));
+        $instance = $this->object
+            ->registerPartial('foo', 'bar')
+            ->unregisterPartial('foo');
+
+        $this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $instance);
+
+        $this->assertNull($instance->getPartial('foo'));
     }
 
     /**
@@ -302,7 +320,7 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function test__callResolver()
     {
         $actual = $this->object->__callResolver(ResolverCallStub::class, [])->foo('bar');
-		$this->assertEquals('barfoo', $actual);
+        $this->assertEquals('barfoo', $actual);
     }
 
     /**
@@ -311,7 +329,7 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testAddResolver()
     {
         $actual = $this->object->addResolver(ResolverCallStub::class, function() {});
-		$this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $actual);
+        $this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $actual);
     }
 
     /**
@@ -319,8 +337,8 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
      */
     public function testGetResolverHandler()
     {
-		$actual = $this->object->getResolverHandler();
-		$this->assertInstanceOf('Cradle\Resolver\ResolverInterface', $actual);
+        $actual = $this->object->getResolverHandler();
+        $this->assertInstanceOf('Cradle\Resolver\ResolverInterface', $actual);
     }
 
     /**
@@ -328,15 +346,15 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
      */
     public function testResolve()
     {
-		$actual = $this->object->addResolver(
-			ResolverCallStub::class, 
-			function() {
-				return new ResolverAddStub();
-			}
-		)
-		->resolve(ResolverCallStub::class)
-		->foo('bar');
-		
+        $actual = $this->object->addResolver(
+            ResolverCallStub::class,
+            function() {
+                return new ResolverAddStub();
+            }
+        )
+        ->resolve(ResolverCallStub::class)
+        ->foo('bar');
+
         $this->assertEquals('barfoo', $actual);
     }
 
@@ -346,18 +364,18 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testResolveShared()
     {
         $actual = $this
-			->object
-			->resolveShared(ResolverSharedStub::class)
-			->reset()
-			->foo('bar');
-		
+            ->object
+            ->resolveShared(ResolverSharedStub::class)
+            ->reset()
+            ->foo('bar');
+
         $this->assertEquals('barfoo', $actual);
-		
-		$actual = $this
-			->object
-			->resolveShared(ResolverSharedStub::class)
-			->foo('bar');
-		
+
+        $actual = $this
+            ->object
+            ->resolveShared(ResolverSharedStub::class)
+            ->foo('bar');
+
         $this->assertEquals('barbar', $actual);
     }
 
@@ -367,13 +385,13 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testResolveStatic()
     {
         $actual = $this
-			->object
-			->resolveStatic(
-				ResolverStaticStub::class, 
-				'foo', 
-				'bar'
-			);
-		
+            ->object
+            ->resolveStatic(
+                ResolverStaticStub::class,
+                'foo',
+                'bar'
+            );
+
         $this->assertEquals('barfoo', $actual);
     }
 
@@ -383,7 +401,7 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testSetResolverHandler()
     {
         $actual = $this->object->setResolverHandler(new ResolverHandlerStub);
-		$this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $actual);
+        $this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $actual);
     }
 
     /**
@@ -392,62 +410,62 @@ class Cradle_Handlebars_HandlebarsHandler_Test extends PHPUnit_Framework_TestCas
     public function testI()
     {
         $actual = HandlebarsHandler::i();
-		$this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $actual);
+        $this->assertInstanceOf('Cradle\Handlebars\HandlebarsHandler', $actual);
     }
 }
 
 if(!class_exists('Cradle\Handlebars\ResolverCallStub')) {
-	class ResolverCallStub
-	{
-		public function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverCallStub
+    {
+        public function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
 
 if(!class_exists('Cradle\Handlebars\ResolverAddStub')) {
-	class ResolverAddStub
-	{
-		public function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverAddStub
+    {
+        public function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
 
 if(!class_exists('Cradle\Handlebars\ResolverSharedStub')) {
-	class ResolverSharedStub
-	{
-		public $name = 'foo';
-		
-		public function foo($string)
-		{
-			$name = $this->name;
-			$this->name = $string;
-			return $string . $name;
-		}
-		
-		public function reset()
-		{
-			$this->name = 'foo';
-			return $this;
-		}
-	}
+    class ResolverSharedStub
+    {
+        public $name = 'foo';
+
+        public function foo($string)
+        {
+            $name = $this->name;
+            $this->name = $string;
+            return $string . $name;
+        }
+
+        public function reset()
+        {
+            $this->name = 'foo';
+            return $this;
+        }
+    }
 }
 
 if(!class_exists('Cradle\Handlebars\ResolverStaticStub')) {
-	class ResolverStaticStub
-	{
-		public static function foo($string)
-		{
-			return $string . 'foo';
-		}
-	}
+    class ResolverStaticStub
+    {
+        public static function foo($string)
+        {
+            return $string . 'foo';
+        }
+    }
 }
 
 if(!class_exists('Cradle\Handlebars\ResolverHandlerStub')) {
-	class ResolverHandlerStub extends ResolverHandler
-	{
-	}
+    class ResolverHandlerStub extends ResolverHandler
+    {
+    }
 }

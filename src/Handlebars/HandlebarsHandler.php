@@ -43,17 +43,22 @@ class HandlebarsHandler
     protected $cache = null;
 
     /**
+     * @var string $bars
+     */
+    protected $bars = '{}';
+
+    /**
      * @var array $callbacks A list of compiled template callbacks
      */
     protected static $callbacks = [];
-    
+
     /**
      * Just load the default helpers
      */
     public function __construct()
     {
         $helpers = include __DIR__.'/helpers.php';
-        
+
         foreach ($helpers as $name => $helper) {
             $this->registerHelper($name, $helper);
         }
@@ -69,29 +74,31 @@ class HandlebarsHandler
     public function compile($template)
     {
         $name = md5($template);
-        
+
         if (isset(self::$callbacks[$name])) {
             return self::$callbacks[$name];
         }
-        
+
         $file = $this->cache . '/' . $this->prefix . $name . '.php';
 
         if (is_dir($this->cache) && file_exists($file)) {
             $callback = include($file);
         } else {
-            $code = $this->resolve(HandlebarsCompiler::class, $this, $template)->compile();
-            
+            $code = $this->resolve(HandlebarsCompiler::class, $this, $template)
+                ->setBars($this->bars)
+                ->compile();
+
             if (is_dir($this->cache)) {
                 file_put_contents($file, $code);
             }
-            
+
             //called like: function($data) {};
             $callback = @eval('?>'.$code);
             //$this->checkEval($code);
         }
-        
+
         self::$callbacks[$name] = $callback;
-        
+
         return $callback;
     }
 
@@ -191,6 +198,22 @@ class HandlebarsHandler
     }
 
     /**
+     * Sets the handlebars characters
+     *
+     * @param string $bars
+     *
+     * @return HandlebarsCompiler
+     */
+    public function setBars($bars)
+    {
+        if(is_string($bars) && strlen($bars) > 1) {
+            $this->bars = $bars;
+        }
+
+        return $this;
+    }
+
+    /**
      * Enables the cache option
      *
      * @param *string The cache path
@@ -200,7 +223,7 @@ class HandlebarsHandler
     public function setCache($path)
     {
         $this->cache = $path;
-        
+
         return $this;
     }
 
@@ -242,7 +265,7 @@ class HandlebarsHandler
         $this->resolveStatic(HandlebarsRuntime::class, 'unregisterPartial', $name);
         return $this;
     }
-    
+
     /**
      * Returns a very nice error message
      *
@@ -253,7 +276,7 @@ class HandlebarsHandler
     protected function checkEval($code)
     {
         $error = error_get_last();
-            
+
         if (isset($error['message'])
             && isset($error['line'])
             && $error['message'] === 'parse error'
@@ -263,16 +286,16 @@ class HandlebarsHandler
             if ($start < 0) {
                 $start = 0;
             }
-            
+
             $code = array_splice($code, $start, 50);
-            
+
             foreach ($code as $i => $line) {
                 $code[$i] = (++$start) . ': ' . $line;
             }
-            
+
             throw HandlebarsException::forCompileError($error, $code);
         }
-        
+
         return $this;
     }
 }
