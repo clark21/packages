@@ -206,7 +206,7 @@ class HandlebarsHandler
      */
     public function setBars($bars)
     {
-        if(is_string($bars) && strlen($bars) > 1) {
+        if (is_string($bars) && strlen($bars) > 1) {
             $this->bars = $bars;
         }
 
