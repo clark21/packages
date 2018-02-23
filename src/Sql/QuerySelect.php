@@ -78,7 +78,7 @@ class QuerySelect extends AbstractQuery
      */
     public function from($from)
     {
-        $this->from = $from;
+        $this->from = '`' . $from . '`';
         return $this;
     }
     

@@ -54,8 +54,8 @@ class QueryInsert extends AbstractQuery
             $multiValList[] = '('.implode(', ', $val).')';
         }
         
-        return 'INSERT INTO '
-            . $this->table . ' ('.implode(', ', $this->setKey)
+        return 'INSERT INTO `'
+            . $this->table . '` ('.implode(', ', $this->setKey)
             . ') VALUES ' . implode(", \n", $multiValList).';';
     }
     

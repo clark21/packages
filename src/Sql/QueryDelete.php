@@ -48,8 +48,8 @@ class QueryDelete extends AbstractQuery
      */
     public function getQuery()
     {
-        return 'DELETE FROM '
-            .$this->table.' WHERE '
+        return 'DELETE FROM `'
+            .$this->table.'` WHERE '
             .implode(' AND ', $this->where).';';
     }
     

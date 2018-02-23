@@ -36,8 +36,8 @@ class QueryUpdate extends QueryDelete
             $set[] = "{$key} = {$value}";
         }
         
-        return 'UPDATE '. $this->table
-        . ' SET ' . implode(', ', $set)
+        return 'UPDATE `'. $this->table
+        . '` SET ' . implode(', ', $set)
         . ' WHERE '. implode(' AND ', $this->where).';';
     }
     
