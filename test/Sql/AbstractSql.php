@@ -134,7 +134,7 @@ class Cradle_Sql_AbstractSql_Test extends PHPUnit_Framework_TestCase
     public function testGetRow()
     {
         $actual = $this->object->getRow('foobar', 'foo_id', 3);
-        $this->assertEquals('SELECT * FROM foobar WHERE foo_id = 3  LIMIT 0,1;', $actual['query']);
+        $this->assertEquals('SELECT * FROM `foobar` WHERE foo_id = 3  LIMIT 0,1;', $actual['query']);
     }
 
     /**

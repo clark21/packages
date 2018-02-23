@@ -118,7 +118,7 @@ class Cradle_Sql_Search_Test extends PHPUnit_Framework_TestCase
     public function testGetRow()
     {
         $actual = $this->object->getRow();
-        $this->assertEquals('SELECT * FROM    ;', $actual['query']);
+        $this->assertEquals('SELECT * FROM ``   ;', $actual['query']);
 
         $actual = $this->object->getRow('foobar');
         $this->assertNull($actual['query']);
@@ -133,7 +133,7 @@ class Cradle_Sql_Search_Test extends PHPUnit_Framework_TestCase
         $this->object->setRange(4);
         $this->object->addSort('bar', 'ASC');
         $actual = $this->object->getRows();
-        $this->assertEquals('SELECT * FROM  GROUP BY foo ORDER BY bar ASC LIMIT 0,4;', $actual[0]['query']);
+        $this->assertEquals('SELECT * FROM ``  GROUP BY foo ORDER BY bar ASC LIMIT 0,4;', $actual[0]['query']);
     }
 
     /**
