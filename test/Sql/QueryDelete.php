@@ -37,7 +37,7 @@ class Cradle_Sql_QueryDelete_Test extends PHPUnit_Framework_TestCase
     public function testGetQuery()
     {
         $actual = $this->object->getQuery();
-		$this->assertEquals('DELETE FROM foobar WHERE ;', $actual);
+		$this->assertEquals('DELETE FROM `foobar` WHERE ;', $actual);
     }
 
     /**

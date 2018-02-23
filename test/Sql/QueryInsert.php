@@ -37,7 +37,7 @@ class Cradle_Sql_QueryInsert_Test extends PHPUnit_Framework_TestCase
     public function testGetQuery()
     {
         $actual = $this->object->getQuery();
-		$this->assertEquals('INSERT INTO foobar () VALUES ;', $actual);
+		$this->assertEquals('INSERT INTO `foobar` () VALUES ;', $actual);
     }
 
     /**

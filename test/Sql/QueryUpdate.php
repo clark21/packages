@@ -37,7 +37,7 @@ class Cradle_Sql_QueryUpdate_Test extends PHPUnit_Framework_TestCase
     public function testGetQuery()
     {
         $actual = $this->object->getQuery();
-		$this->assertEquals('UPDATE foobar SET  WHERE ;', $actual);
+		$this->assertEquals('UPDATE `foobar` SET  WHERE ;', $actual);
     }
 
     /**
